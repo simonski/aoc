@@ -24,10 +24,9 @@ Once you've got it, run it like so
 
 After that, to run a given aoc day
 
-    aoc 2020-1
+    aoc 2020-01
 
 Or to run a whole year
 
     aoc 2020
     
-Then go look at the [USER_GUIDE.md](USER_GUIDE.md) for more information.
