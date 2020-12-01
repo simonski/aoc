@@ -24,9 +24,4 @@ Once you've got it, run it like so
 
 After that, to run a given aoc day
 
-    aoc 2020-01
-
-Or to run a whole year
-
-    aoc 2020
-    
+    aoc 2020-01 -input data/1_input.csv

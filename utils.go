@@ -5,8 +5,10 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
+	"log"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -62,4 +64,23 @@ func RandStringRunes(n int) string {
 		b[i] = letterRunes[rand.Intn(len(letterRunes))]
 	}
 	return string(b)
+}
+
+func load_file_to_ints(filename string) []int {
+	file, err := os.Open(filename)
+	results := make([]int, 0)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		value, _ := strconv.Atoi(line)
+		results = append(results, value)
+	}
+	return results
+
 }
