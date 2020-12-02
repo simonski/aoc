@@ -84,3 +84,21 @@ func load_file_to_ints(filename string) []int {
 	return results
 
 }
+
+func load_file_to_strings(filename string) []string {
+	file, err := os.Open(filename)
+	results := make([]string, 0)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		results = append(results, line)
+	}
+	return results
+
+}

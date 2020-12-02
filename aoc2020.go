@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	goutils "github.com/simonski/goutils"
 )
 
@@ -10,8 +8,4 @@ import (
 func AOC_2020(cli *goutils.CLI) {
 	AOC_2020_01(cli)
 	AOC_2020_02(cli)
-}
-
-func AOC_2020_02(cli *goutils.CLI) {
-	fmt.Printf("2020-02, running.\n")
 }
