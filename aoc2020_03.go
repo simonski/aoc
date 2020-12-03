@@ -19,7 +19,7 @@ func AOC_2020_03_part1_attempt1(cli *goutils.CLI, verbose bool) {
 	tm := NewTobogganMapFromFile(filename)
 	tm.Debug()
 	treeCount := tm.CountTreesWeEncounter(3, 1)
-	fmt.Printf("For %v,%v We will encounter %v trees.\n", treeCount)
+	fmt.Printf("For %v,%v We will encounter %v trees.\n", 3, 1, treeCount)
 }
 
 func AOC_2020_03_part1_attempt2(cli *goutils.CLI, verbose bool) {
