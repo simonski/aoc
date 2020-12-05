@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 
 	goutils "github.com/simonski/goutils"
 )
@@ -9,6 +10,7 @@ import (
 // AOC_2020_05 is the entrypoint to the various attempts for day two
 func AOC_2020_05(cli *goutils.CLI) {
 	AOC_2020_05_part1_attempt1(cli)
+	AOC_2020_05_part2_attempt1(cli)
 }
 
 func AOC_2020_05_part1_attempt1(cli *goutils.CLI) {
@@ -25,6 +27,44 @@ func AOC_2020_05_part1_attempt1(cli *goutils.CLI) {
 		}
 	}
 	fmt.Printf("Highest seatId is %v, pass is %v", maxSeatId, maxPass.line)
+}
+
+func AOC_2020_05_part2_attempt1(cli *goutils.CLI) {
+	// so the seat ids with -1 and +1 will be present
+	// only one will be missing
+	// two ways of checking
+	// brute force
+	// attempt1: build list of ids, sort it, find first missing id
+	// attempt2: something else
+
+	filename := cli.GetFileExistsOrDie("-input")
+
+	passes := LoadBoardingPassesFromFile(filename)
+
+	// TODO look at sorting with functions
+	// https://gobyexample.com/sorting-by-functions
+	seatIds := make([]int, 10)
+	for index := 0; index < len(passes); index++ {
+		pass := passes[index]
+		seatIds = append(seatIds, pass.GetSeatId())
+	}
+	sort.Ints(seatIds)
+
+	// TODO improve on this performance
+	seatId := -1
+	for index := 0; index < len(seatIds); index++ {
+		candidate := seatIds[index]
+		// if the value of the next seat is +2 then the seatID is candidate+1
+		nextValue := seatIds[index+1]
+		fmt.Printf("%v,%v\n", candidate, nextValue)
+		if nextValue == candidate+2 {
+			seatId = candidate + 1
+			break
+		}
+	}
+
+	fmt.Printf("Seat Id is %v\n", seatId)
+
 }
 
 func LoadBoardingPassesFromFile(filename string) []*BoardingPass {
