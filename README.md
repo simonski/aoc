@@ -20,8 +20,17 @@ If you want to build it yourself, try this
 
 Once you've got it, run it like so
 
-    aoc
+    ./aoc
 
 After that, to run a given aoc day
 
-    aoc 2020-01 -input data/1_input.csv
+    ./aoc 2020-01 -input data/1_input.csv
+
+    ...
+
+    ./aoc 2020-06 -input data/6_input.txt
+
+    
+And so on...
+
+    
