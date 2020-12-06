@@ -1,5 +1,19 @@
 package main
 
+/*
+
+I decided not to use structs representing groups, just a single overall data with some functions; this has helped me in terms of the code is a mess and
+super-procedural.  So it works but the maintainability I think is affected.
+
+
+
+That said, people call this “idiomatic” in the go community.  Which I take it is meant to mean “the go-ish way of doing things” but I sort of feel it
+may be dogma in a while.  So, my take is: use structs representing down to possibly the smallest data structure, then use those tested structures to verify.
+
+As it is, I Went the other way this time and whilst it works, I require a rewrite for future simon!
+
+
+*/
 import (
 	"fmt"
 	"regexp"
