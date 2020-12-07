@@ -14,7 +14,6 @@ light lavender bags contain 4 drab olive bags, 5 dark magenta bags.
 
 Given: a shiny gold bag, how many bag colors can eventually contain at least one shiny gold bag?
 
-
 etc.
 
 Given
@@ -43,6 +42,7 @@ So, in this example, the number of bag colors that can eventually contain at lea
 */
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	goutils "github.com/simonski/goutils"
@@ -97,10 +97,10 @@ func NewBagGraphFromStrings(lines []string) *BagGraph {
 			children := strings.Split(splits[1], ",") // [ "1 shiny silver", "3 plain olive", "1 clear tan" ]
 			for childIndex := range children {
 				child := strings.Split(strings.TrimSpace(children[childIndex]), " ")
-				// childCount, _ := strconv.Atoi(child[0])
+				childCount, _ := strconv.Atoi(child[0])
 				childColour := strings.Join(child[1:], " ")
 				childBag := graph.GetOrCreate(childColour)
-				bag.AddChild(childBag)
+				bag.AddChild(childBag, childCount)
 			}
 
 		}
@@ -160,17 +160,23 @@ func walkBag(bag *Bag, results map[string]*Bag) {
 // Bag is my own impl of a simple Tree I can walk later
 type Bag struct {
 	Colour   string
-	Children []*Bag
+	Children []*BagRelation
 	Parents  []*Bag
 }
 
-func (b *Bag) AddChild(child *Bag) {
-	b.Children = append(b.Children, child)
+type BagRelation struct {
+	*Bag
+	number int
+}
+
+func (b *Bag) AddChild(child *Bag, number int) {
+	relation := &BagRelation{child, number}
+	b.Children = append(b.Children, relation)
 	child.Parents = append(child.Parents, b)
 }
 
 func NewBag(line string) *Bag {
-	children := make([]*Bag, 0)
+	children := make([]*BagRelation, 0)
 	parents := make([]*Bag, 0)
 	b := &Bag{Colour: line, Children: children, Parents: parents}
 	return b
