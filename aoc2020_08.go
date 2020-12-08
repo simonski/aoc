@@ -49,6 +49,7 @@ Run your copy of the boot code. Immediately before any instruction is executed a
 */
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -58,6 +59,7 @@ import (
 // AOC_2020_07 is the entrypoint to the various attempts for day six
 func AOC_2020_08(cli *goutils.CLI) {
 	AOC_2020_08_part1_attempt1(cli)
+	AOC_2020_08_part2_attempt1(cli)
 }
 
 func AOC_2020_08_part1_attempt1(cli *goutils.CLI) {
@@ -84,21 +86,51 @@ func AOC_2020_08_part2_attempt1(cli *goutils.CLI) {
 
 	// one jmp is a nop
 	// build list of jmps that exist and for each one run the test until complete or in loop
-	jmps := p.FindInstructions("jmp")
-	nops := p.FindInstructions("nops")
+	jmps := p.FindInstructionIndexes("jmp")
+	// okay so for each jmp, flip it to nop and run
+	for index := range jmps {
+		jmpIndex := jmps[index]
+		// load the program, change the instruction
+		testProgram := NewProgramFromFilename(filename)
+		instruction := testProgram.GetInstructionAtIndex(jmpIndex)
+		instruction.Operation = "nop"
 
-	// or
-	// one nop to a jmp
-	// build list of nops that exist and for each one run the test until complete or in loop
+		// Ok now run the program until we eithe rcomplete or move to a loop
+		for true {
+			if testProgram.Step() == false {
+				// then we went to a loop
+				fmt.Printf("jmp->nop at index %v causes a loop.\n", jmpIndex)
+				break
+			} else if testProgram.IsComplete() {
+				// this is the one we want
+				fmt.Printf("jmp->nop at index %v fixes our program, Accumulator is %v\n", jmpIndex, testProgram.Accumulator)
+				os.Exit(0)
+			}
 
-	// Ok, step until Accumulator is 5
-	for true {
-		p.Step()
-		instruction := p.GetCurrentInstruction()
-		if instruction.ExecutionCount == 1 {
-			// then it has run once.
-			fmt.Printf("Accumulator is now %v, index is %v, instruction is %v\n", p.Accumulator, p.Index, instruction)
-			break
+		}
+	}
+
+	nops := p.FindInstructionIndexes("nop")
+	// okay so for each jmp, flip it to nop and run
+	for index := range nops {
+		jmpIndex := nops[index]
+		// load the program, change the instruction
+		testProgram := NewProgramFromFilename(filename)
+		instruction := testProgram.GetInstructionAtIndex(jmpIndex)
+		instruction.Operation = "jmp"
+
+		// Ok now run the program until we eithe rcomplete or move to a loop
+		for true {
+			if testProgram.Step() == false {
+				// then we went to a loop
+				fmt.Printf("nop->jmp at index %v causes a loop.\n", jmpIndex)
+				break
+			} else if testProgram.IsComplete() {
+				// this is the one we want
+				fmt.Printf("nop->jmp at index %v fixes our program, Accumulator is %v\n", jmpIndex, testProgram.Accumulator)
+				os.Exit(0)
+			}
+
 		}
 	}
 
@@ -111,14 +143,16 @@ type Program struct {
 	CurrentStep  int
 }
 
-func (p *Program) FindInstructions(operation string) []*Instruction {
-	results := make([]*Instruction, 0)
+// Returns the posiiton of all Instructions with the specified Operation type
+func (p *Program) FindInstructionIndexes(operation string) []int {
+	results := make([]int, 0)
 	for index := range p.Instructions {
 		instruction := p.GetInstructionAtIndex(index)
 		if instruction.Operation == operation {
-			results = append(results, instruction)
+			results = append(results, index)
 		}
 	}
+	return results
 }
 
 func (p *Program) Size() int {
@@ -172,7 +206,7 @@ func (p *Program) Step() bool {
 
 // IsComplete indicates if the program has completed
 func (p *Program) IsComplete() bool {
-	return p.Index > len(p.Instructions)
+	return p.Index == len(p.Instructions)
 }
 
 func (p *Program) Debug() {
