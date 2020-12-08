@@ -51,7 +51,7 @@ import (
 // AOC_2020_07 is the entrypoint to the various attempts for day six
 func AOC_2020_07(cli *goutils.CLI) {
 	AOC_2020_07_part1_attempt1(cli)
-
+	AOC_2020_07_part2_attempt1(cli)
 }
 
 func AOC_2020_07_part1_attempt1(cli *goutils.CLI) {
@@ -59,6 +59,12 @@ func AOC_2020_07_part1_attempt1(cli *goutils.CLI) {
 	g := NewBagGraphFromFilename(filename)
 	g.Debug()
 	fmt.Printf("There are %v possible combinations.\n", len(g.GetBagsThatCanContain("shiny gold")))
+}
+
+func AOC_2020_07_part2_attempt1(cli *goutils.CLI) {
+	filename := cli.GetFileExistsOrDie("-input")
+	g := NewBagGraphFromFilename(filename)
+	fmt.Printf("There are %v bags inside the gold.\n", g.GetTotalBagsContainedBy("shiny gold"))
 }
 
 func NewBagGraphFromFilename(filename string) *BagGraph {
@@ -138,23 +144,41 @@ func (b *BagGraph) GetBagsThatCanContain(colour string) map[string]*Bag {
 	bag := b.GetOrCreate(colour)
 	// so walking 'up' any parent, adding each parent we have to the map
 	p := make(map[string]*Bag)
-	walkBag(bag, p)
+	walkBagContainedBy(bag, p)
 	return p
 }
 
-func walkBag(bag *Bag, results map[string]*Bag) {
+func (b *BagGraph) GetTotalBagsContainedBy(colour string) int {
+	bag := b.GetOrCreate(colour)
+	total := walkBagTotals(bag, 0) - 1
+	return total
+}
+
+func walkBagContainedBy(bag *Bag, results map[string]*Bag) {
 	_, exists := results[bag.Colour]
 	if exists {
 		return
 	}
 	for index := range bag.Parents {
 		entry := bag.Parents[index]
-		walkBag(entry, results)
+		walkBagContainedBy(entry, results)
 		results[entry.Colour] = entry
 	}
 
 	// now walk 'up' the tree for each parent until it is empty and we have the total for that
 
+}
+
+func walkBagTotals(bag *Bag, depth int) int {
+	if len(bag.Children) > 0 {
+		value := 1
+		for index := range bag.Children {
+			relation := bag.Children[index]
+			value += relation.Number * walkBagTotals(relation.Bag, depth+1)
+		}
+		return value
+	}
+	return 1
 }
 
 // Bag is my own impl of a simple Tree I can walk later
@@ -166,7 +190,7 @@ type Bag struct {
 
 type BagRelation struct {
 	*Bag
-	number int
+	Number int
 }
 
 func (b *Bag) AddChild(child *Bag, number int) {

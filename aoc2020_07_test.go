@@ -30,4 +30,21 @@ func Test_AOC2020_07_BagParser(t *testing.T) {
 		fmt.Printf("\n\n")
 		t.Errorf("Expected %v, got %v.\n", expected, len(actual))
 	}
+
+	fmt.Printf("\n\n")
+	graph.Debug()
+	fmt.Printf("\nWalked tree and received the following: %v\n\n", actual)
+}
+
+func Test_AOC2020_07_BagTotals(t *testing.T) {
+	graph := NewBagGraphFromStrings(strings.Split(DAY_07_TEST_INPUT, "\n"))
+	// graph.Debug()
+
+	actual := graph.GetTotalBagsContainedBy("shiny gold")
+	expected := 32
+	if actual != expected {
+		t.Errorf("\nWalked tree and received the following: %v\n\n", actual)
+	}
+	fmt.Printf("\nWalked tree expected %v and received the following: %v\n\n", expected, actual)
+
 }
