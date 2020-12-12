@@ -99,20 +99,6 @@ func AOC_2020_09_part2_attempt1(cli *goutils.CLI) {
 
 }
 
-func Min(v1 int, v2 int) int {
-	if v1 < v2 {
-		return v1
-	}
-	return v2
-}
-
-func Max(v1 int, v2 int) int {
-	if v1 > v2 {
-		return v1
-	}
-	return v2
-}
-
 func AOC_2020_09_part1_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 

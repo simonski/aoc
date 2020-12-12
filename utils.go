@@ -102,3 +102,56 @@ func load_file_to_strings(filename string) []string {
 	return results
 
 }
+
+func convert_strings_to_ints(input []string) []int {
+	output := make([]int, 0)
+	for _, value := range input {
+		ivalue, _ := strconv.Atoi(value)
+		output = append(output, ivalue)
+	}
+	return output
+}
+
+func Min(v1 int, v2 int) int {
+	if v1 < v2 {
+		return v1
+	}
+	return v2
+}
+
+func Max(v1 int, v2 int) int {
+	if v1 > v2 {
+		return v1
+	}
+	return v2
+}
+
+type IntMap struct {
+	data map[int]int
+}
+
+func NewIntMap() *IntMap {
+	data := make(map[int]int)
+	m := IntMap{data: data}
+	return &m
+}
+
+func (m *IntMap) Get(key int, defaultValue int) int {
+	value, exists := m.data[key]
+	if exists {
+		return value
+	} else {
+		return defaultValue
+	}
+}
+
+func (m *IntMap) Put(key int, value int) {
+	m.data[key] = value
+}
+
+func (m *IntMap) Increment(key int) int {
+	value := m.Get(key, 0)
+	value++
+	m.Put(key, value)
+	return value
+}
