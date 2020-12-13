@@ -92,10 +92,10 @@ func NewShip() *Ship {
 
 func (s *Ship) Execute(m *Movement) {
 	if m.Command == "N" {
-		s.y -= m.Value
+		s.y += m.Value
 	}
 	if m.Command == "S" {
-		s.y += m.Value
+		s.y -= m.Value
 	}
 	if m.Command == "E" {
 		s.x += m.Value
@@ -118,9 +118,9 @@ func (s *Ship) Execute(m *Movement) {
 	if m.Command == "F" {
 		angle := s.angle
 		if angle == 0 {
-			s.y -= m.Value
-		} else if angle == 180 {
 			s.y += m.Value
+		} else if angle == 180 {
+			s.y -= m.Value
 		} else if angle == 90 {
 			s.x += m.Value
 		} else {
