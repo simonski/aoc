@@ -114,10 +114,8 @@ func AOC_2020_11(cli *goutils.CLI) {
 
 func AOC_2020_11_part1_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
-	lines := load_file_to_strings(filename)
-	line := lines[0]
-	width := len(line)
-	sp := NewSeatingPlanFromFile(filename, width)
+	tolerance := 4
+	sp := NewSeatingPlanFromFile(filename, tolerance)
 	for {
 		if sp.Tick() == 0 {
 			break
@@ -154,7 +152,7 @@ func (sp *SeatingPlan) ConvertAtIndex(index int) int {
 	if seat == EMPTY && sp.CountOccupied(index) == 0 {
 		return OCCUPIED
 	}
-	if seat == OCCUPIED && sp.CountOccupied(index) >= 4 {
+	if seat == OCCUPIED && sp.CountOccupied(index) >= sp.tolerance {
 		return EMPTY
 	}
 	return seat
@@ -280,15 +278,16 @@ const FLOOR = 2
 type SeatingPlan struct {
 	data      []int
 	width     int
+	tolerance int
 	TickCount int // the number of ticks that have happened
 }
 
-func NewSeatingPlanFromFile(filename string, width int) *SeatingPlan {
+func NewSeatingPlanFromFile(filename string, tolerance int) *SeatingPlan {
 	lines := load_file_to_strings(filename)
-	return NewSeatingPlanFromStrings(lines, width)
+	return NewSeatingPlanFromStrings(lines, tolerance)
 }
 
-func NewSeatingPlanFromStrings(lines []string, width int) *SeatingPlan {
+func NewSeatingPlanFromStrings(lines []string, tolerance int) *SeatingPlan {
 	data := make([]int, 0)
 	for _, line := range lines {
 		for index := 0; index < len(line); index++ {
@@ -302,7 +301,8 @@ func NewSeatingPlanFromStrings(lines []string, width int) *SeatingPlan {
 			}
 		}
 	}
-	sp := SeatingPlan{data: data, width: width}
+	width := len(lines[0])
+	sp := SeatingPlan{data: data, width: width, tolerance: tolerance}
 	return &sp
 }
 
