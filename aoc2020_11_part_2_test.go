@@ -83,10 +83,26 @@ LLL###LLL#
 #.LLLLL#.L
 #.L#LL#.L#`
 
+const TEST_ADJACENT_0 = `LLLLLLLLLL
+LLLLLLLLLL
+LLLLLLLLLL
+LLLLL#LLLL
+LLLLLLLLLL
+LLLLLLLLLL
+LLLLLLLLLL`
+
+const TEST_ADJACENT_1 = `LLLLL#LLLL
+LLLLLLLLLL
+LLLLLLLLLL
+LLLLL#LLLL
+LLLLLLLLLL
+LLLLLLLLLL
+LLLLLLLLLL`
+
 func Test_AOC2020_11_day2_Ticks(t *testing.T) {
 	tolerance := 5
-	distance := 8
-	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_2_DATA_01, "\n"), tolerance, distance)
+	searchFar := true
+	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_2_DATA_01, "\n"), tolerance, searchFar)
 	actualTick0 := sp.Debug()
 	if actualTick0 != TEST_11_2_DATA_01 {
 		t.Errorf("Test_AOC2020_11_day2_Ticks: Loaded data does not conform\nExpected\n%v\n\nActual\n%v\n\n", TEST_11_2_DATA_01, actualTick0)
@@ -95,6 +111,7 @@ func Test_AOC2020_11_day2_Ticks(t *testing.T) {
 	}
 
 	changes := sp.Tick()
+	fmt.Printf("Tick(1), changes=%v\n", changes)
 	actualTick1 := sp.Debug()
 	if actualTick1 != TEST_11_2_DATA_02 {
 		t.Errorf("Test_AOC2020_11_day2_Ticks: Tick(1) not conform\nExpected\n%v\n\nActual\n%v\n\n", TEST_11_2_DATA_02, actualTick1)
@@ -103,6 +120,7 @@ func Test_AOC2020_11_day2_Ticks(t *testing.T) {
 	}
 
 	changes = sp.Tick()
+	fmt.Printf("Tick(2), changes=%v\n", changes)
 	actualTick2 := sp.Debug()
 	if actualTick2 != TEST_11_2_DATA_03 {
 		t.Errorf("Test_AOC2020_11_day2_Ticks: Tick(2) not conform\nExpected\n%v\n\nActual\n%v\n\n", TEST_11_2_DATA_03, actualTick2)
@@ -111,9 +129,10 @@ func Test_AOC2020_11_day2_Ticks(t *testing.T) {
 	}
 
 	changes = sp.Tick()
+	fmt.Printf("Tick(3), changes=%v\n", changes)
 	actualTick3 := sp.Debug()
 	if actualTick3 != TEST_11_2_DATA_04 {
-		t.Errorf("Test_AOC2020_11_day2_Ticks: Tick(3)  not conform\nExpected\n%v\n\nActual\n%v\n\n", TEST_11_2_DATA_04, actualTick3)
+		t.Errorf("Test_AOC2020_11_day2_Ticks: Tick(3) changed %v, does not conform\n\nWas previously\n\n%v\n\nExpected\n%v\n\nActual\n%v\n\n", changes, actualTick2, TEST_11_2_DATA_04, actualTick3)
 	} else {
 		fmt.Printf("OK Test_AOC2020_11_day2_Ticks: Tick(3).\n")
 	}

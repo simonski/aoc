@@ -116,8 +116,7 @@ func AOC_2020_11(cli *goutils.CLI) {
 func AOC_2020_11_part1_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 4
-	distance := 1
-	sp := NewSeatingPlanFromFile(filename, tolerance, distance)
+	sp := NewSeatingPlanFromFile(filename, tolerance, false)
 	for {
 		if sp.Tick() == 0 {
 			break
@@ -130,8 +129,8 @@ func AOC_2020_11_part1_attempt1(cli *goutils.CLI) {
 func AOC_2020_11_part2_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 5
-	distance := 8
-	sp := NewSeatingPlanFromFile(filename, tolerance, distance)
+	searchFar := true
+	sp := NewSeatingPlanFromFile(filename, tolerance, searchFar)
 	for {
 		if sp.Tick() == 0 {
 			break
@@ -187,30 +186,145 @@ func (sp *SeatingPlan) GetOccupiedCount() int {
 // CountOccupied checks occupancy in all directions
 func (sp *SeatingPlan) CountAdjacentOccupied(index int) int {
 	count := 0
-	if sp.left(index) == OCCUPIED {
-		count++
+
+	col, row := sp.ColRowFromIndex(index)
+	if !sp.searchFar {
+		// then only search 1
+		if sp.Get(col-1, row) == OCCUPIED {
+			count++
+		}
+		if sp.Get(col+1, row) == OCCUPIED {
+			count++
+		}
+		if sp.Get(col, row+1) == OCCUPIED {
+			count++
+		}
+		if sp.Get(col, row-1) == OCCUPIED {
+			count++
+		}
+
+		if sp.Get(col-1, row-1) == OCCUPIED {
+			count++
+		}
+		if sp.Get(col+1, row-1) == OCCUPIED {
+			count++
+		}
+		if sp.Get(col-1, row+1) == OCCUPIED {
+			count++
+		}
+		if sp.Get(col+1, row+1) == OCCUPIED {
+			count++
+		}
+
+	} else {
+
+		// left
+		// first you can see left is
+		for test_col := col - 1; test_col >= 0; test_col-- {
+			value := sp.Get(test_col, row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// right
+		for test_col := col + 1; test_col < sp.width; test_col++ {
+			value := sp.Get(test_col, row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// up
+		for test_row := row - 1; test_row >= 0; test_row-- {
+			value := sp.Get(col, test_row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// down
+		for test_row := row + 1; test_row < sp.depth; test_row++ {
+			value := sp.Get(col, test_row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// up left
+		for distance := 1; ; distance++ {
+			test_col := col - distance
+			test_row := row - distance
+			value := sp.Get(test_col, test_row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == NONE {
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// up right
+		for distance := 1; ; distance++ {
+			test_col := col + distance
+			test_row := row - distance
+			value := sp.Get(test_col, test_row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == NONE {
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// down left
+		for distance := 1; ; distance++ {
+			test_col := col - distance
+			test_row := row + distance
+			value := sp.Get(test_col, test_row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == NONE {
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
+
+		// down right
+		for distance := 1; ; distance++ {
+			test_col := col + distance
+			test_row := row + distance
+			value := sp.Get(test_col, test_row)
+			if value == OCCUPIED {
+				count++
+				break
+			} else if value == NONE {
+				break
+			} else if value == EMPTY {
+				break
+			}
+		}
 	}
-	if sp.right(index) == OCCUPIED {
-		count++
-	}
-	if sp.up(index) == OCCUPIED {
-		count++
-	}
-	if sp.down(index) == OCCUPIED {
-		count++
-	}
-	if sp.upperleft(index) == OCCUPIED {
-		count++
-	}
-	if sp.upperright(index) == OCCUPIED {
-		count++
-	}
-	if sp.lowerleft(index) == OCCUPIED {
-		count++
-	}
-	if sp.lowerright(index) == OCCUPIED {
-		count++
-	}
+	// fmt.Printf("CountAdjacent(%v,%v), distance=%v, count=%v\n", col, row, sp.maxDistance, count)
+
 	return count
 }
 
@@ -246,65 +360,66 @@ func (sp *SeatingPlan) IndexFromColRow(col int, row int) int {
 	return row*sp.width + col
 }
 
-func (sp *SeatingPlan) left(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col-1, row)
-}
+// func (sp *SeatingPlan) left(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col-1, row)
+// }
 
-func (sp *SeatingPlan) right(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col+1, row)
-}
+// func (sp *SeatingPlan) right(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col+1, row)
+// }
 
-func (sp *SeatingPlan) up(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col, row-1)
-}
+// func (sp *SeatingPlan) up(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col, row-1)
+// }
 
-func (sp *SeatingPlan) down(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col, row+1)
-}
+// func (sp *SeatingPlan) down(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col, row+1)
+// }
 
-func (sp *SeatingPlan) upperleft(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col-1, row-1)
-}
+// func (sp *SeatingPlan) upperleft(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col-1, row-1)
+// }
 
-func (sp *SeatingPlan) upperright(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col+1, row-1)
-}
+// func (sp *SeatingPlan) upperright(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col+1, row-1)
+// }
 
-func (sp *SeatingPlan) lowerleft(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col-1, row+1)
-}
+// func (sp *SeatingPlan) lowerleft(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col-1, row+1)
+// }
 
-func (sp *SeatingPlan) lowerright(position int) int {
-	col, row := sp.ColRowFromIndex(position)
-	return sp.Get(col+1, row+1)
-}
+// func (sp *SeatingPlan) lowerright(position int) int {
+// 	col, row := sp.ColRowFromIndex(position)
+// 	return sp.Get(col+1, row+1)
+// }
 
-const NONE = -1
-const OCCUPIED = 0
-const EMPTY = 1
-const FLOOR = 2
+const NONE = -1    // ?
+const OCCUPIED = 0 // #
+const EMPTY = 1    // L
+const FLOOR = 2    // .
 
 type SeatingPlan struct {
-	data        []int
-	width       int
-	tolerance   int
-	maxDistance int
-	TickCount   int // the number of ticks that have happened
+	data      []int
+	width     int
+	depth     int
+	tolerance int
+	searchFar bool // indicates if we search as far as we can see
+	TickCount int  // the number of ticks that have happened
 }
 
-func NewSeatingPlanFromFile(filename string, tolerance int, maxDistance int) *SeatingPlan {
+func NewSeatingPlanFromFile(filename string, tolerance int, searchFar bool) *SeatingPlan {
 	lines := load_file_to_strings(filename)
-	return NewSeatingPlanFromStrings(lines, tolerance, maxDistance)
+	return NewSeatingPlanFromStrings(lines, tolerance, searchFar)
 }
 
-func NewSeatingPlanFromStrings(lines []string, tolerance int, maxDistance int) *SeatingPlan {
+func NewSeatingPlanFromStrings(lines []string, tolerance int, searchFar bool) *SeatingPlan {
 	data := make([]int, 0)
 	for _, line := range lines {
 		for index := 0; index < len(line); index++ {
@@ -319,7 +434,8 @@ func NewSeatingPlanFromStrings(lines []string, tolerance int, maxDistance int) *
 		}
 	}
 	width := len(lines[0])
-	sp := SeatingPlan{data: data, width: width, tolerance: tolerance, maxDistance: maxDistance}
+	depth := len(lines)
+	sp := SeatingPlan{data: data, width: width, depth: depth, tolerance: tolerance, searchFar: searchFar}
 	return &sp
 }
 
