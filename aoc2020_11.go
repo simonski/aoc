@@ -110,12 +110,28 @@ import (
 // AOC_2020_11 is the entrypoint
 func AOC_2020_11(cli *goutils.CLI) {
 	AOC_2020_11_part1_attempt1(cli)
+	AOC_2020_11_part2_attempt1(cli)
 }
 
 func AOC_2020_11_part1_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 4
-	sp := NewSeatingPlanFromFile(filename, tolerance)
+	distance := 1
+	sp := NewSeatingPlanFromFile(filename, tolerance, distance)
+	for {
+		if sp.Tick() == 0 {
+			break
+		}
+	}
+	fmt.Printf("Tick Count is     : %v\n", sp.TickCount)
+	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
+}
+
+func AOC_2020_11_part2_attempt1(cli *goutils.CLI) {
+	filename := cli.GetFileExistsOrDie("-input")
+	tolerance := 5
+	distance := 8
+	sp := NewSeatingPlanFromFile(filename, tolerance, distance)
 	for {
 		if sp.Tick() == 0 {
 			break
@@ -149,10 +165,10 @@ func (sp *SeatingPlan) ConvertAtIndex(index int) int {
 	if seat == FLOOR {
 		return FLOOR
 	}
-	if seat == EMPTY && sp.CountOccupied(index) == 0 {
+	if seat == EMPTY && sp.CountAdjacentOccupied(index) == 0 {
 		return OCCUPIED
 	}
-	if seat == OCCUPIED && sp.CountOccupied(index) >= sp.tolerance {
+	if seat == OCCUPIED && sp.CountAdjacentOccupied(index) >= sp.tolerance {
 		return EMPTY
 	}
 	return seat
@@ -169,7 +185,7 @@ func (sp *SeatingPlan) GetOccupiedCount() int {
 }
 
 // CountOccupied checks occupancy in all directions
-func (sp *SeatingPlan) CountOccupied(index int) int {
+func (sp *SeatingPlan) CountAdjacentOccupied(index int) int {
 	count := 0
 	if sp.left(index) == OCCUPIED {
 		count++
@@ -276,18 +292,19 @@ const EMPTY = 1
 const FLOOR = 2
 
 type SeatingPlan struct {
-	data      []int
-	width     int
-	tolerance int
-	TickCount int // the number of ticks that have happened
+	data        []int
+	width       int
+	tolerance   int
+	maxDistance int
+	TickCount   int // the number of ticks that have happened
 }
 
-func NewSeatingPlanFromFile(filename string, tolerance int) *SeatingPlan {
+func NewSeatingPlanFromFile(filename string, tolerance int, maxDistance int) *SeatingPlan {
 	lines := load_file_to_strings(filename)
-	return NewSeatingPlanFromStrings(lines, tolerance)
+	return NewSeatingPlanFromStrings(lines, tolerance, maxDistance)
 }
 
-func NewSeatingPlanFromStrings(lines []string, tolerance int) *SeatingPlan {
+func NewSeatingPlanFromStrings(lines []string, tolerance int, maxDistance int) *SeatingPlan {
 	data := make([]int, 0)
 	for _, line := range lines {
 		for index := 0; index < len(line); index++ {
@@ -302,7 +319,7 @@ func NewSeatingPlanFromStrings(lines []string, tolerance int) *SeatingPlan {
 		}
 	}
 	width := len(lines[0])
-	sp := SeatingPlan{data: data, width: width, tolerance: tolerance}
+	sp := SeatingPlan{data: data, width: width, tolerance: tolerance, maxDistance: maxDistance}
 	return &sp
 }
 

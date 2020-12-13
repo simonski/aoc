@@ -84,7 +84,8 @@ L.#.L..#..
 // L.LLLLL.LL
 func Test_AOC2020_11_day1_IndexFromColRow(t *testing.T) {
 	tolerance := 4
-	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_DATA_01, "\n"), tolerance)
+	distance := 1
+	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_DATA_01, "\n"), tolerance, distance)
 	verifyIndexFromColRow(0, 0, 0, sp, t)
 	verifyIndexFromColRow(1, 1, 0, sp, t)
 	verifyIndexFromColRow(2, 2, 0, sp, t)
@@ -131,7 +132,8 @@ func verifyColRowFromIndex(index int, expectedCol int, expectedRow int, sp *Seat
 func Test_AOC2020_11_day1_loading_and_debugs(t *testing.T) {
 
 	tolerance := 4
-	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_DATA_01, "\n"), tolerance)
+	distance := 1
+	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_DATA_01, "\n"), tolerance, distance)
 	verifyContentsAtColRow(0, 0, EMPTY, sp, t)
 	verifyContentsAtColRow(1, 0, FLOOR, sp, t)
 	verifyContentsAtColRow(2, 0, EMPTY, sp, t)
@@ -162,7 +164,7 @@ func verifyContentsAtColRow(col int, row int, expected int, sp *SeatingPlan, t *
 // // #######.##
 func Test_AOC2020_11_conversion_scenarios(t *testing.T) {
 	testdata := strings.Split("#.##.##.##\n#######.##", "\n")
-	sp := NewSeatingPlanFromStrings(testdata, 4)
+	sp := NewSeatingPlanFromStrings(testdata, 4, 1)
 
 	// top left
 	checkValueMatches(sp, "left", sp.left(0), NONE, t)
@@ -232,7 +234,7 @@ func checkValueBeforeAfter(sp *SeatingPlan, index int, expectedOccupiedCount int
 		fmt.Printf("ConvertValue: Value at index %v %v is correct to start with.\n", index, sp.Translate(expectedBefore))
 	}
 
-	actualOccupiedCount := sp.CountOccupied(index)
+	actualOccupiedCount := sp.CountAdjacentOccupied(index)
 	if actualOccupiedCount != expectedOccupiedCount {
 		t.Errorf("ConvertValue: Occupied count at index %v is expected to be %v but was %v.\n", index, expectedOccupiedCount, actualOccupiedCount)
 	} else {
@@ -248,9 +250,9 @@ func checkValueBeforeAfter(sp *SeatingPlan, index int, expectedOccupiedCount int
 }
 
 func Test_AOC2020_11_day_ticks(t *testing.T) {
-
 	tolerance := 4
-	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_DATA_01, "\n"), tolerance)
+	distance := 1
+	sp := NewSeatingPlanFromStrings(strings.Split(TEST_11_DATA_01, "\n"), tolerance, distance)
 	actualTick0 := sp.Debug()
 	if actualTick0 != TEST_11_DATA_01 {
 		t.Errorf("Loaded data does not conform\nExpected\n%v\n\nActual\n%v\n\n", TEST_11_DATA_01, actualTick0)
