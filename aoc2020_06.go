@@ -22,7 +22,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-// AOC_2020_06 is the entrypoint to the various attempts for day six
+// AOC_2020_06 is the entrypoint
 func AOC_2020_06(cli *goutils.CLI) {
 	AOC_2020_06_part1_attempt1(cli)
 	AOC_2020_06_part2_attempt1(cli)
