@@ -42,7 +42,6 @@ Figure out where the navigation instructions lead. What is the Manhattan distanc
 */
 import (
 	"fmt"
-	"math"
 	"strconv"
 
 	goutils "github.com/simonski/goutils"
@@ -50,7 +49,8 @@ import (
 
 // AOC_2020_12 is the entrypoint
 func AOC_2020_12(cli *goutils.CLI) {
-	AOC_2020_12_part1_attempt1(cli)
+	// AOC_2020_12_part1_attempt1(cli)
+	AOC_2020_12_part2_attempt1(cli)
 }
 
 func AOC_2020_12_part1_attempt1(cli *goutils.CLI) {
@@ -62,6 +62,18 @@ func AOC_2020_12_part1_attempt1(cli *goutils.CLI) {
 	for index, m := range p.movements {
 		s.Execute(m)
 		fmt.Printf("[%v] %v%v  -> Ship[x=%v, y=%v, a=%v]\n", index, m.Command, m.Value, s.x, s.y, s.angle)
+	}
+}
+
+func AOC_2020_12_part2_attempt1(cli *goutils.CLI) {
+	filename := cli.GetFileExistsOrDie("-input")
+	p := NewPathFromFile(filename)
+	s := NewShip2(10, 1)
+	fmt.Printf("START\n  Ship2(%v,%v %v) WP (%v,%v)\n", s.x, s.y, s.angle, s.waypoint.x, s.waypoint.y)
+	for index, m := range p.movements {
+		s.Execute(m)
+		wp := s.waypoint
+		fmt.Printf("[%v] %v%v  -> Ship(%v,%v %v), -> Wp(%v,%v)\n", index, m.Command, m.Value, s.x, s.y, s.angle, wp.x, wp.y)
 	}
 }
 
@@ -84,6 +96,18 @@ type Ship struct {
 	x     int
 	y     int
 	angle int
+}
+
+type Ship2 struct {
+	x        int
+	y        int
+	angle    int
+	waypoint *Waypoint
+}
+
+type Waypoint struct {
+	x int
+	y int
 }
 
 func NewShip() *Ship {
@@ -128,6 +152,58 @@ func (s *Ship) Execute(m *Movement) {
 		}
 	}
 }
+func NewShip2(waypoint_x int, waypoint_y int) *Ship2 {
+	wp := Waypoint{x: waypoint_x, y: waypoint_y}
+	return &Ship2{x: 0, y: 0, angle: 90, waypoint: &wp}
+}
+
+func (s *Ship2) Execute(m *Movement) {
+	if m.Command == "N" {
+		s.waypoint.y += m.Value
+	}
+	if m.Command == "S" {
+		s.waypoint.y -= m.Value
+	}
+	if m.Command == "E" {
+		s.waypoint.x += m.Value
+	}
+	if m.Command == "W" {
+		s.waypoint.x -= m.Value
+	}
+
+	if m.Command == "R" {
+		wp := &Point{s.waypoint.x, s.waypoint.y}
+		origin := &Point{s.x, s.y}
+		wp.RotateAroundOrigin(m.Value, origin)
+		s.waypoint.x = wp.x
+		s.waypoint.y = wp.y
+
+	} else if m.Command == "L" {
+		wp := &Point{s.waypoint.x, s.waypoint.y}
+		origin := &Point{s.x, s.y}
+		wp.RotateAroundOrigin(-m.Value, origin)
+		s.waypoint.x = wp.x
+		s.waypoint.y = wp.y
+	}
+
+	if m.Command == "F" {
+		x_diff := s.waypoint.x - s.x
+		y_diff := s.waypoint.y - s.y
+
+		x := (x_diff * m.Value)
+		y := (y_diff * m.Value)
+
+		fmt.Printf("Movement is %v%v, x/y diff is %v,%v, total changes will be adding %v,%v\n", m.Command, m.Value, x_diff, y_diff, x, y)
+
+		s.x += x
+		s.y += y
+
+		fmt.Printf("New s.x/s.y %v,%v\n", s.x, s.y)
+
+		s.waypoint.x = s.x + x_diff
+		s.waypoint.y = s.y + y_diff
+	}
+}
 
 func NewPathFromFile(filename string) *Path {
 	lines := load_file_to_strings(filename)
@@ -141,8 +217,4 @@ func NewPathFromFile(filename string) *Path {
 	}
 	path := Path{movements: data}
 	return &path
-}
-
-func radians(angle float64) float64 {
-	return angle * (math.Pi / 180.0)
 }

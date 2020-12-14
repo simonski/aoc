@@ -155,3 +155,49 @@ func (m *IntMap) Increment(key int) int {
 	m.Put(key, value)
 	return value
 }
+
+type Point struct {
+	x int
+	y int
+}
+
+// Rotates this point around origin 0, 0
+func (p *Point) Rotate(degrees int) {
+	origin := &Point{0, 0}
+	p.RotateAroundOrigin(degrees, origin)
+}
+
+// RotatesAroundOrigin rotates this point around the specified origin
+func (p *Point) RotateAroundOrigin(degrees int, origin *Point) {
+
+	if degrees < 0 {
+		degrees = 360 + degrees
+	}
+
+	x_original := p.x - origin.x
+	y_original := p.y - origin.y
+
+	x := 0
+	y := 0
+
+	if degrees == 90 {
+		// 90 cw (y, -x)
+		x = y_original
+		y = -x_original
+	} else if degrees == 180 {
+		// 180 cw (x,y) -> (-x, -y)
+		x = -x_original
+		y = -y_original
+	} else if degrees == 270 {
+		// 180 cw (x,y) -> (-y, x)
+		x = -y_original
+		y = x_original
+	}
+
+	x += origin.x
+	y += origin.y
+
+	p.x = x
+	p.y = y
+
+}
