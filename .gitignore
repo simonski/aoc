@@ -6,6 +6,8 @@
 *.json
 *.csv
 
+__pycache__
+
 aoc
 # Compiled class file
 *.class
