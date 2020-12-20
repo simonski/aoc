@@ -54,6 +54,15 @@ import (
 // AOC_2020_14 is the entrypoint
 func AOC_2020_14(cli *goutils.CLI) {
 	AOC_2020_14_part1_attempt1(cli)
+	AOC_2020_14_part2_attempt1(cli)
+}
+
+func AOC_2020_14_part1_attempt1(cli *goutils.CLI) {
+	filename := cli.GetFileExistsOrDie("-input")
+	p := NewDay14ProgramFromFilename(filename)
+	p.RunV1()
+	p.Debug()
+	fmt.Printf("Total is %v\n", p.Sum())
 }
 
 type Memory struct {
@@ -105,14 +114,6 @@ func NewMemory() *Memory {
 	return &Memory{data: data}
 }
 
-func AOC_2020_14_part1_attempt1(cli *goutils.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
-	p := NewDay14ProgramFromFilename(filename)
-	p.Run()
-	p.Debug()
-	fmt.Printf("Total is %v\n", p.Sum())
-}
-
 type Day14Program struct {
 	Instructions []string
 	Position     int
@@ -129,9 +130,15 @@ func NewDay14ProgramFromStrings(instructions []string) *Day14Program {
 	return &Day14Program{Instructions: instructions, Position: 0, Memory: m}
 }
 
-func (p *Day14Program) Run() {
+func (p *Day14Program) RunV1() {
 	for _, line := range p.Instructions {
-		p.Execute(line)
+		p.ExecuteV1(line)
+	}
+}
+
+func (p *Day14Program) RunV2() {
+	for _, line := range p.Instructions {
+		p.ExecuteV2(line)
 	}
 }
 
@@ -141,8 +148,8 @@ func (p *Day14Program) Debug() {
 	}
 }
 
-func (p *Day14Program) Execute(instruction string) {
-	fmt.Printf("Execute('%v')\n", instruction)
+func (p *Day14Program) ExecuteV1(instruction string) {
+	fmt.Printf("ExecuteV1('%v')\n", instruction)
 	if p.IsMask(instruction) {
 		mask := p.ParseMask(instruction)
 		p.Memory.SetMask(mask)
@@ -192,7 +199,7 @@ func (p *Day14Program) ParseMask(instruction string) *Mask {
 	for i, n := range result[0] {
 		m[names[i]] = n
 	}
-	return NewMaskFromValue(m["mask"])
+	return NewMask(m["mask"])
 }
 
 func (p *Day14Program) ConvertToBinary(value string) string {

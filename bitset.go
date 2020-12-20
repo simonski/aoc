@@ -53,8 +53,6 @@ func (b *BitSet) ApplyMask(mask *Mask) {
 }
 
 func (b *BitSet) ToBinaryString(bits int) string {
-	// value := b.GetValue()
-	// binary := fmt.Sprintf(strconv.FormatInt(value, 2))
 	if b.Length > bits {
 		bits = b.Length + 1
 	}

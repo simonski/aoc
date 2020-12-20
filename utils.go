@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 	"math/rand"
 	"os"
 	"strconv"
@@ -200,4 +201,21 @@ func (p *Point) RotateAroundOrigin(degrees int, origin *Point) {
 	p.x = x
 	p.y = y
 
+}
+
+func decimal_to_binary(value int64) string {
+	b := NewBitSet(int64(value))
+	return b.ToBinaryString(36)
+}
+
+func binary_to_decimal(decimalValue string) int64 {
+	total := int64(0)
+	for index := 0; index < len(decimalValue); index++ {
+		value := decimalValue[index : index+1]
+		power := len(decimalValue) - index - 1
+		if value == "1" {
+			total += int64(math.Pow(2, float64(power)))
+		}
+	}
+	return total
 }

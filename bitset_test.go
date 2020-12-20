@@ -80,7 +80,7 @@ func verifyBitSet(value int64, expected string, length int, t *testing.T) {
 func Test_BitSetMask(t *testing.T) {
 	// b := NewBitSet(11)
 	verifyBitSet(11, "000000000000000000000000000000001011", 36, t)
-	mask := NewMaskFromValue("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X")
+	mask := NewMask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X")
 	b := NewBitSet(11)
 	original := b.ToBinaryString(36)
 	b.ApplyMask(mask)
