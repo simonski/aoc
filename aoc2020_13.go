@@ -131,12 +131,12 @@ What is the earliest timestamp such that all of the listed bus IDs depart at off
 */
 
 func AOC_2020_13_part2_attempt1(cli *goutils.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
-	buses, indexes := ParseDay13FilePart2(filename)
-	common := 1
-	for index, value := range buses {
-		common *= value
-	}
+	// filename := cli.GetFileExistsOrDie("-input")
+	// buses, indexes := ParseDay13FilePart2(filename)
+	// common := 1
+	// for index, value := range buses {
+	// 	common *= value
+	// }
 
 }
 func AOC_2020_13_part1_attempt1(cli *goutils.CLI) {
@@ -190,7 +190,7 @@ func ParseDay13FilePart1(filename string) (int, []int) {
 // ParseDay13FilePart2 returns two []int - one of the buses one of their indexes
 func ParseDay13FilePart2(filename string) ([]int, []int) {
 	lines := load_file_to_strings(filename)
-	time, _ := strconv.Atoi(lines[0])
+	// time, _ := strconv.Atoi(lines[0])
 	buses := make([]int, 0)
 	indexes := make([]int, 0)
 	splits := strings.Split(lines[1], ",")
