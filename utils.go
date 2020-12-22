@@ -168,6 +168,13 @@ type Point3D struct {
 	z int
 }
 
+type Point4D struct {
+	x int
+	y int
+	z int
+	w int
+}
+
 // Rotates this point around origin 0, 0
 func (p *Point2D) Rotate(degrees int) {
 	origin := &Point2D{0, 0}

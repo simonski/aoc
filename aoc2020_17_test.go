@@ -11,7 +11,7 @@ func Test_AOC2020_17_Test1(t *testing.T) {
 	input := `.#.
 ..#
 ###`
-	g := NewGrid(input)
+	g := NewGrid3D(input)
 
 	minp, maxp := g.Dimensions()
 	fmt.Printf("Dimensions %v %v\n", minp, maxp)
@@ -254,28 +254,28 @@ func Test_AOC2020_17_Test1(t *testing.T) {
 
 }
 
-func verifyCube(key string, expected string, g *Grid, t *testing.T) {
+func verifyCube(key string, expected string, g *Grid3D, t *testing.T) {
 	actual := g.Get(key)
 	if actual != expected {
 		t.Errorf("verifyCube(%v) expects %v actual %v\n", key, expected, actual)
 	}
 }
 
-func verifyCubeTotalActive(expected int, g *Grid, t *testing.T) {
+func verifyCubeTotalActive(expected int, g *Grid3D, t *testing.T) {
 	actual := g.CountActiveTotal()
 	if actual != expected {
 		t.Errorf("verifyCubeTotalActive(): expects %v actual %v\n", expected, actual)
 	}
 }
 
-func verifyCubeActiveNeighbours(key string, expected int, g *Grid, t *testing.T) {
+func verifyCubeActiveNeighbours(key string, expected int, g *Grid3D, t *testing.T) {
 	actual := g.CountActiveNeighbours(key)
 	if actual != expected {
 		t.Errorf("verifyCubeActiveNeigbours(%v): expects %v actual %v\n", key, expected, actual)
 	}
 }
 
-func verifyCubeNeighbours(key string, expected int, g *Grid, t *testing.T) {
+func verifyCubeNeighbours(key string, expected int, g *Grid3D, t *testing.T) {
 	actual := g.Neighbours(key)
 	if len(actual) != expected {
 		t.Errorf("verifyCubeNeighbours(%v): expects %v actual %v\n\n", key, expected, len(actual))
@@ -287,7 +287,7 @@ func verifyCubeNeighbours(key string, expected int, g *Grid, t *testing.T) {
 
 }
 
-func verifyParseKey(key string, expected_x int, expected_y int, expected_z int, g *Grid, t *testing.T) {
+func verifyParseKey(key string, expected_x int, expected_y int, expected_z int, g *Grid3D, t *testing.T) {
 	x, y, z := g.ParseKey(key)
 	if x != expected_x {
 		t.Errorf("verifyParseKey(%v) expected x %v actual x %v\n", key, expected_x, x)
@@ -300,7 +300,7 @@ func verifyParseKey(key string, expected_x int, expected_y int, expected_z int, 
 	}
 }
 
-func verifyDebugZ(layer int, g *Grid, expected string, t *testing.T) {
+func verifyDebugZ(layer int, g *Grid3D, expected string, t *testing.T) {
 	actual := g.DebugZ(layer)
 	if strings.TrimSpace(actual) != strings.TrimSpace(expected) {
 		t.Errorf("verifyDebugZ(%v)\nexpected\n%v\nactual\n%v\n", layer, expected, actual)

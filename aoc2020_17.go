@@ -162,37 +162,39 @@ const DAY_17_INPUT = `.#.####.
 ##.##..#
 #.#.#..#`
 
+const DAY_17_TEST_INPUT = `.#.
+..#
+###`
+
 const ACTIVE = "#"
 const INACTIVE = "."
 
 // AOC_2020_17 is the entrypoint
 func AOC_2020_17(cli *goutils.CLI) {
 	AOC_2020_17_part1_attempt1(cli)
+	AOC_2020_17_part2_attempt1(cli)
 }
 
 func AOC_2020_17_part1_attempt1(cli *goutils.CLI) {
 
-	g := NewGrid(DAY_17_INPUT)
+	g := NewGrid3D(DAY_17_INPUT)
 	g.Cycle()
 	g.Cycle()
 	g.Cycle()
 	g.Cycle()
 	g.Cycle()
 	g.Cycle()
-	fmt.Printf("Active Count is %v\n", g.CountActiveTotal())
+	fmt.Printf("Part 1 Active Count is %v\n", g.CountActiveTotal())
 }
 
-type Day17 struct {
-}
-
-type Grid struct {
+type Grid3D struct {
 	data map[string]string
 }
 
-func NewGrid(input string) *Grid {
+func NewGrid3D(input string) *Grid3D {
 
 	data := make(map[string]string)
-	g := Grid{data: data}
+	g := Grid3D{data: data}
 
 	lines := strings.Split(input, "\n")
 
@@ -210,7 +212,7 @@ func NewGrid(input string) *Grid {
 	return &g
 }
 
-func (g *Grid) Get(key string) string {
+func (g *Grid3D) Get(key string) string {
 	result, exists := g.data[key]
 	if exists {
 		return result
@@ -219,7 +221,7 @@ func (g *Grid) Get(key string) string {
 	}
 }
 
-func (g *Grid) Set(key string, value string) {
+func (g *Grid3D) Set(key string, value string) {
 	if value == INACTIVE {
 		delete(g.data, key)
 	} else {
@@ -227,7 +229,7 @@ func (g *Grid) Set(key string, value string) {
 	}
 }
 
-func (g *Grid) Neighbours(parentKey string) []string {
+func (g *Grid3D) Neighbours(parentKey string) []string {
 	x, y, z := g.ParseKey(parentKey)
 	keys := make([]string, 0)
 	// fmt.Printf("Neighbours of %v\n", key)
@@ -246,7 +248,7 @@ func (g *Grid) Neighbours(parentKey string) []string {
 	return keys
 }
 
-func (g *Grid) ParseKey(key string) (int, int, int) {
+func (g *Grid3D) ParseKey(key string) (int, int, int) {
 	splits := strings.Split(key, ".")
 	x, _ := strconv.Atoi(splits[0])
 	y, _ := strconv.Atoi(splits[1])
@@ -254,7 +256,7 @@ func (g *Grid) ParseKey(key string) (int, int, int) {
 	return x, y, z
 }
 
-func (g *Grid) CountActiveNeighbours(parentKey string) int {
+func (g *Grid3D) CountActiveNeighbours(parentKey string) int {
 	keys := g.Neighbours(parentKey)
 	active := 0
 	for _, key := range keys {
@@ -266,7 +268,7 @@ func (g *Grid) CountActiveNeighbours(parentKey string) int {
 	return active
 }
 
-func (g *Grid) CountActiveTotal() int {
+func (g *Grid3D) CountActiveTotal() int {
 	activeCount := 0
 	for _, value := range g.data {
 		if value == ACTIVE {
@@ -276,7 +278,7 @@ func (g *Grid) CountActiveTotal() int {
 	return activeCount
 }
 
-func (g *Grid) Cycle() {
+func (g *Grid3D) Cycle() {
 	data := make(map[string]string)
 
 	minp, maxp := g.Dimensions()
@@ -312,7 +314,7 @@ func (g *Grid) Cycle() {
 }
 
 // Dimensions returns the min/max points that exist
-func (g *Grid) Dimensions() (Point3D, Point3D) {
+func (g *Grid3D) Dimensions() (Point3D, Point3D) {
 	minp := Point3D{x: 10000, y: 10000, z: 10000}
 	maxp := Point3D{x: -10000, y: -10000, z: -10000}
 	for key := range g.data {
@@ -327,7 +329,7 @@ func (g *Grid) Dimensions() (Point3D, Point3D) {
 	return minp, maxp
 }
 
-func (g *Grid) DebugZ(z int) string {
+func (g *Grid3D) DebugZ(z int) string {
 	minp, maxp := g.Dimensions()
 	min_x := minp.x
 	max_x := maxp.x
