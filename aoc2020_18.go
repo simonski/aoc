@@ -37,6 +37,7 @@ Before you can help with the homework, you need to understand it yourself. Evalu
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -45,7 +46,8 @@ import (
 
 // AOC_2020_18 is the entrypoint
 func AOC_2020_18(cli *goutils.CLI) {
-	AOC_2020_18_part1_attempt1(cli)
+	// AOC_2020_18_part1_attempt1(cli)
+	AOC_2020_18_part1_attempt2(cli)
 }
 
 const DAY_18_INPUT = `5 + 9 + 3 + ((2 + 8 + 2) + 8 + 9 * (4 * 2 * 5) + 6) * 4
@@ -444,6 +446,27 @@ func AOC_2020_18_part1_attempt1(cli *goutils.CLI) {
 
 }
 
+func AOC_2020_18_part1_attempt2(cli *goutils.CLI) {
+
+	wc := NewWeirdCalculator()
+	wc.DebugV2("1 + 2 * 3 + 4 * 5", 105)
+	wc.DebugV2("1 + (2 * 3) + (4 * (5 + 6))", 51)
+	wc.DebugV2("2 * 3 + (4 * 5)", 46)
+	wc.DebugV2("5 + (8 * 3 + 9 + 3 * 4 * 3)", 1445)
+	wc.DebugV2("5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))", 669060)
+	wc.DebugV2("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2", 23340)
+
+	lines := strings.Split(DAY_18_INPUT, "\n")
+	total := 0
+	for _, line := range lines {
+		result := wc.CalculateV2(line)
+		total += result
+
+	}
+	fmt.Printf("The total is %v\n", total)
+
+}
+
 type WeirdCalculator struct {
 }
 
@@ -458,6 +481,16 @@ func (c *WeirdCalculator) Debug(sum string, expected int) {
 		fmt.Printf("Expression '%v' gave %v : Success!\n", sum, expected)
 	} else {
 		fmt.Printf("Expression '%v' gave %v but expected %v : Failure!\n", sum, expected, actual)
+	}
+}
+
+func (c *WeirdCalculator) DebugV2(sum string, expected int) {
+	fmt.Printf("\n")
+	actual := c.CalculateV2(sum)
+	if actual == expected {
+		fmt.Printf("Expression '%v' gave %v : Success!\n", sum, expected)
+	} else {
+		fmt.Printf("Expression '%v' gave %v but expected %v : Failure!\n", sum, actual, expected)
 	}
 }
 
@@ -521,8 +554,108 @@ func (c *WeirdCalculator) Calculate(sum string) int {
 	}
 }
 
+func (c *WeirdCalculator) CalculateV2(sum string) int {
+
+	// for each + place a paren around it then evaluate as normal
+	// 2 * 3 + (4 * 5)
+	// 2 * 3 = 6     >> 6 + (4 * 5) = 6 + 20 = 26
+	// new rules
+	// 2 * 3 + (4 * 5)
+	// 2 * (3 + (4 * 5))
+
+	//	(2 * (8 + 5 + 5 + 7) + (2 + 9 + 8) * 8 * 8 * (4 * 8 * 7)) * ((6 + 2 + 7 * 2) * (4 * 2 + 9) + (4 + 3 + 8 + 8) + 4 + (2 * 4 * 9 * 9 + 4 + 6)) + 4 * (6 + 3 + (6 + 5 * 6 + 9)) + 9 + 7
+
+	//	(2 * (8 + 5 + 5 + 7) + (2 + 9 + 8) * 8 * 8 * (4 * 8 * 7)) * ((6 + 2 + 7 * 2) * (4 * 2 + 9) + (4 + 3 + 8 + 8) + 4 + (2 * 4 * 9 * 9 + 4 + 6)) + 4 * (6 + 3 + (6 + 5 * 6 + 9)) + 9 + 7
+	// walk to last paren
+	// (6 + 5 * 6 + 9)
+	// evaluate it 6 + 5 * 6 + 9
+
+	fmt.Printf("CalculateV2 : %v\n", sum)
+	lastLParen := strings.LastIndex(sum, "(")
+	if lastLParen > -1 {
+		// find the closing paren and evaluate this, replacing it in the overall sum
+		leftPart := sum[0:lastLParen]
+		subSum := sum[lastLParen+1:]
+		closingRParen := strings.Index(subSum, ")")
+		subSum = subSum[0:closingRParen]
+		rightPart := sum[lastLParen+1+closingRParen+1:]
+
+		// fmt.Printf("left=%v, middle=%v, right=%v\n", leftPart, subSum, rightPart)
+
+		expr := subSum
+		result := c.CalculateV2(expr)
+		fmt.Printf("%v\n", expr)
+		sum = leftPart + fmt.Sprintf("%v", result) + rightPart
+		return c.CalculateV2(sum)
+	} else {
+		// no paren, evaulate the expressing as seuqnece of values and operators, in sequence
+		// 1 + 2 * 4 + 4
+		// while + exists
+		// get first \d + \d , evaluate and replace
+
+		for {
+			regex := "\\d+ \\+ \\d+"
+			expr, _ := regexp.Compile(regex)
+			match, _ := regexp.MatchString(regex, sum)
+			if match {
+				// it contains a sum, evaluate it
+				original_sum := sum
+				original := expr.FindString(sum)
+				splits := strings.Split(original, "+")
+				ivalue := intify(splits[0]) + intify(splits[1])
+				// fmt.Printf("splits are %v\n", splits)
+				// fmt.Printf("product is %v\n", ivalue)
+				svalue := fmt.Sprintf("%v", ivalue)
+				sum = strings.Replace(sum, original, svalue, 1)
+
+				fmt.Printf("original line '%v' becomes '%v'\n", original_sum, sum)
+
+			} else {
+				break
+			}
+		}
+
+		splits := strings.Split(sum, " ")
+		value := intify(splits[0])
+
+		add := false
+		sub := false
+		mul := false
+		for index := 1; index < len(splits); index++ {
+			entry := splits[index]
+			if isint(entry) {
+				newvalue := intify(entry)
+				if add {
+					value += newvalue
+				} else if sub {
+					value -= newvalue
+				} else if mul {
+					value *= newvalue
+				}
+			}
+			if isadd(entry) {
+				add = true
+				sub = false
+				mul = false
+			} else if issub(entry) {
+				add = false
+				sub = true
+				mul = false
+			} else if ismul(entry) {
+				add = false
+				sub = false
+				mul = true
+
+			}
+
+		}
+		return value
+
+	}
+}
+
 func intify(value string) int {
-	ival, _ := strconv.Atoi(value)
+	ival, _ := strconv.Atoi(strings.TrimSpace(value))
 	return ival
 }
 
