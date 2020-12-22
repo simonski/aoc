@@ -172,15 +172,15 @@ func (s *Ship2) Execute(m *Movement) {
 	}
 
 	if m.Command == "R" {
-		wp := &Point{s.waypoint.x, s.waypoint.y}
-		origin := &Point{s.x, s.y}
+		wp := &Point2D{s.waypoint.x, s.waypoint.y}
+		origin := &Point2D{s.x, s.y}
 		wp.RotateAroundOrigin(m.Value, origin)
 		s.waypoint.x = wp.x
 		s.waypoint.y = wp.y
 
 	} else if m.Command == "L" {
-		wp := &Point{s.waypoint.x, s.waypoint.y}
-		origin := &Point{s.x, s.y}
+		wp := &Point2D{s.waypoint.x, s.waypoint.y}
+		origin := &Point2D{s.x, s.y}
 		wp.RotateAroundOrigin(-m.Value, origin)
 		s.waypoint.x = wp.x
 		s.waypoint.y = wp.y

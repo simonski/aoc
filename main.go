@@ -54,6 +54,8 @@ func main() {
 			AOC_2020_15(&cli)
 		} else if command == "2020-16" {
 			AOC_2020_16(&cli)
+		} else if command == "2020-17" {
+			AOC_2020_17(&cli)
 		} else if command == "version" {
 			fmt.Printf("aoc version %v\n", VERSION)
 		} else {
@@ -78,7 +80,7 @@ func Usage() {
 	Console("\t  2020-02", "run the 2020-02")
 	Console("\t  ..")
 	Console("")
-	Console("\t  2020-15", "run the 2020-15")
+	Console("\t  2020-17", "run the 2020-17")
 	Console("")
 	Console("\tversion", "prints aoc version ")
 	Console("")
