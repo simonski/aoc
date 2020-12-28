@@ -58,635 +58,231 @@ How many messages completely match rule 0?
 import (
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	goutils "github.com/simonski/goutils"
 )
 
-const DAY_19_INPUT = `3: 7 45 | 10 39
-120: 109 45 | 16 39
-84: 96 39 | 104 45
-6: 120 39 | 113 45
-111: 45 93 | 39 45
-13: 17 45 | 96 39
-74: 122 45 | 17 39
-94: 66 45 | 119 39
-127: 39 84 | 45 132
-129: 45 128 | 39 35
-112: 39 35 | 45 58
-24: 45 76 | 39 112
-43: 39 17 | 45 96
-2: 45 5 | 39 77
-71: 100 45
-11: 42 31
-51: 77 45
-4: 124 39 | 85 45
-45: "a"
-78: 111 39 | 128 45
-8: 42
-104: 45 39 | 39 93
-29: 122 39 | 66 45
-42: 63 45 | 20 39
-41: 73 45 | 19 39
-110: 39 98 | 45 114
-55: 45 104 | 39 122
-0: 8 11
-53: 39 34 | 45 89
-39: "b"
-61: 77 45 | 104 39
-121: 45 65 | 39 1
-105: 45 44 | 39 99
-113: 9 39 | 103 45
-117: 96 93
-125: 39 108 | 45 43
-69: 45 39
-56: 50 45 | 12 39
-73: 39 35 | 45 100
-87: 39 100 | 45 111
-10: 45 13 | 39 73
-19: 39 69 | 45 58
-100: 39 45
-66: 93 93
-46: 45 82 | 39 74
-76: 66 45 | 111 39
-103: 45 52 | 39 115
-77: 45 39 | 45 45
-52: 82 39 | 112 45
-15: 45 47 | 39 132
-68: 39 77 | 45 17
-1: 45 47 | 39 61
-65: 37 45 | 51 39
-98: 45 2 | 39 80
-35: 39 45 | 45 45
-93: 39 | 45
-126: 111 39 | 77 45
-32: 45 36 | 39 37
-37: 45 69 | 39 119
-90: 39 17 | 45 69
-21: 39 66 | 45 58
-22: 39 56 | 45 64
-7: 123 39 | 48 45
-60: 45 102 | 39 26
-107: 45 29 | 39 71
-58: 39 45 | 39 39
-70: 128 39 | 111 45
-81: 27 45 | 129 39
-67: 5 39 | 100 45
-96: 45 45 | 39 39
-116: 39 87 | 45 55
-106: 39 51 | 45 92
-14: 45 128 | 39 58
-48: 39 104 | 45 5
-72: 45 35 | 39 111
-130: 118 45 | 28 39
-115: 45 91 | 39 87
-31: 39 6 | 45 22
-30: 79 45 | 57 39
-9: 125 39 | 49 45
-122: 39 39 | 45 93
-23: 101 45 | 78 39
-47: 39 100 | 45 58
-28: 45 111 | 39 122
-101: 45 77 | 39 66
-33: 39 5 | 45 111
-95: 39 5
-27: 58 45 | 17 39
-16: 15 39 | 116 45
-80: 45 119 | 39 66
-92: 45 111 | 39 58
-57: 39 73 | 45 86
-123: 45 58 | 39 77
-5: 39 39
-128: 45 45
-124: 101 39 | 126 45
-108: 45 122 | 39 119
-119: 45 39 | 39 39
-50: 81 45 | 106 39
-99: 130 45 | 46 39
-132: 17 45 | 119 39
-49: 70 45 | 117 39
-63: 131 39 | 83 45
-85: 39 33 | 45 97
-18: 45 60 | 39 25
-83: 39 54 | 45 4
-38: 62 45 | 21 39
-64: 39 30 | 45 121
-118: 45 17
-91: 39 17 | 45 100
-82: 39 100 | 45 119
-86: 119 39 | 111 45
-89: 39 119 | 45 77
-44: 39 127 | 45 107
-88: 45 95 | 39 89
-17: 39 45 | 45 39
-131: 39 3 | 45 110
-12: 39 24 | 45 23
-26: 39 108 | 45 90
-36: 58 45 | 100 39
-97: 45 111
-25: 39 88 | 45 32
-62: 96 39 | 111 45
-59: 39 119 | 45 96
-34: 45 35 | 39 100
-79: 68 39 | 94 45
-40: 39 72 | 45 14
-20: 39 105 | 45 18
-75: 111 45 | 69 39
-114: 67 45 | 59 39
-54: 38 39 | 53 45
-102: 39 75 | 45 80
-109: 39 40 | 45 41
-
-aaaabbaabbaaabaaabbaaaaa
-aaababaabaaaabaaabababbabbbbaabbabbbbaababbaaabaababababababbabbabbaaabb
-bbbbbbbaabbaabaaaaabbaababbbaaabbababbabaababbaa
-bbbbbbabbabaababbababababbbabbabbbabaabaabbaaaba
-abbbbbaabaabbaabbabaaaba
-aaaabbaaabbbbbabaaabaabaaaaaaaab
-bbabbababaababaabababaaaaabbbbbabbbbabbbabbbaabbbbabbbbb
-aaabaaaaaaaabbaaabaaabbb
-abbabaaabbaaabbabbbabbba
-bababbaaaaaabbababbabaaa
-aaaaabaaaababbbabbaabaaa
-babaabbaaababbbabbaaaaaaaabbbabbbabbbaaabbabaabbaababbaabaabbbbb
-baaaabbbbaaabaababaaaaaabbabaaaabbbaabbabbabaabbabbbbbabbaabbbabaaababba
-aaaaabbbaabbbbbbbbabaaaababaaaab
-abaabaaabaabbbabaaabbbaaabaabbbabbaaaaaabaaabababbaaabbabbbbabaa
-abbbbbbabbaabbababaabaabbabaaabaabbbaaaa
-babbbaaabaaaababababbbba
-babbbabbbaaaababaaabaababbaababbababbaabaabaaababaabbbaaaabbababaaabaabbaababbaabbabbaab
-bbaabaabaabababbbaabaabb
-baaaaabbabbbabbabbbababbbabababb
-baaabbbbaababbabbababababbbbbaabbabbabba
-aaaaabbbaabaaabbbbbbabbbbbaaaaaaabbaaaab
-bbaababababbbbbaabaaabbb
-abaabbababaabaaabaababab
-abbabbabababbababaababaababbababbbababaaabbbbbbaaaababaa
-bbaaaabababbbbaabaaaaaabbabbabbbbabbabbbbaabbaab
-aabaaabbbabaabbabbabbbbb
-baaabbabaabbabbbbaaababb
-ababaababbaabbbbbbbaaabaaaabbbbb
-aaaaabbaaaababbbabaaabab
-abbbaaabbaaabbbaababbabbbbbababbbbbbabba
-aaaabaaabbbbbbabbaaabaaababbbabb
-bbaabbabbababaabaaaabbaaaaaababbabbbaabaaabbaabaabaaaabaaaabbbbbbaabbabb
-bbaabbaabbabaaabababbbaaaababbababbbabbbbaaaabbabaabbbaabaabbabbaabbabba
-aaabbbbabbbbbbaabaabbbbb
-ababbbaaabaaaaaaabaaaaab
-aabaaabbbaaabbabbbbbbabababaaabbbabbabbaaaabbbbb
-abababbaaaabaaaaabbaaaab
-bbbaabaaaabbbbabbbaaaabababbbaaaaaaaabbbbabbbbbaabaaabbaabbababbaaaaababbbababbbaabaabba
-bbbbbbabaabaaababaaabbabbbaabbbbababbaaaaaabbaaabbabaabb
-aaaaaabaaaaabababaaababa
-abaaabaabbaaaaabaaabbbabaabbbaabbaababbbbbbbaaab
-aabbbbbabbbbbabbabbbbbab
-bbabaabaaababbabbaababab
-aabbaaababaaaaaabbabbabababbabbb
-bbabbabbaaaaabbaabbbaaaa
-aabababaaaabbaabbbbbbabb
-aababbabaaabbaababaaaaba
-aabbaaababbbaabaaabaabbb
-bbbbaaaaabaababbabbaabaa
-abaabbabbbbbabbababbbabb
-baaabbbabaaabaaaabaaaaab
-aaababbbaabbabaababbaabaabaabababaabbabbababbaaaaaaaababbaabbaba
-aaaaaabbaababbbabbababbb
-aabaabaaaaaaaabbbbbaababaabbabab
-abbbbbbbaabbbababaaaaabbbababbba
-babbbbaaabbbbabbaabbbbaa
-baaabbabbbaabaabaabbabab
-aaaabbabaabababbbbabbaab
-babaabbbbbbbaabaababaabaabaaaaba
-babbbaabbbababbabaabbbbb
-bbaabababaaabbbbaabbbabbbbbaabbbbbbbbaba
-bbbbabbbbaaaababbbabbbba
-aabaaabbabbbaaababbaabab
-abaababbbbbaabbaaaaabbaabbbaabaababaaabb
-bbaabbbbaaabaaaaabaaaaba
-aaaabaabbbaaababaababaaa
-abaabaaaaabbaabbaababaab
-bbaaabaabbabbbaaabaaabba
-aabbbbbbabaabbabbbaababb
-bbbbaaaaabbbbabaababbbab
-babbbaaaaaaaaabbbabbaaab
-aabbbabbaaaabbabbaabbaaa
-abbbaabaaabaaabbababbaba
-baaabbbaabbbbabbbabaabbbbbbbaabaabbabbbb
-babbbbabbbaabbaaabaabaaabaaaababaababaab
-abbbaabbbabbbabaababbaba
-babbbbabbbbbabaabababbba
-aaababbbababaaaaaababaaa
-baaaabaababaabaaabaababbbbaaaaaabbbbbbaaaabaabba
-bbababbaaababababababbbabbbbbbabbbbbaaaabaaaaabaaaabaabaababaaba
-abbbbabaabaabbabbbbaaababaaabaaaabbbaabb
-bababbbbbabbbababbbbbbba
-baaaaaaabbaabababbaababb
-bbabbaaabbabbbbaabbaaaab
-bbaabbabbbbbbabbaaaaaaba
-abbbbaaaabbbaaabbabbabbb
-bbbabbababbbbaaababaaaab
-aabbbbbbababbbbbaabbbaaa
-babaabbaabaababbbbaababb
-ababaaaabbaababaaabbbbab
-bbbabbaabaaaabbbaabbabab
-aabaaabbaaaabbabbababaababaaabbbabababab
-baaabaaaabbbbaaaaabbabbbbaaaabba
-bbbaabbaabbabbbabbabbbba
-babaababbaaabbabbbbaabbb
-babbbaabbbabbababbbbaabb
-babbbabababbbbbabbaaaaab
-baaabaaabaaaabaabbabaabaababaabbaaababbbabbabbabbabaaaaaabbaaaabbbaabaaa
-bbabbaabbbabbabaaaababababbabbbaaaababaaaabbbbaaababaabb
-baababaabbbbbbabababbaab
-aaabbaababaabbabaaaaabab
-aaabbbaabbbbbabbaaaaabaabbaaaabb
-abbbbabaaaaababbaaabbaaa
-abbbbbbaabbbbbaabaaabbbbaababaaa
-baabbaabbbbabbabbabbabaa
-ababbbaaaabbaaabbaabbbba
-babbbbbaabbbababbbbabababbaababbababababababbbba
-aabbbbbbbbabaaaababababb
-aababbbabbbbabbbbbaabbba
-aababbabbbbababbbabbaaab
-abbabbaabaaaaaabbaabaaab
-bababaaabbabababaabbabaaabbabbbbbaabaaaa
-bababababbaabbaabababbba
-aaaabbababbbaaaaabbaaabaababbabb
-aaaabbbbaaaaaabbbaabbbbb
-aaabbbbabbbaaabaaabaabba
-babaababbbbbabaaabaaaaba
-bbbaaabaabbaabbaabbbbbab
-aaaabbababbbbaaaabbbbabababbbbbbababbaaabaabaaaa
-aaabbaabbabbbbababaaaaba
-abbabbaabbabbbaaaaaaaaba
-abaabbaaaaaaabaaababaababaabbaaa
-babbbaabbbbaaabbaaaaaaab
-aaaabbbbaaaabbbbbaabaaba
-ababbbaaaaaabaaaaabaabaa
-abababaaaabbbbbbbaaaaaba
-babbbaabaaaabaababaaaaba
-bbaaabaaaaabbaababaaaaab
-babbbaaabbbaaabaaababbbabbbbabbbbabaaabbabababab
-bbbaaabaababbabbaabaabbb
-bababaaaaabbbabaababbaba
-baabababbbbaabbbabaabbbbbabbbaababbabbbaabbaabbbbbbbabbabbbbaaabbababbba
-abbbabbabaaabaabbaaaabaaabbabaabbaabaabb
-bbbabbbbbaaaaabbabbbabaa
-bbaaabbbbbbbabaaabababab
-bbababbabbbabbabbbaaaaab
-aababbbabbbbabbbbbbbabab
-bbbbabbabbbbbabbaabbaaba
-aabbbbbaaabbabaaaaaabbaaababbbaaabbbaabbbaabbbbabbaababb
-aabbabbbaabbbbabbbbaabbbabaabaabbaaaaaaaaaaababbabbaaaabaabbaabb
-aabaaaaaaabaabbabababbbabaababbb
-bbbbbbbbbabbababbababaabbaabababababbbbbaaababaa
-aaabaaabbaaaabababbabbaaabbababaababbaab
-bababaaaabbabbaabbbabaab
-ababbabbbbabaabaabaababa
-aabbbabbaabaaabbabbaaaab
-bbaaabaaaabbaabbbbbabaaa
-aabababbbaaabbabbbaabaabaaaaaaaaaaaabaabbaabaaabaaabaaba
-aabaaabaaaaababbabaaabab
-bbabbababbaabaabbaabaaba
-aaababababababbababababb
-aaaaabbbaaaabbabaabbabab
-babaababbbbbaabababababb
-babbbbaabbaabbbabaabaabb
-aaaabbaaababbbaabbabbbba
-bbbbaabbbababbbbaaabaaabbbbbaaababaaabbababaabbbbaabaabbbabbaaab
-abbbbbaabaaabbbbabababaabbabaaaaababbaba
-bbbbabbabbabaabaabbbabab
-baaaababbbbbabbabaabaaab
-aabbbbbabaaaabbbbbabbaab
-bbabbabbaaaabbbbbbbabbbbabababab
-aaaababbaabababbbbaabbbbbaaaaaaaabaaaaba
-aaabaaaababaabbababbbbaabbababaa
-baaabbabbaababbaabbbbaab
-babbbbaaababaabaabbababb
-baabbabaabaaaabaaaabbaaabaabaaaaaaababbaabbaabaaaabbbaaaaaaababbaaaabaabaaaabbaaabbabbbaaabbaaaa
-aaaaaabbbababbbbaaaaabab
-abbbabbabbaaabbbababbbbbbbbbaaabbaabbbba
-aaababaabbbbabaaaabababa
-babbabababaaaaaababbbbaabbabbabbbbabbbbb
-bbabaaababaabaabaaaababa
-aabbaabbbbbbabbababbababbabbaabbabaaaabbbaaabbaa
-baaabaaaaaaaabbababbbabababbbabb
-aabbbabbabbaabbaaabaaaaa
-bbaaabaaabbbabbabbbbabab
-abaaaaaaaabbbbbbbbbaabbb
-babbbbabbabbaababaabaaab
-ababaabbaabaaababaaaaaba
-baababaabababbbbbbbbaabb
-bbbbbaabbaababaaaaabbaaaabaaaabaaaaabbbaaaaababbbaabbbba
-bababbbbaabbbabababbbbaabaabbbbbababbaaaabbabababaabaabb
-abababaaaabbbababaaaabba
-bbaaaaaaabaaaaaabbbbbbbb
-abaabbbbaabbaaabbbbbaaabaabbabbaaabbbababbbbbbaaaabaaaaabbbbaaba
-abbbabbabaaaaaabaabaabba
-aabababbbaababaaabaabbbb
-baababbababbbbbabbabbabbbbbbaabb
-bababbaaaabbbabbaaaabbaaabaababaabbabbab
-abbbbabbabbbbaaaabaaabaa
-abababbaaaabaaababaaabaa
-babbababbbabaaaaabbbaabbaaaaaaab
-abbbbaaaabbbbbbaaabaaaab
-baaaabaaaabaabaaabbaaabb
-bbbbbbabbbaaabababbaabbaaabbbbba
-aaaabbaaaabaabaabbaabbaaabbbabaaaabaabab
-babaabababbbbababbababaa
-baabbbabbaabbbaaaababbaa
-bbbabbbbabbbaabaabaabbabbaaabbaa
-bbaaabbbaabbbababaaaabaabaababab
-babbaabaaaaaaaaaaaabaaba
-bbabbabaaabaaabbabbaabab
-babaababaaabbbbaabbaaabb
-aaaabbabaabbbbbabbbabbba
-bbbbbbabaaabbaababbaababbaabbbbbabbbabbb
-aaabbbbabbbbbabbaabbbaab
-bbbbaabaaaaabaababbabaab
-abbbaabbbbbbabaaaabaabba
-aabbbbaaabababbbaaaabababbaabbbaaabaabbb
-aaaaabbaaaaabbababbbaaaa
-aaababbbabaaaabbbbabbaaaababaaabaabaaaab
-aaabaaabbbaaabbbbbbaaaab
-abaabaabbbbaababbbbaabaa
-aaaabaaaaababbababababab
-aabababbbabbbbbbabbbbabb
-abbabbaababaabbbabbaaaaa
-babbbaabababaabbbbbaababbaaaaabbbbbbbbbaaabbaaaa
-baaabbbbaaabababaaabaabb
-baaabbbabbbaaabaaabaaaaa
-ababaababbbbabaaabaababa
-ababbbaaaaabbbbabbababbb
-abbbbabaabbbbbaabbaaaaab
-baaabbbbababbabbaaabbaaa
-babaabaaaaabbbbabbbbbbaaabaabbabbbbbabbaabaabbbaabaaabbb
-bbbababbabbbbbbabbbbabaaaabaaaabbaababbb
-bbabbabbbbbaaabaaabbabaabaaaabba
-baaabaaabbaaabbbaaaaaababbabbbab
-aaaabbabaaaabaababaaabbb
-abbbbbbaabbaaabbabbbaaaaabbbabab
-abaabaaabbbbbbaaaababaaa
-aaabbaabbabbbaaaabbaaaba
-baaaaaabaaababaaababaaaabbbbaabb
-baaabaabbbaabbaaabbbabababbbbaab
-aaabbbaabbbbabbababbbabb
-baaaababbaababaaaaaababa
-babbbbbababbbaabbabbaaab
-babbaabbbbabbaaabbbaabababaababbbabbbbbbbbbabaabbaaaaabaababaaba
-ababbaaaabbabaabbabbabbbbbbaaaab
-bbaaaaaabbbabbaaaaaaaaba
-bababaaabaaabbbabbbbbbbb
-bbabaaaabbbababbbabbaaaa
-bbaabbbbbaaabaaaababaaab
-babbabababaababbbbbbbaaa
-aabbaabbabbabbbaaaaaabaaabbaabbaaabaaabbbbabbababaabaabb
-aabababbbaaaabbbaaaaabab
-aabbbbbbabbbbabbaababbbababaabbbabbabbbbbaabbabaabababbb
-bbbbaaaaabaabbaaaababbaa
-baaabbababbbaaabaaabbaba
-aaababbbbabbbbbaaaabaaba
-babaabaaabababaaaaaababbabbbabab
-bbaaaaaaaabbabbbaaababba
-bbbabbbbbaaaaaaabababbaaabababbaaabbbbbabaababaabbaaaaab
-bbabbbaaababaaaaabaaabbb
-ababbbaaababbbbbaabaaaaa
-abaababbbabbbaaaababbaaa
-bbbbabbbaaaaaaaababaaaba
-bbbbaabaabababaabbbbaabb
-bbaabaababbbbbabaaaaabababbabbababababbbabbababbbbaababb
-aaaaabbaabababbabaaaaaba
-aabbbabbbbabbabaaaabbabb
-babbbaabaaabaaabbbaabbabbaaabbbbbbbbbabbbabbbabbbaabaababbabbaaa
-babbbaabbaaaabbbbaabbaba
-bbbababbbaaabbbbabbbbbaaababbbbb
-bbbbabbbbbabbabaaaaaaaaaabaaabaaaababaaa
-ababaabbaaaaabbaabbababb
-bababaaaabababaaababbaaa
-bbaabababaaabbbbabbaaabb
-babbbbaabaaabbbaababaaababaaababbbbbbbbbbaaababb
-baaaabbbaaabbaabbabbbabb
-ababbbbbbbbbaaaaaabaabab
-abaabbaabaaaababbaabbabb
-aaaabbababaabaaababaaaab
-baaabaabaaaabaababbbbbbbbabbaaaa
-bbabaaaabaaabbbbaababbbb
-ababbbaaaabbaabbababbbbbaababbaaaaababba
-abbaabbaaaaaaabbbabaaaaa
-aaabababababbabbbabaabbabbabbaababbbbabbbabaaabbaaababab
-bbaababaaaaabaaaabaaaaab
-bbbaababbabbbbbabbbbaabb
-ababaaaabbbbbabbaaabaabb
-babaabbabbbbabaabbbaaaaa
-bbbbbabbabaabaaaabbbabaa
-baaaaaaaaabababbbbbaaabaaabbbabbabbababa
-baaabbbabbaabaabbabbababbaaaabbbbbbbbbbabababbab
-abbbabbabababababaabaaab
-babaababbbaabababbabaabb
-bbabababaabababbbaabbabb
-abaabaabbabaabaaabbaabaa
-aaaaabaaabbaabaaaabbaaababaaabbababbbabbabaabbbbbabbbbbabbaaabababbabbaa
-bbabbbabaababababbbbabbbabaaaabbabbbabbaaabaaaaaababbaba
-babbbbaababbbbaaabbbaaabababbbababaaaabb
-bbbabbbabbabbbababbabaab
-aababbabaaabbbbaaabababa
-abbbbababbabababbababbab
-aaabbaabaabaabaaaabaabab
-bbabbaabbabbbbbbabaaaaaa
-bbabbbaabaabbaabbaabbbbb
-bbbbbabaaabaaabaababbbbababbbbaabaaaabbaababaaaabbababaabbaaabbababbbbbb
-bbaabaaaababbabbababbbaaaaabbabbaabbbabaaaabaaabbabbbbbabaababbbabbbbbbbbabbbbba
-aaabbbbaabaabbaaabbaabbb
-ababbbaaaabbbaaabbbbbaaabbbbabbbbabbabbaababbaabaaababba
-bbaaaaaaababaaaabbaaaaaabbaaabaabbbabaaaababbabaaabaabba
-abbabbaaaaaaaaaaaaaababa
-abbbbabbbaaabbabbbaabaaa
-bbbbaaaabaaabaaabbbabbbaabbabaab
-bbaaababbbbabbbbbbbabaab
-abbaaabbbbaaaaababaaaabaabbaaaaabaabaaab
-aaabaaaababbbbaaaababbaa
-aabbabbbbbbaabbabbabbbab
-aabaabbbabaababaaabaaaaa
-abbbbbbbaaabaaabaaabbaab
-babbaabababbbaababababab
-babbbaaabbababbabaabbbaa
-abbaabbaabbbaabbaababaaa
-ababbbbbbbbbbbaabaaababb
-ababaaaabbbbabaabbaaaaaabbbaabaababababb
-baababaaaaababbbbaaaabbbbabbababbaabbbaaaabbaaaa
-baaaababbbbbbabbbabaaaab
-bbabbabaabaababbababbbab
-abbbbabaabaabbbaabbabbbbbaabbbab
-ababaaaabbaabbbbbabaaaba
-aabaaababaababbaabbaabab
-babaabaaabaababbabbaabbb
-aabbbbbaababaabaabbaabaa
-baaaaabbbababbaaabbbbbbbbbabbaabaaabaabbaaaaaaabaaabbabb
-babababaaaaaaaabbbabaabaaaabbaaaaabaaabbbbababbbababaabbaaaabbbababbbaab
-babbaababbbbaababaabbaba
-baabbabaaaabbbbbbababbabbaabaaab
-abaabaaabaaabbbbbabbabba
-ababbbaaaabaaabbabbbbbab
-aaaaabbbabbaabbaaabaaaab
-aaaaaaaaabbbbbabbaaabbabbaaabbaabaaabbabaaabaaaa
-aaaabbbbbbaabaabbababbab
-babababaabbbbaaaaaaaabbabbbbbababababbab
-aaaabbaaabbbaaabbaabaaab
-aabaabaaabbabbbbaababbaa
-abaabbabbabbbababbbbaabaabbbbbaabaaabbbbabbaaaaa
-bababbbbbbbbabbbbbbaababbabbbbaaaabbababaababbbb
-aaabbbaabbaabbbbabaaabbb
-abbbbbbbbbbaaabbababbabbbaababbb
-aaaabbbbaabbabaaaaabbabb
-aaaaaaaababbbaaaabbaaabb
-babbaabababbaababbbabbbbbbbbbbababbbababbaabbbab
-bbbbabbbbbbabbaabaabbbaa
-aaaabbbbbaaaaaaabaaaaabbabaababaabbbbbab
-aabaaaabbbabbbaaabbabbaaabaabbbaaabbbbbaababbabbabaaabbabbabaaab
-aaaaabbbbbabaaaaabaabbbb
-abaabbaabbbbbbaabaaabbaaababaaababbaabababbbbbbbbaabbbbbbabbaaabbabbbbaaaaaaaaaaaaaabbaa
-abaabaabbbaaabbbabbaabaa
-babbaababaabbbaabbabbaaa
-ababaaabbababbaabaaaaababaabbababbabaabbabbbbaaa
-aaababaabbbbbabbbbabaaaaaabaaaaaaabaabab
-aaaababbbbbbaababababaabaababaaaababbaba
-bbabababababbbaaaababaaa
-bbbabbabaabbbabbabbaabaa
-bbaaababbaaabaaabaaaaababbabaabb
-abbbbbbabaababaaaabbabab
-aaaaaaaaaaaabbaabbabbaab
-bbaaabaaabbabbbaaababaab
-aabaabbbbbbbbbbbbbbabbabaabaabbbabbbbbbbbbbbababbbbbabbbaabbbbbabaaaabba
-abbabbbababbbbbaaabbbaaa
-baaaaaaabbabaaabbaaabaabbbabaabbabbbaabbabbababbaaabababbabaabbaaabbbbabbababbab
-bbbaabaaabaabbabaabaabbabbbbaaaa
-baaabaaabaababaaabbbbaab
-bbbabbaababbbbababaaaaab
-aabbabbbaaabaaaabbbaaaab
-aabbabbbaabbaabbabaabaaabaaabbbb
-bababbbbaaaaabbbaabababbabaabbaababbbaabbabbababaaaaaaabbaabbabbbaabaabb
-bababbaaababbabbbbbbbbba
-aabababbaabaabaabbabbbbb
-bbbbaaaaabbbaababbbbbbba
-bababbbbaabbbbbbabbabaaa
-aaabbbaaaaaaaaaabaabbbab
-baaaabaaaaababbabbbbababbbbaaaab
-abbbaabbbabbbaaabbbabbba
-baaaabbbbabababaabbbabab
-aaaabbabbbababbababbbbaa
-aabbabaabababaabaababbbb
-bbaabbbbbaabbaababbabbbaaaaabbabbbaabbba
-abbbaaabbaaaabbbaabbbaab
-abaaababbaabbbabababaaabbbbaabbbbbaaaaabaaabaaabbabbbabaabaaababbabaabbbaaaabaaa
-aaaaabbbbababaababbaaabb
-bbbbabbbbbabaabaaabaabab
-aababbbababaabbbbbaabbabaabaaabbbabbaaabaaababba
-abaaababababbbbbbbababbabbbabbbbbbaabbbabaaabbbbabaababb
-babbbbbababaabaabbbaabaa
-bbbbabaaaabbbabaaaabaaaaabaaaaaabbababaa
-baaaabaabaaaabbbbabaabbaaabaaababbababbabaababab
-babbbbababbbbaaaabaaaabb
-abaabaaaabbaabbabaaaabbbbaaaaaababbaaabb
-abbaabbabababbaaaaababba
-abbbbbbababaabbabbbbbaab
-bbaabaabaababbbabaaabbabbbaaaaaababaabbbbbbbabbaababbababaabbaaa
-bbaaababbbbababbbbbbaaaaaabaabbb
-bbbbbbaaabbbaabaabbbabbabbbbbbaaabbababbabbbabbbbbabaabb
-aabbaababbaababbbbbababbaabaababbbaaabbaababbbbbbbbaaaaabbabaaaababbabbaaaababbbaababbbb
-babbbaabbbabbabbbbbabbaaabbaaaab
-abbbaabbbbabababaaaababa
-ababbbbbbbaaabaabbbabaaa
-ababaaaabaaaabababbaaaba
-ababbbbbbababababbbbbabbbbbbbbba
-bbbbabaabaaabaaabaabaaaa
-baaabaaaabbbbabbababaababbbbbbbbababbbababaaaaabbbbbabababbbbbaaaabbbbababbaaaaaaabaaababaaaabbb
-bbabababaaaabaaaababbbba
-bbaaababaaaabaabaabababa
-bbbaababaaabbaabbbaabbba
-aabbabbabaaaabbabbaaaaabaabaabaababbbbabbaabaaba
-abbabaabbbbabbbabbaabbaabbabbaabbababbbb
-abbbabbaabbbbabbbbbbbaab
-aabababbabaababbbaaabbbbaabaaababbaabaaa
-bbbbaababbbabbababbbabbb
-aaabaaabbbaabbbbbababbba
-bbbbaabaaaabbabababaaaaabaaaaabaabaaabab
-baabbaabababbbaababbaaaa
-aababbabaaababbbbaaabbaa
-babbbaaaababbbbbabababbb
-baaaaaaabbbaababababbbba
-bbabaaabaaaababbbaabaabb
-abbbbabaabbbabbabbaaaabb
-bbaabbbbbabbbaabbaaabbaa
-aaabbbaaabbababbbbbbabab
-babbbaaaaabbabbbabbaababbbaaababaabababbabbababaaaabbbbbaaabaabb
-bbbababbbbbbbbbaabbabbababaabbbb
-baaaabaabaaabbabbbbbaaab
-babababaabbbbaaabbbababbaaabaabb
-babaaaabbabbabbbbbbabbaaababbaaabaabaaaabaaaabaabbabbbaabaabaaabababbbbb
-bbabbbaababbbbbaaaaaaaaaaabbabab
-bbaabaaaaababaabaabbababaaaabbababaabbbabbbaaababbababbb
-abaabaabbbbbbbabaabbabab
-aabbbababbaaababababbbab
-bbbabbaabbbababbbaabaabb
-babbbabaaabbbbbaaaaaabbaababbbbbabaaabbb
-aaaabaaabbaaabbbababbabbbaaabaaabbbaababaabbbbaa
-abbabbbbbaaaababbaabbaba
-bbaaabbbbbbabbabababaabaabbbbbbbababbbba
-bbbbabbaaabaaabbaaabaaabaabaaaab
-babaababbabaabbbaaababba
-ababaababaaaaaabbbbabbabaabbbaaa
-babaababbbbbabababaaabbaabaaaaaaabbabbababbabaaaabbbabbbaaababaabbbbabaaababbbba
-abbabbaaaaaaabbabbbbaaaaaaaaabbb
-aaabbbbabbaaabbbaababbabbabababb
-bbaabbbbababbaaababaabaabbbbabaaaaabaabbaaabbbaaaaaabbba
-ababaabaaabbababbbbabbabaabaaabbabaabbab
-baaabbbabbbbabbababbbbabaaabaabaaaaabbab
-baaabbbbaabababbbaaaaaba
-abbabbbbbaaaaabbaabaaaaa
-bbabbabbaaaaabbabbabbbaabaabbbaa
-bbbaaabbaaaababbbabbbbaababaabbbabbbaaababababbb
-babbaabbbbbbaaaaababbaba
-abbaabbaabababbaaababbbb
-abbbbaaabaabaabbaabbabbabaaabaabbbabbaabaaabababaabbaabababaaaaabbbbabbaaabbbbaaaaaaabba
-abbbaabaabbbbbbbbabaaabb
-baaaabaabaaaaaabbaaaababaaabbbaabbbabbabbaabbaaa
-baaabbabbbabaaaaaabaabba
-babbaabaaaababbbbaaaabaabaababab
-bbbaabbababaabbbbaaaaaba
-aaaabbbbaabbabaaabaaaabb
-aabbaaabbbbaabbaaaabbaab
-babbbaaaababaaaabbababbb
-abbabbaabbabaaabbbaaaabb
-aaaabaaababbbbbbaababbbb
-bbbababbbbaaaaaaabbbbbab
-bbbabababaabaaabbaaabaaabbabaababbabbaabbbaababbaaaabaababbbabab
-aaaababbbaaabbababababbb
-abaabbabbbaaabaabbaaaaabbbaabbbbbbabaaaabbaaaaabaaaabbabbbababaa
-bbaabbaaaabaabaabbaababb
-aaababbbbaaaaabbbbaaababaabaaaaaabbabaab
-bbbabbbbbaaaaaababaabbbaaaababbbbaabbbaaabbbabaa
-babbbbbbaaababbbbaaabbaa
-bbbbabbaabaaaabbaabbabaababbbbaabbabaabbbbbabbbbabbabaab
-baaaabbbaaaaabbbaababbaa`
-
 // AOC_2020_19 is the entrypoint
 func AOC_2020_19(cli *goutils.CLI) {
-	AOC_2020_19_part1_attempt1(cli)
+	// AOC_2020_19_part1_attempt1(cli)
+	// AOC_2020_19_part2_attempt1(cli)
+	AOC_2020_19_part2_attempt2(cli)
+}
+
+func AOC_2020_19_part2_attempt1(cli *goutils.CLI) {
+
+	/*
+		OK I’m guessing loop detection; a cheap way of doing that would be.. find what gives a loop then exclude any that include that in their rule to begin with
+		10:17
+		I non-nice way would be parse with a depth counter and just break after some depth charge goes off
+		10:18
+		that would mark that one as exploded and (probably) not good, then the remainder are the possibly valid messages, then evaluate only them
+
+		that gets trickey as really what you want to do is assume some messages would pass a rule which had an OR where one was a loop, so you’d retain that message and evaluate only the non-loopy side auto-marking the loopy side as false
+		10:28
+		ok I have real life but some sort of depth charge as a loop detection followed by marking that rule as bad/no-eval and then any loop marked as false is my first attempt… later… real life time now
+	*/
+
+	rre := NewRegexRuleEngine(DAY_19_INPUT_PART_1)
+	rr8 := NewRegexRule("8: 42 | 42 8")
+	rr11 := NewRegexRule("11: 42 31 | 42 11 31")
+	rre.Rules["8"] = rr8
+	rre.Rules["11"] = rr11
+
+	rre.Debug()
+}
+
+func AOC_2020_19_part2_attempt2(cli *goutils.CLI) {
+
+	/*
+		I think that this
+		rr8 := NewRegexRule("8: 42 | 42 8")			    >> 42 | (42+)   == 42+
+		rr11 := NewRegexRule("11: 42 31 | 42 11 31")    >> 42 11 31  >>   42 (42 31) 31  >>
+
+		step0: 42 31 | 42 11 31
+		step1: 42 31 | 42 (42 31) 31
+		step2: 42 31 | 42 (42 (42 31) 31) 31
+		step3: 42 31 | 42 (42 (42 (42 31) 31) 31) 31
+		step4: 42 31 | 42 (42 (42 (42 (42 31) 31) 31) 31) 31
+		step5: 42 31 | 42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31
+		step6: 42 31 | 42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31
+		step7: 42 31 | 42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31
+		step8: 42 31 | 42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31
+		step9: 42 31 | 42 (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) 31
+		step10: 42 31 | 42 (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) 31
+		step11: 42 31 | 42 (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) 31
+
+		step2: 42 31 | (42 (42 31) 31) | (42 (42 (42 31) 31) 31) | (42 (42 (42 (42 31) 31) 31) 31) | (42 (42 (42 (42 (42 31) 31) 31) 31) 31) (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31)
+
+
+		rule = (step1) | (step2) | (step3) ....
+
+		is this
+		rr8 := NewRegexRule("8: 42 | (42)+")
+		rr11 := NewRegexRule("11: 42 31 | 42 (42 31)+ 31")
+
+		so I can just manually do this
+		x1
+		rr8 := NewRegexRule("8: 42 | 42 (42)")
+		rr11 := NewRegexRule("11: 42 31 | 42 (42 31) 31")
+
+		x2
+		rr8 := NewRegexRule("8: 42 | 42 42 42")
+		WRONG rr11 := NewRegexRule("11: 42 31 | 42 (42 31) (42 31) 31")
+
+		RIGHT rr11 := NewRegexRule("11: 42 31 | (42 (42 31) 31)")
+
+
+		xN
+		which means I have a 'source' regex that I keep adding to
+		rr8 := NewRegexRule("8: 42 | 42 RR8")
+		rr11 := NewRegexRule("11: 42 31 | 42 RR11 31")
+
+		Where I replace
+		RR8 with N x 42
+		and
+		RR11 with N x 42 31
+		add in the regex each time and see which messages pass
+		keep going until no messages pass
+		keep adding the passing messages to a set
+		at the end, the set size is the number of messages that pass in total
+	*/
+	index := 1
+	rr8_source := "8: RR8"
+	rr8_template := " 42"
+	rr8_replacewith := ""
+
+	// rr11_source := "11: 42 31 | RR42 RR11 RR31"
+	// rr11_template := " 42 31 "
+	// rr11_template42 := " 42 "
+	// rr11_template31 := " 31 "
+
+	// rr11_replacewith := ""
+	// r11 := "11: 42 31 | ((42 (42 31) 31) | (42 (42 (42 31) 31) 31) | (42 (42 (42 (42 31) 31) 31) 31) | (42 (42 (42 (42 (42 31) 31) 31) 31) 31) (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31))"
+	r11 := "11: 42 31 | ( (42 (42 31) 31) | (42 (42 (42 31) 31) 31) | (42 (42 (42 (42 31) 31) 31) 31) | (42 (42 (42 (42 (42 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) | (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 (42 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) 31) )"
+	// passedMessages := make(map[string]int)
+	// overallTotal := 0
+
+	// here I will keep all "previouly passed" messages and then
+	// on each iteration I will remove them so I don't query them
+	allPassingMessages := make([]string, 0)
+
+	// not 307, 331? NO
+
+	for {
+		rr8_replacewith += rr8_template
+		// rr11_replacewith += rr11_template
+		rr8_regex := strings.ReplaceAll(rr8_source, "RR8", rr8_replacewith)
+		// rr11_regex := strings.ReplaceAll(rr11_source, "RR11", rr11_replacewith)
+		rr8_regex = strings.ReplaceAll(rr8_regex, "  ", " ")
+		// rr11_regex = strings.ReplaceAll(rr11_regex, "  ", " ")
+
+		// fmt.Printf("%v\n", rr8_regex)
+		// fmt.Printf("%v\n", r11)
+
+		rre := NewRegexRuleEngine(DAY_19_INPUT_PART_1)
+		rre.RemoveMessages(allPassingMessages)
+		fmt.Printf("[%v] Removed %v messages that pass, now have %v messages to check.\n", index, len(allPassingMessages), len(rre.Messages))
+		rr8 := NewRegexRule(rr8_regex)
+		// rr11 := NewRegexRule(rr11_regex)
+		rr11 := NewRegexRule(r11)
+		rre.Rules["8"] = rr8
+		rre.Rules["11"] = rr11
+
+		// fmt.Printf("R8: %v\n", rr8_regex)
+		// fmt.Printf("R11: %v\n", rr11_regex)
+		rre.ParseRules(false)
+
+		r42 := rre.Rules["42"]
+		r31 := rre.Rules["31"]
+
+		r0 := rre.Rules["0"]
+		r0.Regex = strings.ReplaceAll(r0.Regex, "4231", "4231")
+		r0.Regex = strings.ReplaceAll(r0.Regex, "42", r42.Regex)
+		r0.Regex = strings.ReplaceAll(r0.Regex, "31", r31.Regex)
+
+		r11 := rre.Rules["11"]
+		r11.Regex = strings.ReplaceAll(r11.Regex, "4231", "4231")
+		r11.Regex = strings.ReplaceAll(r11.Regex, "42", r42.Regex)
+		r11.Regex = strings.ReplaceAll(r11.Regex, "31", r31.Regex)
+
+		// r0.Regex = strings.ReplaceAll(r0.Regex, "4231", "42 31")
+		// for _, rule := range rre.Rules {
+		// 	fmt.Printf("%v %v\n", rule.Key, rule.Regex)
+		// }
+
+		// os.Exit(1)
+		total, passingMessages := rre.Apply("0", false)
+		fmt.Printf("%v messages pass.\n", total)
+		for _, message := range passingMessages {
+			allPassingMessages = append(allPassingMessages, message)
+		}
+		fmt.Printf("[%v] %v rules pass this time, so far %v has passed in total.\n", index, len(passingMessages), len(allPassingMessages))
+		// thisLength := len(passedRules)
+		// if overallTotal == thisLength {
+		// 	os.Exit(1)
+		// } else {
+		// overallTotal = thisLength
+		// }
+
+		// fmt.Printf("[%v] RR8  %v\n", index, rr8_regex)
+		// fmt.Printf("[%v] RR11 %v\n\n", index, rr11_regex)
+		// if index == 10 {
+		// 	os.Exit(1)
+		// }
+		index++
+
+	}
+
+	// rr8 := NewRegexRule("8: 42 | 42 (42)+")
+	// rr11 := NewRegexRule("11: 42 31 | 42 (42 31)+ 31")
+
+	// now this is also equivalent to just throwing in multiple entries to see if any of these rules pass
+	// 337 pass  +1 times
+
+	// rr8 := NewRegexRule("8: 42 | 42 42")
+	// rr11 := NewRegexRule("11: 42 31 | 42 42 31 31")
+
+	// 285 +2 times
+	// rr8 := NewRegexRule("8: 42 | 42 42 42")
+	// rr11 := NewRegexRule("11: 42 31 | 42 42 31 42 31 31")
+
+	// +3 times
+	// 279
+	// rr8 := NewRegexRule("8: 42 | 42 42 42 42")
+	// rr11 := NewRegexRule("11: 42 31 | 42 42 31 42 31 42 31 31")
+
+	// +4 times
+	// 276
+	// rr8 := NewRegexRule("8: 42 | 42 42 42 42 42")
+	// rr11 := NewRegexRule("11: 42 31 | 42 42 31 42 31 42 31 42 31 31")
+
+	// +5 times
+	// 272
+	// rre := NewRegexRuleEngine(DAY_19_INPUT_PART_1)
+
+	// rr8 := NewRegexRule("8: 42 | 42 42 42 42 42 42")
+	// rr11 := NewRegexRule("11: 42 31 | 42 42 31 42 31 42 31 42 31 42 31 31")
+
+	// rre.Rules["8"] = rr8
+	// rre.Rules["11"] = rr11
+
+	// rre.ParseRules()
+	// total, _ := rre.Apply("0")
+	// fmt.Printf("Day19.1: %v messages pass.\n", total)
+
+	// rre.Debug()
 }
 
 func AOC_2020_19_part1_attempt1(cli *goutils.CLI) {
-	rre := NewRegexRuleEngine(DAY_19_INPUT)
-	rre.ParseRules()
-	total := rre.Apply("0")
+	rre := NewRegexRuleEngine(DAY_19_INPUT_PART_1)
+	rre.ParseRules(true)
+	total, _ := rre.Apply("0", false)
 
-	fmt.Printf("133 rules, 471 messages? : %v, %v\n", len(rre.Rules), len(rre.Messages))
-	// rule := rre.Rules["0"]
-	// for _, message := range rre.Messages {
-	// 	if rule.IsMessageValid(message) {
-	// 		total++
-	// 	}
-	// }
-	fmt.Printf("%v messages pass.\n", total)
+	fmt.Printf("Day19.1: 133 rules, 471 messages? : %v, %v\n", len(rre.Rules), len(rre.Messages))
+	fmt.Printf("Day19.1: %v messages pass.\n", total)
 
 }
 
@@ -696,7 +292,294 @@ type RegexRuleEngine struct {
 }
 
 // Init parses all Rules to create RegexRules
-func (r *RegexRuleEngine) ParseRules() {
+func (r *RegexRuleEngine) ParseRules(DEBUG bool) {
+	// first find our literal rules
+	for _, rule := range r.Rules {
+		rule.Value = strings.ReplaceAll(rule.Value, "\"", "")
+		if rule.Value == "\"a\"" || rule.Value == "\"b\"" {
+			regex := strings.ReplaceAll(rule.Value, "\"", "")
+			rule.Regex = regex
+			rule.Evaluated = true
+		}
+	}
+
+	if DEBUG {
+		fmt.Printf(" >>>>>>> RegexRule: before >>>>> \n\n")
+		r.Debug()
+		fmt.Printf("\n <<<<<<< RegexRule: before <<<<< \n\n")
+	}
+
+	// 	0: 4 1 5
+	// 1: 2 3 | 3 2
+	// 2: 4 4 | 5 5
+	// 3: 4 5 | 5 4
+	// 4: "a"
+	// 5: "b"
+
+	// now go over each rule until we have a fully evaluated sequence
+	totalToEvaluate := len(r.Rules)
+	for {
+		// loop over until we evaluate everything
+		totalEvaluated := 0
+		for _, rule := range r.Rules {
+			if rule.Evaluated {
+				totalEvaluated++
+			} else {
+				// this requires evaluation
+				// split this rule to its sub-rules
+				// for any sub-rule that is evaluated, replace the literal with the sub rule regex
+				// newValue is the value that contains e.g. 4 5 | 45 45
+				// for each evaluated subrule, replace it with the evaluated content
+				// newValue := rule.Value
+
+				// the subrules are an array of [ 4, 5, |, 45 ,45 ]
+				subRules := strings.Split(rule.Value, " ")
+				if DEBUG {
+					fmt.Printf("starting value is : '%v'\n", rule.Value)
+					fmt.Printf("subrules are      : '%v'\n", subRules)
+				}
+
+				// we will go over all subrules and replace any that are evaluated
+				// then we will rebuild the rule based on the subrules
+				allSubRulesEvaluated := true
+				changes := 0
+				for subRuleIndex, subRuleKey := range subRules {
+					if subRuleKey == "|" {
+						continue
+					} else if subRuleKey == " " || subRuleKey == "" {
+						continue
+					} else if subRuleKey == "a" || subRuleKey == "b" {
+						continue
+					} else {
+						// fmt.Printf("rule[%v], SubRules %v SubRule %v\n", rule.Key, subRules, subRuleKey)
+						subRule, exists := r.Rules[subRuleKey]
+						if !exists {
+							if DEBUG {
+								fmt.Printf("subRule '%v', exists=%v\n", subRuleKey, exists)
+							}
+							continue
+						}
+						if DEBUG {
+							fmt.Printf("subRule '%v', exists=%v, subruleValue=%v\n", subRuleKey, exists, subRule.Value)
+						}
+						if subRule.Evaluated {
+							// then this sub-rule has been fully evalulated; we can replace
+							// the reference to it with the evaluated content
+							// if the ruleKey was 4 and I had others like 4 44 444
+							// then I need to e "careful" about how I replace using this key
+							// splits := strings.Split(newValue, " ")
+							// for _, splitValue := range splits {
+							// 	if splitValue == subRuleKey {
+							// 		splitValue = subRule.Value
+							// 	}
+							// 	newValue += " "
+							// 	newValue += splitValue
+							// }
+							// subRuleKey = subRule.Value
+							subRules[subRuleIndex] = subRule.Value
+							changes++
+
+							// newValue = strings.ReplaceAll(newValue, subRuleKey, subRule.Value)
+							// rule.Value = newValue
+						} else {
+							allSubRulesEvaluated = false
+						}
+					}
+				}
+
+				if changes > 0 {
+					// make a string from the subRules as they were changed
+					newValue := ""
+					for _, value := range subRules {
+						newValue += " "
+						newValue += value
+					}
+					rule.Value = newValue
+				}
+
+				// now rebuild the subrules to a single value for the rule
+
+				if allSubRulesEvaluated {
+
+					// there seems to be a bug where I am including a number... I don't know why
+					testValue := rule.Value
+					testValue = strings.ReplaceAll(testValue, "(", "")
+					testValue = strings.ReplaceAll(testValue, ")", "")
+					testValue = strings.ReplaceAll(testValue, "a", "")
+					testValue = strings.ReplaceAll(testValue, "b", "")
+					testValue = strings.ReplaceAll(testValue, "|", "")
+					testValue = strings.ReplaceAll(testValue, " ", "")
+
+					if DEBUG && testValue != "" {
+						fmt.Printf(">>>>>>>>>> INVALID RULE %v >>>>>>>\n", testValue)
+						fmt.Printf("%v\n", rule.Line)
+						fmt.Printf("%v\n", rule.Value)
+						fmt.Printf("<<<<<<<<<< INVALID RULE %v <<<<<<<\n", testValue)
+
+						// fmt.Printf("%vINVALID RULE \n", rule.Debug())
+						// fmt.Printf("<<<<<<<<<< INVALID RULE <<<<<<<<\n")
+
+					}
+
+					rule.Evaluated = true
+					rule.Regex = strings.ReplaceAll(rule.Value, " ", "")
+					if len(rule.Regex) > 1 {
+						rule.Regex = "(" + rule.Regex + ")"
+					}
+					rule.Value = rule.Regex
+				}
+
+			}
+		}
+
+		if totalEvaluated == totalToEvaluate {
+			break
+		}
+
+		if DEBUG {
+			fmt.Printf(" >>>>>>> RegexRule: during >>>>> \n\n")
+			r.Debug()
+			fmt.Printf("\n\n <<<<<<< RegexRule: during <<<<< \n\n")
+		}
+
+	}
+
+	if DEBUG {
+		fmt.Printf(" >>>>>>> RegexRule: after >>>>> \n\n")
+		r.Debug()
+		fmt.Printf("\n\n <<<<<<< RegexRule: after <<<<< \n\n")
+	}
+
+}
+
+func (r *RegexRuleEngine) Debug() {
+	for index := 0; index < 10000; index++ {
+		sindex := fmt.Sprintf("%v", index)
+		rule, exists := r.Rules[sindex]
+		if !exists {
+			break
+		}
+		line := rule.Debug()
+		fmt.Printf("%v\n", line)
+	}
+}
+
+func (r *RegexRuleEngine) CheckMessage(message string) (*RegexRule, bool) {
+	for _, rule := range r.Rules {
+		if rule.IsMessageValid(message) {
+			return rule, true
+		}
+	}
+	return nil, false
+}
+
+func (r *RegexRuleEngine) Apply(ruleId string, debug bool) (int, []string) {
+	rule := r.Rules[ruleId]
+	passingMessages := make([]string, 0)
+	total := 0
+	for _, message := range r.Messages {
+		if rule.IsMessageValid(message) {
+			total++
+			if debug {
+				fmt.Printf("REGEX PASSED [id=%v] [regex=%v] '%v'\n", rule.Key, rule.Regex, message)
+			}
+			passingMessages = append(passingMessages, message)
+		} else {
+			if debug {
+				fmt.Printf("REGEX FAILED [id=%v] [regex=%v] '%v'\n", rule.Key, rule.Regex, message)
+			}
+		}
+	}
+	// fmt.Printf("REGEX VALUE %v\n", rule.Regex)
+	return total, passingMessages
+}
+
+func NewRegexRuleEngine(input string) *RegexRuleEngine {
+	splits := strings.Split(input, "\n")
+	messages := make([]string, 0)
+	ruleMap := make(map[string]*RegexRule)
+	useMessages := false
+	for _, line := range splits {
+		if strings.TrimSpace(line) == "" {
+			useMessages = true
+			continue
+		}
+		if useMessages {
+			messages = append(messages, line)
+		} else {
+			rule := NewRegexRule(line)
+			ruleMap[rule.Key] = rule
+		}
+	}
+	return &RegexRuleEngine{Rules: ruleMap, Messages: messages}
+}
+
+func (rre *RegexRuleEngine) RemoveMessages(messages []string) {
+	if len(messages) == 0 {
+		return
+	}
+	retain := make([]string, 0)
+	for _, message := range rre.Messages {
+		shouldRetain := true
+		for _, messageToRemove := range messages {
+			if message == messageToRemove {
+				// we already have it
+				shouldRetain = false
+				break
+			}
+		}
+		if shouldRetain {
+			retain = append(retain, message)
+		}
+	}
+	rre.Messages = retain
+}
+
+func (r *RegexRuleEngine) ParseRulesV3() {
+	// first find our literal rules
+	min_key := 10
+	max_key := 0
+	for key, rule := range r.Rules {
+		ikey, _ := strconv.Atoi(key)
+		min_key = Min(min_key, ikey)
+		max_key = Max(max_key, ikey)
+		rule.Value = strings.ReplaceAll(rule.Value, "\"", "")
+		if rule.Value == "\"a\"" || rule.Value == "\"b\"" {
+			regex := strings.ReplaceAll(rule.Value, "\"", "")
+			rule.Regex = regex
+			rule.Evaluated = true
+		}
+	}
+
+	fmt.Printf("max_key %v\n", max_key)
+	fmt.Printf("min_key %v\n", min_key)
+
+	// ascending
+	for key := min_key; key <= max_key; key++ {
+		skey := fmt.Sprintf("%v", key)
+		sourceRule, exists := r.Rules[skey]
+		if !exists {
+			continue
+		}
+		if sourceRule.Evaluated {
+			for targetKey, targetRule := range r.Rules {
+				if targetKey == skey {
+					continue
+				} else if targetRule.Evaluated {
+					continue
+				} else {
+					// not evaluated; replace any occurances of this sourceRule in the targetRule
+					targetRule.Replace(sourceRule)
+				}
+			}
+		}
+	}
+
+	// sort the list of rules by key order
+}
+
+// Init parses all Rules to create RegexRules
+func (r *RegexRuleEngine) ParseRulesV2() {
 	// first find our literal rules
 	for _, rule := range r.Rules {
 		rule.Value = strings.ReplaceAll(rule.Value, "\"", "")
@@ -719,14 +602,23 @@ func (r *RegexRuleEngine) ParseRules() {
 	// 5: "b"
 
 	// now go over each rule until we have a fully evaluated sequence
+	DEPTH_CHARGE := 10000
+
 	totalToEvaluate := len(r.Rules)
 	for {
 		// loop over until we evaluate everything
+		totalToEvaluate = len(r.Rules)
+
 		totalEvaluated := 0
 		for _, rule := range r.Rules {
 			if rule.Evaluated {
 				totalEvaluated++
 			} else {
+				if rule.Attempt >= DEPTH_CHARGE {
+					rule.IsLooping = true
+					rule.Evaluated = true
+				}
+				rule.Attempt++
 				// this requires evaluation
 				// split this rule to its sub-rules
 				// for any sub-rule that is evaluated, replace the literal with the sub rule regex
@@ -843,54 +735,6 @@ func (r *RegexRuleEngine) ParseRules() {
 
 }
 
-func (r *RegexRuleEngine) Debug() {
-	for index := 0; index < 10000; index++ {
-		sindex := fmt.Sprintf("%v", index)
-		rule, exists := r.Rules[sindex]
-		if !exists {
-			break
-		}
-		line := rule.Debug()
-		fmt.Printf("%v\n", line)
-	}
-}
-
-func (r *RegexRuleEngine) Apply(ruleId string) int {
-	rule := r.Rules[ruleId]
-	total := 0
-	for _, message := range r.Messages {
-		if rule.IsMessageValid(message) {
-			total++
-			fmt.Printf("REGEX PASS '%v'\n", message)
-		} else {
-			fmt.Printf("REGEX FAIL '%v'\n", message)
-
-		}
-	}
-	fmt.Printf("REGEX VALUE %v\n", rule.Regex)
-	return total
-}
-
-func NewRegexRuleEngine(input string) *RegexRuleEngine {
-	splits := strings.Split(input, "\n")
-	messages := make([]string, 0)
-	ruleMap := make(map[string]*RegexRule)
-	useMessages := false
-	for _, line := range splits {
-		if strings.TrimSpace(line) == "" {
-			useMessages = true
-			continue
-		}
-		if useMessages {
-			messages = append(messages, line)
-		} else {
-			rule := NewRegexRule(line)
-			ruleMap[rule.Key] = rule
-		}
-	}
-	return &RegexRuleEngine{Rules: ruleMap, Messages: messages}
-}
-
 /*
 const DAY_19_TEST_INPUT = `0: 4 1 5
 1: 2 3 | 3 2
@@ -914,10 +758,12 @@ type RegexRule struct {
 	Evaluated bool   // indicates if the regex has been evaluated
 	Regex     string // the regex for this rule
 	FullRegex string // the "full" regex composing all regexes (after evaluation)
+	Attempt   int
+	IsLooping bool
 }
 
 func (rr *RegexRule) Debug() string {
-	line := fmt.Sprintf("%v : %v : value=%v, regex=%v", rr.Evaluated, rr.Line, rr.Value, rr.Regex)
+	line := fmt.Sprintf("%v", rr.Line)
 	return line
 }
 
@@ -926,13 +772,34 @@ func NewRegexRule(line string) *RegexRule {
 	key := strings.TrimSpace(splits[0])
 	value := strings.TrimSpace(splits[1])
 	value = strings.ReplaceAll(value, "\"", "")
-	rr := RegexRule{Key: key, Value: value, Line: line, Evaluated: false}
+	rr := RegexRule{Key: key, Value: value, Line: line, Evaluated: false, IsLooping: false, Attempt: 0}
 	return &rr
 }
 
 func (rr *RegexRule) IsMessageValid(message string) bool {
+	if rr.IsLooping {
+		return false
+	}
 	expr, _ := regexp.Compile("^" + rr.Regex + "$")
 	return expr.MatchString(message)
+}
+
+// Replace replaces references to the passed rule with the actual regex of the passed rule
+func (rr *RegexRule) Replace(rule *RegexRule) {
+	splits := strings.Split(rr.Value, " ")
+	replacedValue := ""
+	changed := false
+	for index, value := range splits {
+		if value == rule.Key {
+			changed = true
+			splits[index] = rule.Regex
+		}
+		replacedValue += " "
+		replacedValue += splits[index]
+	}
+	if changed {
+		rr.Value = replacedValue
+	}
 }
 
 /*
