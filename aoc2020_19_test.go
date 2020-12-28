@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"testing"
-)
-
 const DAY_19_TEST_INPUT = `0: 4 1 5
 1: 2 3 | 3 2
 2: 4 4 | 5 5
@@ -220,36 +215,20 @@ func Test_AOC2020_19_Test4(t *testing.T) {
 
 // }
 
-func Test_Day19_Part2_ParseRules(t *testing.T) {
-	re := NewRegexRuleEngine(DAY_19_INPUT_PART_2)
-	re.ParseRulesV2()
-	rule := re.Rules["0"]
-	total := 0
+// func Test_Day19_Part2_ParseRules(t *testing.T) {
+// 	re := NewRegexRuleEngine(DAY_19_INPUT_PART_2)
+// 	re.ParseRulesV2()
+// 	rule := re.Rules["0"]
+// 	total := 0
 
-	// 	test_messages := `abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa
-	// bbabbbbaabaabba
-	// babbbbaabbbbbabbbbbbaabaaabaaa
-	// aaabbbbbbaaaabaababaabababbabaaabbababababaaa
-	// bbbbbbbaaaabbbbaaabbabaaa
-	// bbbababbbbaaaaaaaabbababaaababaabab
-	// ababaaaaaabaaab
-	// ababaaaaabbbaba
-	// baabbaaaabbaaaababbaababb
-	// abbbbabbbbaaaababbbbbbaaaababb
-	// aaaaabbaabaaaaababaa
-	// aaaabbaaaabbaaa
-	// aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
-	// babaaabbbaaabaababbaabababaaab
-	// aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba`
-
-	for _, message := range re.Messages {
-		if rule.IsMessageValid(message) {
-			fmt.Printf("PASSED (%v) '%v' : %v\n", message, rule.Line, rule.Value)
-			total++
-		} else {
-			fmt.Printf("FAILED (%v) '%v' : %v\n", message, rule.Line, rule.Value)
-		}
-	}
-	// total := re.Apply("0")
-	fmt.Printf("Part2 rules gives %v rules passing.\n", total)
-}
+// 	for _, message := range re.Messages {
+// 		if rule.IsMessageValid(message) {
+// 			fmt.Printf("PASSED (%v) '%v' : %v\n", message, rule.Line, rule.Value)
+// 			total++
+// 		} else {
+// 			fmt.Printf("FAILED (%v) '%v' : %v\n", message, rule.Line, rule.Value)
+// 		}
+// 	}
+// 	// total := re.Apply("0")
+// 	fmt.Printf("Part2 rules gives %v rules passing.\n", total)
+// }
