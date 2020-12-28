@@ -170,7 +170,6 @@ func AOC_2020_19_part2_attempt2(cli *goutils.CLI) {
 	allPassingMessages := make([]string, 0)
 
 	// not 307, 331? NO
-	// 374
 
 	for {
 		rr8_replacewith += rr8_template
