@@ -5,6 +5,23 @@ import (
 	"testing"
 )
 
+func Test_AOC2020_20_TestX(t *testing.T) {
+	image := NewImageFromString(DAY_20_DATA)
+	if image.Size() != 144 {
+		t.Errorf("Day 20 Part 1: Test data should have 144 tiles, was %v.\n", image.Size())
+	}
+}
+
+func Test_AOC2020_20_TestFindCorners(t *testing.T) {
+	image := NewImageFromString(DAY_20_TEST_DATA)
+	fmt.Printf("FindCorners\n")
+	corners := image.FindCorners2()
+	fmt.Printf("FindCorners: found %v\n", len(corners))
+	for _, tile := range corners {
+		fmt.Printf("%v\n", tile.TileId)
+	}
+}
+
 func Test_AOC2020_20_Test1(t *testing.T) {
 	image := NewImageFromString(DAY_20_TEST_DATA)
 	if image.Size() != 9 {

@@ -181,7 +181,13 @@ func AOC_2020_20(cli *goutils.CLI) {
 }
 
 func AOC_2020_20_part1_attempt1(cli *goutils.CLI) {
-
+	image := NewImageFromString(DAY_20_DATA)
+	fmt.Printf("FindCorners\n")
+	corners := image.FindCorners2()
+	fmt.Printf("FindCorners: found %v\n", len(corners))
+	for _, tile := range corners {
+		fmt.Printf("%v\n", tile.TileId)
+	}
 }
 
 type Image struct {
@@ -218,8 +224,78 @@ func NewImageFromString(data string) *Image {
 	return &i
 }
 
-func (i *Image) Arrange() {
+// FindTopLeftCorner looks for a tile which has ONLY 2 relations east and south
+func (i *Image) FindCorners2() []*Tile {
+	corners := make([]*Tile, 0)
+	for _, tile := range i.Tiles {
+		count := 0
+		for _, candidate := range i.Tiles {
+			result := i.AttemptAttach(tile, candidate)
+			if result {
+				count++
+			}
+			// two tiles, attempt to attach them
+			// walk the candidate all around
+			// then rotate the candidate and walkt it all around
+			// then flip it one way and walk it all round
+			// if it attaches, increment and move on
+		}
+		if count == 2 {
+			corners = append(corners, tile)
+		}
+	}
+	return corners
 }
+
+// FindCorners finds any tile which has two relations only.
+// func (i *Image) FindCorners() []*Tile {
+// 	corners := make([]*Tile, 0)
+// 	for _, tile := range i.Tiles {
+// 		relations := i.CountRelations(tile)
+// 		if relations != 2 {
+// 			relations = i.CountRelations(tile.Rotate())
+// 		}
+// 		if relations != 2 {
+// 			relations = i.CountRelations(tile.Rotate())
+// 		}
+// 		if relations != 2 {
+// 			relations = i.CountRelations(tile.Rotate())
+// 		}
+// 		if relations != 2 {
+// 			tile.Rotate()
+// 			tile.FlipHorizontal()
+// 			relations = i.CountRelations(tile)
+// 			if relations != 2 {
+// 				relations = i.CountRelations(tile.Rotate())
+// 			}
+// 			if relations != 2 {
+// 				relations = i.CountRelations(tile.Rotate())
+// 			}
+// 			if relations != 2 {
+// 				relations = i.CountRelations(tile.Rotate())
+// 			}
+// 		}
+
+// 		if relations == 2 {
+// 			corners = append(corners, tile)
+// 		}
+
+// 	}
+// 	return corners
+// }
+
+// CountRelations coutns the number different tiles that can attach to this one in this configuration
+// func (i *Image) CountRelations(tile *Tile) int {
+// 	count := 0
+// 	for _, candidate_tile := range i.Tiles {
+// 		if candidate_tile == tile {
+// 			continue
+// 		}
+// 		count := candidate_tile.NumberOfConnectionsTo(tile)
+
+// 	}
+// 	return count
+// }
 
 func (i *Image) GetTile(tileId string) *Tile {
 	tile, _ := i.Tiles[tileId]
@@ -367,4 +443,166 @@ func (t *Tile) FlipHorizontal() *Tile {
 	t.Matrix = matrix_flipped
 	t.Rekey()
 	return t
+}
+
+// IsNorthOf indicates if this attaches to the north of the candidate tile
+func (t *Tile) IsNorthOf(candidate *Tile) bool {
+	return t.South == candidate.North
+}
+
+// IsSouthOf indicates if this attaches to the south of the candidate tile
+func (t *Tile) IsSouthOf(candidate *Tile) bool {
+	return t.North == candidate.South
+}
+
+// IsWestOf indicates if this attaches to the west of the candidate tile
+func (t *Tile) IsWestOf(candidate *Tile) bool {
+	return t.East == candidate.West
+}
+
+// IsWestOf indicates if this attaches to the west of the candidate tile
+func (t *Tile) IsEastOf(candidate *Tile) bool {
+	return t.West == candidate.East
+}
+
+// NumberOfConnectionsTo indicates the number of ways this tile can connect to the candidate
+func (t *Tile) NumberOfConnections(candidate *Tile) int {
+	count := 0
+	if t.IsNorthOf(candidate) {
+		count++
+	}
+	if t.IsSouthOf(candidate) {
+		count++
+	}
+	if t.IsEastOf(candidate) {
+		count++
+	}
+	if t.IsWestOf(candidate) {
+		count++
+	}
+	return count
+}
+
+/*
+ Thoughts
+
+For any tile, the edge as a string is a key.
+
+A connecting tile will have the same key on some side.
+
+A tile shoudl be able to be "Attached" to some side of another tile, rendering it useless.
+
+A tile should be able to count the number of neighbours it *can* have by iterating over all other tiles and manipulating them until it either gets an attachment or does not.
+
+To connect all the tiles together, the total number of connected faces in a 9x9 would be 24
+
+
+	x x x       2  3  2           = 3x3 = 24
+
+	x x x       3  4  3
+
+	x x x       2  3  2
+
+
+
+	x  x  x  x    2  3   3  2     = 4x4  48
+
+	x  x  x  x    3  4   4  3
+
+	x  x  x  x    3  4   4  3
+
+    x  x  x  x    2  3   3  3
+
+
+	x  x  x  x  x                 = corners 2                 4 corners = 8
+
+	x  x  x  x  x                 = edge pieces 3 per face  12         = 36
+
+	x  x  x  x  x                 all others = 3 edges x3 = 9, 3 each  = 27   = 71
+
+	x  x  x  x  x
+
+	x  x  x  x  x
+
+
+	pieces
+	for length L, total = L^2
+	corners = 4
+	edges = L - 2 * 4
+	blocks/remainder = total - 4(corners) - edges
+
+	relations: corners 2
+	edges	: 3
+	blocks  : 4
+
+
+
+
+// Number of Edges = 4
+// Rotate 90       = 4
+// Rotate 180      = 4
+// Rotate 270      = 4
+// Flip Horiz	   = 2 (the top and bottom)
+// Flip Vert       = 2 (left and right)
+
+*/
+
+// AttemptAttach will attempt to attach on any side to a Tile
+// The tile will be rotated and flipped in all combinations to attempt to attach on any side
+// then it will FlipHorizontal and attempt 4 times, then it will FlipVertical and attempt 4 times
+func (i *Image) AttemptAttach(t *Tile, candidate *Tile) bool {
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+
+	// back to 0 and FlipVertical
+	candidate.Rotate()
+	candidate.FlipVertical()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+
+	// back to 0 and FlipHorizontal
+	candidate.Rotate()
+	candidate.FlipHorizontal()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	candidate.Rotate()
+	if t.NumberOfConnections(candidate) > 0 {
+		return true
+	}
+	return false
 }
