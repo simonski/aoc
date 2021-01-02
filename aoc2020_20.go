@@ -1,7 +1,6 @@
 package main
 
 /*
-
 -- Day 20: Jurassic Jigsaw ---
 The high-speed train leaves the forest and quickly carries you south. You can even see a desert in the distance! Since you have some spare time, you might as well see if there was anything interesting in the image the Mythical Information Bureau satellite captured.
 
@@ -164,7 +163,6 @@ For reference, the IDs of the above tiles are:
 To check that you've assembled the image correctly, multiply the IDs of the four corner tiles together. If you do this with the assembled tiles from the example above, you get 1951 * 3079 * 2971 * 1171 = 20899048083289.
 
 Assemble the tiles into an image. What do you get if you multiply together the IDs of the four corner tiles?
-
 */
 import (
 	"fmt"
@@ -178,226 +176,77 @@ import (
 // AOC_2020_20 is the entrypoint
 func AOC_2020_20(cli *goutils.CLI) {
 	AOC_2020_20_part1_attempt1(cli)
+	AOC_2020_20_part2_attempt1(cli)
 }
 
 func AOC_2020_20_part1_attempt1(cli *goutils.CLI) {
 	image := NewImageFromString(DAY_20_DATA)
 	fmt.Printf("FindCorners\n")
-	corners := image.FindCorners2()
-	fmt.Printf("FindCorners: found %v\n", len(corners))
-	for _, tile := range corners {
-		fmt.Printf("%v\n", tile.TileId)
-	}
+	data := image.Arrange(false)
+	DebugMatrix(data, true)
+
+	size := int(math.Sqrt(float64(len(data))))
+	key1 := fmt.Sprintf("%v,%v", 0, 0)
+	key2 := fmt.Sprintf("%v,%v", size-1, 0)
+	key3 := fmt.Sprintf("%v,%v", 0, size-1)
+	key4 := fmt.Sprintf("%v,%v", size-1, size-1)
+	corner1 := data[key1]
+	corner2 := data[key2]
+	corner3 := data[key3]
+	corner4 := data[key4]
+	fmt.Printf("Day 20.1: Corners are %v * %v * %v * %v = ?\n", corner1.TileId, corner2.TileId, corner3.TileId, corner4.TileId)
 }
 
-type Image struct {
-	Tiles map[string]*Tile
+func AOC_2020_20_part2_attempt1(cli *goutils.CLI) {
+	image := NewImageFromString(DAY_20_DATA)
+	image.Arrange(false)
+	hideEdges := false
+	showBorders := true
+	showCoordinates := false
+	matrix := image.Debug(hideEdges, showBorders, showCoordinates)
+	fmt.Printf(matrix)
+
+	// put all tiles together
+	// strip the edges of each
+	// create a single image
+	// apply the regex
+	//
+
+	// image := NewImageFromString(DAY_20_DATA)
+	// corners := image.FindCorners()
+	// image.ArrangeUsingCorners(corners)
+	// 3221
+	// 1447
+	// 1873
+	// 2029
+
+	// fmt.Printf("FindCorners: found %v\n", len(corners))
+	// for _, tile := range corners {
+	// 	fmt.Printf("%v\n", tile.TileId)
+	// }
 }
 
-func (i *Image) Size() int {
-	return len(i.Tiles)
-}
+// const TILE_WIDTH = 10
 
-func NewImageFromString(data string) *Image {
-	lines := strings.Split(data, "\n")
-	tiles := make(map[string]*Tile)
-	tileData := make([]string, 0)
-	tileId := ""
-	for _, line := range lines {
-		if strings.TrimSpace(line) == "" {
-			// end tile
-			tile := NewTile(tileId, tileData)
-			tiles[tileId] = tile
-		} else if strings.Index(line, "Tile") > -1 {
-			// start tile
-			line = strings.ReplaceAll(line, "Tile", "")
-			line = strings.ReplaceAll(line, ":", "")
-			line = strings.TrimSpace(line)
-			tileId = line
-			tileData = make([]string, 0)
-		} else {
-			// in a tile
-			tileData = append(tileData, line)
-		}
-	}
-	i := Image{Tiles: tiles}
-	return &i
-}
-
-// FindTopLeftCorner looks for a tile which has ONLY 2 relations east and south
-func (i *Image) FindCorners2() []*Tile {
-	corners := make([]*Tile, 0)
-	for _, tile := range i.Tiles {
-		count := 0
-		for _, candidate := range i.Tiles {
-			result := i.AttemptAttach(tile, candidate)
-			if result {
-				count++
-			}
-			// two tiles, attempt to attach them
-			// walk the candidate all around
-			// then rotate the candidate and walkt it all around
-			// then flip it one way and walk it all round
-			// if it attaches, increment and move on
-		}
-		if count == 2 {
-			corners = append(corners, tile)
-		}
-	}
-	return corners
-}
-
-// FindCorners finds any tile which has two relations only.
-// func (i *Image) FindCorners() []*Tile {
-// 	corners := make([]*Tile, 0)
-// 	for _, tile := range i.Tiles {
-// 		relations := i.CountRelations(tile)
-// 		if relations != 2 {
-// 			relations = i.CountRelations(tile.Rotate())
-// 		}
-// 		if relations != 2 {
-// 			relations = i.CountRelations(tile.Rotate())
-// 		}
-// 		if relations != 2 {
-// 			relations = i.CountRelations(tile.Rotate())
-// 		}
-// 		if relations != 2 {
-// 			tile.Rotate()
-// 			tile.FlipHorizontal()
-// 			relations = i.CountRelations(tile)
-// 			if relations != 2 {
-// 				relations = i.CountRelations(tile.Rotate())
-// 			}
-// 			if relations != 2 {
-// 				relations = i.CountRelations(tile.Rotate())
-// 			}
-// 			if relations != 2 {
-// 				relations = i.CountRelations(tile.Rotate())
-// 			}
-// 		}
-
-// 		if relations == 2 {
-// 			corners = append(corners, tile)
-// 		}
-
-// 	}
-// 	return corners
-// }
-
-// CountRelations coutns the number different tiles that can attach to this one in this configuration
-// func (i *Image) CountRelations(tile *Tile) int {
-// 	count := 0
-// 	for _, candidate_tile := range i.Tiles {
-// 		if candidate_tile == tile {
-// 			continue
-// 		}
-// 		count := candidate_tile.NumberOfConnectionsTo(tile)
-
-// 	}
-// 	return count
-// }
-
-func (i *Image) GetTile(tileId string) *Tile {
-	tile, _ := i.Tiles[tileId]
-	return tile
-}
-
-const MAX_ROWS = 10
-const MAX_COLS = 10
-
-type Tile struct {
-	TileId  string
-	Matrix  map[string]string
-	North   string
-	South   string
-	East    string
-	West    string
-	min_col int
-	min_row int
-}
-
-func NewTile(id string, data []string) *Tile {
-	index := 0
-	matrix := make(map[string]string)
-	for row := 0; row < MAX_ROWS; row++ {
-		rowData := data[row]
-		for col := 0; col < MAX_COLS; col++ {
-			value := rowData[col : col+1]
-			key := fmt.Sprintf("%v,%v", col, row)
-			matrix[key] = value
-			index++
-		}
-	}
-
-	// build north key
-	t := Tile{TileId: id, Matrix: matrix}
-	t.Rekey()
-	return &t
-}
-
-func (t *Tile) Rekey() *Tile {
-	north := ""
-	south := ""
-	east := ""
-	west := ""
-	for index := 0; index < MAX_COLS; index++ {
-		north += t.Get(index, 0)
-		south += t.Get(index, MAX_ROWS-1)
-		east += t.Get(0, index)
-		west += t.Get(MAX_COLS-1, index)
-	}
-	t.North = north
-	t.South = south
-	t.West = west
-	t.East = east
-	return t
-}
-
-func (t *Tile) Get(col int, row int) string {
-	key := fmt.Sprintf("%v,%v", col, row)
-	value, _ := t.Matrix[key]
-	return value
-}
-
-func (t *Tile) Debug() string {
-	data := ""
-	for row := 0; row < MAX_ROWS; row++ {
-		for col := 0; col < MAX_COLS; col++ {
-			value := t.Get(col, row)
-			data += value
-		}
-		data += "\n"
-	}
-	return strings.TrimSpace(data)
-}
-
-func (t *Tile) Rotate() *Tile {
-	matrix := make(map[string]string)
+func NormaliseTileMap(source map[string]*Tile) map[string]*Tile {
 	min_col := 1000
 	min_row := 1000
 	max_col := -1000
 	max_row := -1000
 	// 90 cw rotation = (x,y) -> (-y, x)
-	for col := 0; col < MAX_COLS; col++ {
-		for row := 0; row < MAX_ROWS; row++ {
-			value := t.Get(col, row)
-			new_col := -row
-			new_row := col
-			min_col = Min(min_col, new_col)
-			min_row = Min(min_row, new_row)
-			max_col = Max(max_col, new_col)
-			max_row = Max(max_row, new_row)
-			// original_key := fmt.Sprintf("%v,%v", col, row)
-			new_key := fmt.Sprintf("%v,%v", new_col, new_row)
-			// fmt.Printf("(%v) cw90 -> (%v)\n", original_key, new_key)
-			matrix[new_key] = value
-		}
+	for key, _ := range source {
+		splits := strings.Split(key, ",")
+		col, _ := strconv.Atoi(splits[0])
+		row, _ := strconv.Atoi(splits[1])
+		min_col = Min(min_col, col)
+		min_row = Min(min_row, row)
+		max_col = Max(max_col, col)
+		max_row = Max(max_row, row)
 	}
 
 	// now normalise our x,y so we are at 0,0 again
-	matrix_normalised := make(map[string]string)
-	fmt.Printf("\n\n")
-	for key, value := range matrix {
+	matrix_normalised := make(map[string]*Tile)
+	for key, value := range source {
 		splits := strings.Split(key, ",")
 		col, _ := strconv.Atoi(splits[0])
 		row, _ := strconv.Atoi(splits[1])
@@ -407,202 +256,192 @@ func (t *Tile) Rotate() *Tile {
 		// fmt.Printf("Rotate: (%v) -> (%v)\n", key, new_key)
 		matrix_normalised[new_key] = value
 	}
-	fmt.Printf("\n\n")
-
-	t.Matrix = matrix_normalised
-	t.Rekey()
-	return t
+	return matrix_normalised
 }
 
-func (t *Tile) FlipVertical() *Tile {
-	matrix_flipped := make(map[string]string)
-	for old_key, value := range t.Matrix {
-		splits := strings.Split(old_key, ",")
+// Rotates the tile 90 degrees clockwise, removing any relationships this
+// tile has
+func RotateMatrix(input map[string]*Tile) map[string]*Tile {
+	output := make(map[string]*Tile)
+	min_col := 1000
+	min_row := 1000
+	max_col := -1000
+	max_row := -1000
+	// 90 cw rotation = (x,y) -> (-y, x)
+	for key, tile := range input {
+		col, _ := strconv.Atoi(strings.Split(key, ",")[0])
+		row, _ := strconv.Atoi(strings.Split(key, ",")[1])
+		new_col := -row
+		new_row := col
+		min_col = Min(min_col, new_col)
+		min_row = Min(min_row, new_row)
+		max_col = Max(max_col, new_col)
+		max_row = Max(max_row, new_row)
+		new_key := fmt.Sprintf("%v,%v", new_col, new_row)
+		output[new_key] = tile
+	}
+
+	// now normalise our x,y so we are at 0,0 again
+	normalised := make(map[string]*Tile)
+	// fmt.Printf("\n\n")
+	for key, value := range output {
+		splits := strings.Split(key, ",")
 		col, _ := strconv.Atoi(splits[0])
 		row, _ := strconv.Atoi(splits[1])
-		new_row := MAX_ROWS - row - 1
-		new_key := fmt.Sprintf("%v,%v", col, new_row)
-		// fmt.Printf("Tile.FlipVertical() %v -> %v\n", old_key, new_key)
-		matrix_flipped[new_key] = value
+		new_col := col + int(math.Abs(float64(min_col)))
+		new_row := row + int(math.Abs(float64(min_row)))
+		new_key := fmt.Sprintf("%v,%v", new_col, new_row)
+		// fmt.Printf("Rotate: (%v) -> (%v)\n", key, new_key)
+		normalised[new_key] = value
 	}
-	t.Matrix = matrix_flipped
-	t.Rekey()
-	return t
+
+	return normalised
 }
 
-func (t *Tile) FlipHorizontal() *Tile {
-	matrix_flipped := make(map[string]string)
-	for old_key, value := range t.Matrix {
-		splits := strings.Split(old_key, ",")
+// Rotates the tile 90 degrees clockwise, removing any relationships this
+// tile has
+func FlipMatrixVertical(input map[string]*Tile) map[string]*Tile {
+	output := make(map[string]*Tile)
+	min_col := 1000
+	min_row := 1000
+	max_col := -1000
+	max_row := -1000
+	// vertical flip is x, y -> x, -y and normalise
+	for key, tile := range input {
+		col, _ := strconv.Atoi(strings.Split(key, ",")[0])
+		row, _ := strconv.Atoi(strings.Split(key, ",")[1])
+		new_row := -row
+		new_col := col
+		min_col = Min(min_col, new_col)
+		min_row = Min(min_row, new_row)
+		max_col = Max(max_col, new_col)
+		max_row = Max(max_row, new_row)
+		new_key := fmt.Sprintf("%v,%v", new_col, new_row)
+		output[new_key] = tile
+		tile.SetCanRotateOrFlip(true)
+		tile.FlipVertical()
+		tile.SetCanRotateOrFlip(false)
+	}
+
+	// now normalise our x,y so we are at 0,0 again
+	normalised := make(map[string]*Tile)
+	// fmt.Printf("\n\n")
+	for key, value := range output {
+		splits := strings.Split(key, ",")
 		col, _ := strconv.Atoi(splits[0])
 		row, _ := strconv.Atoi(splits[1])
-		new_col := MAX_COLS - col - 1
-		new_key := fmt.Sprintf("%v,%v", new_col, row)
-		matrix_flipped[new_key] = value
+		new_col := col + int(math.Abs(float64(min_col)))
+		new_row := row + int(math.Abs(float64(min_row)))
+		new_key := fmt.Sprintf("%v,%v", new_col, new_row)
+		// fmt.Printf("Rotate: (%v) -> (%v)\n", key, new_key)
+		normalised[new_key] = value
 	}
-	t.Matrix = matrix_flipped
-	t.Rekey()
-	return t
+
+	return normalised
 }
 
-// IsNorthOf indicates if this attaches to the north of the candidate tile
-func (t *Tile) IsNorthOf(candidate *Tile) bool {
-	return t.South == candidate.North
+func DebugMatrix(matrix map[string]*Tile, showPositions bool) string {
+	size := int(math.Sqrt(float64(len(matrix))))
+	line := ""
+	for row := 0; row < size; row++ {
+		for col := 0; col < size; col++ {
+			key := fmt.Sprintf("%v,%v", col, row)
+			tile := matrix[key]
+			if showPositions {
+				line += "(" + key + ") "
+			}
+			line += tile.TileId
+			line += " "
+		}
+		line += "\n\n"
+	}
+	return fmt.Sprintf(line)
 }
 
-// IsSouthOf indicates if this attaches to the south of the candidate tile
-func (t *Tile) IsSouthOf(candidate *Tile) bool {
-	return t.North == candidate.South
-}
+func ValidateMatrix(matrix map[string]*Tile) (string, bool) {
+	size := int(math.Sqrt(float64(len(matrix))))
+	line := ""
+	errorsExist := false
+	for row := 0; row < size; row++ {
+		for col := 0; col < size; col++ {
+			key := fmt.Sprintf("%v,%v", col, row)
+			tile := matrix[key]
+			northKey := fmt.Sprintf("%v,%v", col, row+1)
+			southKey := fmt.Sprintf("%v,%v", col, row-1)
+			eastKey := fmt.Sprintf("%v,%v", col+1, row)
+			westKey := fmt.Sprintf("%v,%v", col-1, row)
 
-// IsWestOf indicates if this attaches to the west of the candidate tile
-func (t *Tile) IsWestOf(candidate *Tile) bool {
-	return t.East == candidate.West
-}
+			northRequired := row < size
+			southRequired := row > 0
+			eastRequired := col < size
+			westRequired := col > 0
 
-// IsWestOf indicates if this attaches to the west of the candidate tile
-func (t *Tile) IsEastOf(candidate *Tile) bool {
-	return t.West == candidate.East
-}
+			// check all tiles around this tile to ensure their keys line up
+			northTile, northExists := matrix[northKey]
+			southTile, southExists := matrix[southKey]
+			eastTile, eastExists := matrix[eastKey]
+			westTile, westExists := matrix[westKey]
 
-// NumberOfConnectionsTo indicates the number of ways this tile can connect to the candidate
-func (t *Tile) NumberOfConnections(candidate *Tile) int {
-	count := 0
-	if t.IsNorthOf(candidate) {
-		count++
+			errors := ""
+			if northRequired != northExists {
+				errorsExist = true
+				errors += fmt.Sprintf("North required %v, north exists %v.\n", northRequired, northExists)
+			} else if northExists {
+				// verify alignment
+				if tile.NorthEdge != northTile.SouthEdge {
+					errorsExist = true
+					errors += fmt.Sprintf("North tile %v (%v) edge does not match %v != %v.\n", northTile.TileId, northKey, northTile.SouthEdge, tile.NorthEdge)
+					errors += fmt.Sprintf("Tile (required matching north edge)\n%v\n\n", tile.Debug(false))
+					errors += fmt.Sprintf("\nNorth Tile\n%v\n\n", northTile.Debug(false))
+				}
+			}
+			if southRequired != southExists {
+				errorsExist = true
+				errors += fmt.Sprintf("South required %v, south exists %v.\n", southRequired, southExists)
+			} else if southExists {
+				// verify alignment
+				if tile.SouthEdge != southTile.NorthEdge {
+					errorsExist = true
+					errors += fmt.Sprintf("South tile %v (%v) edge does not match %v != %v.\n", southTile.TileId, southKey, southTile.NorthEdge, tile.SouthEdge)
+					errors += fmt.Sprintf("Tile (required matching south edge)\n%v\n\n", tile.Debug(false))
+					errors += fmt.Sprintf("\nSouth Tile\n%v\n\n", southTile.Debug(false))
+				}
+			}
+
+			if eastRequired != eastExists {
+				errorsExist = true
+				errors += fmt.Sprintf("East required %v, east exists %v.\n", eastRequired, eastExists)
+			} else if eastExists {
+				// verify alignment
+				if tile.EastEdge != eastTile.WestEdge {
+					errorsExist = true
+					errors += fmt.Sprintf("East tile %v (%v) edge does not match %v != %v.\n", eastTile.TileId, eastKey, eastTile.WestEdge, tile.EastEdge)
+					errors += fmt.Sprintf("Tile (required matching east edge)\n%v\n\n", tile.Debug(false))
+					errors += fmt.Sprintf("\nEast Tile\n%v\n\n", eastTile.Debug(false))
+				}
+			}
+
+			if westRequired != westExists {
+				errorsExist = true
+				errors += fmt.Sprintf("West required %v, west exists %v.\n", westRequired, westExists)
+			} else if westExists {
+				// verify alignment
+				if tile.WestEdge != westTile.EastEdge {
+					errorsExist = true
+					errors += fmt.Sprintf("West tile %v (%v) edge does not match %v != %v.\n", westTile.TileId, westKey, westTile.EastEdge, tile.WestEdge)
+					errors += fmt.Sprintf("Tile (requires matching west edge)\n%v\n\n", tile.Debug(false))
+					errors += fmt.Sprintf("\nWest Tile\n%v\n\n", westTile.Debug(false))
+				}
+			}
+
+			if errorsExist {
+				line += fmt.Sprintf("\n%v (%v)\n", tile.TileId, key)
+				line += errors
+			} else {
+				line += fmt.Sprintf("\n%v (%v) OK\n", tile.TileId, key)
+			}
+		}
+		line += "\n\n"
 	}
-	if t.IsSouthOf(candidate) {
-		count++
-	}
-	if t.IsEastOf(candidate) {
-		count++
-	}
-	if t.IsWestOf(candidate) {
-		count++
-	}
-	return count
-}
-
-/*
- Thoughts
-
-For any tile, the edge as a string is a key.
-
-A connecting tile will have the same key on some side.
-
-A tile shoudl be able to be "Attached" to some side of another tile, rendering it useless.
-
-A tile should be able to count the number of neighbours it *can* have by iterating over all other tiles and manipulating them until it either gets an attachment or does not.
-
-To connect all the tiles together, the total number of connected faces in a 9x9 would be 24
-
-
-	x x x       2  3  2           = 3x3 = 24
-
-	x x x       3  4  3
-
-	x x x       2  3  2
-
-
-
-	x  x  x  x    2  3   3  2     = 4x4  48
-
-	x  x  x  x    3  4   4  3
-
-	x  x  x  x    3  4   4  3
-
-    x  x  x  x    2  3   3  3
-
-
-	x  x  x  x  x                 = corners 2                 4 corners = 8
-
-	x  x  x  x  x                 = edge pieces 3 per face  12         = 36
-
-	x  x  x  x  x                 all others = 3 edges x3 = 9, 3 each  = 27   = 71
-
-	x  x  x  x  x
-
-	x  x  x  x  x
-
-
-	pieces
-	for length L, total = L^2
-	corners = 4
-	edges = L - 2 * 4
-	blocks/remainder = total - 4(corners) - edges
-
-	relations: corners 2
-	edges	: 3
-	blocks  : 4
-
-
-
-
-// Number of Edges = 4
-// Rotate 90       = 4
-// Rotate 180      = 4
-// Rotate 270      = 4
-// Flip Horiz	   = 2 (the top and bottom)
-// Flip Vert       = 2 (left and right)
-
-*/
-
-// AttemptAttach will attempt to attach on any side to a Tile
-// The tile will be rotated and flipped in all combinations to attempt to attach on any side
-// then it will FlipHorizontal and attempt 4 times, then it will FlipVertical and attempt 4 times
-func (i *Image) AttemptAttach(t *Tile, candidate *Tile) bool {
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-
-	// back to 0 and FlipVertical
-	candidate.Rotate()
-	candidate.FlipVertical()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-
-	// back to 0 and FlipHorizontal
-	candidate.Rotate()
-	candidate.FlipHorizontal()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	candidate.Rotate()
-	if t.NumberOfConnections(candidate) > 0 {
-		return true
-	}
-	return false
+	return fmt.Sprintf(line), errorsExist
 }

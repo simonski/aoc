@@ -157,6 +157,44 @@ func (m *IntMap) Increment(key int) int {
 	return value
 }
 
+type Counter struct {
+	data map[string]int
+}
+
+func NewCounter() *Counter {
+	data := make(map[string]int)
+	m := Counter{data: data}
+	return &m
+}
+
+func (m *Counter) Get(key string, defaultValue int) int {
+	value, exists := m.data[key]
+	if exists {
+		return value
+	} else {
+		return defaultValue
+	}
+}
+
+func (m *Counter) Keys() []string {
+	klist := make([]string, 0)
+	for k, _ := range m.data {
+		klist = append(klist, k)
+	}
+	return klist
+}
+
+func (m *Counter) Put(key string, value int) {
+	m.data[key] = value
+}
+
+func (m *Counter) Increment(key string) int {
+	value := m.Get(key, 0)
+	value++
+	m.Put(key, value)
+	return value
+}
+
 type Point2D struct {
 	x int
 	y int
@@ -231,4 +269,23 @@ func binary_to_decimal(decimalValue string) int64 {
 		}
 	}
 	return total
+}
+
+func ReverseString(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
+
+// make_map_of_inty_list helper makes a map[int]int of a []int to give me
+// whatever go's maps key algorithm performance is, at the cost of the memory
+func make_map_of_inty_list(data []int) map[int]int {
+	m := make(map[int]int)
+	for index := 0; index < len(data); index++ {
+		value := data[index]
+		m[value] = value
+	}
+	return m
 }
