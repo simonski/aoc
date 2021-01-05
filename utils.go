@@ -104,6 +104,17 @@ func load_file_to_strings(filename string) []string {
 
 }
 
+// make_map_of_inty_list helper makes a map[int]int of a []int to give me
+// whatever go's maps key algorithm performance is, at the cost of the memory
+func make_map_of_inty_list(data []int) map[int]int {
+	m := make(map[int]int)
+	for index := 0; index < len(data); index++ {
+		value := data[index]
+		m[value] = value
+	}
+	return m
+}
+
 func convert_strings_to_ints(input []string) []int {
 	output := make([]int, 0)
 	for _, value := range input {
@@ -125,133 +136,6 @@ func Max(v1 int, v2 int) int {
 		return v1
 	}
 	return v2
-}
-
-type IntMap struct {
-	data map[int]int
-}
-
-func NewIntMap() *IntMap {
-	data := make(map[int]int)
-	m := IntMap{data: data}
-	return &m
-}
-
-func (m *IntMap) Get(key int, defaultValue int) int {
-	value, exists := m.data[key]
-	if exists {
-		return value
-	} else {
-		return defaultValue
-	}
-}
-
-func (m *IntMap) Put(key int, value int) {
-	m.data[key] = value
-}
-
-func (m *IntMap) Increment(key int) int {
-	value := m.Get(key, 0)
-	value++
-	m.Put(key, value)
-	return value
-}
-
-type Counter struct {
-	data map[string]int
-}
-
-func NewCounter() *Counter {
-	data := make(map[string]int)
-	m := Counter{data: data}
-	return &m
-}
-
-func (m *Counter) Get(key string, defaultValue int) int {
-	value, exists := m.data[key]
-	if exists {
-		return value
-	} else {
-		return defaultValue
-	}
-}
-
-func (m *Counter) Keys() []string {
-	klist := make([]string, 0)
-	for k, _ := range m.data {
-		klist = append(klist, k)
-	}
-	return klist
-}
-
-func (m *Counter) Put(key string, value int) {
-	m.data[key] = value
-}
-
-func (m *Counter) Increment(key string) int {
-	value := m.Get(key, 0)
-	value++
-	m.Put(key, value)
-	return value
-}
-
-type Point2D struct {
-	x int
-	y int
-}
-
-type Point3D struct {
-	x int
-	y int
-	z int
-}
-
-type Point4D struct {
-	x int
-	y int
-	z int
-	w int
-}
-
-// Rotates this point around origin 0, 0
-func (p *Point2D) Rotate(degrees int) {
-	origin := &Point2D{0, 0}
-	p.RotateAroundOrigin(degrees, origin)
-}
-
-// RotatesAroundOrigin rotates this point around the specified origin
-func (p *Point2D) RotateAroundOrigin(degrees int, origin *Point2D) {
-
-	if degrees < 0 {
-		degrees = 360 + degrees
-	}
-
-	x_original := p.x - origin.x
-	y_original := p.y - origin.y
-
-	x := 0
-	y := 0
-
-	if degrees == 90 {
-		// 90 cw (y, -x)
-		x = y_original
-		y = -x_original
-	} else if degrees == 180 {
-		// 180 cw (x,y) -> (-x, -y)
-		x = -x_original
-		y = -y_original
-	} else if degrees == 270 {
-		// 180 cw (x,y) -> (-y, x)
-		x = -y_original
-		y = x_original
-	}
-
-	x += origin.x
-	y += origin.y
-
-	p.x = x
-	p.y = y
-
 }
 
 func decimal_to_binary(value int64) string {
@@ -277,15 +161,4 @@ func ReverseString(s string) string {
 		runes[i], runes[j] = runes[j], runes[i]
 	}
 	return string(runes)
-}
-
-// make_map_of_inty_list helper makes a map[int]int of a []int to give me
-// whatever go's maps key algorithm performance is, at the cost of the memory
-func make_map_of_inty_list(data []int) map[int]int {
-	m := make(map[int]int)
-	for index := 0; index < len(data); index++ {
-		value := data[index]
-		m[value] = value
-	}
-	return m
 }
