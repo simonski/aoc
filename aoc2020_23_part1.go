@@ -77,16 +77,45 @@ Using your labeling, simulate 100 moves. What are the labels on the cups after c
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_20 is the entrypoint
 func AOC_2020_23(cli *goutils.CLI) {
-	AOC_2020_23_part1_attempt1(cli)
+	AOC_2020_23_part2_attempt1(cli)
 }
 
 func AOC_2020_23_part1_attempt1(cli *goutils.CLI) {
+}
+
+func AOC_2020_23_part2_attempt1(cli *goutils.CLI) {
+	start := time.Now()
+	input := "198753462"
+	SIZE := 1000000
+	ROUNDS := SIZE * 10
+	data := make([]int, SIZE)
+	for index := 0; index < len(input); index++ {
+		sval := input[index : index+1]
+		ival, _ := strconv.Atoi(sval)
+		data[index] = ival
+	}
+	inputSize := len(input)
+	for index := inputSize; index < SIZE; index++ {
+		data[index] = index + 1
+	}
+
+	ring := NewRing(data)
+	DEBUG := false
+	ring.Play(ROUNDS, DEBUG)
+	cup1 := ring.Find(1)
+	r1 := cup1.Next
+	r2 := cup1.Next.Next
+	fmt.Printf("r1.Value=%v, r2.Value=%v, %v x %v = %v\n", r1.Value, r2.Value, r1.Value, r2.Value, r1.Value*r2.Value)
+	end := time.Now()
+	fmt.Printf("%v\n", end.Sub(start))
+
 }
 
 type CrabCups struct {
@@ -134,9 +163,9 @@ func DebugLine(currentCup int, data []int) string {
 }
 
 func Shuffle(currentCup int, newIndexRequired int, data []int) []int {
-	d := make([]int, 9)
 	index := IndexOf(currentCup, data)
 	offset := newIndexRequired - index
+	d := make([]int, len(data))
 	for index := 0; index < len(data); index++ {
 		new_index := (index + offset) % len(data)
 		if index+offset < 0 {

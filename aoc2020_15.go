@@ -69,7 +69,7 @@ func AOC_2020_15_part1_attempt1(cli *goutils.CLI) {
 }
 
 func NextInDay15Part1Sequence(sequence string, iterations int) int {
-	ints := split_to_ints(sequence)
+	ints := split_comma_separated_string_to_ints(sequence)
 
 	store := NewValueStore()
 	lastValue := -1
@@ -101,12 +101,23 @@ func NextInDay15Part1Sequence(sequence string, iterations int) int {
 	return speakValue
 }
 
-func split_to_ints(sequence string) []int {
+func split_comma_separated_string_to_ints(sequence string) []int {
 	splits := strings.Split(sequence, ",")
 	results := make([]int, 0)
 	for _, entry := range splits {
 		ivalue, _ := strconv.Atoi(entry)
 		results = append(results, ivalue)
+	}
+	return results
+}
+
+//  split_undecorated_string_to_ints takes a string 5432 returning [ 5, 4, 3, 2 ]
+func split_undecorated_string_to_ints(sequence string) []int {
+	results := make([]int, len(sequence))
+	for index := 0; index < len(sequence); index++ {
+		svalue := sequence[index : index+1]
+		ivalue, _ := strconv.Atoi(svalue)
+		results[index] = ivalue
 	}
 	return results
 }

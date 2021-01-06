@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -107,5 +108,78 @@ func Test_AOC2020_23_1_Test(t *testing.T) {
 	// if result100 != "67384529" {
 	// 	t.Errorf("CrabCups(100) should give 67384529 but gave %v.\n", result100)
 	// }
+
+}
+
+func Test_AOC2020_23_2_Test(t *testing.T) {
+	cc := NewCrabCups2("389125467")
+	DEBUG := false
+	cc.Play(10000000, DEBUG)
+	index := IndexOf(1, cc.Data)
+	fmt.Printf("data length is %v\n", len(cc.Data))
+	fmt.Printf("data[%v] = %v\n", index, cc.Data[index])
+	fmt.Printf("data[%v] = %v\n", index+1, cc.Data[index+1])
+	fmt.Printf("data[%v] = %v\n", index+2, cc.Data[index+2])
+
+	for index, value := range cc.Data {
+		fmt.Printf("[%v] = %v\n", index, value)
+	}
+}
+
+func Test_AOC2020_23_Ring_Test_Real(t *testing.T) {
+	DEBUG := true
+	// input := "389125467"
+	// 198753462
+	input := "198753462"
+	data := split_undecorated_string_to_ints(input)
+	// SIZE := 100
+	// data := make([]int, SIZE)
+	// for index := 0; index < len(input); index++ {
+	// 	sval := input[index : index+1]
+	// 	ival, _ := strconv.Atoi(sval)
+	// 	data[index] = ival
+	// }
+	// inputSize := len(input)
+	// for index := inputSize; index < SIZE; index++ {
+	// 	data[index] = index + 1
+	// }
+
+	ring := NewRing(data)
+	ring.Play(100, DEBUG)
+	// fmt.Printf("The line is \n\n%v\n\n", line)
+	// result100Real := ccReal.Play(100, true)
+	// fmt.Printf("CrabCups(100) REAL gives %v\n", result100Real)
+
+}
+
+func Test_AOC2020_23_Ring_Test_Mega(t *testing.T) {
+	DEBUG := false
+
+	test_input := "389125467"
+	// real_input := "198753462"
+	// data := split_undecorated_string_to_ints(input)
+	input := test_input
+	SIZE := 1000000
+	ROUNDS := SIZE * 10
+	data := make([]int, SIZE)
+	for index := 0; index < len(input); index++ {
+		sval := input[index : index+1]
+		ival, _ := strconv.Atoi(sval)
+		data[index] = ival
+	}
+	inputSize := len(input)
+	for index := inputSize; index < SIZE; index++ {
+		data[index] = index + 1
+	}
+
+	ring := NewRing(data)
+	ring.Play(ROUNDS, DEBUG)
+	cup1 := ring.Find(1)
+	r1 := cup1.Next
+	r2 := cup1.Next.Next
+	fmt.Printf("r1.Value=%v, r2.Value=%v, % x %v = %v\n", r1.Value, r2.Value, r1.Value, r2.Value, r1.Value*r2.Value)
+	// fmt.Printf("The line is \n\n%v\n\n", line)
+	// result100Real := ccReal.Play(100, true)
+	// fmt.Printf("CrabCups(100) REAL gives %v\n", result100Real)
 
 }
