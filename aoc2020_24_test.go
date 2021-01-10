@@ -113,7 +113,7 @@ func Test_AOC2020_24_AddressParsing(t *testing.T) {
 
 func verifyCoordinates(address string, expected_x float64, expected_y int, t *testing.T) {
 	grid := NewHexGrid()
-	actual_x, actual_y := grid.Coordinates(address)
+	actual_x, actual_y := grid.CoordinatesCreateHexesAlongTheWay(address)
 	if actual_x != expected_x || actual_y != expected_y {
 		t.Errorf("VerifyCoordinates(%v) expect (%v,%v) got (%v,%v)\n", address, expected_x, expected_y, actual_x, actual_y)
 		t.Errorf("%v\n", grid.ParseAddress(address))
@@ -130,26 +130,26 @@ func verifyCoordinates(address string, expected_x float64, expected_y int, t *te
 func Test_AOC2020_24_Part1_Test(t *testing.T) {
 	grid := NewHexGrid()
 	grid.PlayPart1(DAY_24_TEST_INPUT)
-	fmt.Printf("BlackCount: %v\n", grid.BlackCount())
+	// fmt.Printf("BlackCount: %v\n", grid.BlackCount())
 	grid.Render(0, "test_day_0.png")
-	for day := 1; day <= 10; day++ {
+	for day := 1; day <= 100; day++ {
 		grid.PlayPart2(day)
 		filename := fmt.Sprintf("test_day_%v.png", day)
 		grid.Render(day, filename)
 	}
 }
 
-func Test_AOC2020_24_Part1_Real(t *testing.T) {
+func Test_AOC2020_24_Part2_Real(t *testing.T) {
 	grid := NewHexGrid()
 	grid.PlayPart1(DAY_24_INPUT)
 	width, height := grid.Dimensions()
 	fmt.Printf("BlackCount: %v, width: %v, height :%v\n", grid.BlackCount(), width, height)
-	grid.Render(0, "test_real_part1.png")
-	// keys := grid.Keys()
-	// for _, key := range keys {
-	// 	fmt.Printf("%v\n", key)
-	// }
-	// "ne e sw se e nw w sw nw sw sw nw"
+	grid.Render(0, "real_day_0.png")
+	for day := 1; day <= 100; day++ {
+		grid.PlayPart2(day)
+		filename := fmt.Sprintf("real_day_%v.png", day)
+		grid.Render(day, filename)
+	}
 }
 func Test_AOC2020_24_Part2(t *testing.T) {
 	grid := NewHexGrid()
@@ -168,10 +168,13 @@ func Test_AOC2020_24_X(t *testing.T) {
 	// grid.PlayPart1(DAY_24_TEST_INPUT)
 	fmt.Printf("BlackCount: %v\n", grid.BlackCount())
 	hex := grid.FindByCoordinates("0,0").Flip()
+	grid.FindByCoordinates("-2,0").Flip()
+	// grid.FindByCoordinates("2,0").Flip()
 	neighbours := hex.Neighbours()
 	for _, coords := range neighbours {
 		grid.FindByCoordinates(coords).Flip()
 	}
+	grid.Render(0, "test_day_x.png")
 
 	hex = grid.FindByCoordinates("-0.5,-1") // .Flip()
 	neighbours = hex.Neighbours()

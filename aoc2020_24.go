@@ -671,7 +671,15 @@ func (grid *HexGrid) PlayPart2(day int) (int, int, int, int) {
 
 	newCache := make(map[string]*Hex)
 	keys := grid.Keys()
+	for _, key := range keys {
+		hex := grid.FindByCoordinates(key)
+		for _, nkey := range hex.Neighbours() {
+			grid.FindByCoordinates(nkey)
+		}
+	}
+
 	// fmt.Printf("There are %v tiles.\n", len(keys))
+	keys = grid.Keys()
 	for _, key := range keys {
 		// fmt.Printf("1: %v\n", key)
 		hex := grid.FindByCoordinates(key)
@@ -689,18 +697,18 @@ func (grid *HexGrid) PlayPart2(day int) (int, int, int, int) {
 		// fmt.Printf("6")
 		copy := hex.Copy()
 		if !hex.White && (count == 0 || count > 2) {
-			fmt.Printf("[Play] [Day %v] (%v,%v) is Black, has %v neighbours, flipping white.\n", day, copy.x, copy.y, count)
+			// fmt.Printf("[Play] [Day %v] (%v,%v) is Black, has %v neighbours, flipping white.\n", day, copy.x, copy.y, count)
 			copy.Flip()
 			turnWhite++
 		} else if hex.White && count == 2 {
-			fmt.Printf("[Play] [Day %v] (%v,%v) is White, has %v neighbours, flipping black.\n", day, copy.x, copy.y, count)
+			// fmt.Printf("[Play] [Day %v] (%v,%v) is White, has %v neighbours, flipping black.\n", day, copy.x, copy.y, count)
 			copy.Flip()
 			turnBlack++
 		} else if hex.White {
-			fmt.Printf("[Play] [Day %v] (%v,%v) is White, has %v neighbours, ignoring.\n", day, copy.x, copy.y, count)
+			// fmt.Printf("[Play] [Day %v] (%v,%v) is White, has %v neighbours, ignoring.\n", day, copy.x, copy.y, count)
 			stayWhite++
 		} else {
-			fmt.Printf("[Play] [Day %v] (%v,%v) is Black, has %v neighbours, ignoring.\n", day, copy.x, copy.y, count)
+			// fmt.Printf("[Play] [Day %v] (%v,%v) is Black, has %v neighbours, ignoring.\n", day, copy.x, copy.y, count)
 			stayBlack++
 		}
 		// fmt.Printf("7")
@@ -723,7 +731,7 @@ func (hex *Hex) Neighbours() []string {
 }
 
 // Coordinates returns the relative x,y of this address from the centre
-func (grid *HexGrid) Coordinates(fullAddress string) (float64, int) {
+func (grid *HexGrid) CoordinatesDontCreateHexesAlongTheWay(fullAddress string) (float64, int) {
 	x := 0.0
 	y := 0
 	parsed := grid.ParseAddress(fullAddress)
@@ -756,8 +764,44 @@ func (grid *HexGrid) Coordinates(fullAddress string) (float64, int) {
 
 }
 
+func (grid *HexGrid) CoordinatesCreateHexesAlongTheWay(fullAddress string) (float64, int) {
+	x := 0.0
+	y := 0
+	parsed := grid.ParseAddress(fullAddress)
+	for _, address := range parsed {
+		if strings.Index(address, "se") == 0 {
+			x += 0.5
+			y -= 1
+			address = address[2:]
+		} else if strings.Index(address, "sw") == 0 {
+			x -= 0.5
+			y -= 1
+			address = address[2:]
+		} else if strings.Index(address, "ne") == 0 {
+			x += 0.5
+			y += 1
+			address = address[2:]
+		} else if strings.Index(address, "nw") == 0 {
+			x -= 0.5
+			y += 1
+			address = address[2:]
+		} else if strings.Index(address, "e") == 0 {
+			x += 1
+			address = address[1:]
+		} else if strings.Index(address, "w") == 0 {
+			x -= 1
+			address = address[1:]
+		}
+		// now create this one as-is
+		key := fmt.Sprintf("%v,%v", x, y)
+		grid.FindByCoordinates(key)
+	}
+	return x, y
+
+}
+
 func (grid *HexGrid) FindByAddress(address string) *Hex {
-	x, y := grid.Coordinates(address)
+	x, y := grid.CoordinatesCreateHexesAlongTheWay(address)
 	key := fmt.Sprintf("%v,%v", x, y)
 	hex, exists := grid.Cache[key]
 	if exists {
@@ -837,29 +881,39 @@ func NewHexGrid() *HexGrid {
 func (grid *HexGrid) Render(day int, filename string) {
 	// keys := grid.Keys()
 
-	colorBackground := "#ffccff" // peach
-	colorLine := "#000000"       // black
-	colorFill := "#000000"       // black
+	COLOR_PEACH := "#ffccff"
+	COLOR_BLACK := "#000000"
+	COLOR_WHITE := "#ffffff"
+
+	colorBackground := COLOR_PEACH // peach
+	colorLine := COLOR_BLACK       // black
+	colorFill := COLOR_BLACK       // black
 
 	drawHex := true
 	drawBoxWithBorder := false
 	drawBoxWithoutBorder := false
 	drawPoints := false
-	drawText := true
+	drawText := false
 	drawInfo := true
 
-	imageWidth := 1000.0
-	imageHeight := 1000.0
-	imageOffsetX := 0.0
-	imageOffsetY := 0.0
-	imageCentreX := imageOffsetX + (imageWidth / 2.0)
-	imageCentreY := imageOffsetY + (imageHeight / 2.0)
-	border := 25.0    // 1pct of the overall side as a horizontal margin
-	tileMargin := 1.0 // amound of space 'inside' tile box before tile is rendered
+	overallImageWidth := 1000.0
+	overallImageHeight := 1000.0
 
-	dc := gg.NewContext(int(imageWidth), int(imageHeight))
+	border := 25.0 // 1pct of the overall side as a horizontal margin
+	viewportW := overallImageWidth * 0.75
+	viewportH := overallImageHeight * 0.75
+	viewportX := overallImageWidth - viewportW - border
+	viewportY := overallImageHeight/2 - (viewportH / 2) // - border
+
+	// imageOffsetX := 0.0
+	// imageOffsetY := 0.0
+	imageCentreX := viewportX + viewportW/2.0 // imageOffsetX + (imageWidth / 2.0)
+	imageCentreY := viewportY + viewportH/2.0 // imageOffsetY + (imageHeight / 2.0)
+	tileMargin := 1.0                         // amound of space 'inside' tile box before tile is rendered
+
+	dc := gg.NewContext(int(overallImageWidth), int(overallImageHeight))
 	// fill background entirely
-	dc.DrawRectangle(0, 0, float64(imageWidth), float64(imageHeight))
+	dc.DrawRectangle(0, 0, float64(overallImageWidth), float64(overallImageHeight))
 	dc.SetHexColor(colorBackground)
 	dc.Fill()
 
@@ -868,8 +922,8 @@ func (grid *HexGrid) Render(day int, filename string) {
 	numberOfWhiteTiles := len(grid.Cache) - grid.BlackCount()
 	numberTilesHorizontal, numberTilesVertical := grid.Dimensions()
 
-	totalTileHeight := (imageHeight - (border * 2.0)) / float64((numberTilesVertical + 1))
-	totalTileWidth := (imageWidth - (border * 2.0)) / float64((numberTilesHorizontal + 1))
+	totalTileHeight := (viewportH - (border * 2.0)) / float64((numberTilesVertical + 1))
+	totalTileWidth := (viewportW - (border * 2.0)) / float64((numberTilesHorizontal + 1))
 
 	totalTileHeight = math.Min(totalTileHeight, totalTileWidth)
 	totalTileWidth = math.Min(totalTileHeight, totalTileWidth)
@@ -986,6 +1040,7 @@ func (grid *HexGrid) Render(day int, filename string) {
 
 			if fill {
 				dc.ClearPath()
+				dc.SetHexColor(COLOR_BLACK)
 				dc.MoveTo(tileP1.x, tileP1.y)
 				dc.LineTo(tileP2.x, tileP2.y)
 				dc.LineTo(tileP3.x, tileP3.y)
@@ -999,11 +1054,12 @@ func (grid *HexGrid) Render(day int, filename string) {
 				dc.Fill()
 				// 				dc.SetHexColor(colorFill)
 				if drawText {
-					dc.SetHexColor("#ffffff")
+					dc.SetHexColor(COLOR_WHITE)
 					dc.DrawString(key, x_pos-10, y_pos)
 					dc.Fill()
 				}
 			} else {
+				dc.SetHexColor(COLOR_BLACK)
 				dc.DrawLine(tileP1.x, tileP1.y, tileP2.x, tileP2.y)
 				dc.DrawLine(tileP2.x, tileP2.y, tileP3.x, tileP3.y)
 				dc.DrawLine(tileP3.x, tileP3.y, tileP4.x, tileP4.y)
@@ -1082,6 +1138,11 @@ func (grid *HexGrid) Render(day int, filename string) {
 		dc.Stroke()
 	}
 
+	dc.DrawRectangle(viewportX, viewportY, viewportW, viewportH)
+	dc.SetHexColor(colorLine)
+	dc.SetLineWidth(1)
+	dc.Stroke()
+
 	dc.SavePNG(filename)
 
 }
@@ -1151,8 +1212,8 @@ func (grid *HexGrid) Dimensions() (int, int) {
 		// min_x := math.Min(min_x, hex.x)
 		// min_y := math.Min(min_y, hex.y)
 		// max_x := math.Max(max_x, hex.x)
-		max_x = Max(max_x, int(x))
-		max_y = Max(max_y, y)
+		max_x = Max(max_x, int(math.Abs(x)))
+		max_y = Max(max_y, int(math.Abs(float64(y))))
 	}
 	width := (max_x * 2) + 1  //  * 1.5
 	height := (max_y * 2) + 1 //  * 1.5
