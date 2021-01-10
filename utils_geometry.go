@@ -5,6 +5,16 @@ type Point2D struct {
 	y int
 }
 
+type Point2DF struct {
+	x float64
+	y float64
+}
+
+func (point *Point2DF) Translate(x float64, y float64) *Point2DF {
+	copy := Point2DF{x: point.x + x, y: point.y + y}
+	return &copy
+}
+
 type Point3D struct {
 	x int
 	y int

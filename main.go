@@ -70,6 +70,8 @@ func main() {
 			AOC_2020_22(&cli)
 		} else if command == "2020-23" {
 			AOC_2020_23(&cli)
+		} else if command == "2020-24" {
+			AOC_2020_24(&cli)
 		} else if command == "version" {
 			fmt.Printf("aoc version %v\n", VERSION)
 		} else {
