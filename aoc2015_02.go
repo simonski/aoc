@@ -14,15 +14,17 @@ All numbers in the elves' list are in feet. How many total square feet of wrappi
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 
 	goutils "github.com/simonski/goutils"
 )
 
-// AOC_2020_25 is the entrypoint
+// AOC_2015_02 is the entrypoint
 func AOC_2015_02(cli *goutils.CLI) {
 	AOC_2015_02_part1_attempt1(cli)
+	AOC_2015_02_part2_attempt1(cli)
 }
 
 func AOC_2015_02_part1_attempt1(cli *goutils.CLI) {
@@ -48,7 +50,16 @@ A present with dimensions 1x1x10 requires 1+1+1+1 = 4 feet of ribbon to wrap the
 How many total feet of ribbon should they order?
 */
 func AOC_2015_02_part2_attempt1(cli *goutils.CLI) {
-
+	lines := strings.Split(DAY_2015_02_DATA, "\n")
+	volume := 0
+	perimeter := 0
+	for _, line := range lines {
+		p := NewPresent(line)
+		perimeter += p.Perimeter()
+		volume += p.Volume()
+	}
+	total := perimeter + volume
+	fmt.Printf("Volume %v Perimeter %v, total %v\n", volume, perimeter, total)
 }
 
 type Present struct {
@@ -71,6 +82,20 @@ func (p *Present) Area() int {
 	t = Min(t, h*l)
 
 	return a1 + a2 + a3 + t
+}
+
+func (p *Present) Volume() int {
+	return p.l * p.h * p.w
+}
+
+func (p *Present) Perimeter() int {
+	arr := make([]int, 0)
+	arr = append(arr, p.l)
+	arr = append(arr, p.h)
+	arr = append(arr, p.w)
+	sort.Ints(arr)
+	fmt.Printf("%v\n", arr)
+	return arr[0] + arr[0] + arr[1] + arr[1]
 }
 
 func NewPresent(line string) *Present {
