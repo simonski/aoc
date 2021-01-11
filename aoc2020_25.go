@@ -47,8 +47,14 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-const DAY_25_INPUT_1 = 335121
-const DAY_25_INPUT_2 = 363891
+const DAY_25_DIVIDE_BY = 20201227
+
+const DAY_25_TEST_CARD_PUBLIC_KEY = 5764801
+const DAY_25_TEST_CARD_LOOP_SIZE = 8
+const DAY_25_TEST_CARD_SUBJECT_NUMBER = 7
+
+const DAY_25_CARD_PUBLIC_KEY = 335121
+const DAY_25_DOOR_PUBLIC_KEY = 363891
 
 // AOC_2020_25 is the entrypoint
 func AOC_2020_25(cli *goutils.CLI) {
@@ -66,4 +72,34 @@ func AOC_2020_25_part2_attempt1(cli *goutils.CLI) {
 	start := time.Now()
 	end := time.Now()
 	fmt.Printf("%v\n", end.Sub(start))
+}
+
+// Finds the loop size or breaks after CIRCUIT_BREAKER times (1000)
+func FindLoopSize(subject_number int, target int) int {
+	loop_size := 1
+	value := 1
+	for {
+		if loop_size%10000 == 0 {
+			fmt.Printf("FindLoopSize(subject_number: %v, target %v, value=%v) loop=%v\n", subject_number, target, value, loop_size)
+		}
+		value *= subject_number
+		value = value % DAY_25_DIVIDE_BY
+		if value == target {
+			return loop_size
+		}
+		loop_size++
+	}
+}
+
+func FindPrivateKey(subject_number int, max_loop_size int) int {
+	loop_size := 1
+	value := 1
+	for {
+		value *= subject_number
+		value = value % DAY_25_DIVIDE_BY
+		if loop_size == max_loop_size {
+			return value
+		}
+		loop_size++
+	}
 }
