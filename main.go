@@ -22,6 +22,13 @@ func main() {
 			Help(&cli)
 		} else if command == "info" {
 			Info(&cli)
+		} else if command == "2015" {
+			AOC_2015(&cli)
+		} else if command == "2015-01" {
+			AOC_2015_01(&cli)
+		} else if command == "2015-02" {
+			AOC_2015_02(&cli)
+
 		} else if command == "2020" {
 			AOC_2020(&cli)
 		} else if command == "2020-01" {
@@ -93,10 +100,11 @@ func Usage() {
 	Console("")
 	Console("The commands are:")
 	Console("")
-	Console("\t2020", "run all 2020 examples")
-	Console("\t  2020-01", "run only 2020-01 problem")
-	Console("\t  ..")
-	Console("\t  2020-25", "run only the 2020-25 problem")
+	Console("\t2020", "run all 2020 days")
+	Console("\t  2020-01 .. 2020-25", "run specific day")
+	Console("")
+	Console("\t20150", "run all 2020 examples")
+	Console("\t  2015-01 .. 20150-25", "run specific day")
 	Console("")
 	Console("\tversion", "prints aoc version ")
 	Console("")
@@ -119,6 +127,35 @@ func Help(cli *goutils.CLI) {
 func Info(cli *goutils.CLI) {
 	info := NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
+}
+
+// Usage displays in terminal how to use the application
+// Usage displays in terminal how to use the application
+func AOC_2015(cli *goutils.CLI) {
+	AOC_2015_01(cli)
+	AOC_2015_02(cli)
+	// AOC_2015_03(cli)
+	// AOC_2015_04(cli)
+	// AOC_2015_05(cli)
+	// AOC_2015_06(cli)
+	// AOC_2015_07(cli)
+	// AOC_2015_08(cli)
+	// AOC_2015_09(cli)
+	// AOC_2015_10(cli)
+	// AOC_2015_11(cli)
+	// AOC_2015_13(cli)
+	// AOC_2015_14(cli)
+	// AOC_2015_15(cli)
+	// AOC_2015_16(cli)
+	// AOC_2015_17(cli)
+	// AOC_2015_18(cli)
+	// AOC_2015_19(cli)
+	// AOC_2015_20(cli)
+	// AOC_2015_21(cli)
+	// AOC_2015_22(cli)
+	// AOC_2015_23(cli)
+	// AOC_2015_24(cli)
+	// AOC_2015_25(cli)
 }
 
 // Usage displays in terminal how to use the application
