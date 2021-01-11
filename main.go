@@ -72,6 +72,8 @@ func main() {
 			AOC_2020_23(&cli)
 		} else if command == "2020-24" {
 			AOC_2020_24(&cli)
+		} else if command == "2020-25" {
+			AOC_2020_25(&cli)
 		} else if command == "version" {
 			fmt.Printf("aoc version %v\n", VERSION)
 		} else {
@@ -94,7 +96,7 @@ func Usage() {
 	Console("\t2020", "run all 2020 examples")
 	Console("\t  2020-01", "run only 2020-01 problem")
 	Console("\t  ..")
-	Console("\t  2020-23", "run only the 2020-23 problem")
+	Console("\t  2020-25", "run only the 2020-25 problem")
 	Console("")
 	Console("\tversion", "prints aoc version ")
 	Console("")
@@ -141,9 +143,8 @@ func AOC_2020(cli *goutils.CLI) {
 	AOC_2020_19(cli)
 	AOC_2020_20(cli)
 	AOC_2020_21(cli)
-	// AOC_2020_21(cli)
-	// AOC_2020_22(cli)
-	// AOC_2020_23(cli)
-	// AOC_2020_24(cli)
-	// AOC_2020_25(cli)
+	AOC_2020_22(cli)
+	AOC_2020_23(cli)
+	AOC_2020_24(cli)
+	AOC_2020_25(cli)
 }
