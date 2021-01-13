@@ -38,7 +38,6 @@ Before you can help with the homework, you need to understand it yourself. Evalu
 import (
 	"fmt"
 	"regexp"
-	"strconv"
 	"strings"
 
 	goutils "github.com/simonski/goutils"
@@ -652,19 +651,6 @@ func (c *WeirdCalculator) CalculateV2(sum string) int {
 		return value
 
 	}
-}
-
-func intify(value string) int {
-	ival, _ := strconv.Atoi(strings.TrimSpace(value))
-	return ival
-}
-
-func isint(value string) bool {
-	_, err := strconv.Atoi(value)
-	if err != nil {
-		return false
-	}
-	return true
 }
 
 func isadd(value string) bool {

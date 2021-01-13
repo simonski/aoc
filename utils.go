@@ -162,3 +162,22 @@ func ReverseString(s string) string {
 	}
 	return string(runes)
 }
+
+func intify(value string) int {
+	ival, _ := strconv.Atoi(strings.TrimSpace(value))
+	return ival
+}
+
+func isint(value string) bool {
+	_, err := strconv.Atoi(value)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+func bitwisenot(value int) int {
+	result := (1 << 16) - 1 - value
+	// fmt.Printf("bitwisenot: ^%v=%v\n", value, result)
+	return result
+}
