@@ -32,6 +32,10 @@ func main() {
 			AOC_2015_03(&cli)
 		} else if command == "2015-04" {
 			AOC_2015_04(&cli)
+		} else if command == "2015-05" {
+			AOC_2015_05(&cli)
+		} else if command == "2015-06" {
+			AOC_2015_06(&cli)
 
 		} else if command == "2020" {
 			AOC_2020(&cli)
@@ -107,8 +111,8 @@ func Usage() {
 	Console("\t2020", "run all 2020 days")
 	Console("\t  2020-01 .. 2020-25", "run specific day")
 	Console("")
-	Console("\t20150", "run all 2020 examples")
-	Console("\t  2015-01 .. 20150-25", "run specific day")
+	Console("\t2015", "run all 2015 examples")
+	Console("\t  2015-01 .. 2015-25", "run specific day")
 	Console("")
 	Console("\tversion", "prints aoc version ")
 	Console("")
@@ -138,10 +142,10 @@ func Info(cli *goutils.CLI) {
 func AOC_2015(cli *goutils.CLI) {
 	AOC_2015_01(cli)
 	AOC_2015_02(cli)
-	// AOC_2015_03(cli)
-	// AOC_2015_04(cli)
-	// AOC_2015_05(cli)
-	// AOC_2015_06(cli)
+	AOC_2015_03(cli)
+	AOC_2015_04(cli)
+	AOC_2015_05(cli)
+	AOC_2015_06(cli)
 	// AOC_2015_07(cli)
 	// AOC_2015_08(cli)
 	// AOC_2015_09(cli)
