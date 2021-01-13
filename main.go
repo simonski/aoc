@@ -36,6 +36,8 @@ func main() {
 			AOC_2015_05(&cli)
 		} else if command == "2015-06" {
 			AOC_2015_06(&cli)
+		} else if command == "2015-07" {
+			AOC_2015_07(&cli)
 
 		} else if command == "2020" {
 			AOC_2020(&cli)
@@ -137,8 +139,6 @@ func Info(cli *goutils.CLI) {
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
 }
 
-// Usage displays in terminal how to use the application
-// Usage displays in terminal how to use the application
 func AOC_2015(cli *goutils.CLI) {
 	AOC_2015_01(cli)
 	AOC_2015_02(cli)
@@ -146,7 +146,7 @@ func AOC_2015(cli *goutils.CLI) {
 	AOC_2015_04(cli)
 	AOC_2015_05(cli)
 	AOC_2015_06(cli)
-	// AOC_2015_07(cli)
+	AOC_2015_07(cli)
 	// AOC_2015_08(cli)
 	// AOC_2015_09(cli)
 	// AOC_2015_10(cli)
