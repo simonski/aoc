@@ -38,6 +38,8 @@ func main() {
 			AOC_2015_06(&cli)
 		} else if command == "2015-07" {
 			AOC_2015_07(&cli)
+		} else if command == "2015-08" {
+			AOC_2015_08(&cli)
 
 		} else if command == "2020" {
 			AOC_2020(&cli)
