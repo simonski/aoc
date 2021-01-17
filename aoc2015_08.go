@@ -31,7 +31,7 @@ import (
 // AOC_2015_07 is the entrypoint
 func AOC_2015_08(cli *goutils.CLI) {
 	AOC_2015_08_part1_attempt1(cli)
-	// AOC_2015_08_part2_attempt1(cli)
+	AOC_2015_08_part2_attempt1(cli)
 }
 
 func AOC_2015_08_part1_attempt1(cli *goutils.CLI) {
@@ -50,10 +50,30 @@ func AOC_2015_08_part1_attempt1(cli *goutils.CLI) {
 	}
 	fmt.Printf("%v - %v = %v\n", length, character_length, length-character_length)
 
-	// 1206 too low
-	// 1246 wrong
-	// 1257 wrong
+}
 
+func AOC_2015_08_part2_attempt1(cli *goutils.CLI) {
+
+	data := DAY_2015_08_DATA
+	splits := strings.Split(data, "\n")
+	// length := 0
+	// character_length := 0
+	for _, line := range splits {
+		total_quoted_character_length(line)
+		break
+	}
+}
+
+func total_quoted_character_length(line string) int {
+	count := len(line)
+	for index, _ := range line {
+		c := line[index : index+1]
+		if c == `\` || c == '"' {
+			count++
+		}
+		fmt.Printf("%v\n", c)
+	}
+	return count
 }
 
 func total_parsed_character_length(line string) int {
