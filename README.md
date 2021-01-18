@@ -16,21 +16,27 @@ If you want to build it yourself, try this
     cd aoc
     make all
 
+This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
+
 ## Runnning
 
 Once you've got it, run it like so
 
-    ./aoc
+    aoc
 
-After that, to run a given aoc day
+After that, have a look at the puzzles
 
-    ./aoc 2020-01 -input data/1_input.csv
+    aoc list
 
-    ...
+A completed year/day combo will show up as a green star.  If the puzzle has a visualisation it will show as a yellow star.
 
-    ./aoc 2020-06 -input data/6_input.txt
+Let's run 2020, day 1
 
-    
-And so on...
+    aoc run 2020 01
+
+Let's render day 24, 2020 as an animation
+
+    aoc render 2020 24
+
 
     
