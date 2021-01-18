@@ -3,6 +3,7 @@ module github.com/simonski/aoc
 go 1.14
 
 require (
+	github.com/andybons/gogif v0.0.0-20140526152223-16d573594812
 	github.com/fogleman/gg v1.3.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/google/uuid v1.1.2

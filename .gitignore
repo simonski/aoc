@@ -8,6 +8,10 @@
 
 __pycache__
 
+*.gif
+*.png
+*.jpeg
+
 aoc
 # Compiled class file
 *.class

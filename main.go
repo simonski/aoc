@@ -3,9 +3,77 @@ package main
 import (
 	"fmt"
 	"os"
+	"reflect"
 
 	goutils "github.com/simonski/goutils"
 )
+
+const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
+
+Usage:
+    aoc <command> [arguments]
+	
+The commands are:
+
+    run (year) (day)         run a puzzle 
+	
+    render (year) (day)      render a puzzle to an animated gif
+
+    list (year)              list all the puzzles done so far
+	
+    version                  prints aoc version
+	
+Usage "aoc help <topic>" for more information.
+
+`
+
+type AOC2015_06 struct {
+}
+
+func (logic *AOC2015_06) Part1(app *Application) {
+}
+
+type Application struct {
+}
+
+func (app *Application) Foo() {
+	fmt.Printf("Application.Foo()")
+}
+
+func reflectycall() {
+	// gimme an application
+	var app Application
+	rvalue := reflect.ValueOf(&app)
+	mvalue := rvalue.MethodByName("foo")
+	cvalue := mvalue.Call([]reflect.Value{})
+	if false {
+		fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
+	}
+	// reflect.ValueOf(&t).MethodByName("Foo").Call([]reflect.Value{})
+
+}
+
+func (app *Application) ReflectUponMySelf(name string, cli *goutils.CLI) {
+	// gimme an application
+	inputs := make([]reflect.Value, 1) // len(args))
+	inputs[0] = reflect.ValueOf(cli)
+	// for i, _ := range args {
+	// 	inputs[i] = reflect.ValueOf(args[i])
+	// }
+	rvalue := reflect.ValueOf(&app)
+	mvalue := rvalue.MethodByName(name)
+	// inputs := cli
+	cvalue := mvalue.Call(inputs) // []reflect.Value{})
+	if false {
+		fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
+	}
+	// reflect.ValueOf(&t).MethodByName("Foo").Call([]reflect.Value{})
+
+}
+
+func (app *Application) AThing(cli *goutils.CLI) {
+	fmt.Printf("AThing, cli length is %v\n", len(cli.Args))
+}
 
 func main() {
 	cli := goutils.CLI{os.Args}
@@ -20,6 +88,8 @@ func main() {
 	} else {
 		if command == "help" {
 			Help(&cli)
+		} else if command == "render" {
+			Render(&cli)
 		} else if command == "info" {
 			Info(&cli)
 		} else if command == "2015" {
@@ -103,23 +173,7 @@ func main() {
 
 // Usage displays in terminal how to use the application
 func Usage() {
-	Console("aoc is my Advent Of Code set of attempts.")
-	Console("")
-	Console("Usage:")
-	Console("\taoc <command> [arguments]")
-	Console("")
-	Console("The commands are:")
-	Console("")
-	Console("\t2020", "run all 2020 days")
-	Console("\t  2020-01 .. 2020-25", "run specific day")
-	Console("")
-	Console("\t2015", "run all 2015 examples")
-	Console("\t  2015-01 .. 2015-25", "run specific day")
-	Console("")
-	Console("\tversion", "prints aoc version ")
-	Console("")
-	Console("Usage \"aoc help <topic>\" for more information.")
-	Console("")
+	fmt.Printf(USAGE_OVERALL)
 }
 
 // Help shows detailed help on each command
@@ -137,6 +191,31 @@ func Help(cli *goutils.CLI) {
 func Info(cli *goutils.CLI) {
 	info := NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
+}
+
+func Render(cli *goutils.CLI) {
+
+	USAGE := `aoc render <day> will call the render logic on that day
+
+renderable days:
+	2015-06
+	2015-08
+
+	2020-24
+`
+	fmt.Printf(USAGE)
+	// if len(cli.Args) == 2 {
+	// 	// they typed render only
+	// } else {
+
+	// }
+
+	// }
+	// command := cli.Args[2]
+	// if len(os.Args) < 2 {
+	// 	Usage()
+	// }
+
 }
 
 func AOC_2015(cli *goutils.CLI) {
