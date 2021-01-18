@@ -1,6 +1,6 @@
-# AOC (go)
+# AOC
 
-This houses my Advent of Code [https://adventofcode.com/2020](https://adventofcode.com/2020) attempts, in go.
+This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.com/) attempts, in go.
 
 ## Install
 
