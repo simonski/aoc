@@ -57,6 +57,7 @@ import (
 	"strconv"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -171,7 +172,7 @@ func Day13Logic(time int, buses []int) (int, int) {
 }
 
 func ParseDay13FilePart1(filename string) (int, []int) {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	time, _ := strconv.Atoi(lines[0])
 	buses := make([]int, 0)
 	splits := strings.Split(lines[1], ",")
@@ -189,7 +190,7 @@ func ParseDay13FilePart1(filename string) (int, []int) {
 
 // ParseDay13FilePart2 returns two []int - one of the buses one of their indexes
 func ParseDay13FilePart2(filename string) ([]int, []int) {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	// time, _ := strconv.Atoi(lines[0])
 	buses := make([]int, 0)
 	indexes := make([]int, 0)

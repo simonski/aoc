@@ -90,6 +90,7 @@ import (
 	"fmt"
 	"sort"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -102,7 +103,7 @@ func AOC_2020_10(cli *goutils.CLI) {
 
 func AOC_2020_10_part1_attempt1_from_cli(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
-	ints := load_file_to_ints(filename)
+	ints := utils.Load_file_to_ints(filename)
 	results := AOC_2020_10_part1_attempt1(ints)
 	fmt.Printf("%v\n", results)
 
@@ -176,7 +177,7 @@ func AOC_2020_10_part1_attempt1(ints []int) map[int]int {
 
 func AOC_2020_10_part2_attempt2(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
-	data := load_file_to_ints(filename)
+	data := utils.Load_file_to_ints(filename)
 	fmt.Printf("data is   %v\n", data)
 	sort.Ints(data)
 	fmt.Printf("sorted is %v\n", data)
@@ -187,13 +188,13 @@ func AOC_2020_10_part2_attempt2(cli *goutils.CLI) {
 	// #                                                + ways to get to 3 jolts less than this joltage
 	// ways[a] = ways.get(a - 1, 0) + ways.get(a - 2, 0) + ways.get(a - 3, 0)
 
-	m := NewIntMap()
+	m := utils.NewIntMap()
 	m.Put(0, 1)
 	max := 0
 	for _, value := range data {
 		total := m.Get(value-1, 0) + m.Get(value-2, 0) + m.Get(value-3, 0)
 		m.Put(value, total)
-		max = Max(max, total)
+		max = utils.Max(max, total)
 	}
 
 	fmt.Printf("%v\n", m)

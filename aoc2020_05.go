@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -68,7 +69,7 @@ func AOC_2020_05_part2_attempt1(cli *goutils.CLI) {
 }
 
 func LoadBoardingPassesFromFile(filename string) []*BoardingPass {
-	results := load_file_to_strings(filename)
+	results := utils.Load_file_to_strings(filename)
 	passes := make([]*BoardingPass, 0)
 	for index := 0; index < len(results); index++ {
 		line := results[index]

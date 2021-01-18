@@ -1,17 +1,17 @@
-package main
+package utils
 
 type Counter struct {
-	data map[string]int
+	Data map[string]int
 }
 
 func NewCounter() *Counter {
 	data := make(map[string]int)
-	m := Counter{data: data}
+	m := Counter{Data: data}
 	return &m
 }
 
 func (m *Counter) Get(key string, defaultValue int) int {
-	value, exists := m.data[key]
+	value, exists := m.Data[key]
 	if exists {
 		return value
 	} else {
@@ -21,14 +21,14 @@ func (m *Counter) Get(key string, defaultValue int) int {
 
 func (m *Counter) Keys() []string {
 	klist := make([]string, 0)
-	for k, _ := range m.data {
+	for k, _ := range m.Data {
 		klist = append(klist, k)
 	}
 	return klist
 }
 
 func (m *Counter) Put(key string, value int) {
-	m.data[key] = value
+	m.Data[key] = value
 }
 
 func (m *Counter) Increment(key string) int {

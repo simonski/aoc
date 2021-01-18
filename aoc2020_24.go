@@ -57,6 +57,7 @@ import (
 
 	"github.com/andybons/gogif"
 	"github.com/fogleman/gg"
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -399,12 +400,12 @@ func (grid *HexGrid) Render(day int, filename string) {
 	halfTileHeight := tileHeight / 2.0
 	halfTileWidth := tileWidth / 2.0
 	divideBy := 2.25
-	p1 := Point2DF{x: 0.0, y: halfTileHeight}                                          // north
-	p2 := Point2DF{x: halfTileWidth, y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
-	p3 := Point2DF{x: halfTileWidth, y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
-	p4 := Point2DF{x: 0, y: -halfTileHeight}                                           // south
-	p5 := Point2DF{x: -halfTileWidth, y: -halfTileHeight + (halfTileHeight / divideBy)}
-	p6 := Point2DF{x: -halfTileWidth, y: halfTileHeight - (halfTileHeight / divideBy)}
+	p1 := utils.Point2DF{X: 0.0, Y: halfTileHeight}                                          // north
+	p2 := utils.Point2DF{X: halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
+	p3 := utils.Point2DF{X: halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
+	p4 := utils.Point2DF{X: 0, Y: -halfTileHeight}                                           // south
+	p5 := utils.Point2DF{X: -halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)}
+	p6 := utils.Point2DF{X: -halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}
 
 	// count := 0
 
@@ -501,13 +502,13 @@ func (grid *HexGrid) Render(day int, filename string) {
 			if fill {
 				dc.ClearPath()
 				dc.SetHexColor(COLOR_BLACK)
-				dc.MoveTo(tileP1.x, tileP1.y)
-				dc.LineTo(tileP2.x, tileP2.y)
-				dc.LineTo(tileP3.x, tileP3.y)
-				dc.LineTo(tileP4.x, tileP4.y)
-				dc.LineTo(tileP5.x, tileP5.y)
-				dc.LineTo(tileP6.x, tileP6.y)
-				dc.LineTo(tileP1.x, tileP1.y)
+				dc.MoveTo(tileP1.X, tileP1.Y)
+				dc.LineTo(tileP2.X, tileP2.Y)
+				dc.LineTo(tileP3.X, tileP3.Y)
+				dc.LineTo(tileP4.X, tileP4.Y)
+				dc.LineTo(tileP5.X, tileP5.Y)
+				dc.LineTo(tileP6.X, tileP6.Y)
+				dc.LineTo(tileP1.X, tileP1.Y)
 				dc.ClosePath()
 				dc.SetHexColor(colorFill)
 				dc.SetLineWidth(lineWidth)
@@ -520,12 +521,12 @@ func (grid *HexGrid) Render(day int, filename string) {
 				}
 			} else {
 				dc.SetHexColor(COLOR_BLACK)
-				dc.DrawLine(tileP1.x, tileP1.y, tileP2.x, tileP2.y)
-				dc.DrawLine(tileP2.x, tileP2.y, tileP3.x, tileP3.y)
-				dc.DrawLine(tileP3.x, tileP3.y, tileP4.x, tileP4.y)
-				dc.DrawLine(tileP4.x, tileP4.y, tileP5.x, tileP5.y)
-				dc.DrawLine(tileP5.x, tileP5.y, tileP6.x, tileP6.y)
-				dc.DrawLine(tileP6.x, tileP6.y, tileP1.x, tileP1.y)
+				dc.DrawLine(tileP1.X, tileP1.Y, tileP2.X, tileP2.Y)
+				dc.DrawLine(tileP2.X, tileP2.Y, tileP3.X, tileP3.Y)
+				dc.DrawLine(tileP3.X, tileP3.Y, tileP4.X, tileP4.Y)
+				dc.DrawLine(tileP4.X, tileP4.Y, tileP5.X, tileP5.Y)
+				dc.DrawLine(tileP5.X, tileP5.Y, tileP6.X, tileP6.Y)
+				dc.DrawLine(tileP6.X, tileP6.Y, tileP1.X, tileP1.Y)
 				dc.Stroke()
 				if drawText {
 					dc.SetHexColor(colorLine)
@@ -535,12 +536,12 @@ func (grid *HexGrid) Render(day int, filename string) {
 				}
 				// dc.DrawString(key, x_pos-10, y_pos)
 				if drawPoints {
-					dc.DrawString(fmt.Sprintf("P1 (%v,%v)", tileP1.x, tileP1.y), tileP1.x, tileP1.y)
-					dc.DrawString("P2", tileP2.x, tileP2.y)
-					dc.DrawString(fmt.Sprintf("P3 (%v,%v)", tileP3.x, tileP3.y), tileP3.x, tileP3.y)
-					dc.DrawString("P4", tileP4.x, tileP4.y)
-					dc.DrawString("P5", tileP5.x, tileP5.y)
-					dc.DrawString("P6", tileP6.x, tileP6.y)
+					dc.DrawString(fmt.Sprintf("P1 (%v,%v)", tileP1.X, tileP1.Y), tileP1.X, tileP1.Y)
+					dc.DrawString("P2", tileP2.X, tileP2.Y)
+					dc.DrawString(fmt.Sprintf("P3 (%v,%v)", tileP3.X, tileP3.Y), tileP3.X, tileP3.Y)
+					dc.DrawString("P4", tileP4.X, tileP4.Y)
+					dc.DrawString("P5", tileP5.X, tileP5.Y)
+					dc.DrawString("P6", tileP6.X, tileP6.Y)
 					dc.Stroke()
 				}
 			}
@@ -711,12 +712,12 @@ func (grid *HexGrid) RenderFrame(dc *gg.Context, day int) image.Image {
 	halfTileHeight := tileHeight / 2.0
 	halfTileWidth := tileWidth / 2.0
 	divideBy := 2.25
-	p1 := Point2DF{x: 0.0, y: halfTileHeight}                                          // north
-	p2 := Point2DF{x: halfTileWidth, y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
-	p3 := Point2DF{x: halfTileWidth, y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
-	p4 := Point2DF{x: 0, y: -halfTileHeight}                                           // south
-	p5 := Point2DF{x: -halfTileWidth, y: -halfTileHeight + (halfTileHeight / divideBy)}
-	p6 := Point2DF{x: -halfTileWidth, y: halfTileHeight - (halfTileHeight / divideBy)}
+	p1 := utils.Point2DF{X: 0.0, Y: halfTileHeight}                                          // north
+	p2 := utils.Point2DF{X: halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
+	p3 := utils.Point2DF{X: halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
+	p4 := utils.Point2DF{X: 0, Y: -halfTileHeight}                                           // south
+	p5 := utils.Point2DF{X: -halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)}
+	p6 := utils.Point2DF{X: -halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}
 
 	// count := 0
 
@@ -813,13 +814,13 @@ func (grid *HexGrid) RenderFrame(dc *gg.Context, day int) image.Image {
 			if fill {
 				dc.ClearPath()
 				dc.SetHexColor(COLOR_BLACK)
-				dc.MoveTo(tileP1.x, tileP1.y)
-				dc.LineTo(tileP2.x, tileP2.y)
-				dc.LineTo(tileP3.x, tileP3.y)
-				dc.LineTo(tileP4.x, tileP4.y)
-				dc.LineTo(tileP5.x, tileP5.y)
-				dc.LineTo(tileP6.x, tileP6.y)
-				dc.LineTo(tileP1.x, tileP1.y)
+				dc.MoveTo(tileP1.X, tileP1.Y)
+				dc.LineTo(tileP2.X, tileP2.Y)
+				dc.LineTo(tileP3.X, tileP3.Y)
+				dc.LineTo(tileP4.X, tileP4.Y)
+				dc.LineTo(tileP5.X, tileP5.Y)
+				dc.LineTo(tileP6.X, tileP6.Y)
+				dc.LineTo(tileP1.X, tileP1.Y)
 				dc.ClosePath()
 				dc.SetHexColor(colorFill)
 				dc.SetLineWidth(lineWidth)
@@ -832,12 +833,12 @@ func (grid *HexGrid) RenderFrame(dc *gg.Context, day int) image.Image {
 				}
 			} else {
 				dc.SetHexColor(COLOR_BLACK)
-				dc.DrawLine(tileP1.x, tileP1.y, tileP2.x, tileP2.y)
-				dc.DrawLine(tileP2.x, tileP2.y, tileP3.x, tileP3.y)
-				dc.DrawLine(tileP3.x, tileP3.y, tileP4.x, tileP4.y)
-				dc.DrawLine(tileP4.x, tileP4.y, tileP5.x, tileP5.y)
-				dc.DrawLine(tileP5.x, tileP5.y, tileP6.x, tileP6.y)
-				dc.DrawLine(tileP6.x, tileP6.y, tileP1.x, tileP1.y)
+				dc.DrawLine(tileP1.X, tileP1.Y, tileP2.X, tileP2.Y)
+				dc.DrawLine(tileP2.X, tileP2.Y, tileP3.X, tileP3.Y)
+				dc.DrawLine(tileP3.X, tileP3.Y, tileP4.X, tileP4.Y)
+				dc.DrawLine(tileP4.X, tileP4.Y, tileP5.X, tileP5.Y)
+				dc.DrawLine(tileP5.X, tileP5.Y, tileP6.X, tileP6.Y)
+				dc.DrawLine(tileP6.X, tileP6.Y, tileP1.X, tileP1.Y)
 				dc.Stroke()
 				if drawText {
 					dc.SetHexColor(colorLine)
@@ -847,12 +848,12 @@ func (grid *HexGrid) RenderFrame(dc *gg.Context, day int) image.Image {
 				}
 				// dc.DrawString(key, x_pos-10, y_pos)
 				if drawPoints {
-					dc.DrawString(fmt.Sprintf("P1 (%v,%v)", tileP1.x, tileP1.y), tileP1.x, tileP1.y)
-					dc.DrawString("P2", tileP2.x, tileP2.y)
-					dc.DrawString(fmt.Sprintf("P3 (%v,%v)", tileP3.x, tileP3.y), tileP3.x, tileP3.y)
-					dc.DrawString("P4", tileP4.x, tileP4.y)
-					dc.DrawString("P5", tileP5.x, tileP5.y)
-					dc.DrawString("P6", tileP6.x, tileP6.y)
+					dc.DrawString(fmt.Sprintf("P1 (%v,%v)", tileP1.X, tileP1.Y), tileP1.X, tileP1.Y)
+					dc.DrawString("P2", tileP2.X, tileP2.Y)
+					dc.DrawString(fmt.Sprintf("P3 (%v,%v)", tileP3.X, tileP3.Y), tileP3.X, tileP3.Y)
+					dc.DrawString("P4", tileP4.X, tileP4.Y)
+					dc.DrawString("P5", tileP5.X, tileP5.Y)
+					dc.DrawString("P6", tileP6.X, tileP6.Y)
 					dc.Stroke()
 				}
 			}
@@ -934,8 +935,8 @@ func (grid *HexGrid) Dimensions() (int, int) {
 	max_y := 0
 	for _, key := range keys {
 		x, y := ToXY(key)
-		max_x = Max(max_x, int(math.Abs(x)))
-		max_y = Max(max_y, int(math.Abs(float64(y))))
+		max_x = utils.Max(max_x, int(math.Abs(x)))
+		max_y = utils.Max(max_y, int(math.Abs(float64(y))))
 	}
 	width := (max_x * 2) + 1  //  * 1.5
 	height := (max_y * 2) + 1 //  * 1.5

@@ -18,6 +18,7 @@ import (
 	"strconv"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -78,8 +79,8 @@ func (p *Present) Area() int {
 	a3 := (2 * h * l)
 
 	t := l * w
-	t = Min(t, w*h)
-	t = Min(t, h*l)
+	t = utils.Min(t, w*h)
+	t = utils.Min(t, h*l)
 
 	return a1 + a2 + a3 + t
 }

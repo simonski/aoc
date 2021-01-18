@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"bufio"
@@ -67,7 +67,7 @@ func RandStringRunes(n int) string {
 	return string(b)
 }
 
-func load_file_to_ints(filename string) []int {
+func Load_file_to_ints(filename string) []int {
 	file, err := os.Open(filename)
 	results := make([]int, 0)
 
@@ -86,7 +86,7 @@ func load_file_to_ints(filename string) []int {
 
 }
 
-func load_file_to_strings(filename string) []string {
+func Load_file_to_strings(filename string) []string {
 	file, err := os.Open(filename)
 	results := make([]string, 0)
 
@@ -106,7 +106,7 @@ func load_file_to_strings(filename string) []string {
 
 // make_map_of_inty_list helper makes a map[int]int of a []int to give me
 // whatever go's maps key algorithm performance is, at the cost of the memory
-func make_map_of_inty_list(data []int) map[int]int {
+func Make_map_of_inty_list(data []int) map[int]int {
 	m := make(map[int]int)
 	for index := 0; index < len(data); index++ {
 		value := data[index]
@@ -115,7 +115,7 @@ func make_map_of_inty_list(data []int) map[int]int {
 	return m
 }
 
-func convert_strings_to_ints(input []string) []int {
+func Convert_strings_to_ints(input []string) []int {
 	output := make([]int, 0)
 	for _, value := range input {
 		ivalue, _ := strconv.Atoi(value)
@@ -138,12 +138,12 @@ func Max(v1 int, v2 int) int {
 	return v2
 }
 
-func decimal_to_binary(value int64) string {
+func Decimal_to_binary(value int64) string {
 	b := NewBitSet(int64(value))
 	return b.ToBinaryString(36)
 }
 
-func binary_to_decimal(decimalValue string) int64 {
+func Binary_to_decimal(decimalValue string) int64 {
 	total := int64(0)
 	for index := 0; index < len(decimalValue); index++ {
 		value := decimalValue[index : index+1]

@@ -104,6 +104,7 @@ import (
 	"fmt"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -415,7 +416,7 @@ type SeatingPlan struct {
 }
 
 func NewSeatingPlanFromFile(filename string, tolerance int, searchFar bool) *SeatingPlan {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	return NewSeatingPlanFromStrings(lines, tolerance, searchFar)
 }
 

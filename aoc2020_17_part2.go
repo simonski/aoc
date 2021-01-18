@@ -23,6 +23,7 @@ import (
 	"strconv"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -137,10 +138,10 @@ func (g *Grid4D) Cycle() {
 	data := make(map[string]string)
 
 	minp, maxp := g.Dimensions()
-	for w := minp.w - 1; w <= maxp.w+1; w++ {
-		for z := minp.z - 1; z <= maxp.z+1; z++ {
-			for y := minp.y - 1; y <= maxp.y+1; y++ {
-				for x := minp.x - 1; x <= maxp.x+1; x++ {
+	for w := minp.W - 1; w <= maxp.W+1; w++ {
+		for z := minp.Z - 1; z <= maxp.Z+1; z++ {
+			for y := minp.Y - 1; y <= maxp.Y+1; y++ {
+				for x := minp.X - 1; x <= maxp.X+1; x++ {
 					key := fmt.Sprintf("%v.%v.%v.%v", x, y, z, w)
 					originalValue := g.Get(key)
 					// fmt.Printf("Cycle(); key=%v, state=%v\n", key, originalValue)
@@ -171,29 +172,29 @@ func (g *Grid4D) Cycle() {
 }
 
 // Dimensions returns the min/max points that exist
-func (g *Grid4D) Dimensions() (Point4D, Point4D) {
-	minp := Point4D{x: 10000, y: 10000, z: 10000, w: 10000}
-	maxp := Point4D{x: -10000, y: -10000, z: -10000, w: -10000}
+func (g *Grid4D) Dimensions() (utils.Point4D, utils.Point4D) {
+	minp := utils.Point4D{X: 10000, Y: 10000, Z: 10000, W: 10000}
+	maxp := utils.Point4D{X: -10000, Y: -10000, Z: -10000, W: -10000}
 	for key := range g.data {
 		x, y, z, w := g.ParseKey(key)
-		minp.x = Min(x, minp.x)
-		maxp.x = Max(x, maxp.x)
-		minp.y = Min(y, minp.y)
-		maxp.y = Max(y, maxp.y)
-		minp.z = Min(z, minp.z)
-		maxp.z = Max(z, maxp.z)
-		minp.w = Min(w, minp.w)
-		maxp.w = Max(w, maxp.w)
+		minp.X = utils.Min(x, minp.X)
+		maxp.X = utils.Max(x, maxp.X)
+		minp.Y = utils.Min(y, minp.Y)
+		maxp.Y = utils.Max(y, maxp.Y)
+		minp.Z = utils.Min(z, minp.Z)
+		maxp.Z = utils.Max(z, maxp.Z)
+		minp.W = utils.Min(w, minp.W)
+		maxp.W = utils.Max(w, maxp.W)
 	}
 	return minp, maxp
 }
 
 func (g *Grid4D) DebugZ(z int) string {
 	minp, maxp := g.Dimensions()
-	min_x := minp.x
-	max_x := maxp.x
-	min_y := minp.y
-	max_y := maxp.y
+	min_x := minp.X
+	max_x := maxp.X
+	min_y := minp.Y
+	max_y := maxp.Y
 	// min_w := minp.w
 	// max_w := maxp.w
 	line := ""

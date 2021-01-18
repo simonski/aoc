@@ -6,11 +6,13 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 func Test_AOC2020_14_BitSet(t *testing.T) {
 
-	b := NewBitSet(1)
+	b := utils.NewBitSet(1)
 	s := b.ToBinaryString(8)
 	if s != "00000001" {
 		t.Error("Test_AOC2020_14_BitSet")
@@ -41,7 +43,7 @@ func Test_AOC2020_14_Mask(t *testing.T) {
 	isMask := p.IsMask(maskInput)
 	isMem := p.IsMem(maskInput)
 	maskValue := p.ParseMask(maskInput)
-	if maskValue.data != "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X" {
+	if maskValue.Data != "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X" {
 		t.Errorf("Mask value was incorrect.")
 	}
 
@@ -139,7 +141,7 @@ func Test_AOC2020_14_Part2_Section1(t *testing.T) {
 	p.ExecuteV2("mask = 000000000000000000000000000000X1001X")
 	expected := "000000000000000000000000000000X1001X"
 	actual := p.Memory.GetMask()
-	if actual.data != expected {
+	if actual.Data != expected {
 		t.Error("Mask is incorrect.")
 	}
 
@@ -149,25 +151,25 @@ func Test_AOC2020_14_Part2_Section1(t *testing.T) {
 	// ivalue, _ := strconv.Atoi(memValue)
 
 	// convert the memory location to a bitset
-	binaryMemoryAddress := decimal_to_binary(int64(ipos))
+	binaryMemoryAddress := utils.Decimal_to_binary(int64(ipos))
 	if binaryMemoryAddress != "000000000000000000000000000000101010" {
 		t.Errorf("binaryMemoryAddress should be 000000000000000000000000000000101010")
 	}
 
 	actualMask := p.Memory.GetMask()
-	if actualMask.data != "000000000000000000000000000000X1001X" {
+	if actualMask.Data != "000000000000000000000000000000X1001X" {
 		t.Errorf("actualMask should be 000000000000000000000000000000X1001X")
 	}
 
 	// create a new mask from this as the current mask
 	floatingMask := p.Memory.GetMask().DeriveNewMask(binaryMemoryAddress)
-	if floatingMask.data != "000000000000000000000000000000X1101X" {
+	if floatingMask.Data != "000000000000000000000000000000X1101X" {
 		t.Errorf("")
 		t.Errorf("derivedMask is incorect")
-		t.Errorf("original: %v\n", actualMask.data)
+		t.Errorf("original: %v\n", actualMask.Data)
 		t.Errorf("address:  %v\n", binaryMemoryAddress)
 		t.Errorf("Expected: 000000000000000000000000000000X1101X")
-		t.Errorf("Actual  : %v", floatingMask.data)
+		t.Errorf("Actual  : %v", floatingMask.Data)
 		t.Errorf("")
 	}
 

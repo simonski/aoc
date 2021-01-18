@@ -1,15 +1,15 @@
-package main
+package utils
 
 import "fmt"
 
 type Mask struct {
-	data string
+	Data string
 }
 
 func (b *Mask) Get(index int) string {
-	if len(b.data) > index {
-		position := len(b.data) - index
-		return b.data[position-1 : position]
+	if len(b.Data) > index {
+		position := len(b.Data) - index
+		return b.Data[position-1 : position]
 	} else {
 		return "X"
 	}
@@ -25,8 +25,8 @@ func (b *Mask) Get(index int) string {
 func (m *Mask) DeriveNewMask(address string) *Mask {
 	// changedBits := make([]int, 0)
 	newMaskValue := ""
-	for index := 0; index < len(m.data); index++ {
-		maskValue := m.data[index : index+1]
+	for index := 0; index < len(m.Data); index++ {
+		maskValue := m.Data[index : index+1]
 		addressValue := address[index : index+1]
 		if maskValue == addressValue || maskValue == "0" {
 			// ignore
@@ -44,7 +44,7 @@ func (m *Mask) DeriveNewMask(address string) *Mask {
 }
 
 func NewMask(value string) *Mask {
-	m := Mask{data: value}
+	m := Mask{Data: value}
 	return &m
 }
 
@@ -55,7 +55,7 @@ func NewMask(value string) *Mask {
 func (m *Mask) GetVariations() []string {
 	results := make([]string, 0)
 	position := 0
-	maskData := m.data
+	maskData := m.Data
 	results = MaskPermutations(maskData, position, results)
 	return results
 }

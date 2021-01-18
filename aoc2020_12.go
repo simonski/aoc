@@ -44,6 +44,7 @@ import (
 	"fmt"
 	"strconv"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -61,7 +62,7 @@ func AOC_2020_12_part1_attempt1(cli *goutils.CLI) {
 	s := NewShip()
 	for index, m := range p.movements {
 		s.Execute(m)
-		fmt.Printf("[%v] %v%v  -> Ship[x=%v, y=%v, a=%v]\n", index, m.Command, m.Value, s.x, s.y, s.angle)
+		fmt.Printf("[%v] %v%v  -> Ship[x=%v, y=%v, a=%v]\n", index, m.Command, m.Value, s.X, s.Y, s.Angle)
 	}
 }
 
@@ -69,11 +70,11 @@ func AOC_2020_12_part2_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	s := NewShip2(10, 1)
-	fmt.Printf("START\n  Ship2(%v,%v %v) WP (%v,%v)\n", s.x, s.y, s.angle, s.waypoint.x, s.waypoint.y)
+	fmt.Printf("START\n  Ship2(%v,%v %v) WP (%v,%v)\n", s.X, s.Y, s.Angle, s.Waypoint.X, s.Waypoint.Y)
 	for index, m := range p.movements {
 		s.Execute(m)
-		wp := s.waypoint
-		fmt.Printf("[%v] %v%v  -> Ship(%v,%v %v), -> Wp(%v,%v)\n", index, m.Command, m.Value, s.x, s.y, s.angle, wp.x, wp.y)
+		wp := s.Waypoint
+		fmt.Printf("[%v] %v%v  -> Ship(%v,%v %v), -> Wp(%v,%v)\n", index, m.Command, m.Value, s.X, s.Y, s.Angle, wp.X, wp.Y)
 	}
 }
 
@@ -93,120 +94,120 @@ type Movement struct {
 }
 
 type Ship struct {
-	x     int
-	y     int
-	angle int
+	X     int
+	Y     int
+	Angle int
 }
 
 type Ship2 struct {
-	x        int
-	y        int
-	angle    int
-	waypoint *Waypoint
+	X        int
+	Y        int
+	Angle    int
+	Waypoint *Waypoint
 }
 
 type Waypoint struct {
-	x int
-	y int
+	X int
+	Y int
 }
 
 func NewShip() *Ship {
-	return &Ship{x: 0, y: 0, angle: 90}
+	return &Ship{X: 0, Y: 0, Angle: 90}
 }
 
 func (s *Ship) Execute(m *Movement) {
 	if m.Command == "N" {
-		s.y += m.Value
+		s.Y += m.Value
 	}
 	if m.Command == "S" {
-		s.y -= m.Value
+		s.Y -= m.Value
 	}
 	if m.Command == "E" {
-		s.x += m.Value
+		s.X += m.Value
 	}
 	if m.Command == "W" {
-		s.x -= m.Value
+		s.X -= m.Value
 	}
 	if m.Command == "R" {
-		s.angle += m.Value
-		if s.angle >= 360 {
-			s.angle = s.angle - 360
+		s.Angle += m.Value
+		if s.Angle >= 360 {
+			s.Angle = s.Angle - 360
 		}
 	}
 	if m.Command == "L" {
-		s.angle -= m.Value
-		if s.angle < 0 {
-			s.angle = 360 + s.angle
+		s.Angle -= m.Value
+		if s.Angle < 0 {
+			s.Angle = 360 + s.Angle
 		}
 	}
 	if m.Command == "F" {
-		angle := s.angle
+		angle := s.Angle
 		if angle == 0 {
-			s.y += m.Value
+			s.Y += m.Value
 		} else if angle == 180 {
-			s.y -= m.Value
+			s.Y -= m.Value
 		} else if angle == 90 {
-			s.x += m.Value
+			s.X += m.Value
 		} else {
-			s.x -= m.Value
+			s.X -= m.Value
 		}
 	}
 }
 func NewShip2(waypoint_x int, waypoint_y int) *Ship2 {
-	wp := Waypoint{x: waypoint_x, y: waypoint_y}
-	return &Ship2{x: 0, y: 0, angle: 90, waypoint: &wp}
+	wp := Waypoint{X: waypoint_x, Y: waypoint_y}
+	return &Ship2{X: 0, Y: 0, Angle: 90, Waypoint: &wp}
 }
 
 func (s *Ship2) Execute(m *Movement) {
 	if m.Command == "N" {
-		s.waypoint.y += m.Value
+		s.Waypoint.Y += m.Value
 	}
 	if m.Command == "S" {
-		s.waypoint.y -= m.Value
+		s.Waypoint.Y -= m.Value
 	}
 	if m.Command == "E" {
-		s.waypoint.x += m.Value
+		s.Waypoint.X += m.Value
 	}
 	if m.Command == "W" {
-		s.waypoint.x -= m.Value
+		s.Waypoint.X -= m.Value
 	}
 
 	if m.Command == "R" {
-		wp := &Point2D{s.waypoint.x, s.waypoint.y}
-		origin := &Point2D{s.x, s.y}
+		wp := &utils.Point2D{s.Waypoint.X, s.Waypoint.Y}
+		origin := &utils.Point2D{s.X, s.Y}
 		wp.RotateAroundOrigin(m.Value, origin)
-		s.waypoint.x = wp.x
-		s.waypoint.y = wp.y
+		s.Waypoint.X = wp.X
+		s.Waypoint.Y = wp.Y
 
 	} else if m.Command == "L" {
-		wp := &Point2D{s.waypoint.x, s.waypoint.y}
-		origin := &Point2D{s.x, s.y}
+		wp := &utils.Point2D{s.Waypoint.X, s.Waypoint.Y}
+		origin := &utils.Point2D{s.X, s.Y}
 		wp.RotateAroundOrigin(-m.Value, origin)
-		s.waypoint.x = wp.x
-		s.waypoint.y = wp.y
+		s.Waypoint.Y = wp.X
+		s.Waypoint.Y = wp.Y
 	}
 
 	if m.Command == "F" {
-		x_diff := s.waypoint.x - s.x
-		y_diff := s.waypoint.y - s.y
+		x_diff := s.Waypoint.X - s.X
+		y_diff := s.Waypoint.Y - s.Y
 
 		x := (x_diff * m.Value)
 		y := (y_diff * m.Value)
 
 		fmt.Printf("Movement is %v%v, x/y diff is %v,%v, total changes will be adding %v,%v\n", m.Command, m.Value, x_diff, y_diff, x, y)
 
-		s.x += x
-		s.y += y
+		s.X += x
+		s.Y += y
 
-		fmt.Printf("New s.x/s.y %v,%v\n", s.x, s.y)
+		fmt.Printf("New s.x/s.y %v,%v\n", s.X, s.Y)
 
-		s.waypoint.x = s.x + x_diff
-		s.waypoint.y = s.y + y_diff
+		s.Waypoint.X = s.X + x_diff
+		s.Waypoint.Y = s.Y + y_diff
 	}
 }
 
 func NewPathFromFile(filename string) *Path {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	data := make([]*Movement, 0)
 	for _, line := range lines {
 		command := line[0:1]

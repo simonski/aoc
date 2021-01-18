@@ -1,31 +1,31 @@
-package main
+package utils
 
 type Point2D struct {
-	x int
-	y int
+	X int
+	Y int
 }
 
 type Point2DF struct {
-	x float64
-	y float64
+	X float64
+	Y float64
 }
 
 func (point *Point2DF) Translate(x float64, y float64) *Point2DF {
-	copy := Point2DF{x: point.x + x, y: point.y + y}
+	copy := Point2DF{X: point.X + x, Y: point.Y + y}
 	return &copy
 }
 
 type Point3D struct {
-	x int
-	y int
-	z int
+	X int
+	Y int
+	Z int
 }
 
 type Point4D struct {
-	x int
-	y int
-	z int
-	w int
+	X int
+	Y int
+	Z int
+	W int
 }
 
 // Rotates this point around origin 0, 0
@@ -41,8 +41,8 @@ func (p *Point2D) RotateAroundOrigin(degrees int, origin *Point2D) {
 		degrees = 360 + degrees
 	}
 
-	x_original := p.x - origin.x
-	y_original := p.y - origin.y
+	x_original := p.X - origin.X
+	y_original := p.Y - origin.Y
 
 	x := 0
 	y := 0
@@ -61,10 +61,10 @@ func (p *Point2D) RotateAroundOrigin(degrees int, origin *Point2D) {
 		y = x_original
 	}
 
-	x += origin.x
-	y += origin.y
+	x += origin.X
+	y += origin.Y
 
-	p.x = x
-	p.y = y
+	p.X = x
+	p.Y = y
 
 }

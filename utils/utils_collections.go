@@ -1,4 +1,4 @@
-package main
+package utils
 
 type IntMap struct {
 	data map[int]int

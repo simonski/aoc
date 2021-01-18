@@ -19,6 +19,7 @@ import (
 	"regexp"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -122,7 +123,7 @@ func NewQandA(content string) *QandA {
 }
 
 func NewQandAFromFile(filename string) *QandA {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	q := &QandA{lines: lines}
 	return q
 }

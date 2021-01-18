@@ -8,6 +8,7 @@ import (
 
 	"github.com/gookit/color"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -402,7 +403,7 @@ func Help(cli *goutils.CLI) {
 }
 
 func Info(cli *goutils.CLI) {
-	info := NewSysInfo()
+	info := utils.NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
 }
 

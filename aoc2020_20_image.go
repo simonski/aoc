@@ -6,6 +6,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 // AOC_2020_20 is the entrypoint
@@ -188,7 +190,7 @@ func (image *Image) Debug(hideTileEdges bool, showBorderBetweenTiles bool, showC
 				tileRowAsString := ""
 				if tileExists {
 					tileRowAsString = strings.Split(tile.Debug(hideTileEdges), "\n")[depth]
-					tileRowAsString = ReverseString(tileRowAsString)
+					tileRowAsString = utils.ReverseString(tileRowAsString)
 				} else {
 					if hideTileEdges {
 						tileRowAsString = "        "

@@ -17,6 +17,7 @@ For example:
 import (
 	"fmt"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -45,14 +46,14 @@ func AOC_2015_03_part1_attempt1(cli *goutils.CLI) {
 	}
 
 	total_single_presents := 0
-	for _, value := range grid.counter.data {
+	for _, value := range grid.Counter.Data {
 		if value == 1 {
 			total_single_presents++
 		}
 	}
 
 	fmt.Printf("Part1: Single present households: %v\n", total_single_presents)
-	fmt.Printf("Part1: Total households: %v\n", len(grid.counter.data))
+	fmt.Printf("Part1: Total households: %v\n", len(grid.Counter.Data))
 }
 
 /*
@@ -106,14 +107,14 @@ func AOC_2015_03_part2_attempt1(cli *goutils.CLI) {
 	}
 
 	total_single_presents := 0
-	for _, value := range grid.counter.data {
+	for _, value := range grid.Counter.Data {
 		if value == 1 {
 			total_single_presents++
 		}
 	}
 
 	fmt.Printf("Part2: Single present households: %v\n", total_single_presents)
-	fmt.Printf("Part2: Total households: %v\n", len(grid.counter.data))
+	fmt.Printf("Part2: Total households: %v\n", len(grid.Counter.Data))
 }
 
 type Grid201503 struct {
@@ -121,17 +122,17 @@ type Grid201503 struct {
 	y       int
 	robo_x  int
 	robo_y  int
-	counter *Counter
+	Counter *utils.Counter
 }
 
 func NewGrid201503() *Grid201503 {
-	g := Grid201503{x: 0, y: 0, counter: NewCounter()}
+	g := Grid201503{x: 0, y: 0, Counter: utils.NewCounter()}
 	return &g
 }
 
 func (grid *Grid201503) Increment(x int, y int) {
 	key := fmt.Sprintf("%v,%v", x, y)
-	grid.counter.Increment(key)
+	grid.Counter.Increment(key)
 }
 
 func (grid *Grid201503) North() {

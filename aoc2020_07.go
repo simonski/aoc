@@ -45,6 +45,7 @@ import (
 	"strconv"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -68,7 +69,7 @@ func AOC_2020_07_part2_attempt1(cli *goutils.CLI) {
 }
 
 func NewBagGraphFromFilename(filename string) *BagGraph {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	return NewBagGraphFromStrings(lines)
 }
 

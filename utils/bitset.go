@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -7,12 +7,12 @@ import (
 )
 
 type BitSet struct {
-	bits   map[int]int
+	Bits   map[int]int
 	Length int
 }
 
 func (b *BitSet) Get(index int) int {
-	value, exists := b.bits[index]
+	value, exists := b.Bits[index]
 	if exists {
 		return value
 	} else {
@@ -27,7 +27,7 @@ func (b *BitSet) SetValue(value int64) {
 		bitindex := len(binary) - index
 		bitvalue := binary[bitindex-1 : bitindex]
 		ivalue, _ := strconv.Atoi(bitvalue)
-		b.bits[index] = ivalue
+		b.Bits[index] = ivalue
 		if index > b.Length {
 			b.Length = index
 		}
@@ -37,15 +37,15 @@ func (b *BitSet) SetValue(value int64) {
 func (b *BitSet) ApplyMask(mask *Mask) {
 	fmt.Printf("BitSet.ApplyMask()\n")
 	fmt.Printf("Original  %v\n", b.ToBinaryString(36))
-	fmt.Printf("ApplyMask %v\n", mask.data)
-	for index := 0; index < len(mask.data); index++ {
+	fmt.Printf("ApplyMask %v\n", mask.Data)
+	for index := 0; index < len(mask.Data); index++ {
 		maskvalue := mask.Get(index)
 		if maskvalue == "X" {
 			// ingnore
 		} else if maskvalue == "1" {
-			b.bits[index] = 1
+			b.Bits[index] = 1
 		} else if maskvalue == "0" {
-			b.bits[index] = 0
+			b.Bits[index] = 0
 		}
 	}
 	fmt.Printf("Modified  %v\n", b.ToBinaryString(36))
@@ -69,7 +69,7 @@ func (b *BitSet) ToBinaryString(bits int) string {
 
 func (b *BitSet) GetValue() int64 {
 	total := int64(0)
-	for key, value := range b.bits {
+	for key, value := range b.Bits {
 		if value == 1 {
 			total += int64(math.Pow(2, float64(key)))
 		}
@@ -78,12 +78,12 @@ func (b *BitSet) GetValue() int64 {
 }
 
 func (b *BitSet) Clear() {
-	b.bits = make(map[int]int)
+	b.Bits = make(map[int]int)
 }
 
 func NewBitSet(value int64) *BitSet {
 	bits := make(map[int]int)
-	b := BitSet{bits: bits}
+	b := BitSet{Bits: bits}
 	b.SetValue(value)
 	return &b
 }

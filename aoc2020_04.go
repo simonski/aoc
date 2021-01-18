@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -242,7 +243,7 @@ func (pc *PassportControl) Get(index int) *Passport {
 
 // NewPassportControlFromString constructs and populates a snowy field from the passed filename
 func NewPassportControlFromFile(filename string) *PassportControl {
-	lines := load_file_to_strings(filename)
+	lines := utils.Load_file_to_strings(filename)
 	return NewPassportControlFromString(lines)
 }
 

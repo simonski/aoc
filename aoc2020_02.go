@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -44,7 +45,7 @@ func AOC_2020_02_part1_attempt1(cli *goutils.CLI, verbose bool) {
 	// then come back and do it properly
 
 	filename := cli.GetStringOrDie("-input")
-	data := load_file_to_strings(filename)
+	data := utils.Load_file_to_strings(filename)
 	validCount := 0
 	for index := 0; index < len(data); index++ {
 		line := data[index]
@@ -73,7 +74,7 @@ func AOC_2020_02_part2_attempt1(cli *goutils.CLI, verbose bool) {
 	// then come back and do it properly
 
 	filename := cli.GetStringOrDie("-input")
-	data := load_file_to_strings(filename)
+	data := utils.Load_file_to_strings(filename)
 	validCount := 0
 	for index := 0; index < len(data); index++ {
 		line := data[index]
