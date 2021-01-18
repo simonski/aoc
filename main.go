@@ -6,6 +6,8 @@ import (
 	"reflect"
 	"strconv"
 
+	"github.com/gookit/color"
+
 	goutils "github.com/simonski/goutils"
 )
 
@@ -29,8 +31,8 @@ Usage "aoc help <topic>" for more information.
 `
 
 type Application struct {
-	CLI   goutils.CLI
-	value string
+	CLI     goutils.CLI
+	Verbose bool
 }
 
 func (app *Application) Run(cli *goutils.CLI) {
@@ -67,10 +69,6 @@ func (app *Application) Run(cli *goutils.CLI) {
 		fmt.Printf("%v(), %v %v Part 2 does not exist.\n", methodNamePart2, year, day)
 	}
 
-}
-
-func (app *Application) Y2015D01P1() {
-	fmt.Printf("Y2015D01P1() called\n")
 }
 
 func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {
@@ -114,7 +112,14 @@ func (app *Application) List(cli *goutils.CLI) {
 	// 	os.Exit(1)
 	// }
 
-	max_year := 2021
+	max_year := 2020
+	min_year := 2015
+
+	tick := "\u2713"
+	star := "\u2606"
+
+	tick = star
+	cross := " " // \u2717"
 
 	dash := "\u2501"
 
@@ -137,24 +142,24 @@ func (app *Application) List(cli *goutils.CLI) {
 	fmt.Println(bigline1)
 	fmt.Println(header)
 	fmt.Println(bigline2)
-	for year := 2015; year <= max_year; year++ {
+	for year := max_year; year >= min_year; year-- {
 		line := fmt.Sprintf("\u2503 %04d \u2503", year)
 		for day := 1; day <= 25; day++ {
 			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
 			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
-			// methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
-			// methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
+			methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
+			methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
 
 			_, _, m1exists := app.GetMethod(methodNamePart1)
 			_, _, m2exists := app.GetMethod(methodNamePart2)
-			// _, _, m1existsRender := app.GetMethod(methodNamePart1Render)
-			// _, _, m2existsRender := app.GetMethod(methodNamePart2Render)
-
-			tick := "\u2713"
-			cross := "\u2717"
+			_, _, m1existsRender := app.GetMethod(methodNamePart1Render)
+			_, _, m2existsRender := app.GetMethod(methodNamePart2Render)
 
 			part1 := cross
 			part2 := cross
+
+			gold := color.FgYellow.Render
+
 			if m1exists {
 				part1 = tick
 				// if m1existsRender {
@@ -179,6 +184,13 @@ func (app *Application) List(cli *goutils.CLI) {
 
 			// }
 
+			if m1existsRender {
+				part1 = gold(part1)
+			}
+			if m2existsRender {
+				part2 = gold(part2)
+			}
+
 			line = fmt.Sprintf("%v%v%v\u2503", line, part1, part2)
 
 		}
@@ -202,13 +214,9 @@ func (app *Application) Help(cli *goutils.CLI) {
 	fmt.Printf("Application.Help(%v)", cli.Args)
 }
 
-func (app *Application) Foo() {
-	fmt.Printf("Application[value=%v].Foo()\n", app.value)
-}
-
 func NewApplication(cli goutils.CLI) Application {
 	app := Application{CLI: cli}
-	app.value = "hi there"
+	app.Verbose = cli.IndexOf("-v") > -1
 	return app
 }
 

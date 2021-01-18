@@ -66,9 +66,21 @@ func AOC_2020_24(cli *goutils.CLI) {
 	AOC_2020_24_part2_attempt1(cli)
 }
 
+func (app *Application) Y2020D24P1() {
+	AOC_2020_24_part1_attempt1(&app.CLI)
+}
+
+func (app *Application) Y2020D24P2() {
+	AOC_2020_24_part2_attempt1(&app.CLI)
+}
+
+func (app *Application) Y2020D24P2Render() {
+	grid := NewHexGrid()
+	grid.RenderAnimation(DAY_24_INPUT, "animation.gif", 100, 1)
+}
+
 func AOC_2020_24_part1_attempt1(cli *goutils.CLI) {
 	start := time.Now()
-
 	grid := NewHexGrid()
 	grid.PlayPart1(DAY_24_INPUT)
 	end := time.Now()

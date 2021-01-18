@@ -209,6 +209,14 @@ const DAY_1_DATA = `1749
 1734
 1389`
 
+func (app *Application) Y2020D01P1() {
+	AOC_2020_01(&app.CLI)
+}
+
+func (app *Application) Y2020D01P2() {
+	AOC_2020_02(&app.CLI)
+}
+
 // AOC_2020_01 is the entrypoint to the various attempts for day one
 func AOC_2020_01(cli *goutils.CLI) {
 
