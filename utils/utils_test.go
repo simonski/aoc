@@ -105,20 +105,20 @@ func Test_Utils_Points_R270(t *testing.T) {
 }
 
 func verifyPoint(expected *Point2D, actual *Point2D, t *testing.T) {
-	if expected.x != actual.x || expected.y != actual.y {
+	if expected.X != actual.X || expected.Y != actual.Y {
 		t.Errorf("verifyPoint %v != %v\n", expected, actual)
 	}
 }
 
 func Test_decimal_to_binary(t *testing.T) {
 	value := 1
-	actual := decimal_to_binary(1)
+	actual := Decimal_to_binary(1)
 	expected := "000000000000000000000000000000000001"
 	if actual != expected {
 		t.Errorf("decimal_to_binary, for %v expected %v got %v\n", value, expected, actual)
 	}
 
-	actual = decimal_to_binary(8)
+	actual = Decimal_to_binary(8)
 	expected = "000000000000000000000000000000001000"
 	if actual != expected {
 		t.Errorf("decimal_to_binary, for %v expected %v got %v\n", value, expected, actual)
@@ -128,14 +128,14 @@ func Test_decimal_to_binary(t *testing.T) {
 
 func Test_binary_to_decimal(t *testing.T) {
 	value := "000000000000000000000000000000000001"
-	actual := binary_to_decimal(value)
+	actual := Binary_to_decimal(value)
 	expected := int64(1)
 	if actual != expected {
 		t.Errorf("binary_to_decimal, for %v expected %v got %v\n", value, expected, actual)
 	}
 
 	value = "000000000000000000000000000000001000"
-	actual = binary_to_decimal(value)
+	actual = Binary_to_decimal(value)
 	expected = int64(8)
 	if actual != expected {
 		t.Errorf("binary_to_decimal, for %v expected %v got %v\n", value, expected, actual)

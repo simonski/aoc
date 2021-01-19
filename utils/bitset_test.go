@@ -90,7 +90,7 @@ func Test_BitSetMask(t *testing.T) {
 		t.Error("Mask not applied properly.")
 		t.Errorf("Value    : %v\n", "000000000000000000000000000000001011")
 		t.Errorf("Original : %v\n", original)
-		t.Errorf("Mask     : %v\n", mask.data)
+		t.Errorf("Mask     : %v\n", mask.Data)
 		t.Errorf("Expceted : %v\n", expected)
 		t.Errorf("Actual   : %v\n", actual)
 	}
