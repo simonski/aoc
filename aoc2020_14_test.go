@@ -7,12 +7,12 @@ import (
 	"strings"
 	"testing"
 
-	utils "github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 func Test_AOC2020_14_BitSet(t *testing.T) {
 
-	b := utils.NewBitSet(1)
+	b := goutils.NewBitSet(1)
 	s := b.ToBinaryString(8)
 	if s != "00000001" {
 		t.Error("Test_AOC2020_14_BitSet")
@@ -151,7 +151,7 @@ func Test_AOC2020_14_Part2_Section1(t *testing.T) {
 	// ivalue, _ := strconv.Atoi(memValue)
 
 	// convert the memory location to a bitset
-	binaryMemoryAddress := utils.Decimal_to_binary(int64(ipos))
+	binaryMemoryAddress := goutils.Decimal_to_binary(int64(ipos))
 	if binaryMemoryAddress != "000000000000000000000000000000101010" {
 		t.Errorf("binaryMemoryAddress should be 000000000000000000000000000000101010")
 	}

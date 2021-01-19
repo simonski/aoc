@@ -17,7 +17,6 @@ For example:
 import (
 	"fmt"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -122,11 +121,11 @@ type Grid201503 struct {
 	y       int
 	robo_x  int
 	robo_y  int
-	Counter *utils.Counter
+	Counter *goutils.Counter
 }
 
 func NewGrid201503() *Grid201503 {
-	g := Grid201503{x: 0, y: 0, Counter: utils.NewCounter()}
+	g := Grid201503{x: 0, y: 0, Counter: goutils.NewCounter()}
 	return &g
 }
 

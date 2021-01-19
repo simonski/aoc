@@ -57,7 +57,6 @@ import (
 
 	"github.com/andybons/gogif"
 	"github.com/fogleman/gg"
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -400,12 +399,12 @@ func (grid *HexGrid) Render(day int, filename string) {
 	halfTileHeight := tileHeight / 2.0
 	halfTileWidth := tileWidth / 2.0
 	divideBy := 2.25
-	p1 := utils.Point2DF{X: 0.0, Y: halfTileHeight}                                          // north
-	p2 := utils.Point2DF{X: halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
-	p3 := utils.Point2DF{X: halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
-	p4 := utils.Point2DF{X: 0, Y: -halfTileHeight}                                           // south
-	p5 := utils.Point2DF{X: -halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)}
-	p6 := utils.Point2DF{X: -halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}
+	p1 := goutils.Point2DF{X: 0.0, Y: halfTileHeight}                                          // north
+	p2 := goutils.Point2DF{X: halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
+	p3 := goutils.Point2DF{X: halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
+	p4 := goutils.Point2DF{X: 0, Y: -halfTileHeight}                                           // south
+	p5 := goutils.Point2DF{X: -halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)}
+	p6 := goutils.Point2DF{X: -halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}
 
 	// count := 0
 
@@ -712,12 +711,12 @@ func (grid *HexGrid) RenderFrame(dc *gg.Context, day int) image.Image {
 	halfTileHeight := tileHeight / 2.0
 	halfTileWidth := tileWidth / 2.0
 	divideBy := 2.25
-	p1 := utils.Point2DF{X: 0.0, Y: halfTileHeight}                                          // north
-	p2 := utils.Point2DF{X: halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
-	p3 := utils.Point2DF{X: halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
-	p4 := utils.Point2DF{X: 0, Y: -halfTileHeight}                                           // south
-	p5 := utils.Point2DF{X: -halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)}
-	p6 := utils.Point2DF{X: -halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}
+	p1 := goutils.Point2DF{X: 0.0, Y: halfTileHeight}                                          // north
+	p2 := goutils.Point2DF{X: halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}  // north east
+	p3 := goutils.Point2DF{X: halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)} // south east
+	p4 := goutils.Point2DF{X: 0, Y: -halfTileHeight}                                           // south
+	p5 := goutils.Point2DF{X: -halfTileWidth, Y: -halfTileHeight + (halfTileHeight / divideBy)}
+	p6 := goutils.Point2DF{X: -halfTileWidth, Y: halfTileHeight - (halfTileHeight / divideBy)}
 
 	// count := 0
 
@@ -935,8 +934,8 @@ func (grid *HexGrid) Dimensions() (int, int) {
 	max_y := 0
 	for _, key := range keys {
 		x, y := ToXY(key)
-		max_x = utils.Max(max_x, int(math.Abs(x)))
-		max_y = utils.Max(max_y, int(math.Abs(float64(y))))
+		max_x = goutils.Max(max_x, int(math.Abs(x)))
+		max_y = goutils.Max(max_y, int(math.Abs(float64(y))))
 	}
 	width := (max_x * 2) + 1  //  * 1.5
 	height := (max_y * 2) + 1 //  * 1.5

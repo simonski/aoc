@@ -44,7 +44,6 @@ import (
 	"fmt"
 	"strconv"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -173,15 +172,15 @@ func (s *Ship2) Execute(m *Movement) {
 	}
 
 	if m.Command == "R" {
-		wp := &utils.Point2D{s.Waypoint.X, s.Waypoint.Y}
-		origin := &utils.Point2D{s.X, s.Y}
+		wp := &goutils.Point2D{s.Waypoint.X, s.Waypoint.Y}
+		origin := &goutils.Point2D{s.X, s.Y}
 		wp.RotateAroundOrigin(m.Value, origin)
 		s.Waypoint.X = wp.X
 		s.Waypoint.Y = wp.Y
 
 	} else if m.Command == "L" {
-		wp := &utils.Point2D{s.Waypoint.X, s.Waypoint.Y}
-		origin := &utils.Point2D{s.X, s.Y}
+		wp := &goutils.Point2D{s.Waypoint.X, s.Waypoint.Y}
+		origin := &goutils.Point2D{s.X, s.Y}
 		wp.RotateAroundOrigin(-m.Value, origin)
 		s.Waypoint.Y = wp.X
 		s.Waypoint.Y = wp.Y
@@ -207,7 +206,7 @@ func (s *Ship2) Execute(m *Movement) {
 }
 
 func NewPathFromFile(filename string) *Path {
-	lines := utils.Load_file_to_strings(filename)
+	lines := goutils.Load_file_to_strings(filename)
 	data := make([]*Movement, 0)
 	for _, line := range lines {
 		command := line[0:1]

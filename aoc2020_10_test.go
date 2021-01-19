@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	utils "github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 const TEST_10_DATA_01 = `16
@@ -55,7 +55,7 @@ const TEST_10_DATA_02 = `28
 func Test_AOC2020_10_Jolt1(t *testing.T) {
 
 	// load test data
-	ints := utils.Convert_strings_to_ints(strings.Split(TEST_10_DATA_01, "\n"))
+	ints := goutils.Convert_strings_to_ints(strings.Split(TEST_10_DATA_01, "\n"))
 	results := AOC_2020_10_part1_attempt1(ints)
 
 	actual1, _ := results[1]
@@ -76,7 +76,7 @@ func Test_AOC2020_10_Jolt1(t *testing.T) {
 func Test_AOC2020_10_Jolt2(t *testing.T) {
 
 	// load test data
-	ints := utils.Convert_strings_to_ints(strings.Split(TEST_10_DATA_02, "\n"))
+	ints := goutils.Convert_strings_to_ints(strings.Split(TEST_10_DATA_02, "\n"))
 	results := AOC_2020_10_part1_attempt1(ints)
 
 	actual1, _ := results[1]

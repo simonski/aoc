@@ -53,7 +53,6 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -576,13 +575,13 @@ type Ticket struct {
 	ints        []int
 	PassedRules []*Rule
 	FailedRules []*Rule
-	IntMap      *utils.IntMap
+	IntMap      *goutils.IntMap
 }
 
 // PassesRule indicates if the Ticket meets the passed Rule
 func (t *Ticket) ErrorRate(rules []*Rule) int {
 	ints := t.ints
-	passes := utils.NewIntMap()
+	passes := goutils.NewIntMap()
 	for _, rule := range rules {
 		for _, ivalue := range ints {
 			if rule.Passes(ivalue) {
@@ -638,7 +637,7 @@ func NewTicket(line string) *Ticket {
 	passedRules := make([]*Rule, 0)
 	failedRules := make([]*Rule, 0)
 
-	intMap := utils.NewIntMap()
+	intMap := goutils.NewIntMap()
 
 	ticket := Ticket{line: line, ints: ints, PassedRules: passedRules, FailedRules: failedRules, IntMap: intMap}
 	return &ticket

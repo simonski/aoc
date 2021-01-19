@@ -5,10 +5,8 @@ import (
 	"os"
 	"reflect"
 	"strconv"
-
+	"strings"
 	"github.com/gookit/color"
-
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -17,23 +15,54 @@ const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
 Usage:
     aoc <command> [arguments]
 	
+Status:
+
+LIST
+Commands:
+
 The commands are:
 
     run    (year) (day)      run a puzzle 
 	
     render (year) (day)      render a puzzle to an animated gif
 
-    list   (year)            list all the puzzles done so far
-	
+    info                     prints computer information
+
     version                  prints aoc version
 	
-Usage "aoc help <topic>" for more information.
-
 `
 
+func main() {
+	cli := goutils.CLI{Args: os.Args}
+	c := &cli
+	app := NewApplication(cli)
+	if len(cli.Args) == 1 {
+		app.Help(c)
+		os.Exit(1)
+	}
+	command := cli.Args[1]
+	if command == "run" {
+		app.Run(c)
+	} else if command == "render" {
+		app.Render(c)
+	} else if command == "info" {
+		Info(c)
+	} else if command == "version" {
+		fmt.Printf("%v\n", VERSION)
+	} else {
+		fmt.Printf("I don't know how to '%v'.\n", command)
+		os.Exit(1)
+		// app.Help(c)
+	}
+}
 type Application struct {
 	CLI     goutils.CLI
 	Verbose bool
+}
+func NewApplication(cli goutils.CLI) Application {
+	app := Application{CLI: cli}
+	app.Verbose = cli.IndexOf("-v") > -1
+	return app
 }
 
 func (app *Application) Run(cli *goutils.CLI) {
@@ -72,46 +101,9 @@ func (app *Application) Run(cli *goutils.CLI) {
 
 }
 
-func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {
+func (app *Application) List() string {
 
-	// var a Application
-	rvalue := reflect.ValueOf(&app)
-	// fmt.Printf("GetMethod[%v], rvalue %v\n", methodName, rvalue)
-	mvalue := rvalue.MethodByName(methodName)
-	// fmt.Printf("GetMethod[%v], mvalue %v\n", methodName, mvalue)
-	exists := false
-	if reflect.Value.IsValid(mvalue) {
-		exists = true
-	}
-
-	// if mvalue == nil {
-	// exists = false
-	// }
-	// cvalue := mvalue.Call([]reflect.Value{})
-	// fmt.Printf("cvalue %v\n", cvalue)
-	// if false {
-	// 	fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
-	// }
-	return rvalue, mvalue, exists
-
-}
-
-func repeatstring(s string, times int) string {
-	out := s
-	for index := 0; index < times; index++ {
-		out += s
-	}
-	return out
-}
-
-func (app *Application) List(cli *goutils.CLI) {
-	// USAGE := "Usage: aoc list (year) (day)"
-	// fmt.Printf("Application.List(%v)", cli.Args)
-	// year := cli.GetStringOrDefault("run", "")
-	// if year == "" {
-	// 	fmt.Printf("%v\n", USAGE)
-	// 	os.Exit(1)
-	// }
+	output := ""
 
 	max_year := 2020
 	min_year := 2015
@@ -140,9 +132,13 @@ func (app *Application) List(cli *goutils.CLI) {
 	// bigline2 := "\u2523" + repeatstring(dash, repeat) + "\u252b"
 	bigline2 := "\u2523" + repeatstring(dash, 5) + repeatstring(biggyup, 24) + "\u252b"
 	bigline3 := "\u2517" + repeatstring(dash, 5) + repeatstring(biggyuponly, 24) + "\u251b"
-	fmt.Println(bigline1)
-	fmt.Println(header)
-	fmt.Println(bigline2)
+
+	output += bigline1
+	output += "\n"
+	output += header
+	output += "\n"
+	output += bigline2
+	output += "\n"
 	for year := max_year; year >= min_year; year-- {
 		line := fmt.Sprintf("\u2503 %04d \u2503", year)
 		for day := 1; day <= 25; day++ {
@@ -195,9 +191,13 @@ func (app *Application) List(cli *goutils.CLI) {
 			line = fmt.Sprintf("%v%v%v\u2503", line, part1, part2)
 
 		}
-		fmt.Println(line)
+		output += line
+		output += "\n"
 	}
-	fmt.Println(bigline3)
+	output += bigline3
+	output += "\n"
+
+	return output
 
 }
 
@@ -211,278 +211,248 @@ func (app *Application) Render(cli *goutils.CLI) {
 	}
 }
 
+
 func (app *Application) Help(cli *goutils.CLI) {
-	fmt.Printf("Application.Help(%v)", cli.Args)
-}
-
-func NewApplication(cli goutils.CLI) Application {
-	app := Application{CLI: cli}
-	app.Verbose = cli.IndexOf("-v") > -1
-	return app
-}
-
-// func Test(cli *goutils.CLI) {
-// 	app := NewApplication(cli)
-// 	reflectycall(app)
-// }
-
-func reflectycall(app Application) {
-	// gimme an application
-	// var app Application
-	// var a Application
-	rvalue := reflect.ValueOf(&app)
-	fmt.Printf("rvalue %v\n", rvalue)
-	mvalue := rvalue.MethodByName("Foo")
-	fmt.Printf("mvalue %v\n", mvalue)
-	cvalue := mvalue.Call([]reflect.Value{})
-	fmt.Printf("cvalue %v\n", cvalue)
-	if false {
-		fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
-	}
-	// reflect.ValueOf(&t).MethodByName("Foo").Call([]reflect.Value{})
-
-}
-
-func (app *Application) ReflectUponMySelf(name string, cli *goutils.CLI) {
-	// gimme an application
-	inputs := make([]reflect.Value, 1) // len(args))
-	inputs[0] = reflect.ValueOf(cli)
-	// for i, _ := range args {
-	// 	inputs[i] = reflect.ValueOf(args[i])
-	// }
-	rvalue := reflect.ValueOf(&app)
-	mvalue := rvalue.MethodByName(name)
-	// inputs := cli
-	cvalue := mvalue.Call(inputs) // []reflect.Value{})
-	if false {
-		fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
-	}
-	// reflect.ValueOf(&t).MethodByName("Foo").Call([]reflect.Value{})
-
-}
-
-func (app *Application) AThing(cli *goutils.CLI) {
-	fmt.Printf("AThing, cli length is %v\n", len(cli.Args))
-}
-
-func main() {
-	cli := goutils.CLI{os.Args}
-	if len(cli.Args) == 1 {
-		Help(&cli)
-		os.Exit(1)
-	}
-	app := NewApplication(cli)
-	command := cli.Args[1]
-	c := &cli
-	if command == "run" {
-		app.Run(c)
-	} else if command == "list" {
-		app.List(c)
-	} else if command == "render" {
-		app.Render(c)
-	} else if command == "render" {
-		app.Help(c)
-	} else {
-		Usage()
-	}
-}
-
-func mainx() {
-	cli := goutils.CLI{os.Args}
-	if len(cli.Args) == 1 {
-		Help(&cli)
-		os.Exit(1)
-	}
-
-	command := cli.Args[1]
-	if len(os.Args) < 2 {
-		Usage()
-	} else {
-		// if command == "test" {
-		// Test(&cli)
-		if command == "help" {
-			Help(&cli)
-		} else if command == "render" {
-			Render(&cli)
-		} else if command == "info" {
-			Info(&cli)
-		} else if command == "2015" {
-			AOC_2015(&cli)
-		} else if command == "2015-01" {
-			AOC_2015_01(&cli)
-		} else if command == "2015-02" {
-			AOC_2015_02(&cli)
-		} else if command == "2015-03" {
-			AOC_2015_03(&cli)
-		} else if command == "2015-04" {
-			AOC_2015_04(&cli)
-		} else if command == "2015-05" {
-			AOC_2015_05(&cli)
-		} else if command == "2015-06" {
-			AOC_2015_06(&cli)
-		} else if command == "2015-07" {
-			AOC_2015_07(&cli)
-
-		} else if command == "2020" {
-			AOC_2020(&cli)
-		} else if command == "2020-01" {
-			AOC_2020_01(&cli)
-		} else if command == "2020-02" {
-			AOC_2020_02(&cli)
-		} else if command == "2020-03" {
-			AOC_2020_03(&cli)
-		} else if command == "2020-04" {
-			AOC_2020_04(&cli)
-		} else if command == "2020-05" {
-			AOC_2020_05(&cli)
-		} else if command == "2020-06" {
-			AOC_2020_06(&cli)
-		} else if command == "2020-07" {
-			AOC_2020_07(&cli)
-		} else if command == "2020-08" {
-			AOC_2020_08(&cli)
-		} else if command == "2020-09" {
-			AOC_2020_09(&cli)
-		} else if command == "2020-10" {
-			AOC_2020_10(&cli)
-		} else if command == "2020-11" {
-			AOC_2020_11(&cli)
-		} else if command == "2020-12" {
-			AOC_2020_12(&cli)
-		} else if command == "2020-13" {
-			AOC_2020_13(&cli)
-		} else if command == "2020-14" {
-			AOC_2020_14(&cli)
-		} else if command == "2020-15" {
-			AOC_2020_15(&cli)
-		} else if command == "2020-16" {
-			AOC_2020_16(&cli)
-		} else if command == "2020-17" {
-			AOC_2020_17(&cli)
-		} else if command == "2020-18" {
-			AOC_2020_18(&cli)
-		} else if command == "2020-19" {
-			AOC_2020_19(&cli)
-		} else if command == "2020-20" {
-			AOC_2020_20(&cli)
-		} else if command == "2020-21" {
-			AOC_2020_21(&cli)
-		} else if command == "2020-22" {
-			AOC_2020_22(&cli)
-		} else if command == "2020-23" {
-			AOC_2020_23(&cli)
-		} else if command == "2020-24" {
-			AOC_2020_24(&cli)
-		} else if command == "2020-25" {
-			AOC_2020_25(&cli)
-		} else if command == "version" {
-			fmt.Printf("aoc version %v\n", VERSION)
-		} else {
-			// usage()
-			fmt.Printf("aoc %s: unknown command.  Run `aoc help`.\n", command)
-		}
-	}
-
-}
-
-// Usage displays in terminal how to use the application
-func Usage() {
-	fmt.Printf(USAGE_OVERALL)
-}
-
-// Help shows detailed help on each command
-// Usage: aoc help <command>
-func Help(cli *goutils.CLI) {
+	output := strings.ReplaceAll(USAGE_OVERALL, "LIST", app.List())
+	fmt.Println(output)
 	command := cli.GetStringOrDefault("help", "")
-	if command == "" {
-		Usage()
-	} else {
+	if command != "" {
 		fmt.Printf("aoc help %s: unknown help topic. Run `aoc help`.\n", command)
 		os.Exit(1)
 	}
 }
 
+
 func Info(cli *goutils.CLI) {
-	info := utils.NewSysInfo()
+	info := goutils.NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
 }
 
-func Render(cli *goutils.CLI) {
 
-	USAGE := `aoc render <day> will call the render logic on that day
+// func reflectycall(app Application) {
+// 	// gimme an application
+// 	// var app Application
+// 	// var a Application
+// 	rvalue := reflect.ValueOf(&app)
+// 	fmt.Printf("rvalue %v\n", rvalue)
+// 	mvalue := rvalue.MethodByName("Foo")
+// 	fmt.Printf("mvalue %v\n", mvalue)
+// 	cvalue := mvalue.Call([]reflect.Value{})
+// 	fmt.Printf("cvalue %v\n", cvalue)
+// 	if false {
+// 		fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
+// 	}
+// 	// reflect.ValueOf(&t).MethodByName("Foo").Call([]reflect.Value{})
 
-renderable days:
-	2015-06
-	2015-08
+// }
 
-	2020-24
-`
-	fmt.Printf(USAGE)
-	// if len(cli.Args) == 2 {
-	// 	// they typed render only
-	// } else {
+// func (app *Application) ReflectUponMySelf(name string, cli *goutils.CLI) {
+// 	// gimme an application
+// 	inputs := make([]reflect.Value, 1) // len(args))
+// 	inputs[0] = reflect.ValueOf(cli)
+// 	// for i, _ := range args {
+// 	// 	inputs[i] = reflect.ValueOf(args[i])
+// 	// }
+// 	rvalue := reflect.ValueOf(&app)
+// 	mvalue := rvalue.MethodByName(name)
+// 	// inputs := cli
+// 	cvalue := mvalue.Call(inputs) // []reflect.Value{})
+// 	if false {
+// 		fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
+// 	}
+// 	// reflect.ValueOf(&t).MethodByName("Foo").Call([]reflect.Value{})
 
+// }
+
+// func (app *Application) AThing(cli *goutils.CLI) {
+// 	fmt.Printf("AThing, cli length is %v\n", len(cli.Args))
+// }
+
+
+
+// func mainx() {
+// 	cli := goutils.CLI{os.Args}
+// 	if len(cli.Args) == 1 {
+// 		Help(&cli)
+// 		os.Exit(1)
+// 	}
+
+// 	command := cli.Args[1]
+// 	if len(os.Args) < 2 {
+// 		Usage()
+// 	} else {
+// 		// if command == "test" {
+// 		// Test(&cli)
+// 		if command == "help" {
+// 			Help(&cli)
+// 		} else if command == "render" {
+// 			Render(&cli)
+// 		} else if command == "info" {
+// 			Info(&cli)
+// 		} else if command == "2015" {
+// 			AOC_2015(&cli)
+// 		} else if command == "2015-01" {
+// 			AOC_2015_01(&cli)
+// 		} else if command == "2015-02" {
+// 			AOC_2015_02(&cli)
+// 		} else if command == "2015-03" {
+// 			AOC_2015_03(&cli)
+// 		} else if command == "2015-04" {
+// 			AOC_2015_04(&cli)
+// 		} else if command == "2015-05" {
+// 			AOC_2015_05(&cli)
+// 		} else if command == "2015-06" {
+// 			AOC_2015_06(&cli)
+// 		} else if command == "2015-07" {
+// 			AOC_2015_07(&cli)
+
+// 		} else if command == "2020" {
+// 			AOC_2020(&cli)
+// 		} else if command == "2020-01" {
+// 			AOC_2020_01(&cli)
+// 		} else if command == "2020-02" {
+// 			AOC_2020_02(&cli)
+// 		} else if command == "2020-03" {
+// 			AOC_2020_03(&cli)
+// 		} else if command == "2020-04" {
+// 			AOC_2020_04(&cli)
+// 		} else if command == "2020-05" {
+// 			AOC_2020_05(&cli)
+// 		} else if command == "2020-06" {
+// 			AOC_2020_06(&cli)
+// 		} else if command == "2020-07" {
+// 			AOC_2020_07(&cli)
+// 		} else if command == "2020-08" {
+// 			AOC_2020_08(&cli)
+// 		} else if command == "2020-09" {
+// 			AOC_2020_09(&cli)
+// 		} else if command == "2020-10" {
+// 			AOC_2020_10(&cli)
+// 		} else if command == "2020-11" {
+// 			AOC_2020_11(&cli)
+// 		} else if command == "2020-12" {
+// 			AOC_2020_12(&cli)
+// 		} else if command == "2020-13" {
+// 			AOC_2020_13(&cli)
+// 		} else if command == "2020-14" {
+// 			AOC_2020_14(&cli)
+// 		} else if command == "2020-15" {
+// 			AOC_2020_15(&cli)
+// 		} else if command == "2020-16" {
+// 			AOC_2020_16(&cli)
+// 		} else if command == "2020-17" {
+// 			AOC_2020_17(&cli)
+// 		} else if command == "2020-18" {
+// 			AOC_2020_18(&cli)
+// 		} else if command == "2020-19" {
+// 			AOC_2020_19(&cli)
+// 		} else if command == "2020-20" {
+// 			AOC_2020_20(&cli)
+// 		} else if command == "2020-21" {
+// 			AOC_2020_21(&cli)
+// 		} else if command == "2020-22" {
+// 			AOC_2020_22(&cli)
+// 		} else if command == "2020-23" {
+// 			AOC_2020_23(&cli)
+// 		} else if command == "2020-24" {
+// 			AOC_2020_24(&cli)
+// 		} else if command == "2020-25" {
+// 			AOC_2020_25(&cli)
+// 		} else if command == "version" {
+// 			fmt.Printf("aoc version %v\n", VERSION)
+// 		} else {
+// 			// usage()
+// 			fmt.Printf("aoc %s: unknown command.  Run `aoc help`.\n", command)
+// 		}
+// 	}
+
+// }
+
+
+// func AOC_2015(cli *goutils.CLI) {
+// 	AOC_2015_01(cli)
+// 	AOC_2015_02(cli)
+// 	AOC_2015_03(cli)
+// 	AOC_2015_04(cli)
+// 	AOC_2015_05(cli)
+// 	AOC_2015_06(cli)
+// 	AOC_2015_07(cli)
+// 	// AOC_2015_08(cli)
+// 	// AOC_2015_09(cli)
+// 	// AOC_2015_10(cli)
+// 	// AOC_2015_11(cli)
+// 	// AOC_2015_13(cli)
+// 	// AOC_2015_14(cli)
+// 	// AOC_2015_15(cli)
+// 	// AOC_2015_16(cli)
+// 	// AOC_2015_17(cli)
+// 	// AOC_2015_18(cli)
+// 	// AOC_2015_19(cli)
+// 	// AOC_2015_20(cli)
+// 	// AOC_2015_21(cli)
+// 	// AOC_2015_22(cli)
+// 	// AOC_2015_23(cli)
+// 	// AOC_2015_24(cli)
+// 	// AOC_2015_25(cli)
+// }
+
+// // Usage displays in terminal how to use the application
+// func AOC_2020(cli *goutils.CLI) {
+// 	AOC_2020_01(cli)
+// 	AOC_2020_02(cli)
+// 	AOC_2020_03(cli)
+// 	AOC_2020_04(cli)
+// 	AOC_2020_05(cli)
+// 	AOC_2020_06(cli)
+// 	AOC_2020_07(cli)
+// 	AOC_2020_08(cli)
+// 	AOC_2020_09(cli)
+// 	AOC_2020_10(cli)
+// 	AOC_2020_11(cli)
+// 	AOC_2020_13(cli)
+// 	AOC_2020_14(cli)
+// 	AOC_2020_15(cli)
+// 	AOC_2020_16(cli)
+// 	AOC_2020_17(cli)
+// 	AOC_2020_18(cli)
+// 	AOC_2020_19(cli)
+// 	AOC_2020_20(cli)
+// 	AOC_2020_21(cli)
+// 	AOC_2020_22(cli)
+// 	AOC_2020_23(cli)
+// 	AOC_2020_24(cli)
+// 	AOC_2020_25(cli)
+// }
+
+func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {
+
+	// var a Application
+	rvalue := reflect.ValueOf(&app)
+	// fmt.Printf("GetMethod[%v], rvalue %v\n", methodName, rvalue)
+	mvalue := rvalue.MethodByName(methodName)
+	// fmt.Printf("GetMethod[%v], mvalue %v\n", methodName, mvalue)
+	exists := false
+	if reflect.Value.IsValid(mvalue) {
+		exists = true
+	}
+
+	// if mvalue == nil {
+	// exists = false
 	// }
-
+	// cvalue := mvalue.Call([]reflect.Value{})
+	// fmt.Printf("cvalue %v\n", cvalue)
+	// if false {
+	// 	fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
 	// }
-	// command := cli.Args[2]
-	// if len(os.Args) < 2 {
-	// 	Usage()
-	// }
+	return rvalue, mvalue, exists
 
 }
 
-func AOC_2015(cli *goutils.CLI) {
-	AOC_2015_01(cli)
-	AOC_2015_02(cli)
-	AOC_2015_03(cli)
-	AOC_2015_04(cli)
-	AOC_2015_05(cli)
-	AOC_2015_06(cli)
-	AOC_2015_07(cli)
-	// AOC_2015_08(cli)
-	// AOC_2015_09(cli)
-	// AOC_2015_10(cli)
-	// AOC_2015_11(cli)
-	// AOC_2015_13(cli)
-	// AOC_2015_14(cli)
-	// AOC_2015_15(cli)
-	// AOC_2015_16(cli)
-	// AOC_2015_17(cli)
-	// AOC_2015_18(cli)
-	// AOC_2015_19(cli)
-	// AOC_2015_20(cli)
-	// AOC_2015_21(cli)
-	// AOC_2015_22(cli)
-	// AOC_2015_23(cli)
-	// AOC_2015_24(cli)
-	// AOC_2015_25(cli)
+func repeatstring(s string, times int) string {
+	out := s
+	for index := 0; index < times; index++ {
+		out += s
+	}
+	return out
 }
 
-// Usage displays in terminal how to use the application
-func AOC_2020(cli *goutils.CLI) {
-	AOC_2020_01(cli)
-	AOC_2020_02(cli)
-	AOC_2020_03(cli)
-	AOC_2020_04(cli)
-	AOC_2020_05(cli)
-	AOC_2020_06(cli)
-	AOC_2020_07(cli)
-	AOC_2020_08(cli)
-	AOC_2020_09(cli)
-	AOC_2020_10(cli)
-	AOC_2020_11(cli)
-	AOC_2020_13(cli)
-	AOC_2020_14(cli)
-	AOC_2020_15(cli)
-	AOC_2020_16(cli)
-	AOC_2020_17(cli)
-	AOC_2020_18(cli)
-	AOC_2020_19(cli)
-	AOC_2020_20(cli)
-	AOC_2020_21(cli)
-	AOC_2020_22(cli)
-	AOC_2020_23(cli)
-	AOC_2020_24(cli)
-	AOC_2020_25(cli)
-}

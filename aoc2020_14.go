@@ -48,7 +48,6 @@ import (
 	"regexp"
 	"strconv"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -67,26 +66,26 @@ func AOC_2020_14_part1_attempt1(cli *goutils.CLI) {
 }
 
 type Memory struct {
-	data map[int]*utils.BitSet
-	Mask *utils.Mask
+	data map[int]*goutils.BitSet
+	Mask *goutils.Mask
 }
 
-func (m *Memory) Get(index int) *utils.BitSet {
+func (m *Memory) Get(index int) *goutils.BitSet {
 	b, exists := m.data[index]
 	if exists {
 		return b
 	} else {
-		b := utils.NewBitSet(0)
+		b := goutils.NewBitSet(0)
 		m.data[index] = b
 		return b
 	}
 }
 
-func (m *Memory) SetMask(mask *utils.Mask) {
+func (m *Memory) SetMask(mask *goutils.Mask) {
 	m.Mask = mask
 }
 
-func (m *Memory) GetMask() *utils.Mask {
+func (m *Memory) GetMask() *goutils.Mask {
 	return m.Mask
 }
 
@@ -111,7 +110,7 @@ func (m *Memory) Sum() int64 {
 }
 
 func NewMemory() *Memory {
-	data := make(map[int]*utils.BitSet)
+	data := make(map[int]*goutils.BitSet)
 	return &Memory{data: data}
 }
 
@@ -122,7 +121,7 @@ type Day14Program struct {
 }
 
 func NewDay14ProgramFromFilename(filename string) *Day14Program {
-	instructions := utils.Load_file_to_strings(filename)
+	instructions := goutils.Load_file_to_strings(filename)
 	return NewDay14ProgramFromStrings(instructions)
 }
 
@@ -191,7 +190,7 @@ func (p *Day14Program) ParseMem(instruction string) (string, string) {
 	return m["position"], m["mem"]
 }
 
-func (p *Day14Program) ParseMask(instruction string) *utils.Mask {
+func (p *Day14Program) ParseMask(instruction string) *goutils.Mask {
 	pattern1 := "mask = (?P<mask>.*)"
 	expr := regexp.MustCompile(pattern1)
 	names := expr.SubexpNames()
@@ -200,18 +199,18 @@ func (p *Day14Program) ParseMask(instruction string) *utils.Mask {
 	for i, n := range result[0] {
 		m[names[i]] = n
 	}
-	return utils.NewMask(m["mask"])
+	return goutils.NewMask(m["mask"])
 }
 
 func (p *Day14Program) ConvertToBinary(value string) string {
 	ivalue, _ := strconv.Atoi(value)
-	b := utils.NewBitSet(int64(ivalue))
+	b := goutils.NewBitSet(int64(ivalue))
 	return b.ToBinaryString(36)
 }
 
-func (p *Day14Program) ConvertToBitSet(value string) *utils.BitSet {
+func (p *Day14Program) ConvertToBitSet(value string) *goutils.BitSet {
 	ivalue, _ := strconv.Atoi(value)
-	b := utils.NewBitSet(int64(ivalue))
+	b := goutils.NewBitSet(int64(ivalue))
 	return b
 }
 

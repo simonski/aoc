@@ -54,7 +54,6 @@ import (
 	"fmt"
 	"sort"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -68,7 +67,7 @@ func AOC_2020_09_part2_attempt1(cli *goutils.CLI) {
 	searchFor := 373803594
 	// find the first contiguous block of numbers that sums to our number
 	filename := cli.GetFileExistsOrDie("-input")
-	ints := utils.Load_file_to_ints(filename)
+	ints := goutils.Load_file_to_ints(filename)
 
 	for index1, _ := range ints {
 		for index2, _ := range ints {
@@ -81,8 +80,8 @@ func AOC_2020_09_part2_attempt1(cli *goutils.CLI) {
 			maxvalue := 0
 			for _, value3 := range slice {
 				total += value3
-				minvalue = utils.Min(minvalue, value3)
-				maxvalue = utils.Max(maxvalue, value3)
+				minvalue = goutils.Min(minvalue, value3)
+				maxvalue = goutils.Max(maxvalue, value3)
 			}
 			if total == searchFor {
 				value1 := ints[index1]
@@ -103,7 +102,7 @@ func AOC_2020_09_part2_attempt1(cli *goutils.CLI) {
 func AOC_2020_09_part1_attempt1(cli *goutils.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 
-	ints := utils.Load_file_to_ints(filename)
+	ints := goutils.Load_file_to_ints(filename)
 	preamble := 25
 
 	s := Sequence{values: ints, preamble: preamble}
@@ -128,7 +127,7 @@ type Sequence struct {
 }
 
 func NewSequenceFromFilename(filename string, preamble int) *Sequence {
-	inty_list := utils.Load_file_to_ints(filename)
+	inty_list := goutils.Load_file_to_ints(filename)
 	s := Sequence{values: inty_list, preamble: preamble}
 	return &s
 }

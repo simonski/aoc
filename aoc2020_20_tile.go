@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 type Tile struct {
@@ -64,7 +64,7 @@ func (tile *Tile) Keys() []string {
 	r6 := r5.Copy().Rotate()
 	r7 := r6.Copy().Rotate()
 
-	keys := utils.NewCounter()
+	keys := goutils.NewCounter()
 	keys.Increment(r1.NorthEdge)
 	keys.Increment(r2.NorthEdge)
 	keys.Increment(r3.NorthEdge)
@@ -251,10 +251,10 @@ func (t *Tile) Rotate() *Tile {
 			value := t.Get(col, row)
 			new_col := -row
 			new_row := col
-			min_col = utils.Min(min_col, new_col)
-			min_row = utils.Min(min_row, new_row)
-			max_col = utils.Max(max_col, new_col)
-			max_row = utils.Max(max_row, new_row)
+			min_col = goutils.Min(min_col, new_col)
+			min_row = goutils.Min(min_row, new_row)
+			max_col = goutils.Max(max_col, new_col)
+			max_row = goutils.Max(max_row, new_row)
 			// original_key := fmt.Sprintf("%v,%v", col, row)
 			new_key := fmt.Sprintf("%v,%v", new_col, new_row)
 			// fmt.Printf("(%v) cw90 -> (%v)\n", original_key, new_key)

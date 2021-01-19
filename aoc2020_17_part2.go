@@ -23,7 +23,6 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -172,19 +171,19 @@ func (g *Grid4D) Cycle() {
 }
 
 // Dimensions returns the min/max points that exist
-func (g *Grid4D) Dimensions() (utils.Point4D, utils.Point4D) {
-	minp := utils.Point4D{X: 10000, Y: 10000, Z: 10000, W: 10000}
-	maxp := utils.Point4D{X: -10000, Y: -10000, Z: -10000, W: -10000}
+func (g *Grid4D) Dimensions() (goutils.Point4D, goutils.Point4D) {
+	minp := goutils.Point4D{X: 10000, Y: 10000, Z: 10000, W: 10000}
+	maxp := goutils.Point4D{X: -10000, Y: -10000, Z: -10000, W: -10000}
 	for key := range g.data {
 		x, y, z, w := g.ParseKey(key)
-		minp.X = utils.Min(x, minp.X)
-		maxp.X = utils.Max(x, maxp.X)
-		minp.Y = utils.Min(y, minp.Y)
-		maxp.Y = utils.Max(y, maxp.Y)
-		minp.Z = utils.Min(z, minp.Z)
-		maxp.Z = utils.Max(z, maxp.Z)
-		minp.W = utils.Min(w, minp.W)
-		maxp.W = utils.Max(w, maxp.W)
+		minp.X = goutils.Min(x, minp.X)
+		maxp.X = goutils.Max(x, maxp.X)
+		minp.Y = goutils.Min(y, minp.Y)
+		maxp.Y = goutils.Max(y, maxp.Y)
+		minp.Z = goutils.Min(z, minp.Z)
+		maxp.Z = goutils.Max(z, maxp.Z)
+		minp.W = goutils.Min(w, minp.W)
+		maxp.W = goutils.Max(w, maxp.W)
 	}
 	return minp, maxp
 }

@@ -150,7 +150,6 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -315,17 +314,17 @@ func (g *Grid3D) Cycle() {
 }
 
 // Dimensions returns the min/max points that exist
-func (g *Grid3D) Dimensions() (utils.Point3D, utils.Point3D) {
-	minp := utils.Point3D{X: 10000, Y: 10000, Z: 10000}
-	maxp := utils.Point3D{X: -10000, Y: -10000, Z: -10000}
+func (g *Grid3D) Dimensions() (goutils.Point3D, goutils.Point3D) {
+	minp := goutils.Point3D{X: 10000, Y: 10000, Z: 10000}
+	maxp := goutils.Point3D{X: -10000, Y: -10000, Z: -10000}
 	for key := range g.data {
 		x, y, z := g.ParseKey(key)
-		minp.X = utils.Min(x, minp.X)
-		maxp.X = utils.Max(x, maxp.X)
-		minp.Y = utils.Min(y, minp.Y)
-		maxp.Y = utils.Max(y, maxp.Y)
-		minp.Z = utils.Min(z, minp.Z)
-		maxp.Z = utils.Max(z, maxp.Z)
+		minp.X = goutils.Min(x, minp.X)
+		maxp.X = goutils.Max(x, maxp.X)
+		minp.Y = goutils.Min(y, minp.Y)
+		maxp.Y = goutils.Max(y, maxp.Y)
+		minp.Z = goutils.Min(z, minp.Z)
+		maxp.Z = goutils.Max(z, maxp.Z)
 	}
 	return minp, maxp
 }

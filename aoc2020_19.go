@@ -61,7 +61,6 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -543,8 +542,8 @@ func (r *RegexRuleEngine) ParseRulesV3() {
 	max_key := 0
 	for key, rule := range r.Rules {
 		ikey, _ := strconv.Atoi(key)
-		min_key = utils.Min(min_key, ikey)
-		max_key = utils.Max(max_key, ikey)
+		min_key = goutils.Min(min_key, ikey)
+		max_key = goutils.Max(max_key, ikey)
 		rule.Value = strings.ReplaceAll(rule.Value, "\"", "")
 		if rule.Value == "\"a\"" || rule.Value == "\"b\"" {
 			regex := strings.ReplaceAll(rule.Value, "\"", "")

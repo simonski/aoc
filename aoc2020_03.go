@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 
-	utils "github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -53,7 +52,7 @@ func NewTobogganMap() *TobogganMap {
 
 // NewTobogganMapFromFile constructs and populates a snowy field from the passed filename
 func NewTobogganMapFromFile(filename string) *TobogganMap {
-	data := utils.Load_file_to_strings(filename)
+	data := goutils.Load_file_to_strings(filename)
 	tm := NewTobogganMap()
 	for index := 0; index < len(data); index++ {
 		line := data[index]
