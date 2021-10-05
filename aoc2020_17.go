@@ -282,9 +282,9 @@ func (g *Grid3D) Cycle() {
 	data := make(map[string]string)
 
 	minp, maxp := g.Dimensions()
-	for z := minp.z - 1; z <= maxp.z+1; z++ {
-		for y := minp.y - 1; y <= maxp.y+1; y++ {
-			for x := minp.x - 1; x <= maxp.x+1; x++ {
+	for z := minp.Z - 1; z <= maxp.Z+1; z++ {
+		for y := minp.Y - 1; y <= maxp.Y+1; y++ {
+			for x := minp.X - 1; x <= maxp.X+1; x++ {
 				key := fmt.Sprintf("%v.%v.%v", x, y, z)
 				originalValue := g.Get(key)
 				// fmt.Printf("Cycle(); key=%v, state=%v\n", key, originalValue)
@@ -314,27 +314,27 @@ func (g *Grid3D) Cycle() {
 }
 
 // Dimensions returns the min/max points that exist
-func (g *Grid3D) Dimensions() (Point3D, Point3D) {
-	minp := Point3D{x: 10000, y: 10000, z: 10000}
-	maxp := Point3D{x: -10000, y: -10000, z: -10000}
+func (g *Grid3D) Dimensions() (goutils.Point3D, goutils.Point3D) {
+	minp := goutils.Point3D{X: 10000, Y: 10000, Z: 10000}
+	maxp := goutils.Point3D{X: -10000, Y: -10000, Z: -10000}
 	for key := range g.data {
 		x, y, z := g.ParseKey(key)
-		minp.x = Min(x, minp.x)
-		maxp.x = Max(x, maxp.x)
-		minp.y = Min(y, minp.y)
-		maxp.y = Max(y, maxp.y)
-		minp.z = Min(z, minp.z)
-		maxp.z = Max(z, maxp.z)
+		minp.X = goutils.Min(x, minp.X)
+		maxp.X = goutils.Max(x, maxp.X)
+		minp.Y = goutils.Min(y, minp.Y)
+		maxp.Y = goutils.Max(y, maxp.Y)
+		minp.Z = goutils.Min(z, minp.Z)
+		maxp.Z = goutils.Max(z, maxp.Z)
 	}
 	return minp, maxp
 }
 
 func (g *Grid3D) DebugZ(z int) string {
 	minp, maxp := g.Dimensions()
-	min_x := minp.x
-	max_x := maxp.x
-	min_y := minp.y
-	max_y := maxp.y
+	min_x := minp.X
+	max_x := maxp.X
+	min_y := minp.Y
+	max_y := maxp.Y
 	line := ""
 	for y := min_y; y <= max_y; y++ {
 		for x := min_x; x <= max_x; x++ {

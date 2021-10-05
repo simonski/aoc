@@ -229,7 +229,7 @@ func NewProgram(lines []string) *Program {
 }
 
 func NewProgramFromFilename(filename string) *Program {
-	lines := load_file_to_strings(filename)
+	lines := goutils.Load_file_to_strings(filename)
 	return NewProgram(lines)
 }
 

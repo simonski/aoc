@@ -515,15 +515,15 @@ func (c *WeirdCalculator) Calculate(sum string) int {
 		// no paren, evaulate the expressing as seuqnece of values and operators, in sequence
 		// 1 + 2 * 4 + 4
 		splits := strings.Split(sum, " ")
-		value := intify(splits[0])
+		value := goutils.Intify(splits[0])
 
 		add := false
 		sub := false
 		mul := false
 		for index := 1; index < len(splits); index++ {
 			entry := splits[index]
-			if isint(entry) {
-				newvalue := intify(entry)
+			if goutils.Isint(entry) {
+				newvalue := goutils.Intify(entry)
 				if add {
 					value += newvalue
 				} else if sub {
@@ -601,7 +601,7 @@ func (c *WeirdCalculator) CalculateV2(sum string) int {
 				original_sum := sum
 				original := expr.FindString(sum)
 				splits := strings.Split(original, "+")
-				ivalue := intify(splits[0]) + intify(splits[1])
+				ivalue := goutils.Intify(splits[0]) + goutils.Intify(splits[1])
 				// fmt.Printf("splits are %v\n", splits)
 				// fmt.Printf("product is %v\n", ivalue)
 				svalue := fmt.Sprintf("%v", ivalue)
@@ -615,15 +615,15 @@ func (c *WeirdCalculator) CalculateV2(sum string) int {
 		}
 
 		splits := strings.Split(sum, " ")
-		value := intify(splits[0])
+		value := goutils.Intify(splits[0])
 
 		add := false
 		sub := false
 		mul := false
 		for index := 1; index < len(splits); index++ {
 			entry := splits[index]
-			if isint(entry) {
-				newvalue := intify(entry)
+			if goutils.Isint(entry) {
+				newvalue := goutils.Intify(entry)
 				if add {
 					value += newvalue
 				} else if sub {

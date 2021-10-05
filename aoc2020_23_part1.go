@@ -185,8 +185,8 @@ func (cc *CrabCups) Play1(Rounds int, DEBUG bool) string {
 	lowestCup := 9
 	highestCup := 0
 	for _, value := range d {
-		lowestCup = Min(lowestCup, value)
-		highestCup = Max(highestCup, value)
+		lowestCup = goutils.Min(lowestCup, value)
+		highestCup = goutils.Max(highestCup, value)
 	}
 
 	fmt.Printf("\n%v Round(s)\n", Rounds)

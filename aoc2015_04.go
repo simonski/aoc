@@ -17,16 +17,14 @@ import (
 	"crypto/md5"
 	"fmt"
 	"strings"
-
-	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2015_03 is the entrypoint
-func AOC_2015_04(cli *goutils.CLI) {
-	AOC_2015_04_part1_attempt1(cli)
+func (app *Application) Y2015D04() {
+	app.Y2015D04P1()
 }
 
-func AOC_2015_04_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D04P1() {
 	prefix := "bgvyzdsv"
 	// prefix = "abcdef"
 	counter := 0

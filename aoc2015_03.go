@@ -21,12 +21,12 @@ import (
 )
 
 // AOC_2015_03 is the entrypoint
-func AOC_2015_03(cli *goutils.CLI) {
-	AOC_2015_03_part1_attempt1(cli)
-	AOC_2015_03_part2_attempt1(cli)
+func (app *Application) Y2015D03() {
+	app.Y2015D03P1()
+	app.Y2015D03P2()
 }
 
-func AOC_2015_03_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D03P1() {
 	grid := NewGrid201503()
 	grid.Increment(0, 0)
 	for index := 0; index < len(DAY_2015_03_DATA); index++ {
@@ -45,14 +45,14 @@ func AOC_2015_03_part1_attempt1(cli *goutils.CLI) {
 	}
 
 	total_single_presents := 0
-	for _, value := range grid.counter.data {
+	for _, value := range grid.Counter.Data {
 		if value == 1 {
 			total_single_presents++
 		}
 	}
 
 	fmt.Printf("Part1: Single present households: %v\n", total_single_presents)
-	fmt.Printf("Part1: Total households: %v\n", len(grid.counter.data))
+	fmt.Printf("Part1: Total households: %v\n", len(grid.Counter.Data))
 }
 
 /*
@@ -70,7 +70,7 @@ For example:
 ^v^v^v^v^v now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
 */
 
-func AOC_2015_03_part2_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D03P2() {
 	grid := NewGrid201503()
 	grid.Increment(0, 0)
 	grid.Increment(0, 0)
@@ -106,14 +106,14 @@ func AOC_2015_03_part2_attempt1(cli *goutils.CLI) {
 	}
 
 	total_single_presents := 0
-	for _, value := range grid.counter.data {
+	for _, value := range grid.Counter.Data {
 		if value == 1 {
 			total_single_presents++
 		}
 	}
 
 	fmt.Printf("Part2: Single present households: %v\n", total_single_presents)
-	fmt.Printf("Part2: Total households: %v\n", len(grid.counter.data))
+	fmt.Printf("Part2: Total households: %v\n", len(grid.Counter.Data))
 }
 
 type Grid201503 struct {
@@ -121,17 +121,17 @@ type Grid201503 struct {
 	y       int
 	robo_x  int
 	robo_y  int
-	counter *Counter
+	Counter *goutils.Counter
 }
 
 func NewGrid201503() *Grid201503 {
-	g := Grid201503{x: 0, y: 0, counter: NewCounter()}
+	g := Grid201503{x: 0, y: 0, Counter: goutils.NewCounter()}
 	return &g
 }
 
 func (grid *Grid201503) Increment(x int, y int) {
 	key := fmt.Sprintf("%v,%v", x, y)
-	grid.counter.Increment(key)
+	grid.Counter.Increment(key)
 }
 
 func (grid *Grid201503) North() {

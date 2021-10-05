@@ -27,16 +27,16 @@ func Test_AOC2020_12_TestExample(t *testing.T) {
 }
 
 func verifyShipAndWaypoint(message string, x_ship int, y_ship int, x_wp int, y_wp int, s *Ship2, t *testing.T) {
-	if x_ship != s.x {
-		t.Errorf("[%v] ship.x %v!=%v\n", message, x_ship, s.x)
+	if x_ship != s.X {
+		t.Errorf("[%v] ship.x %v!=%v\n", message, x_ship, s.X)
 	}
-	if y_ship != s.y {
-		t.Errorf("[%v] ship.y %v!=%v\n", message, y_ship, s.y)
+	if y_ship != s.Y {
+		t.Errorf("[%v] ship.y %v!=%v\n", message, y_ship, s.Y)
 	}
-	if x_wp != s.waypoint.x {
-		t.Errorf("[%v] ship.wp.x %v!=%v\n", message, x_wp, s.waypoint.x)
+	if x_wp != s.Waypoint.X {
+		t.Errorf("[%v] ship.wp.x %v!=%v\n", message, x_wp, s.Waypoint.X)
 	}
-	if y_wp != s.waypoint.y {
-		t.Errorf("[%v] ship.wp.y %v!=%v\n", message, y_wp, s.waypoint.y)
+	if y_wp != s.Waypoint.Y {
+		t.Errorf("[%v] ship.wp.y %v!=%v\n", message, y_wp, s.Waypoint.Y)
 	}
 }

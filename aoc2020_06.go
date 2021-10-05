@@ -122,7 +122,7 @@ func NewQandA(content string) *QandA {
 }
 
 func NewQandAFromFile(filename string) *QandA {
-	lines := load_file_to_strings(filename)
+	lines := goutils.Load_file_to_strings(filename)
 	q := &QandA{lines: lines}
 	return q
 }

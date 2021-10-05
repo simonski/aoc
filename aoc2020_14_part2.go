@@ -75,11 +75,11 @@ func (m *Memory) SetV2(index int, value int64) {
 	// mask := m.GetMask()
 	// memoryAddress.ApplyMask(mask)
 
-	binaryMemoryAddress := decimal_to_binary(int64(index))
+	binaryMemoryAddress := goutils.Decimal_to_binary(int64(index))
 	floatingMask := m.GetMask().DeriveNewMask(binaryMemoryAddress)
 	addresses := floatingMask.GetVariations()
 	for _, binaryAddress := range addresses {
-		index := binary_to_decimal(binaryAddress)
+		index := goutils.Binary_to_decimal(binaryAddress)
 		b := m.Get(int(index))
 		b.SetValue(value)
 	}

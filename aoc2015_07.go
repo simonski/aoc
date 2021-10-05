@@ -179,14 +179,14 @@ func (c *Circuit) Evaluate() {
 					leftKey := keys[0]
 					leftValue := uint16(0)
 					leftGood := false
-					if !isint(leftKey) {
+					if !goutils.Isint(leftKey) {
 						leftInstruction := c.GetInstruction(leftKey)
 						if leftInstruction.evaluated {
 							leftValue = leftInstruction.value
 							leftGood = true
 						}
 					} else {
-						leftValue = uint16(intify(leftKey))
+						leftValue = uint16(goutils.Intify(leftKey))
 						leftGood = true
 					}
 
@@ -195,14 +195,14 @@ func (c *Circuit) Evaluate() {
 					rightKey := ""
 					if len(keys) == 2 {
 						rightKey = keys[1]
-						if !isint(rightKey) {
+						if !goutils.Isint(rightKey) {
 							rightInstruction := c.GetInstruction(rightKey)
 							if rightInstruction.evaluated {
 								rightValue = uint16(rightInstruction.value)
 								rightGood = true
 							}
 						} else {
-							rightValue = uint16(intify(rightKey))
+							rightValue = uint16(goutils.Intify(rightKey))
 							rightGood = true
 						}
 					}
@@ -228,7 +228,7 @@ func (c *Circuit) Evaluate() {
 						i.evaluated = true
 						evaluated++
 					} else if i.isNOT() && leftGood {
-						i.value = uint16(bitwisenot(int(leftValue)))
+						i.value = uint16(goutils.Bitwisenot(int(leftValue)))
 						i.evaluated = true
 						evaluated++
 					}

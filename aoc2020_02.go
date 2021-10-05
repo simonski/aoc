@@ -8,11 +8,21 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
+func (app *Application) Y2020D02P1() {
+	verbose := app.CLI.IndexOf("-v") > -1
+	AOC_2020_02_part1_attempt1(&app.CLI, verbose)
+}
+
+func (app *Application) Y2020D02P2() {
+	verbose := app.CLI.IndexOf("-v") > -1
+	AOC_2020_02_part2_attempt1(&app.CLI, verbose)
+}
+
 // AOC_2020_02 is the entrypoint to the various attempts for day two
 func AOC_2020_02(cli *goutils.CLI) {
 	verbose := cli.IndexOf("-v") > -1
 	AOC_2020_02_part1_attempt1(cli, verbose)
-	AOC_2020_02_part1_attempt2(cli, verbose)
+	AOC_2020_02_part2_attempt1(cli, verbose)
 }
 
 // AOC_2020_01_part1_attempt1 this is part 1 of day 1, attempt 1
@@ -34,7 +44,7 @@ func AOC_2020_02_part1_attempt1(cli *goutils.CLI, verbose bool) {
 	// then come back and do it properly
 
 	filename := cli.GetStringOrDie("-input")
-	data := load_file_to_strings(filename)
+	data := goutils.Load_file_to_strings(filename)
 	validCount := 0
 	for index := 0; index < len(data); index++ {
 		line := data[index]
@@ -47,7 +57,7 @@ func AOC_2020_02_part1_attempt1(cli *goutils.CLI, verbose bool) {
 
 }
 
-func AOC_2020_02_part1_attempt2(cli *goutils.CLI, verbose bool) {
+func AOC_2020_02_part2_attempt1(cli *goutils.CLI, verbose bool) {
 
 	// make it work
 	// make it right
@@ -63,7 +73,7 @@ func AOC_2020_02_part1_attempt2(cli *goutils.CLI, verbose bool) {
 	// then come back and do it properly
 
 	filename := cli.GetStringOrDie("-input")
-	data := load_file_to_strings(filename)
+	data := goutils.Load_file_to_strings(filename)
 	validCount := 0
 	for index := 0; index < len(data); index++ {
 		line := data[index]

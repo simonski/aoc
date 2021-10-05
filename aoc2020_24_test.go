@@ -163,29 +163,7 @@ func Test_AOC2020_24_Part2(t *testing.T) {
 	}
 }
 
-func Test_AOC2020_24_X(t *testing.T) {
+func Test_AOC2020_24_Part2_Animation(t *testing.T) {
 	grid := NewHexGrid()
-	// grid.PlayPart1(DAY_24_TEST_INPUT)
-	fmt.Printf("BlackCount: %v\n", grid.BlackCount())
-	hex := grid.FindByCoordinates("0,0").Flip()
-	grid.FindByCoordinates("-2,0").Flip()
-	// grid.FindByCoordinates("2,0").Flip()
-	neighbours := hex.Neighbours()
-	for _, coords := range neighbours {
-		grid.FindByCoordinates(coords).Flip()
-	}
-	grid.Render(0, "test_day_x.png")
-
-	hex = grid.FindByCoordinates("-0.5,-1") // .Flip()
-	neighbours = hex.Neighbours()
-	for _, coords := range neighbours {
-		grid.FindByCoordinates(coords).Flip()
-	}
-
-	grid.Render(0, "test_day_0.png")
-	for day := 1; day <= 10; day++ {
-		grid.PlayPart2(day)
-		filename := fmt.Sprintf("test_day_%v.png", day)
-		grid.Render(day, filename)
-	}
+	grid.RenderAnimation(DAY_24_INPUT, "animation.gif", 100, 25)
 }

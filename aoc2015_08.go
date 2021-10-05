@@ -68,7 +68,7 @@ func total_quoted_character_length(line string) int {
 	count := len(line)
 	for index, _ := range line {
 		c := line[index : index+1]
-		if c == `\` || c == '"' {
+		if c == `\` || c == "\"" {
 			count++
 		}
 		fmt.Printf("%v\n", c)

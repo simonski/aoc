@@ -24,17 +24,15 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
-
-	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2015_05 is the entrypoint
-func AOC_2015_05(cli *goutils.CLI) {
-	AOC_2015_05_part1_attempt1(cli)
-	AOC_2015_05_part2_attempt1(cli)
+func (app *Application) Y2015D05() {
+	app.Y2015D05P1()
+	app.Y2015D05P2()
 }
 
-func AOC_2015_05_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D05P1() {
 	splits := strings.Split(DAY_2015_05_DATA, "\n")
 	niceCount := 0
 	naughtyCount := 0
@@ -48,7 +46,7 @@ func AOC_2015_05_part1_attempt1(cli *goutils.CLI) {
 	fmt.Printf("Part 1 Nice count %v, naughty count %v\n", niceCount, naughtyCount)
 }
 
-func AOC_2015_05_part2_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D05P2() {
 	splits := strings.Split(DAY_2015_05_DATA, "\n")
 	niceCount := 0
 	naughtyCount := 0

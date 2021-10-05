@@ -238,10 +238,10 @@ func NormaliseTileMap(source map[string]*Tile) map[string]*Tile {
 		splits := strings.Split(key, ",")
 		col, _ := strconv.Atoi(splits[0])
 		row, _ := strconv.Atoi(splits[1])
-		min_col = Min(min_col, col)
-		min_row = Min(min_row, row)
-		max_col = Max(max_col, col)
-		max_row = Max(max_row, row)
+		min_col = goutils.Min(min_col, col)
+		min_row = goutils.Min(min_row, row)
+		max_col = goutils.Max(max_col, col)
+		max_row = goutils.Max(max_row, row)
 	}
 
 	// now normalise our x,y so we are at 0,0 again
@@ -273,10 +273,10 @@ func RotateMatrix(input map[string]*Tile) map[string]*Tile {
 		row, _ := strconv.Atoi(strings.Split(key, ",")[1])
 		new_col := -row
 		new_row := col
-		min_col = Min(min_col, new_col)
-		min_row = Min(min_row, new_row)
-		max_col = Max(max_col, new_col)
-		max_row = Max(max_row, new_row)
+		min_col = goutils.Min(min_col, new_col)
+		min_row = goutils.Min(min_row, new_row)
+		max_col = goutils.Max(max_col, new_col)
+		max_row = goutils.Max(max_row, new_row)
 		new_key := fmt.Sprintf("%v,%v", new_col, new_row)
 		output[new_key] = tile
 	}
@@ -312,10 +312,10 @@ func FlipMatrixVertical(input map[string]*Tile) map[string]*Tile {
 		row, _ := strconv.Atoi(strings.Split(key, ",")[1])
 		new_row := -row
 		new_col := col
-		min_col = Min(min_col, new_col)
-		min_row = Min(min_row, new_row)
-		max_col = Max(max_col, new_col)
-		max_row = Max(max_row, new_row)
+		min_col = goutils.Min(min_col, new_col)
+		min_row = goutils.Min(min_row, new_row)
+		max_col = goutils.Max(max_col, new_col)
+		max_row = goutils.Max(max_row, new_row)
 		new_key := fmt.Sprintf("%v,%v", new_col, new_row)
 		output[new_key] = tile
 		tile.SetCanRotateOrFlip(true)

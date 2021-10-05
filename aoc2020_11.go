@@ -415,7 +415,7 @@ type SeatingPlan struct {
 }
 
 func NewSeatingPlanFromFile(filename string, tolerance int, searchFar bool) *SeatingPlan {
-	lines := load_file_to_strings(filename)
+	lines := goutils.Load_file_to_strings(filename)
 	return NewSeatingPlanFromStrings(lines, tolerance, searchFar)
 }
 

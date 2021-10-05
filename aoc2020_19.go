@@ -542,8 +542,8 @@ func (r *RegexRuleEngine) ParseRulesV3() {
 	max_key := 0
 	for key, rule := range r.Rules {
 		ikey, _ := strconv.Atoi(key)
-		min_key = Min(min_key, ikey)
-		max_key = Max(max_key, ikey)
+		min_key = goutils.Min(min_key, ikey)
+		max_key = goutils.Max(max_key, ikey)
 		rule.Value = strings.ReplaceAll(rule.Value, "\"", "")
 		if rule.Value == "\"a\"" || rule.Value == "\"b\"" {
 			regex := strings.ReplaceAll(rule.Value, "\"", "")
