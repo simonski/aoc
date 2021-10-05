@@ -46,6 +46,6 @@ When you work on a new day, e.g. 2021-01-01
     - copy the test `aoc_20XX_XX_test.go -> aoc_2021_01_test.go`
     - copy the data `aoc_20XX_XX_data.go -> aoc_2021_01_data.go`
 
-You can then run it
+You can then run it as an application
 
     ./aoc run 2021 01
