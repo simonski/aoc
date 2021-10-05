@@ -41,29 +41,55 @@ In little Bobby's kit's instructions booklet (provided as your puzzle input), wh
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
+
+	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2015_07 is the entrypoint
-func (app *Application) Y2015D07() {
-	app.Y2015D07P1()
-	// AOC_2015_06_part2_attempt1(cli)
+func AOC_2015_07(cli *goutils.CLI) {
+	AOC_2015_07_part1_attempt1(cli)
+	AOC_2015_07_part2_attempt1(cli)
 }
 
-func (app *Application) Y2015D07P1() {
-	splits := strings.Split(DAY_2015_06_DATA, "\n")
-	grid := NewLightGrid()
-	for _, instruction := range splits {
-		grid.Execute(instruction)
+func AOC_2015_07_part1_attempt1(cli *goutils.CLI) {
+	circuit := NewCircuit(DAY_2015_07_DATA)
+	circuit.Evaluate()
+
+	for key, instruction := range circuit.instructions {
+		fmt.Printf("[%v] %v: %v   %v\n", instruction.evaluated, key, instruction.value, instruction.line)
 	}
-	countOn, countOff := grid.CountOnOff()
-	fmt.Printf("On %v Off %v\n", countOn, countOff)
+
+	fmt.Printf("a: %v\n", circuit.GetSignalValue("a"))
+}
+
+func AOC_2015_07_part2_attempt1(cli *goutils.CLI) {
+
+	circuit1 := NewCircuit(DAY_2015_07_DATA)
+	circuit1.Evaluate()
+	a := circuit1.GetInstruction("a")
+	value := a.value
+
+	circuit2 := NewCircuit(DAY_2015_07_DATA)
+	i := circuit2.GetInstruction("b")
+	i.evaluated = true
+	i.value = value
+	circuit2.Evaluate()
+
+	for key, instruction := range circuit2.instructions {
+		fmt.Printf("[%v] %v: %v   %v\n", instruction.evaluated, key, instruction.value, instruction.line)
+	}
+
+	fmt.Printf("a: %v\n", circuit2.GetSignalValue("a"))
 }
 
 type CircuitInstruction struct {
-	line  string // x LSHIFT 2 -> f     NOT x -> h
-	logic string // x LSHIFT 2          NOT x
-	wire  string // f                   h
+	line      string // x LSHIFT 2 -> f     NOT x -> h
+	logic     string // x LSHIFT 2          NOT x
+	wire      string // f                   h
+	evaluated bool
+	value     uint16
 }
 
 // Operation returns the bitwise operation NOT, AND OR LSHIFT RSHIFT
@@ -93,23 +119,146 @@ func (ci *CircuitInstruction) isLiteral() bool {
 
 func NewCircuitInstruction(line string) *CircuitInstruction {
 	splits := strings.Split(line, "->")
-	logic := splits[0]
-	wire := splits[1]
-	ci := CircuitInstruction{line: line, logic: logic, wire: wire}
+	logic := strings.TrimSpace(splits[0])
+	wire := strings.TrimSpace(splits[1])
+	ci := CircuitInstruction{line: line, logic: logic, wire: wire, evaluated: false}
 	return &ci
 }
 
+func (i *CircuitInstruction) GetLeftRight() []string {
+	// "x LSHIFT 2" >> [x, 2]
+	// "4 LSHIFT x" >> [4, x]
+	// "x AND y" >> [x, y]
+	// "NOT xx" >> [xx]
+	// "a or b" >> [a, b]
+	l := strings.ReplaceAll(i.logic, "AND", "")
+	l = strings.ReplaceAll(l, "OR", "")
+	l = strings.ReplaceAll(l, "LSHIFT", "")
+	l = strings.ReplaceAll(l, "RSHIFT", "")
+	l = strings.ReplaceAll(l, "NOT", "")
+	l = strings.ReplaceAll(l, "  ", " ")
+	l = strings.TrimSpace(l)
+	splits := strings.Split(l, " ")
+	return splits
+}
+
 type Circuit struct {
-	instructions []*CircuitInstruction
+	instructions map[string]*CircuitInstruction
+}
+
+func (c *Circuit) GetInstruction(key string) *CircuitInstruction {
+	i, _ := c.instructions[key]
+	return i
+}
+
+func (c *Circuit) Evaluate() {
+	for {
+		evaluated := 0
+		for _, i := range c.instructions {
+			if !i.evaluated {
+				if i.isLiteral() {
+					value, err := strconv.ParseInt(i.logic, 10, 16)
+					if err == nil {
+						i.value = uint16(value)
+						i.evaluated = true
+						evaluated++
+						fmt.Printf("Literal: %v, value=%v, err=%v\n", i.line, value, err)
+					} else {
+						// it is an assigment of a gate
+						instruction := c.GetInstruction(i.logic)
+						if instruction != nil && instruction.evaluated {
+							i.value = instruction.value
+							i.evaluated = true
+							evaluated++
+
+						}
+					}
+				} else {
+
+					keys := i.GetLeftRight()
+					leftKey := keys[0]
+					leftValue := uint16(0)
+					leftGood := false
+					if !goutils.Isint(leftKey) {
+						leftInstruction := c.GetInstruction(leftKey)
+						if leftInstruction.evaluated {
+							leftValue = leftInstruction.value
+							leftGood = true
+						}
+					} else {
+						leftValue = uint16(goutils.Intify(leftKey))
+						leftGood = true
+					}
+
+					rightValue := uint16(0)
+					rightGood := false
+					rightKey := ""
+					if len(keys) == 2 {
+						rightKey = keys[1]
+						if !goutils.Isint(rightKey) {
+							rightInstruction := c.GetInstruction(rightKey)
+							if rightInstruction.evaluated {
+								rightValue = uint16(rightInstruction.value)
+								rightGood = true
+							}
+						} else {
+							rightValue = uint16(goutils.Intify(rightKey))
+							rightGood = true
+						}
+					}
+
+					if i.isAND() && leftGood && rightGood {
+						i.value = leftValue & rightValue
+						i.evaluated = true
+						evaluated++
+					} else if i.isOR() && leftGood && rightGood {
+						i.value = leftValue | rightValue
+						i.evaluated = true
+						evaluated++
+						// } else if i.isNOT() && leftGood {
+						// 	i.value = leftValue | rightValue
+						// 	i.evaluated = true
+						// 	evaluated++
+					} else if i.isRShift() && leftGood && rightGood {
+						i.value = leftValue >> rightValue
+						i.evaluated = true
+						evaluated++
+					} else if i.isLShift() && leftGood && rightGood {
+						i.value = leftValue << rightValue
+						i.evaluated = true
+						evaluated++
+					} else if i.isNOT() && leftGood {
+						i.value = uint16(goutils.Bitwisenot(int(leftValue)))
+						i.evaluated = true
+						evaluated++
+					}
+
+				}
+
+			}
+		}
+		if evaluated == 0 {
+			break
+		}
+	}
+
+}
+
+func (c *Circuit) GetSignalValue(key string) uint16 {
+	return c.instructions[key].value
+}
+
+func (c *Circuit) Size() int {
+	return len(c.instructions)
 }
 
 func NewCircuit(instructions string) *Circuit {
 	splits := strings.Split(instructions, "\n")
-	arr := make([]*CircuitInstruction, 0)
+	m := make(map[string]*CircuitInstruction)
 	for _, instruction := range splits {
 		i := NewCircuitInstruction(instruction)
-		arr = append(arr, i)
+		m[i.wire] = i
 	}
-	circuit := Circuit{instructions: arr}
+	circuit := Circuit{instructions: m}
 	return &circuit
 }

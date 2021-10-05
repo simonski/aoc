@@ -1,5 +1,14 @@
 package main
 
+const DAY_2015_07_TEST_DATA = `123 -> x
+456 -> y
+x AND y -> d
+x OR y -> e
+x LSHIFT 2 -> f
+y RSHIFT 2 -> g
+NOT x -> h
+NOT y -> i`
+
 const DAY_2015_07_DATA = `bn RSHIFT 2 -> bo
 lf RSHIFT 1 -> ly
 fo RSHIFT 3 -> fq
