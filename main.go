@@ -2,10 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/simonski/aoc/app"
 	goutils "github.com/simonski/goutils"
+	"os"
 )
 
 const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
