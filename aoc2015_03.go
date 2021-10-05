@@ -21,12 +21,12 @@ import (
 )
 
 // AOC_2015_03 is the entrypoint
-func AOC_2015_03(cli *goutils.CLI) {
-	AOC_2015_03_part1_attempt1(cli)
-	AOC_2015_03_part2_attempt1(cli)
+func (app *Application) Y2015D03() {
+	app.Y2015D03P1()
+	app.Y2015D03P2()
 }
 
-func AOC_2015_03_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D03P1() {
 	grid := NewGrid201503()
 	grid.Increment(0, 0)
 	for index := 0; index < len(DAY_2015_03_DATA); index++ {
@@ -70,7 +70,7 @@ For example:
 ^v^v^v^v^v now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
 */
 
-func AOC_2015_03_part2_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D03P2() {
 	grid := NewGrid201503()
 	grid.Increment(0, 0)
 	grid.Increment(0, 0)

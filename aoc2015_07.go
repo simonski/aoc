@@ -42,17 +42,15 @@ In little Bobby's kit's instructions booklet (provided as your puzzle input), wh
 import (
 	"fmt"
 	"strings"
-
-	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2015_07 is the entrypoint
-func AOC_2015_07(cli *goutils.CLI) {
-	AOC_2015_07_part1_attempt1(cli)
+func (app *Application) Y2015D07() {
+	app.Y2015D07P1()
 	// AOC_2015_06_part2_attempt1(cli)
 }
 
-func AOC_2015_07_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D07P1() {
 	splits := strings.Split(DAY_2015_06_DATA, "\n")
 	grid := NewLightGrid()
 	for _, instruction := range splits {

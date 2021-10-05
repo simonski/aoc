@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func Test_AOC2015_06_Part1(t *testing.T) {
+func Test_AOC2015_07_Part1(t *testing.T) {
 	grid := NewLightGrid()
 	actualOn, actualOff := grid.CountOnOff()
 	if actualOn != 0 {
@@ -36,4 +36,3 @@ func Test_AOC2015_06_Part1(t *testing.T) {
 	}
 
 }
-

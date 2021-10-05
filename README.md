@@ -38,5 +38,14 @@ Let's render day 24, 2020 as an animation
 
     aoc render 2020 24
 
+## Extending
 
-    
+When you work on a new day, e.g. 2021-01-01
+
+    - copy the `aoc20XX_XX.go -> aoc2021_01.go`
+    - copy the test `aoc_20XX_XX_test.go -> aoc_2021_01_test.go`
+    - copy the data `aoc_20XX_XX_data.go -> aoc_2021_01_data.go`
+
+You can then run it
+
+    ./aoc run 2021 01

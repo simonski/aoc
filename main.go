@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
 	"github.com/gookit/color"
 	goutils "github.com/simonski/goutils"
 )
@@ -55,10 +56,12 @@ func main() {
 		// app.Help(c)
 	}
 }
+
 type Application struct {
 	CLI     goutils.CLI
 	Verbose bool
 }
+
 func NewApplication(cli goutils.CLI) Application {
 	app := Application{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
@@ -105,7 +108,7 @@ func (app *Application) List() string {
 
 	output := ""
 
-	max_year := 2020
+	max_year := 2021
 	min_year := 2015
 
 	tick := "\u2713"
@@ -211,7 +214,6 @@ func (app *Application) Render(cli *goutils.CLI) {
 	}
 }
 
-
 func (app *Application) Help(cli *goutils.CLI) {
 	output := strings.ReplaceAll(USAGE_OVERALL, "LIST", app.List())
 	fmt.Println(output)
@@ -222,12 +224,10 @@ func (app *Application) Help(cli *goutils.CLI) {
 	}
 }
 
-
 func Info(cli *goutils.CLI) {
 	info := goutils.NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
 }
-
 
 // func reflectycall(app Application) {
 // 	// gimme an application
@@ -267,8 +267,6 @@ func Info(cli *goutils.CLI) {
 // func (app *Application) AThing(cli *goutils.CLI) {
 // 	fmt.Printf("AThing, cli length is %v\n", len(cli.Args))
 // }
-
-
 
 // func mainx() {
 // 	cli := goutils.CLI{os.Args}
@@ -368,7 +366,6 @@ func Info(cli *goutils.CLI) {
 
 // }
 
-
 // func AOC_2015(cli *goutils.CLI) {
 // 	AOC_2015_01(cli)
 // 	AOC_2015_02(cli)
@@ -455,4 +452,3 @@ func repeatstring(s string, times int) string {
 	}
 	return out
 }
-

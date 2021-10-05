@@ -22,12 +22,12 @@ import (
 )
 
 // AOC_2015_02 is the entrypoint
-func AOC_2015_02(cli *goutils.CLI) {
-	AOC_2015_02_part1_attempt1(cli)
-	AOC_2015_02_part2_attempt1(cli)
+func (app *Application) Y2015D02() {
+	app.Y2015D02P1()
+	app.Y2015D02P1()
 }
 
-func AOC_2015_02_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D02P1() {
 	lines := strings.Split(DAY_2015_02_DATA, "\n")
 	total := 0
 	for _, line := range lines {
@@ -49,7 +49,7 @@ A present with dimensions 2x3x4 requires 2+2+3+3 = 10 feet of ribbon to wrap the
 A present with dimensions 1x1x10 requires 1+1+1+1 = 4 feet of ribbon to wrap the present plus 1*1*10 = 10 feet of ribbon for the bow, for a total of 14 feet.
 How many total feet of ribbon should they order?
 */
-func AOC_2015_02_part2_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D02P2() {
 	lines := strings.Split(DAY_2015_02_DATA, "\n")
 	volume := 0
 	perimeter := 0

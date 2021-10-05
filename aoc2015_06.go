@@ -22,17 +22,15 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2015_05 is the entrypoint
-func AOC_2015_06(cli *goutils.CLI) {
-	AOC_2015_06_part1_attempt1(cli)
-	AOC_2015_06_part2_attempt1(cli)
+func (app *Application) Y2015D06() {
+	app.Y2015D06P1()
+	app.Y2015D06P2()
 }
 
-func AOC_2015_06_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D06P1() {
 	splits := strings.Split(DAY_2015_06_DATA, "\n")
 	grid := NewLightGrid()
 	for _, instruction := range splits {
@@ -60,7 +58,7 @@ For example:
 turn on 0,0 through 0,0 would increase the total brightness by 1.
 toggle 0,0 through 999,999 would increase the total brightness by 2000000.
 */
-func AOC_2015_06_part2_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2015D06P2() {
 	splits := strings.Split(DAY_2015_06_DATA, "\n")
 	grid := NewLightGrid()
 	for _, instruction := range splits {
