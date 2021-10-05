@@ -1,4 +1,4 @@
-default_target: usage
+default_target: build
 .PHONY : default_target upload
 
 usage:
