@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/simonski/aoc/app"
 	goutils "github.com/simonski/goutils"
-	"os"
 )
 
 const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
@@ -30,14 +31,13 @@ The commands are:
 `
 
 func main() {
-	cli := goutils.CLI{Args: os.Args}
-	c := &cli
-	app := app.NewApplication(cli)
-	if len(cli.Args) == 1 {
+	c := &goutils.CLI{Args: os.Args}
+	app := app.NewApplication(c)
+	if len(c.Args) == 1 {
 		app.Help(c)
 		os.Exit(1)
 	}
-	command := cli.Args[1]
+	command := c.Args[1]
 	if command == "run" {
 		app.Run(c)
 	} else if command == "render" {
@@ -57,11 +57,3 @@ func Info(cli *goutils.CLI) {
 	info := goutils.NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
 }
-
-// func repeatstring(s string, times int) string {
-// 	out := s
-// 	for index := 0; index < times; index++ {
-// 		out += s
-// 	}
-// 	return out
-// }

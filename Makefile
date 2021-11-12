@@ -2,7 +2,7 @@ default_target: build
 .PHONY : default_target upload
 
 usage:
-	@echo "The aoc2020 go Makefile"
+	@echo "The aoc go Makefile"
 	@echo ""
 	@echo "Usage : make <command> "
 	@echo ""

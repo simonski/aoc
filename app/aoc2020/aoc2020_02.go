@@ -10,12 +10,12 @@ import (
 
 func (app *Application) Y2020D02P1() {
 	verbose := app.CLI.IndexOf("-v") > -1
-	AOC_2020_02_part1_attempt1(&app.CLI, verbose)
+	AOC_2020_02_part1_attempt1(app.CLI, verbose)
 }
 
 func (app *Application) Y2020D02P2() {
 	verbose := app.CLI.IndexOf("-v") > -1
-	AOC_2020_02_part2_attempt1(&app.CLI, verbose)
+	AOC_2020_02_part2_attempt1(app.CLI, verbose)
 }
 
 // AOC_2020_02 is the entrypoint to the various attempts for day two
