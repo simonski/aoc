@@ -1,4 +1,4 @@
-package app
+package aoc2020
 
 /*
 --- Day 25: Combo Breaker ---

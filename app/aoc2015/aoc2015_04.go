@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 /*
 --- Day 4: The Ideal Stocking Stuffer ---

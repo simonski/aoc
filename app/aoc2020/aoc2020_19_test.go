@@ -1,4 +1,4 @@
-package app
+package aoc2020
 
 const DAY_19_TEST_INPUT = `0: 4 1 5
 1: 2 3 | 3 2

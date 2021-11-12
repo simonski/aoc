@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 const DAY_2015_05_DATA = `zgsnvdmlfuplrubt
 vlhagaovgqjmgvwq

@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 /*
 Space on the sleigh is limited this year, and so Santa will be bringing his list as a digital copy. He needs to know how much space it will take up when stored.

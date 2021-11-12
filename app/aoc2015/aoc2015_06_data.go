@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 const DAY_2015_06_DATA = `turn on 887,9 through 959,629
 turn on 454,398 through 844,448

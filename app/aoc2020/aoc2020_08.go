@@ -1,4 +1,4 @@
-package app
+package aoc2020
 
 /*
 Day 08 - Handheld Halting

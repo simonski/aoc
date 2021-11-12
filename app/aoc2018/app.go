@@ -1,4 +1,4 @@
-package app
+package aoc2018
 
 import (
 	"fmt"

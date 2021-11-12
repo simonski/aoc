@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 const DAY_2015_07_TEST_DATA = `123 -> x
 456 -> y

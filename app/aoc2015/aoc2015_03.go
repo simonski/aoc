@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 /*
 --- Day 3: Perfectly Spherical Houses in a Vacuum ---

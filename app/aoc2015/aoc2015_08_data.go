@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 const DAY_2015_08_DATA = `"\xa8br\x8bjr\""
 "nq"

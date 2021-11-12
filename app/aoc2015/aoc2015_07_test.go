@@ -1,4 +1,4 @@
-package app
+package aoc2015
 
 import (
 	"testing"

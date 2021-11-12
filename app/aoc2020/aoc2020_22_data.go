@@ -1,4 +1,4 @@
-package app
+package aoc2020
 
 const DAY_22_TEST_DATA = `Player 1:
 9
