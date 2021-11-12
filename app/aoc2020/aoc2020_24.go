@@ -67,11 +67,11 @@ func AOC_2020_24(cli *goutils.CLI) {
 }
 
 func (app *Application) Y2020D24P1() {
-	AOC_2020_24_part1_attempt1(&app.CLI)
+	AOC_2020_24_part1_attempt1(app.CLI)
 }
 
 func (app *Application) Y2020D24P2() {
-	AOC_2020_24_part2_attempt1(&app.CLI)
+	AOC_2020_24_part2_attempt1(app.CLI)
 }
 
 func (app *Application) Y2020D24P2Render() {
