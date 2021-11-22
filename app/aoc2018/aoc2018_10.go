@@ -165,72 +165,6 @@ What message will eventually appear in the sky?
 
 */
 
-func Abs(a int) int {
-	if a < 0 {
-		return -a
-	}
-	return a
-}
-
-func Min(a int, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func Max(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func NewH() []string {
-	// an H is a 5x8 grid
-	// #...#
-	// #...#
-	// #...#
-	// #####
-	// #...#
-	// #...#
-	// #...#
-	// #...#
-	var letter []string
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#####")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	return letter
-}
-
-func NewI() []string {
-	// an I is a 3x8 grid
-	// ###
-	// .#.
-	// .#.
-	// .#.
-	// .#.
-	// .#.
-	// .#.
-	// ###
-	var letter []string
-	letter = append(letter, "###")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, "###")
-	return letter
-
-}
-
 type Point struct {
 	line       string
 	position_x int
@@ -238,6 +172,7 @@ type Point struct {
 	velocity_x int
 	velocity_y int
 	Key        string
+	Grid       *Grid
 }
 
 type Grid struct {
@@ -276,6 +211,8 @@ func (g *Grid) Draw() {
 }
 
 func (g *Grid) IsH(point *Point) bool {
+	// return false
+	// return false
 	// #...#
 	// #...#
 	// #...#
@@ -297,30 +234,36 @@ func (g *Grid) IsH(point *Point) bool {
 	// x+4, y+7
 	x := point.position_x
 	y := point.position_y
+
+	for index := 0; index <= 4; index++ {
+		if g.Get(x+index, y+3) == nil {
+			// bar not present
+			// fmt.Printf("!got the horiz\n")
+			return false
+		}
+	}
+	fmt.Printf("got the horiz\n")
+
 	for index := 0; index <= 7; index++ {
 		if g.Get(x+4, y+index) == nil {
 			// right bar not present
 			return false
 		}
+	}
+	fmt.Printf("got the right bar\n")
+	for index := 0; index <= 7; index++ {
 		if g.Get(x, y+index) == nil {
 			// left bar not present
 			return false
 		}
 	}
-
+	fmt.Printf("got the left bar\n")
 	// horizontal line
 	// x, y+3
 	// x+1, y+3
 	// x+2, y+3
 	// x+3, y+3
 	// x+4, y+3
-	for index := 0; index <= 4; index++ {
-		if g.Get(x+index, y+3) == nil {
-			// bar not present
-			return false
-		}
-	}
-
 	return true
 
 	// left and right must both be present
@@ -334,6 +277,24 @@ func (g *Grid) IsH(point *Point) bool {
 	// x, y+6
 	// x, y+7
 
+}
+
+func (g *Grid) Bounds() (int, int, int, int, int, int) {
+	min_x := g.points[0].position_x
+	min_y := g.points[0].position_y
+	max_x := min_x
+	max_y := min_y
+
+	for _, point := range g.points {
+		max_x = Max(max_x, point.position_x)
+		max_y = Max(max_y, point.position_y)
+		min_x = Min(min_x, point.position_x)
+		min_y = Min(min_y, point.position_y)
+	}
+	width := max_x - min_x
+	height := max_y - min_y
+
+	return min_x, min_y, max_x, max_y, width, height
 }
 
 func (g *Grid) Snapshot(x int, y int, width int, height int) []string {
@@ -351,13 +312,6 @@ func (g *Grid) Snapshot(x int, y int, width int, height int) []string {
 		snapshot = append(snapshot, line)
 	}
 	return snapshot
-}
-
-func DebugLetter(letter []string) {
-	for index := 0; index < len(letter); index++ {
-		line := letter[index]
-		fmt.Printf("%v\n", line)
-	}
 }
 
 // indicates if the position x,y matches the passed search expression letter
@@ -401,6 +355,7 @@ func (g *Grid) AddPoint(p *Point) {
 	g.min_y = Min(p.position_y, g.min_y)
 	g.max_y = Max(p.position_y, g.max_y)
 	g.points = append(g.points, p)
+	p.Grid = g
 }
 
 func (g *Grid) Get(x int, y int) *Point {
@@ -408,18 +363,34 @@ func (g *Grid) Get(x int, y int) *Point {
 	return g.pointMap[key]
 }
 
-func (g *Grid) Step(remap bool) {
-	// g.step += 1
-	if remap {
-		g.pointMap = make(map[string]*Point)
-	}
-	// everything cycles to where it needs to be
+func (g *Grid) Step() {
+	g.pointMap = make(map[string]*Point)
 	for _, p := range g.points {
-		p.Step(remap)
-		if remap {
-			g.pointMap[p.Key] = p
-		}
+		p.Step()
+		// p.Remap()
+		g.pointMap[p.Key] = p
 	}
+	// g.Remap()
+}
+
+func (g *Grid) Remap() {
+	// g.pointMap = make(map[string]*Point)
+	// // everything cycles to where it needs to be
+	// for _, p := range g.points {
+	// 	p.Remap()
+	// 	g.pointMap[p.Key] = p
+	// }
+}
+
+func (p *Point) Step() {
+	p.position_x += p.velocity_x
+	p.position_y += p.velocity_y
+	p.Key = fmt.Sprintf("%v.%v", p.position_x, p.position_y)
+	// p.position_x = applyrange(p.position_x, p.velocity_x, g.min_x, g.max_x)
+	// p.position_y = applyrange(p.position_y, p.velocity_y, g.min_y, g.max_y)
+}
+
+func (p *Point) Remap() {
 }
 
 func (g *Grid) CountLetters() int {
@@ -427,6 +398,7 @@ func (g *Grid) CountLetters() int {
 	for _, p := range g.points {
 		if g.IsH(p) {
 			h_counter += 1
+			break
 		}
 	}
 	return h_counter
@@ -438,18 +410,6 @@ func (g *Grid) Debug() {
 
 func (p *Point) Debug() {
 	fmt.Printf("line=%v, px=%v, py=%v, vx=%v, vy=%v\n", p.line, p.position_x, p.position_y, p.velocity_x, p.velocity_y)
-}
-
-func (p *Point) Step(remap bool) {
-	// p.step += 1
-	p.position_x += p.velocity_x
-	p.position_y += p.velocity_y
-	if remap {
-		p.Key = fmt.Sprintf("%v.%v", p.position_x, p.position_y)
-	}
-
-	// p.position_x = applyrange(p.position_x, p.velocity_x, g.min_x, g.max_x)
-	// p.position_y = applyrange(p.position_y, p.velocity_y, g.min_y, g.max_y)
 }
 
 func NewPoint(line string) *Point {
@@ -476,50 +436,110 @@ func NewPoint(line string) *Point {
 	return &Point{line: line, position_x: pos_x, position_y: pos_y, velocity_x: v_x, velocity_y: v_y}
 }
 
-func applyrange(value int, changeby int, lowerbound int, upperbound int) int {
-	value += changeby
-	if value < lowerbound {
-		// we went under the lowerbound, wrap around to the upperbound
-		diff := Abs(value - lowerbound)
-		value = upperbound - diff
-	} else if value > upperbound {
-		// we went over the upperbound, wrap aroudn to the lowerbound
-		diff := Abs(value - upperbound)
-		value = lowerbound + diff
-	}
-	return value
-}
-
 // rename this to the year and day in question
 func (app *Application) Y2018D10P1() {
 	lines := strings.Split(DAY_2018_10_DATA_TEST, "\n")
 	g := NewGrid()
 	g.Load(lines)
+	g.Remap()
+
+	// let's see if we can find the lowest common factors for lining up many vertical
+	// bars of size 8.  this is because I assume a letter is a constant height (8)
+	// will generall have at least 1 vertical bar.  So, if I find a number of them, this
+	// is a signal that this timeperiod is a set of words.
+	// what I expect is a timecode; this timecode is what I then move to and *should*
+	// find myself able to print the line
+
+	// (x1,y1)+(vx1+vx1)  (x2,y2)+(vx2+vy2)
+	// x1+(n*vx1)   common n
+	// x2+(n*vx2)
+
+	// 6 + 1
+	// 3 + 2   << never meet  because this cannot catch  up; so never compare
+
+	// 2+1
+	// -1000 + 2
+
+	// know they will intersect
+	// 	IF they are going in the same direction
+	// 	AND the LOWER is travelling *faster* in that direction
+	// 	THEN calculate number of steps to intersect
+	// 		faster is faster by a ratio
+	// 		above
+	// 		500steps gets to -1000 0
+	// 		500 steps gets 2 to 502
+	// 		now calculate, how many steps to catch up with 2+1
+	// 		so second is 2x faster
+	// 		difference is 500
+	// 		log(2) 500
+	// 		250steps, we are now at 1502 and 752
+	// 		difference is now 250
+	// 		in 125 steps we add on to be
+	// 		125
+
+	ox1 := -1753
+	v1 := 7
+	ox2 := 1313
+	v2 := 6
+
+	x1 := ox1
+	x2 := ox2
+
+	step := 0
+	for {
+		step += 1
+		x1 = ox1 + (v1 * step)
+		x2 = ox2 + (v2 * step)
+		if x1 == x2 {
+			fmt.Printf("x1==x2 (%v,%v), step=%v\n", x1, x2, step)
+			break
+		} else if x1 > x2 {
+			fmt.Printf("x1>=x2 (%v, %v), step=%v\n", x1, x2, step)
+			break
+		} else {
+			fmt.Printf("x1!=x2 (%v,%v), step=%v\n", x1, x2, step)
+		}
+	}
+
+	// where x1 = -1000 v1 = 2
+	//       x2 = 0, v1 = 1
+
+	// steps = 1000 to get to same
+	// difference = 1000
+	// 500 steps to close difference gives new difference of 500
+	// x2 nw at 500, so 500 steps halved the distsance
+
+	// on x1,500 steps creates 1000, 0+1000=1000
+	// 500 gives 500, 500+500 = 100
+	// so 1000 steps
+
+	// -1643
+
+	return
 
 	h := g.CountLetters()
 	g.Draw()
 
-	g.Step(true)
+	g.Step()
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
-	g.Step(true)
+	g.Step()
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
-	g.Step(true)
+	g.Step()
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
-}
+	g.Step()
+	h = g.CountLetters()
+	fmt.Printf("There is %v H.\n", h)
+	g.Draw()
 
-func DrawLetter(l []string) {
-	for _, line := range l {
-		fmt.Printf("%v\n", line)
-	}
 }
 
 // rename this to the year and day in question
@@ -528,23 +548,43 @@ func (app *Application) Y2018D10P2() {
 	lines := strings.Split(DAY_2018_10_DATA, "\n")
 	g := NewGrid()
 	g.Load(lines)
+	g.Remap()
 	fmt.Printf("There are %v stars.\n", len(g.points))
 
 	step := 0
+
+	p0 := g.points[0]
+	p300 := g.points[299]
+
 	for index := 0; index < 1000000; index++ {
-		step += 1
-		g.Step(true)
+		// g.Remap()
+
 		// g.DrawLimited(50, 50)
 		h := g.CountLetters()
+
+		// h := 0
 		// h, i := 0, 0
-		if step%1000 == 0 {
-			fmt.Printf("[%v] %v H\n", step, h)
+		if step%5000 == 0 {
+			min_x, min_y, max_x, max_y, width, height := g.Bounds()
+
+			// width := Abs(max_x) - Abs(min_x)
+			// height := Abs(max_y) - Abs(min_y)
+			// if width < 200 && height < 200 {
+			fmt.Printf("[%v] %v H, grid=(%v,%v->%v,%v) [%v,%v] p0[%v,%v] p300[%v,%v]\n", step, h, min_x, min_y, max_x, max_y, width, height, p0.position_x, p0.position_y, p300.position_x, p300.position_y)
+			// g.Draw()
 		}
+		// }
 		if h > 0 {
 			fmt.Printf("Step %v, H %v\n", step, h)
 			break
 		}
 
+		if h > 0 {
+			return
+		}
+
+		g.Step()
+		step += 1
 	}
 
 }
