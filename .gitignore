@@ -1,6 +1,8 @@
 *.csv
 *.gz
 
+target/*
+
 .DS_Store
 
 *.json
