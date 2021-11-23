@@ -40,10 +40,13 @@ Let's render day 24, 2020 as an animation
 
 ## Extending
 
-When you work on a new day, e.g. 2021-01-01
+When you work on a new day, e.g. 2021
 
+    git checkout -b 2021-01
     ./start_problem.sh 2021 01
 
 You can then run it as an application
 
     ./aoc run 2021 01
+
+Eventually I'll be finished and can merge back to develop and finally main.
