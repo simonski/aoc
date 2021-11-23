@@ -2,7 +2,6 @@ package aoc2018
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -165,277 +164,6 @@ What message will eventually appear in the sky?
 
 */
 
-type Point struct {
-	line       string
-	position_x int
-	position_y int
-	velocity_x int
-	velocity_y int
-	Key        string
-	Grid       *Grid
-}
-
-type Grid struct {
-	min_x    int
-	min_y    int
-	max_x    int
-	max_y    int
-	points   []*Point
-	width    int
-	height   int
-	pointMap map[string]*Point
-}
-
-func NewGrid() *Grid {
-	g := &Grid{}
-	return g
-}
-
-func (g *Grid) Draw() {
-	for y := g.min_y; y <= g.max_y; y++ {
-		for x := g.min_x; x <= g.max_x; x++ {
-			p := g.Get(x, y)
-			if p != nil {
-				// if p.isTopLeft {
-				// 	fmt.Print("T")
-				// } else {
-				fmt.Print("#")
-				// }
-			} else {
-				fmt.Print(".")
-			}
-		}
-		fmt.Print("\n")
-	}
-	fmt.Print("\n")
-}
-
-func (g *Grid) IsH(point *Point) bool {
-	// return false
-	// return false
-	// #...#
-	// #...#
-	// #...#
-	// #####
-	// #...#
-	// #...#
-	// #...#
-	// #...#
-
-	// so an H has a point which has a sibling at
-	// right vertical
-	// x+4, y
-	// x+4, y+1
-	// x+4, y+2
-	// x+4, y+3
-	// x+4, y+4
-	// x+4, y+5
-	// x+4, y+6
-	// x+4, y+7
-	x := point.position_x
-	y := point.position_y
-
-	for index := 0; index <= 4; index++ {
-		if g.Get(x+index, y+3) == nil {
-			// bar not present
-			// fmt.Printf("!got the horiz\n")
-			return false
-		}
-	}
-	fmt.Printf("got the horiz\n")
-
-	for index := 0; index <= 7; index++ {
-		if g.Get(x+4, y+index) == nil {
-			// right bar not present
-			return false
-		}
-	}
-	fmt.Printf("got the right bar\n")
-	for index := 0; index <= 7; index++ {
-		if g.Get(x, y+index) == nil {
-			// left bar not present
-			return false
-		}
-	}
-	fmt.Printf("got the left bar\n")
-	// horizontal line
-	// x, y+3
-	// x+1, y+3
-	// x+2, y+3
-	// x+3, y+3
-	// x+4, y+3
-	return true
-
-	// left and right must both be present
-
-	// left vertical
-	// x, y+1
-	// x, y+2
-	// x, y+3
-	// x, y+4
-	// x, y+5
-	// x, y+6
-	// x, y+7
-
-}
-
-func (g *Grid) Bounds() (int, int, int, int, int, int) {
-	min_x := g.points[0].position_x
-	min_y := g.points[0].position_y
-	max_x := min_x
-	max_y := min_y
-
-	for _, point := range g.points {
-		max_x = Max(max_x, point.position_x)
-		max_y = Max(max_y, point.position_y)
-		min_x = Min(min_x, point.position_x)
-		min_y = Min(min_y, point.position_y)
-	}
-	width := max_x - min_x
-	height := max_y - min_y
-
-	return min_x, min_y, max_x, max_y, width, height
-}
-
-func (g *Grid) Snapshot(x int, y int, width int, height int) []string {
-	var snapshot []string
-	for yindex := y; yindex < y+height; yindex++ {
-		line := ""
-		for xindex := x; xindex < x+width; xindex++ {
-			point := g.Get(xindex, yindex)
-			if point == nil {
-				line += "."
-			} else {
-				line += "#"
-			}
-		}
-		snapshot = append(snapshot, line)
-	}
-	return snapshot
-}
-
-// indicates if the position x,y matches the passed search expression letter
-func (g *Grid) Compare(letter []string, x int, y int) (bool, []string) {
-	// in this case we need to match each character in letter
-	// with each character in the grid at that point
-	width := len(letter[0])
-	height := len(letter)
-	snapshot := g.Snapshot(x, y, width-1, height-1)
-
-	for index := 0; index < len(letter); index++ {
-		if letter[index] != snapshot[index] {
-			return false, snapshot
-		}
-	}
-	return true, snapshot
-}
-
-func (g *Grid) Load(lines []string) {
-	for _, line := range lines {
-		p := NewPoint(line)
-		g.AddPoint(p)
-	}
-
-	if g.min_x < 0 {
-		g.width = Abs(g.min_x) + g.max_x
-	} else {
-		g.width = g.max_x
-	}
-
-	if g.min_y < 0 {
-		g.height = Abs(g.min_y) + g.max_y
-	} else {
-		g.height = g.max_y
-	}
-}
-
-func (g *Grid) AddPoint(p *Point) {
-	g.min_x = Min(p.position_x, g.min_x)
-	g.max_x = Max(p.position_x, g.max_x)
-	g.min_y = Min(p.position_y, g.min_y)
-	g.max_y = Max(p.position_y, g.max_y)
-	g.points = append(g.points, p)
-	p.Grid = g
-}
-
-func (g *Grid) Get(x int, y int) *Point {
-	key := fmt.Sprintf("%v.%v", x, y)
-	return g.pointMap[key]
-}
-
-func (g *Grid) Step() {
-	g.pointMap = make(map[string]*Point)
-	for _, p := range g.points {
-		p.Step()
-		// p.Remap()
-		g.pointMap[p.Key] = p
-	}
-	// g.Remap()
-}
-
-func (g *Grid) Remap() {
-	// g.pointMap = make(map[string]*Point)
-	// // everything cycles to where it needs to be
-	// for _, p := range g.points {
-	// 	p.Remap()
-	// 	g.pointMap[p.Key] = p
-	// }
-}
-
-func (p *Point) Step() {
-	p.position_x += p.velocity_x
-	p.position_y += p.velocity_y
-	p.Key = fmt.Sprintf("%v.%v", p.position_x, p.position_y)
-	// p.position_x = applyrange(p.position_x, p.velocity_x, g.min_x, g.max_x)
-	// p.position_y = applyrange(p.position_y, p.velocity_y, g.min_y, g.max_y)
-}
-
-func (p *Point) Remap() {
-}
-
-func (g *Grid) CountLetters() int {
-	h_counter := 0
-	for _, p := range g.points {
-		if g.IsH(p) {
-			h_counter += 1
-			break
-		}
-	}
-	return h_counter
-}
-
-func (g *Grid) Debug() {
-	fmt.Printf("Grid.debug() min_x=%v, min_y=%v, max_x=%v, max_y=%v, width=%v, height=%v\n", g.min_x, g.min_y, g.max_x, g.max_y, g.width, g.height)
-}
-
-func (p *Point) Debug() {
-	fmt.Printf("line=%v, px=%v, py=%v, vx=%v, vy=%v\n", p.line, p.position_x, p.position_y, p.velocity_x, p.velocity_y)
-}
-
-func NewPoint(line string) *Point {
-	// position=< 9,  1> velocity=< 0,  2>
-	splits := strings.Split(line, "velocity")
-	position := strings.Split(splits[0], "=")[1]
-	position = strings.Replace(position, "position=", "", -1)
-	position = strings.Replace(position, "<", "", -1)
-	position = strings.Replace(position, ">", "", -1)
-	position = strings.Replace(position, " ", "", -1)
-	p := strings.Split(position, ",")
-	pos_x, _ := strconv.Atoi(p[0])
-	pos_y, _ := strconv.Atoi(p[1])
-
-	velocity := strings.Split(splits[1], "=")[1]
-	velocity = strings.Replace(velocity, "velocity=", "", -1)
-	velocity = strings.Replace(velocity, "<", "", -1)
-	velocity = strings.Replace(velocity, ">", "", -1)
-	velocity = strings.Replace(velocity, " ", "", -1)
-	v := strings.Split(velocity, ",")
-	v_x, _ := strconv.Atoi(v[0])
-	v_y, _ := strconv.Atoi(v[1])
-
-	return &Point{line: line, position_x: pos_x, position_y: pos_y, velocity_x: v_x, velocity_y: v_y}
-}
-
 // rename this to the year and day in question
 func (app *Application) Y2018D10P1() {
 	lines := strings.Split(DAY_2018_10_DATA_TEST, "\n")
@@ -477,29 +205,29 @@ func (app *Application) Y2018D10P1() {
 	// 		in 125 steps we add on to be
 	// 		125
 
-	ox1 := -1753
-	v1 := 7
-	ox2 := 1313
-	v2 := 6
+	// ox1 := -1753
+	// v1 := 7
+	// ox2 := 1313
+	// v2 := 6
 
-	x1 := ox1
-	x2 := ox2
+	// x1 := ox1
+	// x2 := ox2
 
-	step := 0
-	for {
-		step += 1
-		x1 = ox1 + (v1 * step)
-		x2 = ox2 + (v2 * step)
-		if x1 == x2 {
-			fmt.Printf("x1==x2 (%v,%v), step=%v\n", x1, x2, step)
-			break
-		} else if x1 > x2 {
-			fmt.Printf("x1>=x2 (%v, %v), step=%v\n", x1, x2, step)
-			break
-		} else {
-			fmt.Printf("x1!=x2 (%v,%v), step=%v\n", x1, x2, step)
-		}
-	}
+	// step := 0
+	// for {
+	// 	step += 1
+	// 	x1 = ox1 + (v1 * step)
+	// 	x2 = ox2 + (v2 * step)
+	// 	if x1 == x2 {
+	// 		// fmt.Printf("x1==x2 (%v,%v), step=%v\n", x1, x2, step)
+	// 		break
+	// 	} else if x1 > x2 {
+	// 		// fmt.Printf("x1>=x2 (%v, %v), step=%v\n", x1, x2, step)
+	// 		break
+	// 	} else {
+	// 		// fmt.Printf("x1!=x2 (%v,%v), step=%v\n", x1, x2, step)
+	// 	}
+	// }
 
 	// where x1 = -1000 v1 = 2
 	//       x2 = 0, v1 = 1
@@ -515,27 +243,27 @@ func (app *Application) Y2018D10P1() {
 
 	// -1643
 
-	return
+	// return
 
 	h := g.CountLetters()
 	g.Draw()
 
-	g.Step()
+	g.Step(true)
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
-	g.Step()
+	g.Step(true)
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
-	g.Step()
+	g.Step(true)
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
-	g.Step()
+	g.Step(true)
 	h = g.CountLetters()
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
@@ -553,24 +281,61 @@ func (app *Application) Y2018D10P2() {
 
 	step := 0
 
-	p0 := g.points[0]
-	p300 := g.points[299]
+	// p0 := g.points[0]
+	// p300 := g.points[299]
 
-	for index := 0; index < 1000000; index++ {
-		// g.Remap()
+	width := 0
+	height := 0
+	min_x := 0
+	min_y := 0
+	max_x := 0
+	max_y := 0
+
+	// the max time signature would be.. the last positive moving x passing the last negative moving x
+	// AND
+	// the max time signature would be.. the last positive moving y passing the last negative moving y
+	// this way once we get "past" this time sig, we cannot create any more letters as they will have
+	// passed each other
+	// each time code, find least X of a positive velocity and max x of a negative velocity
+	// each time code, find least y of a positive velocity and max y of a negative velocity
+	// once both exceed, we have crossed our timecode
+
+	for {
+
+		leftMostMovingRight, rightMostMovingLeft, topMostMovingDown, bottomMostMovingUp := g.FindMovingBoundaryPoints()
+		if leftMostMovingRight.position_x > rightMostMovingLeft.position_x {
+			// then our last left star has gone "past" our last right star
+			fmt.Printf("stars have exceeded horizontally\n")
+			break
+		}
+		if topMostMovingDown.position_y > bottomMostMovingUp.position_y {
+			// then our last top star has gone "past" our last bottom star
+			fmt.Printf("stars have exceeded vertically\n")
+			break
+
+		}
 
 		// g.DrawLimited(50, 50)
 		h := g.CountLetters()
+		// fmt.Printf("Step is [%v]\n", step)
 
 		// h := 0
 		// h, i := 0, 0
+		// last_width := width
+		// last_height := height
+
+		// if last_width*last_height < width*height {
+		// fmt.Printf("Last bounds were smaller.")
+		// fmt.Printf("[%v] %v H, grid=(%v,%v->%v,%v) [%v,%v] p0[%v,%v] p300[%v,%v]\n", step, h, min_x, min_y, max_x, max_y, width, height, p0.position_x, p0.position_y, p300.position_x, p300.position_y)
+		// }
+
 		if step%5000 == 0 {
-			min_x, min_y, max_x, max_y, width, height := g.Bounds()
 
 			// width := Abs(max_x) - Abs(min_x)
 			// height := Abs(max_y) - Abs(min_y)
 			// if width < 200 && height < 200 {
-			fmt.Printf("[%v] %v H, grid=(%v,%v->%v,%v) [%v,%v] p0[%v,%v] p300[%v,%v]\n", step, h, min_x, min_y, max_x, max_y, width, height, p0.position_x, p0.position_y, p300.position_x, p300.position_y)
+			min_x, min_y, max_x, max_y, width, height = g.Bounds()
+			fmt.Printf("[%v] %v H, grid (minx,miny,maxx,maxy)=(%v,%v->%v,%v) [w=%v,h=%v]\n", step, h, min_x, min_y, max_x, max_y, width, height)
 			// g.Draw()
 		}
 		// }
@@ -583,8 +348,9 @@ func (app *Application) Y2018D10P2() {
 			return
 		}
 
-		g.Step()
+		g.Step(true)
 		step += 1
+
 	}
 
 }

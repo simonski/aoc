@@ -77,6 +77,12 @@ func DebugLetter(letter []string) {
 	}
 }
 
+func DrawLetter(l []string) {
+	for _, line := range l {
+		fmt.Printf("%v\n", line)
+	}
+}
+
 func applyrange(value int, changeby int, lowerbound int, upperbound int) int {
 	value += changeby
 	if value < lowerbound {
@@ -89,10 +95,4 @@ func applyrange(value int, changeby int, lowerbound int, upperbound int) int {
 		value = lowerbound + diff
 	}
 	return value
-}
-
-func DrawLetter(l []string) {
-	for _, line := range l {
-		fmt.Printf("%v\n", line)
-	}
 }
