@@ -6,11 +6,11 @@ package app
 */
 
 // rename this to the year and day in question
-func (app *Application) Y20XXDXXP1() {
+func (app *Application) YyyyyDddP1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y20XXDXXP2() {
+func (app *Application) YyyyyDddP2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
@@ -23,7 +23,7 @@ func (app *Application) Y20XXDXXP2() {
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y20XXDXX() {
-	app.Y20XXDXXP1()
-	app.Y20XXDXXP2()
+func (app *Application) YyyyyDdd() {
+	app.YyyyyDddP1()
+	app.YyyyyDddP2()
 }

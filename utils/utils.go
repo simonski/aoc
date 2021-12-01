@@ -1,7 +1,9 @@
-package aoc2018
+package utils
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 func Abs(a int) int {
@@ -23,6 +25,15 @@ func Max(a int, b int) int {
 		return a
 	}
 	return b
+}
+
+func Factorial(a uint64) uint64 {
+	if a > 1 {
+		a = a * Factorial(a-1)
+		return a
+	} else {
+		return a
+	}
 }
 
 func NewH() []string {
@@ -95,4 +106,15 @@ func applyrange(value int, changeby int, lowerbound int, upperbound int) int {
 		value = lowerbound + diff
 	}
 	return value
+}
+
+// reads some test data to a slice of ints
+func SplitDataToListOfInts(data string) []int {
+	results := make([]int, 0)
+	splits := strings.Split(data, "\n")
+	for _, line := range splits {
+		iline, _ := strconv.Atoi(line)
+		results = append(results, iline)
+	}
+	return results
 }

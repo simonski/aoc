@@ -2,6 +2,8 @@ package aoc2018
 
 import (
 	"fmt"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 type Grid struct {
@@ -27,10 +29,10 @@ func (g *Grid) Bounds() (int, int, int, int, int, int) {
 	max_y := min_y
 
 	for _, point := range g.points {
-		max_x = Max(max_x, point.position_x)
-		max_y = Max(max_y, point.position_y)
-		min_x = Min(min_x, point.position_x)
-		min_y = Min(min_y, point.position_y)
+		max_x = utils.Max(max_x, point.position_x)
+		max_y = utils.Max(max_y, point.position_y)
+		min_x = utils.Min(min_x, point.position_x)
+		min_y = utils.Min(min_y, point.position_y)
 	}
 	width := max_x - min_x
 	height := max_y - min_y
@@ -178,13 +180,13 @@ func (g *Grid) Load(lines []string) {
 	}
 
 	if g.min_x < 0 {
-		g.width = Abs(g.min_x) + g.max_x
+		g.width = utils.Abs(g.min_x) + g.max_x
 	} else {
 		g.width = g.max_x
 	}
 
 	if g.min_y < 0 {
-		g.height = Abs(g.min_y) + g.max_y
+		g.height = utils.Abs(g.min_y) + g.max_y
 	} else {
 		g.height = g.max_y
 	}
@@ -200,10 +202,10 @@ func (g *Grid) Remap() {
 }
 
 func (g *Grid) AddPoint(p *Point) {
-	g.min_x = Min(p.position_x, g.min_x)
-	g.max_x = Max(p.position_x, g.max_x)
-	g.min_y = Min(p.position_y, g.min_y)
-	g.max_y = Max(p.position_y, g.max_y)
+	g.min_x = utils.Min(p.position_x, g.min_x)
+	g.max_x = utils.Max(p.position_x, g.max_x)
+	g.min_y = utils.Min(p.position_y, g.min_y)
+	g.max_y = utils.Max(p.position_y, g.max_y)
 	g.points = append(g.points, p)
 }
 
