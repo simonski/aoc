@@ -2,6 +2,7 @@
 *.gz
 
 target/*
+aoc_linux
 
 .DS_Store
 

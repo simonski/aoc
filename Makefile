@@ -36,3 +36,14 @@ install:
 
 all: clean build test
 	go install
+
+release:
+	goreleaser --snapshot --skip-publish --rm-dist
+
+docker: build
+	GOOS=linux GOARCH=amd64 go build -o aoc_linux
+	docker build -t aoc .
+
+publish: 
+	docker tag aoc simongauld/aoc:latest
+	docker push simongauld/aoc:latest

@@ -26,6 +26,8 @@ The commands are:
 
     info                     prints computer information
 
+	server					 runs the .... webserver version!
+
     version                  prints aoc version
 	
 `
@@ -42,6 +44,8 @@ func main() {
 		app.Run(c)
 	} else if command == "render" {
 		app.Render(c)
+	} else if command == "server" {
+		app.Server(c)
 	} else if command == "info" {
 		Info(c)
 	} else if command == "version" {

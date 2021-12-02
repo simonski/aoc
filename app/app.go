@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gookit/color"
+	api "github.com/simonski/aoc/api"
 	aoc2015 "github.com/simonski/aoc/app/aoc2015"
 	aoc2016 "github.com/simonski/aoc/app/aoc2016"
 	aoc2017 "github.com/simonski/aoc/app/aoc2017"
@@ -55,6 +56,11 @@ func NewApplication(cli *goutils.CLI) Application {
 	app := Application{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
+}
+
+func (app *Application) Server(cli *goutils.CLI) {
+	server := api.NewServer(cli)
+	server.Run()
 }
 
 func (app *Application) Run(cli *goutils.CLI) {
