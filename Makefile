@@ -16,15 +16,9 @@ usage:
 	@echo "  all                   - all of the above"
 	@echo ""
 
-# init:
-# 	go get github.com/rakyll/statik
-
 clean:
 	go clean
 	
-# statik:
-# 	statik -src=data -include=*.txt
-
 build:
 	go build
 	
