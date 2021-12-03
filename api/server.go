@@ -1,12 +1,18 @@
 package api
 
 import (
+	"embed"
 	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/simonski/goutils"
+
+	_ "embed"
 )
+
+//go:embed css js index.html
+var staticFiles embed.FS
 
 // https://tutorialedge.net/golang/creating-restful-api-with-golang/
 type Server struct {
@@ -18,19 +24,21 @@ func NewServer(c *goutils.CLI) *Server {
 	return server
 }
 
-func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "AOC 2021 Time!")
-	// fmt.Println("Endpoint hit: homepage")
-
-	// where Articles is a []Article
-	// json.NewEncoder(w).Encode(Articles)
-
-}
-
 func (server *Server) Run() {
 	port := server.cli.GetIntOrDefault("-p", 8000)
 	portstr := fmt.Sprintf(":%v", port)
-	http.HandleFunc("/", homePage)
+
+	var staticFS = http.FS(staticFiles)
+	fs := http.FileServer(staticFS)
+
+	http.Handle("/", fs)
+
+	// myRouter := mux.NewRouter().StrictSlash(true)
+	// myRouter.HandleFunc("/", htmlFunc)
+	// myRouter.HandleFunc("/style.css", cssFunc)
+	// myRouter.HandleFunc("/code.js", jsFunc)
+	// myRouter.HandleFunc("/tachyons.css", tachyonsFunc)
+
 	fmt.Printf("AOC Server listening on %v\n", portstr)
 	log.Fatal(http.ListenAndServe(portstr, nil))
 }

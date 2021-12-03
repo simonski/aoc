@@ -1,6 +1,6 @@
 module github.com/simonski/aoc
 
-go 1.14
+go 1.16
 
 require (
 	github.com/StackExchange/wmi v1.2.1 // indirect
@@ -8,6 +8,7 @@ require (
 	github.com/fogleman/gg v1.3.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/gookit/color v1.3.6
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/shirou/gopsutil v3.21.9+incompatible // indirect
 	github.com/simonski/goutils v0.0.0-20211005171939-dbad30e5ade8 // indirect
 	github.com/tklauser/go-sysconf v0.3.9 // indirect

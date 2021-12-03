@@ -6,6 +6,22 @@ import (
 	"strings"
 )
 
+/*
+Converts a decimal string to an integer value
+e.g. "11" -> utisl.BinaryStringToInt("11") = 3
+*/
+func BinaryStringToInt(v string) int {
+	result := 0
+	pow := 1
+	for index := len(v) - 1; index >= 0; index-- {
+		value, _ := strconv.Atoi(v[index : index+1])
+		value *= pow
+		result += value
+		pow += pow
+	}
+	return result
+}
+
 func Abs(a int) int {
 	if a < 0 {
 		return -a
