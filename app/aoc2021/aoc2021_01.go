@@ -52,7 +52,7 @@ How many measurements are larger than the previous measurement?
 */
 
 func (app *Application) Y2021D01P1() {
-	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA)
+	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA, "\n")
 	last_value := 0
 	increase := 0
 	for index, value := range ints {
@@ -65,7 +65,7 @@ func (app *Application) Y2021D01P1() {
 	}
 	fmt.Printf("2021 01/1 - Depth increased %v times in test data\n", increase)
 
-	ints = utils.SplitDataToListOfInts(DAY_2021_01_DATA)
+	ints = utils.SplitDataToListOfInts(DAY_2021_01_DATA, "\n")
 	last_value = 0
 	increase = 0
 	for index, value := range ints {
@@ -82,7 +82,7 @@ func (app *Application) Y2021D01P1() {
 
 // rename this to the year and day in question
 func (app *Application) Y2021D01P2() {
-	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA)
+	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA, "\n")
 	last_value := 0
 	increase := 0
 	for index := range ints {
@@ -99,7 +99,7 @@ func (app *Application) Y2021D01P2() {
 	}
 	fmt.Printf("2021 01/2 - Depth increased %v times in test data\n", increase)
 
-	ints = utils.SplitDataToListOfInts(DAY_2021_01_DATA)
+	ints = utils.SplitDataToListOfInts(DAY_2021_01_DATA, "\n")
 	last_value = 0
 	increase = 0
 	for index := range ints {
