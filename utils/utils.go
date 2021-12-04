@@ -125,9 +125,9 @@ func applyrange(value int, changeby int, lowerbound int, upperbound int) int {
 }
 
 // reads some test data to a slice of ints
-func SplitDataToListOfInts(data string) []int {
+func SplitDataToListOfInts(data string, delim string) []int {
 	results := make([]int, 0)
-	splits := strings.Split(data, "\n")
+	splits := strings.Split(data, delim)
 	for _, line := range splits {
 		iline, _ := strconv.Atoi(line)
 		results = append(results, iline)
