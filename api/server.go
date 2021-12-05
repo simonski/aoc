@@ -33,12 +33,13 @@ func (server *Server) Run() {
 	port := server.cli.GetIntOrDefault("-p", 8000)
 	portstr := fmt.Sprintf(":%v", port)
 
-	var staticFS = http.FS(staticFiles)
-	fs := http.FileServer(staticFS)
+	// var staticFS = http.FS(staticFiles)
+	// fs := http.FileServer(staticFS)
 
-	http.Handle("/", fs)
+	// http.Handle("/", fs)
 
 	// myRouter := mux.NewRouter().StrictSlash(true)
+	http.HandleFunc("/", indexFunc)
 	http.HandleFunc("/api/solutions", apiSolutionsFunc)
 	// myRouter.HandleFunc("/style.css", cssFunc)
 	// myRouter.HandleFunc("/code.js", jsFunc)
@@ -87,5 +88,11 @@ func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 	length_str := fmt.Sprintf("%v", len(msg))
 	w.Header().Set("Content-Type", "application/json") // this
 	w.Header().Set("Content-Length", length_str)       // this
+	fmt.Fprint(w, msg)
+}
+
+func indexFunc(w http.ResponseWriter, r *http.Request) {
+	msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC 2021 <a href='/api/solutions'>[solutions]</a></body>\n</html>"
+	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, msg)
 }
