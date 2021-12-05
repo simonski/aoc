@@ -25,6 +25,10 @@ func (app Application) GetName() string {
 	return "I am 2015"
 }
 
+func (app Application) Api(day int) string {
+	return ""
+}
+
 func (app Application) Run(cli *goutils.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	// fmt.Printf("Application.Run(%v)", cli.Args)

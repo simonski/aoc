@@ -144,6 +144,7 @@ type AppLogic interface {
 	Help(cli *goutils.CLI)
 	GetMethod(methodName string) (reflect.Value, reflect.Value, bool)
 	GetName() string
+	Api(day int) string
 }
 
 // func GetMethod(appLogic AppLogic, methodName string) (reflect.Value, reflect.Value, bool) {

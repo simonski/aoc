@@ -183,3 +183,7 @@ func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Valu
 	}
 	return rvalue, mvalue, exists
 }
+
+func (app Application) Api(day int) string {
+	return ""
+}

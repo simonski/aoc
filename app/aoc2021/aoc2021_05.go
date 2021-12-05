@@ -51,9 +51,9 @@ Consider only horizontal and vertical lines. At how many points do at least two 
 */
 
 type Grid struct {
-	width  int
-	height int
-	lines  []*Line
+	Width  int     `json:"width"`
+	Height int     `json:"height"`
+	Lines  []*Line `json:"lines"`
 }
 
 func NewGrid(data string) *Grid {
@@ -67,34 +67,34 @@ func NewGrid(data string) *Grid {
 	for _, line_s := range splits {
 		line := NewLine(line_s)
 		lines = append(lines, line)
-		fmt.Print(line.Debug())
-		minx = utils.Min(minx, line.x1)
-		minx = utils.Min(minx, line.x2)
-		maxx = utils.Max(maxx, line.x1)
-		maxx = utils.Max(maxx, line.x2)
+		// fmt.Print(line.Debug())
+		minx = utils.Min(minx, line.X1)
+		minx = utils.Min(minx, line.X2)
+		maxx = utils.Max(maxx, line.X1)
+		maxx = utils.Max(maxx, line.X2)
 
-		miny = utils.Min(miny, line.y1)
-		miny = utils.Min(miny, line.y2)
-		maxy = utils.Max(maxy, line.y1)
-		maxy = utils.Max(maxy, line.y2)
+		miny = utils.Min(miny, line.Y1)
+		miny = utils.Min(miny, line.Y2)
+		maxy = utils.Max(maxy, line.Y1)
+		maxy = utils.Max(maxy, line.Y2)
 	}
 	// fmt.Printf("minx=%v, miny=%v, maxx=%v, maxy=%v\n", minx, miny, maxx, maxy)
 	width := maxx - minx
 	height := maxx - miny
-	return &Grid{width: width, height: height, lines: lines}
+	return &Grid{Width: width, Height: height, Lines: lines}
 }
 
 func (grid *Grid) PlayPartOne() int {
 	// the x * y grid containing all the occupants
 	counts := make(map[string]int)
-	for index, line := range grid.lines {
-		fmt.Printf("Line[%v] %v", index, line.Debug())
+	for _, line := range grid.Lines {
+		// fmt.Printf("Line[%v] %v", index, line.Debug())
 		if line.IsHorizontal() {
-			min_x := utils.Min(line.x1, line.x2)
-			max_x := utils.Max(line.x1, line.x2)
+			min_x := utils.Min(line.X1, line.X2)
+			max_x := utils.Max(line.X1, line.X2)
 
 			for x := min_x; x <= max_x; x++ {
-				key := fmt.Sprintf("%v,%v", x, line.y1)
+				key := fmt.Sprintf("%v,%v", x, line.Y1)
 				value := counts[key]
 				value++
 				counts[key] = value
@@ -103,10 +103,10 @@ func (grid *Grid) PlayPartOne() int {
 				// }
 			}
 		} else if line.IsVertical() {
-			min_y := utils.Min(line.y1, line.y2)
-			max_y := utils.Max(line.y1, line.y2)
+			min_y := utils.Min(line.Y1, line.Y2)
+			max_y := utils.Max(line.Y1, line.Y2)
 			for y := min_y; y <= max_y; y++ {
-				key := fmt.Sprintf("%v,%v", line.x1, y)
+				key := fmt.Sprintf("%v,%v", line.X1, y)
 				value := counts[key]
 				value++
 				counts[key] = value
@@ -131,14 +131,14 @@ func (grid *Grid) PlayPartOne() int {
 func (grid *Grid) PlayPartTwo() int {
 	// the x * y grid containing all the occupants
 	counts := make(map[string]int)
-	for _, line := range grid.lines {
+	for _, line := range grid.Lines {
 		// fmt.Printf("Line[%v] %v", index, line.Debug())
 		if line.IsHorizontal() {
-			min_x := utils.Min(line.x1, line.x2)
-			max_x := utils.Max(line.x1, line.x2)
+			min_x := utils.Min(line.X1, line.X2)
+			max_x := utils.Max(line.X1, line.X2)
 
 			for x := min_x; x <= max_x; x++ {
-				key := fmt.Sprintf("%v,%v", x, line.y1)
+				key := fmt.Sprintf("%v,%v", x, line.Y1)
 				value := counts[key]
 				value++
 				counts[key] = value
@@ -148,10 +148,10 @@ func (grid *Grid) PlayPartTwo() int {
 			}
 
 		} else if line.IsVertical() {
-			min_y := utils.Min(line.y1, line.y2)
-			max_y := utils.Max(line.y1, line.y2)
+			min_y := utils.Min(line.Y1, line.Y2)
+			max_y := utils.Max(line.Y1, line.Y2)
 			for y := min_y; y <= max_y; y++ {
-				key := fmt.Sprintf("%v,%v", line.x1, y)
+				key := fmt.Sprintf("%v,%v", line.X1, y)
 				value := counts[key]
 				value++
 				counts[key] = value
@@ -162,17 +162,17 @@ func (grid *Grid) PlayPartTwo() int {
 		} else {
 			// It MUST be diagonal - I don't need to detect it cos the rules
 			// is it a left-to-right or right-to-left
-			if line.x1 < line.x2 {
-				y := line.y1
+			if line.X1 < line.X2 {
+				y := line.Y1
 				y_diff := 0
-				if line.y1 < line.y2 {
+				if line.Y1 < line.Y2 {
 					// it is a downy angle "\"
 					y_diff = 1
 				} else {
 					// it is an uppy angle "/"
 					y_diff = -1
 				}
-				for x := line.x1; x <= line.x2; x++ {
+				for x := line.X1; x <= line.X2; x++ {
 					// is it an uppy angle or a downy angle
 					// we will go left to right, but will it be up or down
 					key := fmt.Sprintf("%v,%v", x, y)
@@ -182,16 +182,16 @@ func (grid *Grid) PlayPartTwo() int {
 					y += y_diff
 				}
 			} else {
-				y := line.y1
+				y := line.Y1
 				y_diff := 0
-				if line.y1 < line.y2 {
+				if line.Y1 < line.Y2 {
 					// it is a downy angle "\"
 					y_diff = 1
 				} else {
 					// it is an uppy angle "/"
 					y_diff = -1
 				}
-				for x := line.x1; x >= line.x2; x-- {
+				for x := line.X1; x >= line.X2; x-- {
 					key := fmt.Sprintf("%v,%v", x, y)
 					value := counts[key]
 					value++
@@ -235,10 +235,10 @@ func DebugCounts(line *Line, counts map[string]int) string {
 }
 
 type Line struct {
-	x1 int
-	y1 int
-	x2 int
-	y2 int
+	X1 int `json:"x1"`
+	Y1 int `json:"y1"`
+	X2 int `json:"x2"`
+	Y2 int `json:"y2"`
 }
 
 func (line *Line) Debug() string {
@@ -248,7 +248,7 @@ func (line *Line) Debug() string {
 	} else if line.IsVertical() {
 		linetype = "Vertical"
 	}
-	return fmt.Sprintf("(%v,%v)->(%v,%v) [%v]\n", line.x1, line.y1, line.x2, line.y2, linetype)
+	return fmt.Sprintf("(%v,%v)->(%v,%v) [%v]\n", line.X1, line.Y1, line.X2, line.Y2, linetype)
 }
 
 func NewLine(line_s string) *Line {
@@ -260,20 +260,20 @@ func NewLine(line_s string) *Line {
 	x2, _ := strconv.Atoi(points[2])
 	y2, _ := strconv.Atoi(points[3])
 
-	line := Line{x1: x1, x2: x2, y1: y1, y2: y2}
+	line := Line{X1: x1, X2: x2, Y1: y1, Y2: y2}
 	return &line
 }
 
 func (line *Line) IsHorizontal() bool {
-	return line.y1 == line.y2
+	return line.Y1 == line.Y2
 }
 
 func (line *Line) IsVertical() bool {
-	return line.x1 == line.x2
+	return line.X1 == line.X2
 }
 
 func (line *Line) IsDiagonally() bool {
-	return line.x1 == line.x2
+	return line.X1 == line.X2
 }
 
 func Part1D5(data string) {

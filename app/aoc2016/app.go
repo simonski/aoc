@@ -171,6 +171,10 @@ func (app Application) Render(cli *goutils.CLI) {
 	}
 }
 
+func (app Application) Api(day int) string {
+	return ""
+}
+
 func (app Application) Help(cli *goutils.CLI) {
 }
 

@@ -1,6 +1,7 @@
 package aoc2021
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"reflect"
@@ -182,4 +183,14 @@ func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Valu
 		exists = true
 	}
 	return rvalue, mvalue, exists
+}
+
+func (app Application) Api(day int) string {
+	if day == 5 {
+		grid := NewGrid(DAY_2021_05_DATA)
+		msgb, _ := json.Marshal(grid)
+		msg := string(msgb)
+		return msg
+	}
+	return ""
 }

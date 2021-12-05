@@ -13,7 +13,7 @@ import (
 	_ "embed"
 )
 
-//go:embed css js index.html
+//go:embed css js visualisations api index.html
 var staticFiles embed.FS
 var SERVER *Server
 
@@ -33,14 +33,15 @@ func (server *Server) Run() {
 	port := server.cli.GetIntOrDefault("-p", 8000)
 	portstr := fmt.Sprintf(":%v", port)
 
-	// var staticFS = http.FS(staticFiles)
-	// fs := http.FileServer(staticFS)
+	var staticFS = http.FS(staticFiles)
+	fs := http.FileServer(staticFS)
 
-	// http.Handle("/", fs)
+	http.Handle("/", fs)
 
 	// myRouter := mux.NewRouter().StrictSlash(true)
-	http.HandleFunc("/", indexFunc)
+	// http.HandleFunc("/", indexFunc)
 	http.HandleFunc("/api/solutions", apiSolutionsFunc)
+	http.HandleFunc("/api/2021/05", api202105)
 	// myRouter.HandleFunc("/style.css", cssFunc)
 	// myRouter.HandleFunc("/code.js", jsFunc)
 	// myRouter.HandleFunc("/tachyons.css", tachyonsFunc)
@@ -95,4 +96,16 @@ func indexFunc(w http.ResponseWriter, r *http.Request) {
 	msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC 2021 <a href='/api/solutions'>[solutions]</a></body>\n</html>"
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, msg)
+}
+
+func api202105(w http.ResponseWriter, r *http.Request) {
+	a := SERVER.application
+	appLogic := a.GetAppLogic(2021)
+	response := appLogic.Api(5)
+	// msgb, _ := json.Marshal(response)
+	// msg := string(msgb)
+	length_str := fmt.Sprintf("%v", len(response))
+	w.Header().Set("Content-Type", "application/json") // this
+	w.Header().Set("Content-Length", length_str)       // this
+	fmt.Fprint(w, response)
 }

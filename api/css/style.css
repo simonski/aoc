@@ -1,3 +1,7 @@
-body {
-    font: Courier
+html, body {
+    /* height: 100%;
+    width: 100%; */
+    padding: 40px;
+    margin: 40;
+    font-family: 'Courier New', Courier, monospace;
 }
