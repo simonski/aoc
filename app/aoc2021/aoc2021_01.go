@@ -128,7 +128,7 @@ func (app *Application) Y2021D01P2() {
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y202021D01() {
-	app.Y2021D01P1()
-	app.Y2021D01P2()
-}
+// func (app *Application) Y202021D01() {
+// 	app.Y2021D01P1()
+// 	app.Y2021D01P2()
+// }

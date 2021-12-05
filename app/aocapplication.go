@@ -3,11 +3,10 @@ package app
 import (
 	"fmt"
 	"os"
-	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/gookit/color"
-	api "github.com/simonski/aoc/api"
 	aoc2015 "github.com/simonski/aoc/app/aoc2015"
 	aoc2016 "github.com/simonski/aoc/app/aoc2016"
 	aoc2017 "github.com/simonski/aoc/app/aoc2017"
@@ -15,6 +14,7 @@ import (
 	aoc2019 "github.com/simonski/aoc/app/aoc2019"
 	aoc2020 "github.com/simonski/aoc/app/aoc2020"
 	aoc2021 "github.com/simonski/aoc/app/aoc2021"
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -40,93 +40,43 @@ The commands are:
 	
 `
 
-type Application struct {
+type AOCApplication struct {
 	CLI     *goutils.CLI
 	Verbose bool
 }
 
-type AppLogic interface {
-	Run(cli *goutils.CLI)
-	Render(cli *goutils.CLI)
-	Help(cli *goutils.CLI)
-	GetMethod(methodName string) (reflect.Value, reflect.Value, bool)
-}
-
-func NewApplication(cli *goutils.CLI) Application {
-	app := Application{CLI: cli}
+func NewAOCApplication(cli *goutils.CLI) AOCApplication {
+	app := AOCApplication{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
 }
 
-func (app *Application) Server(cli *goutils.CLI) {
-	server := api.NewServer(cli)
-	server.Run()
-}
-
-func (app *Application) Run(cli *goutils.CLI) {
+func (app *AOCApplication) Run(cli *goutils.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	year := cli.GetStringOrDefault("run", "")
 	if year == "" {
 		fmt.Printf("%v\n", USAGE)
 		os.Exit(1)
 	}
-	if year == "2015" {
-		a := aoc2015.NewApplication(cli)
-		a.Run(cli)
-	} else if year == "2016" {
-		a := aoc2016.NewApplication(cli)
-		a.Run(cli)
-	} else if year == "2017" {
-		a := aoc2017.NewApplication(cli)
-		a.Run(cli)
-	} else if year == "2018" {
-		a := aoc2018.NewApplication(cli)
-		a.Run(cli)
-	} else if year == "2019" {
-		a := aoc2019.NewApplication(cli)
-		a.Run(cli)
-	} else if year == "2020" {
-		a := aoc2020.NewApplication(cli)
-		a.Run(cli)
-	} else if year == "2021" {
-		a := aoc2021.NewApplication(cli)
-		a.Run(cli)
-	}
+	iyear, _ := strconv.Atoi(year)
+	al := app.GetAppLogic(iyear)
+	al.Run(cli)
 
 }
 
-func (app *Application) Render(cli *goutils.CLI) {
+func (app *AOCApplication) Render(cli *goutils.CLI) {
 	USAGE := "Usage: aoc render (year) (day)"
-	year := cli.GetStringOrDefault("run", "")
+	year := cli.GetStringOrDefault("render", "")
 	if year == "" {
 		fmt.Printf("%v\n", USAGE)
 		os.Exit(1)
 	}
-	if year == "2015" {
-		a := aoc2015.NewApplication(cli)
-		a.Render(cli)
-	} else if year == "2016" {
-		a := aoc2016.NewApplication(cli)
-		a.Render(cli)
-	} else if year == "2017" {
-		a := aoc2017.NewApplication(cli)
-		a.Render(cli)
-	} else if year == "2018" {
-		a := aoc2018.NewApplication(cli)
-		a.Render(cli)
-	} else if year == "2019" {
-		a := aoc2019.NewApplication(cli)
-		a.Render(cli)
-	} else if year == "2020" {
-		a := aoc2020.NewApplication(cli)
-		a.Render(cli)
-	} else if year == "2021" {
-		a := aoc2021.NewApplication(cli)
-		a.Render(cli)
-	}
+	iyear, _ := strconv.Atoi(year)
+	al := app.GetAppLogic(iyear)
+	al.Render(cli)
 }
 
-func (app *Application) Help(cli *goutils.CLI) {
+func (app *AOCApplication) Help(cli *goutils.CLI) {
 	output := strings.ReplaceAll(USAGE_OVERALL, "LIST", app.List())
 	fmt.Println(output)
 	command := cli.GetStringOrDefault("help", "")
@@ -136,7 +86,7 @@ func (app *Application) Help(cli *goutils.CLI) {
 	}
 }
 
-func (a *Application) List() string {
+func (a *AOCApplication) List() string {
 
 	output := ""
 
@@ -183,10 +133,10 @@ func (a *Application) List() string {
 			methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
 			methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
 
-			_, _, m1exists := GetMethod(app, methodNamePart1)
-			_, _, m2exists := GetMethod(app, methodNamePart2)
-			_, _, m1existsRender := GetMethod(app, methodNamePart1Render)
-			_, _, m2existsRender := GetMethod(app, methodNamePart2Render)
+			_, _, m1exists := app.GetMethod(methodNamePart1)
+			_, _, m2exists := app.GetMethod(methodNamePart2)
+			_, _, m1existsRender := app.GetMethod(methodNamePart1Render)
+			_, _, m2existsRender := app.GetMethod(methodNamePart2Render)
 
 			part1 := cross
 			part2 := cross
@@ -237,7 +187,7 @@ func (a *Application) List() string {
 
 }
 
-func (a *Application) GetAppLogic(year int) AppLogic {
+func (a *AOCApplication) GetAppLogic(year int) utils.AppLogic {
 	if year == 2015 {
 		return aoc2015.NewApplication(a.CLI)
 	} else if year == 2016 {
@@ -257,14 +207,4 @@ func (a *Application) GetAppLogic(year int) AppLogic {
 	} else {
 		return nil
 	}
-}
-
-func GetMethod(app AppLogic, methodName string) (reflect.Value, reflect.Value, bool) {
-	rvalue := reflect.ValueOf(app)
-	mvalue := rvalue.MethodByName(methodName)
-	exists := false
-	if reflect.Value.IsValid(mvalue) {
-		exists = true
-	}
-	return rvalue, mvalue, exists
 }

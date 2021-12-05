@@ -21,6 +21,10 @@ func NewApplication(cli *goutils.CLI) Application {
 	return app
 }
 
+func (app Application) GetName() string {
+	return "I am 2015"
+}
+
 func (app Application) Run(cli *goutils.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	// fmt.Printf("Application.Run(%v)", cli.Args)
@@ -98,15 +102,21 @@ func (app Application) List() string {
 	for year := max_year; year >= min_year; year-- {
 		line := fmt.Sprintf("\u2503 %04d \u2503", year)
 		for day := 1; day <= 25; day++ {
-			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
-			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
+			// methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
+			// methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
 			methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
 			methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
 
-			_, _, m1exists := app.GetMethod(methodNamePart1)
-			_, _, m2exists := app.GetMethod(methodNamePart2)
+			// _, _, m1exists := app.GetMethod(methodNamePart1)
+			// _, _, m2exists := app.GetMethod(methodNamePart2)
 			_, _, m1existsRender := app.GetMethod(methodNamePart1Render)
 			_, _, m2existsRender := app.GetMethod(methodNamePart2Render)
+
+			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
+			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
+
+			_, _, m1exists := app.GetMethod(methodNamePart1)
+			_, _, m2exists := app.GetMethod(methodNamePart2)
 
 			part1 := cross
 			part2 := cross
@@ -171,25 +181,11 @@ func (app Application) Render(cli *goutils.CLI) {
 }
 
 func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {
-
-	// var a Application
 	rvalue := reflect.ValueOf(&app)
-	// fmt.Printf("GetMethod[%v], rvalue %v\n", methodName, rvalue)
 	mvalue := rvalue.MethodByName(methodName)
-	// fmt.Printf("GetMethod[%v], mvalue %v\n", methodName, mvalue)
 	exists := false
 	if reflect.Value.IsValid(mvalue) {
 		exists = true
 	}
-
-	// if mvalue == nil {
-	// exists = false
-	// }
-	// cvalue := mvalue.Call([]reflect.Value{})
-	// fmt.Printf("cvalue %v\n", cvalue)
-	// if false {
-	// 	fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
-	// }
 	return rvalue, mvalue, exists
-
 }

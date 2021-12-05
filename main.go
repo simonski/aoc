@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/simonski/aoc/api"
 	"github.com/simonski/aoc/app"
 	goutils "github.com/simonski/goutils"
 )
@@ -34,7 +35,7 @@ The commands are:
 
 func main() {
 	c := &goutils.CLI{Args: os.Args}
-	app := app.NewApplication(c)
+	app := app.NewAOCApplication(c)
 	if len(c.Args) == 1 {
 		app.Help(c)
 		os.Exit(1)
@@ -45,7 +46,8 @@ func main() {
 	} else if command == "render" {
 		app.Render(c)
 	} else if command == "server" {
-		app.Server(c)
+		server := api.NewServer(c, &app)
+		server.Run()
 	} else if command == "info" {
 		Info(c)
 	} else if command == "version" {

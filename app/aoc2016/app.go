@@ -21,6 +21,10 @@ func NewApplication(cli *goutils.CLI) Application {
 	return app
 }
 
+func (app Application) GetName() string {
+	return "I am 2016"
+}
+
 func (app Application) Run(cli *goutils.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	// fmt.Printf("Application.Run(%v)", cli.Args)
@@ -171,25 +175,11 @@ func (app Application) Help(cli *goutils.CLI) {
 }
 
 func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {
-
-	// var a Application
 	rvalue := reflect.ValueOf(&app)
-	// fmt.Printf("GetMethod[%v], rvalue %v\n", methodName, rvalue)
 	mvalue := rvalue.MethodByName(methodName)
-	// fmt.Printf("GetMethod[%v], mvalue %v\n", methodName, mvalue)
 	exists := false
 	if reflect.Value.IsValid(mvalue) {
 		exists = true
 	}
-
-	// if mvalue == nil {
-	// exists = false
-	// }
-	// cvalue := mvalue.Call([]reflect.Value{})
-	// fmt.Printf("cvalue %v\n", cvalue)
-	// if false {
-	// 	fmt.Printf("rvalue: %v, mvalue %v, cvalue %v\n", rvalue, mvalue, cvalue)
-	// }
 	return rvalue, mvalue, exists
-
 }

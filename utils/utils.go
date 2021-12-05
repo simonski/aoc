@@ -2,8 +2,11 @@ package utils
 
 import (
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/simonski/goutils"
 )
 
 /*
@@ -134,3 +137,22 @@ func SplitDataToListOfInts(data string, delim string) []int {
 	}
 	return results
 }
+
+type AppLogic interface {
+	Run(cli *goutils.CLI)
+	Render(cli *goutils.CLI)
+	Help(cli *goutils.CLI)
+	GetMethod(methodName string) (reflect.Value, reflect.Value, bool)
+	GetName() string
+}
+
+// func GetMethod(appLogic AppLogic, methodName string) (reflect.Value, reflect.Value, bool) {
+// 	rvalue := reflect.ValueOf(&appLogic)
+// 	mvalue := rvalue.MethodByName(methodName)
+// 	exists := false
+// 	if reflect.Value.IsValid(mvalue) {
+// 		exists = true
+// 	}
+// 	fmt.Printf("GetMethod(rvalue=%v, mvalue=%v, appLogic=%v, methodName=%v, exists=%v\n", rvalue, mvalue, appLogic.GetName(), methodName, exists)
+// 	return rvalue, mvalue, exists
+// }
