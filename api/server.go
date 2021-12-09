@@ -33,7 +33,15 @@ func (server *Server) Run() {
 	port := server.cli.GetIntOrDefault("-p", 8000)
 	portstr := fmt.Sprintf(":%v", port)
 
-	var staticFS = http.FS(staticFiles)
+	var staticFS http.FileSystem
+	if server.cli.GetStringOrDefault("-fs", "") == "" {
+		staticFS = http.FS(staticFiles)
+		fmt.Print("Serving files from memory.\n")
+	} else {
+		root := server.cli.GetStringOrDefault("-fs", "")
+		staticFS = http.Dir(root)
+		fmt.Printf("Serving files from filesystem '%v'.\n", root)
+	}
 	fs := http.FileServer(staticFS)
 
 	http.Handle("/", fs)
