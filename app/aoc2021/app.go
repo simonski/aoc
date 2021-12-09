@@ -191,6 +191,12 @@ func (app Application) Api(day int) string {
 		msgb, _ := json.Marshal(grid)
 		msg := string(msgb)
 		return msg
+	} else if day == 9 {
+		grid := NewDay9Grid(DAY_2021_09_DATA)
+		grid.LoadBasins()
+		msgb, _ := json.Marshal(grid.GetApiResponse())
+		msg := string(msgb)
+		return msg
 	}
 	return ""
 }

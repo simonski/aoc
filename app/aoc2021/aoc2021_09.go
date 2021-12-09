@@ -32,16 +32,27 @@ Find all of the low points on your heightmap. What is the sum of the risk levels
 */
 
 type Point struct {
-	X     int
-	Y     int
-	Value int
-	Taken bool
+	X         int    `json:"x"`
+	Y         int    `json:"y"`
+	Value     int    `json:"v"`
+	Taken     bool   `json:"-"`
+	Direction string `json:"d"`
 }
 
+const DIRECTION_DOWN = "d"
+const DIRECTION_UP = "u"
+const DIRECTION_LEFT = "l"
+const DIRECTION_RIGHT = "r"
+
 type Day9Grid struct {
-	Data   [][]*Point
-	Height int
-	Width  int
+	Data   [][]*Point `json:"points"`
+	Height int        `json:"height"`
+	Width  int        `json:"width"`
+	Basins []*Basin   `json:"basins"`
+}
+
+func (grid *Day9Grid) GetPoint(col int, row int) *Point {
+	return grid.Data[row][col]
 }
 
 func (grid *Day9Grid) Up(p *Point) *Point {
@@ -213,21 +224,41 @@ func (b *Basin) fillUp(grid *Day9Grid, point *Point) {
 	left := grid.Left(point)
 	if up != nil && !up.Taken && up.Value != 9 { // } point.Value {
 		// take it
+		if up.Value > point.Value {
+			up.Direction = DIRECTION_DOWN
+		} else {
+			up.Direction = DIRECTION_UP
+		}
 		b.take(up)
 		b.fillUp(grid, up)
 	}
 	if right != nil && !right.Taken && right.Value != 9 { // Value < point.Value {
 		// take it
+		if right.Value > point.Value {
+			right.Direction = DIRECTION_LEFT
+		} else {
+			right.Direction = DIRECTION_RIGHT
+		}
 		b.take(right)
 		b.fillUp(grid, right)
 	}
 	if down != nil && !down.Taken && down.Value != 9 { //  < point.Value {
 		// take it
+		if down.Value > point.Value {
+			down.Direction = DIRECTION_UP
+		} else {
+			down.Direction = DIRECTION_DOWN
+		}
 		b.take(down)
 		b.fillUp(grid, down)
 	}
 	if left != nil && !left.Taken && left.Value != 9 { //  < point.Value {
 		// take it
+		if left.Value > point.Value {
+			left.Direction = DIRECTION_RIGHT
+		} else {
+			left.Direction = DIRECTION_LEFT
+		}
 		b.take(left)
 		b.fillUp(grid, left)
 	}
@@ -258,37 +289,9 @@ func (app *Application) Y2021D09P1() {
 func (app *Application) Y2021D09P2() {
 	g := NewDay9Grid(DAY_2021_09_DATA)
 	fmt.Printf("loaded grid, width=%v, height=%v\n", g.Width, g.Height)
-	basins := make([]*Basin, 0)
-	for rowNum := 0; rowNum < len(g.Data); rowNum++ {
-		row := g.Data[rowNum]
-		for colNum := 0; colNum < len(row); colNum++ {
-			point := row[colNum]
-			fmt.Printf("scanning[%v,%v], point=(%v,%v=%v)\n", colNum, rowNum, point.X, point.Y, point.Value)
-			if point.Value == 9 {
-				fmt.Printf("[%v][%v] == %v, ignore, (%v, %v)\n", colNum, rowNum, point.Value, point.X, point.Y)
-				continue
-			}
-			if point.Taken {
-				fmt.Printf("[%v][%v] == %v is taken, ignore, (%v, %v)\n", colNum, rowNum, point.Value, point.X, point.Y)
-				continue
-			}
-			// ok so now wind in a clock recursively asking
-			// am I flowing downwards to my neighbour?
-			// if yes, move to the neighbour and "take" it
-			basin := &Basin{}
-			basin.fillUp(g, point)
-			// basin.take(point)
-			if basin.Size() > 1 {
-				// basin.take(point)
-				fmt.Printf("[%v][%v] basin is size %v\n", colNum, rowNum, basin.Size())
-				basins = append(basins, basin)
-			} else {
-				fmt.Printf("[%v][%v] basin is size %v, ignore\n", colNum, rowNum, basin.Size())
-			}
-			fmt.Println()
-		}
-	}
+	g.LoadBasins()
 
+	basins := g.Basins
 	sizes := make([]int, 0)
 	for _, basin := range basins {
 		size := basin.Size()
@@ -303,4 +306,71 @@ func (app *Application) Y2021D09P2() {
 	value := sizes[index1] * sizes[index2] * sizes[index3]
 	fmt.Printf("%v, value=%v\n", sizes, value)
 
+}
+
+func (g *Day9Grid) LoadBasins() {
+	DEBUG := false
+	basins := make([]*Basin, 0)
+	for rowNum := 0; rowNum < len(g.Data); rowNum++ {
+		row := g.Data[rowNum]
+		for colNum := 0; colNum < len(row); colNum++ {
+			point := row[colNum]
+			if DEBUG {
+				fmt.Printf("scanning[%v,%v], point=(%v,%v=%v)\n", colNum, rowNum, point.X, point.Y, point.Value)
+			}
+			if point.Value == 9 {
+				if DEBUG {
+					fmt.Printf("[%v][%v] == %v, ignore, (%v, %v)\n", colNum, rowNum, point.Value, point.X, point.Y)
+				}
+				continue
+			}
+			if point.Taken {
+				if DEBUG {
+					fmt.Printf("[%v][%v] == %v is taken, ignore, (%v, %v)\n", colNum, rowNum, point.Value, point.X, point.Y)
+				}
+				continue
+			}
+			// ok so now wind in a clock recursively asking
+			// am I flowing downwards to my neighbour?
+			// if yes, move to the neighbour and "take" it
+			basin := &Basin{}
+			basin.fillUp(g, point)
+			// basin.take(point)
+			if basin.Size() > 1 {
+				// basin.take(point)
+				if DEBUG {
+					fmt.Printf("[%v][%v] basin is size %v\n", colNum, rowNum, basin.Size())
+
+				}
+				basins = append(basins, basin)
+			} else {
+				if DEBUG {
+					fmt.Printf("[%v][%v] basin is size %v, ignore\n", colNum, rowNum, basin.Size())
+				}
+			}
+			if DEBUG {
+				fmt.Println()
+			}
+		}
+	}
+
+	g.Basins = basins
+}
+
+type ApiResponse struct {
+	Points map[string]int `json:"points"`
+	Width  int            `json:"width"`
+	Height int            `json:"height"`
+}
+
+func (grid *Day9Grid) GetApiResponse() *ApiResponse {
+	points := make(map[string]int)
+	for colNum := 0; colNum < grid.Width; colNum++ {
+		for rowNum := 0; rowNum < grid.Height; rowNum++ {
+			point := grid.GetPoint(colNum, rowNum)
+			key := fmt.Sprintf("%v,%v", colNum, rowNum)
+			points[key] = point.Value
+		}
+	}
+	return &ApiResponse{Points: points, Width: grid.Width, Height: grid.Height}
 }
