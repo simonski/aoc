@@ -23,18 +23,23 @@ import (
 )
 
 // AOC_2020_06 is the entrypoint
-func AOC_2020_06(cli *goutils.CLI) {
-	AOC_2020_06_part1_attempt1(cli)
-	AOC_2020_06_part2_attempt1(cli)
+func (app *Application) Y2020D06P1() {
+	AOC_2020_06_part1_attempt1(app)
 }
 
-func AOC_2020_06_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2020D06P2() {
+	AOC_2020_06_part2_attempt1(app)
+}
+
+func AOC_2020_06_part1_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	q := NewQandAFromFile(filename)
 	fmt.Printf("There are %v total answers.\n", q.TotalForAllGroups())
 }
 
-func AOC_2020_06_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_06_part2_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	q := NewQandAFromFile(filename)
 	fmt.Printf("There are %v total answers in the second round.\n", q.SecondTotalForAllGroups())

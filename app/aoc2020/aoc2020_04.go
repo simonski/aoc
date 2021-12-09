@@ -10,12 +10,15 @@ import (
 )
 
 // AOC_2020_04 is the entrypoint
-func AOC_2020_04(cli *goutils.CLI) {
-	AOC_2020_04_part1_attempt1(cli)
-	AOC_2020_04_part2_attempt1(cli)
+func (app *Application) Y2020D04P1() {
+	AOC_2020_04_part1_attempt1(app)
+}
+func (app *Application) Y2020D04P2() {
+	AOC_2020_04_part2_attempt1(app)
 }
 
-func AOC_2020_04_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_04_part1_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetStringOrDie("-input")
 	pc := NewPassportControlFromFile(filename)
 	validCount := 0
@@ -31,7 +34,8 @@ func AOC_2020_04_part1_attempt1(cli *goutils.CLI) {
 	fmt.Printf("Part1: Out of %v passports, %v are valid.\n", totalPassports, validCount)
 }
 
-func AOC_2020_04_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_04_part2_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetStringOrDie("-input")
 	pc := NewPassportControlFromFile(filename)
 	validCount := 0

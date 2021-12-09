@@ -7,10 +7,14 @@ import (
 )
 
 // AOC_2020_03 is the entrypoint
-func AOC_2020_03(cli *goutils.CLI) {
+func (app *Application) Y2020D03P1() {
+	cli := app.CLI
 	verbose := cli.IndexOf("-v") > -1
 	AOC_2020_03_part1_attempt1(cli, verbose)
 	AOC_2020_03_part1_attempt2(cli, verbose)
+}
+
+func (app *Application) Y2020D03P2() {
 }
 
 // AOC_2020_01_part3_attempt1 this is part 1 of day 3, attempt 1

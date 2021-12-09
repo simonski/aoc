@@ -94,13 +94,17 @@ import (
 )
 
 // AOC_2020_10 is the entrypoint
-func AOC_2020_10(cli *goutils.CLI) {
+func (app *Application) Y2020D10P1() {
 	// AOC_2020_10_part1_attempt1_from_cli(cli)
 	// AOC_2020_10_part2_attempt1(cli)
-	AOC_2020_10_part2_attempt2(cli)
 }
 
-func AOC_2020_10_part1_attempt1_from_cli(cli *goutils.CLI) {
+func (app *Application) Y2020D10P2() {
+	AOC_2020_10_part2_attempt2(app)
+}
+
+func AOC_2020_10_part1_attempt1_from_cli(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	ints := goutils.Load_file_to_ints(filename)
 	results := AOC_2020_10_part1_attempt1(ints)
@@ -174,7 +178,8 @@ func AOC_2020_10_part1_attempt1(ints []int) map[int]int {
 // 	fmt.Printf("%v\n", data)
 // }
 
-func AOC_2020_10_part2_attempt2(cli *goutils.CLI) {
+func AOC_2020_10_part2_attempt2(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	data := goutils.Load_file_to_ints(filename)
 	fmt.Printf("data is   %v\n", data)

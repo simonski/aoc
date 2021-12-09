@@ -49,19 +49,24 @@ import (
 )
 
 // AOC_2020_07 is the entrypoint
-func AOC_2020_07(cli *goutils.CLI) {
-	AOC_2020_07_part1_attempt1(cli)
-	AOC_2020_07_part2_attempt1(cli)
+func (app *Application) Y2020D07P1() {
+	AOC_2020_07_part1_attempt1(app)
 }
 
-func AOC_2020_07_part1_attempt1(cli *goutils.CLI) {
+func (app *Application) Y2020D07P2() {
+	AOC_2020_07_part2_attempt1(app)
+}
+
+func AOC_2020_07_part1_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	g := NewBagGraphFromFilename(filename)
 	g.Debug()
 	fmt.Printf("There are %v possible combinations.\n", len(g.GetBagsThatCanContain("shiny gold")))
 }
 
-func AOC_2020_07_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_07_part2_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	g := NewBagGraphFromFilename(filename)
 	fmt.Printf("There are %v bags inside the gold.\n", g.GetTotalBagsContainedBy("shiny gold"))

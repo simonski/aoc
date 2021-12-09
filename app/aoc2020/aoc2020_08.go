@@ -57,12 +57,15 @@ import (
 )
 
 // AOC_2020_08 is the entrypoint
-func AOC_2020_08(cli *goutils.CLI) {
-	AOC_2020_08_part1_attempt1(cli)
-	AOC_2020_08_part2_attempt1(cli)
+func (app *Application) Y2020D08P1() {
+	AOC_2020_08_part1_attempt1(app)
+}
+func (app *Application) Y2020D08P2() {
+	AOC_2020_08_part2_attempt1(app)
 }
 
-func AOC_2020_08_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_08_part1_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewProgramFromFilename(filename)
 	p.Debug()
@@ -80,7 +83,8 @@ func AOC_2020_08_part1_attempt1(cli *goutils.CLI) {
 
 }
 
-func AOC_2020_08_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_08_part2_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewProgramFromFilename(filename)
 

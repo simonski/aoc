@@ -8,12 +8,13 @@ import (
 )
 
 // AOC_2020_05 is the entrypoint
-func AOC_2020_05(cli *goutils.CLI) {
-	AOC_2020_05_part1_attempt1(cli)
-	AOC_2020_05_part2_attempt1(cli)
+func (app *Application) Y2020D05P1() {
+	AOC_2020_05_part1_attempt1(app)
+	AOC_2020_05_part2_attempt1(app)
 }
 
-func AOC_2020_05_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_05_part1_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	passes := LoadBoardingPassesFromFile(filename)
 	maxPass := passes[0]
@@ -29,7 +30,8 @@ func AOC_2020_05_part1_attempt1(cli *goutils.CLI) {
 	fmt.Printf("Highest seatId is %v, pass is %v", maxSeatId, maxPass.line)
 }
 
-func AOC_2020_05_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_05_part2_attempt1(app *Application) {
+	cli := app.CLI
 	// so the seat ids with -1 and +1 will be present
 	// only one will be missing
 	// two ways of checking

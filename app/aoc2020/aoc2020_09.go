@@ -58,12 +58,15 @@ import (
 )
 
 // AOC_2020_09 is the entrypoint
-func AOC_2020_09(cli *goutils.CLI) {
-	AOC_2020_09_part1_attempt1(cli)
-	AOC_2020_09_part2_attempt1(cli)
+func (app *Application) Y2020D09P1() {
+	AOC_2020_09_part1_attempt1(app)
+}
+func (app *Application) Y2020D09P2() {
+	AOC_2020_09_part2_attempt1(app)
 }
 
-func AOC_2020_09_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_09_part2_attempt1(app *Application) {
+	cli := app.CLI
 	searchFor := 373803594
 	// find the first contiguous block of numbers that sums to our number
 	filename := cli.GetFileExistsOrDie("-input")
@@ -99,7 +102,8 @@ func AOC_2020_09_part2_attempt1(cli *goutils.CLI) {
 
 }
 
-func AOC_2020_09_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_09_part1_attempt1(app *Application) {
+	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 
 	ints := goutils.Load_file_to_ints(filename)
