@@ -516,9 +516,38 @@ func (app *Application) Y2021D11P1() {
 
 }
 
-// // rename this to the year and day in question
-// func (app *Application) Y2021D11P2() {
-// }
+/*
+--- Part Two ---
+It seems like the individual flashes aren't bright enough to navigate. However, you might have a better option: the flashes seem to be synchronizing!
+
+In the example above, the first time all octopuses flash simultaneously is step 195:
+
+
+*/
+func (app *Application) Y2021D11P2() {
+
+	data1 := DAY_2021_11_TEST_DATA
+	grid1 := NewDay11Grid(data1)
+	fmt.Printf("[0]\n%v\n", grid1.Debug())
+	for x := 1; x <= 192; x++ {
+		grid1.Step(false)
+	}
+
+	grid1.Step(true)
+	grid1.Step(true)
+	grid1.Step(true)
+
+	data2 := DAY_2021_11_DATA
+	grid2 := NewDay11Grid(data2)
+	for {
+		flashes := grid2.Step(false)
+		if flashes == 100 {
+			fmt.Printf("100 flashes at step %v.\n", grid2.StepCount)
+			break
+		}
+	}
+
+}
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
 // func (app *Application) Y20XXDXXP1Render() {
