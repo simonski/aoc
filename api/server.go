@@ -63,16 +63,22 @@ func (server *Server) Run() {
 // to look at
 
 type Solution struct {
-	Year          int  `json:"year"`
-	Day           int  `json:"day"`
-	Part1Solution bool `json:"part1Solution"`
-	Part2Solution bool `json:"part2Solution"`
-	Part1Api      bool `json:"part1Api"`
-	Part2Api      bool `json:"part2Api"`
+	Part1Solution bool `json:"c1"`
+	Part2Solution bool `json:"c2"`
+	Part1Api      bool `json:"a1"`
+	Part2Api      bool `json:"a2"`
+}
+
+type Progress struct {
+	Solutions map[string]*Solution `json:"solutions"`
+	YearStart int                  `json:"start"`
+	YearEnd   int                  `json:"end"`
 }
 
 func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
-	solutions := make([]*Solution, 0)
+
+	progress := Progress{YearStart: 2015, YearEnd: 2021}
+	solutions := make(map[string]*Solution)
 
 	a := SERVER.application
 
@@ -89,11 +95,14 @@ func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 			_, _, m1existsApi := appLogic.GetMethod(methodNamePart1Api)
 			_, _, m2existsApi := appLogic.GetMethod(methodNamePart2Api)
 
-			s := &Solution{Year: year, Day: day, Part1Solution: m1exists, Part2Solution: m2exists, Part1Api: m1existsApi, Part2Api: m2existsApi}
-			solutions = append(solutions, s)
+			s := &Solution{Part1Solution: m1exists, Part2Solution: m2exists, Part1Api: m1existsApi, Part2Api: m2existsApi}
+			key := fmt.Sprintf("%v.%v", year, day)
+			solutions[key] = s
 		}
 	}
-	msgb, _ := json.Marshal(solutions)
+
+	progress.Solutions = solutions
+	msgb, _ := json.Marshal(progress)
 	msg := string(msgb)
 	length_str := fmt.Sprintf("%v", len(msg))
 	w.Header().Set("Content-Type", "application/json") // this

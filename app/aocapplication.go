@@ -60,6 +60,10 @@ func (app *AOCApplication) Run(cli *goutils.CLI) {
 	}
 	iyear, _ := strconv.Atoi(year)
 	al := app.GetAppLogic(iyear)
+	if al == nil {
+		fmt.Printf("Sorry, we don't have year %v\n", year)
+		return
+	}
 	al.Run(cli)
 
 }
