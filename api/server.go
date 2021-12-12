@@ -51,6 +51,7 @@ func (server *Server) Run() {
 	http.HandleFunc("/api/solutions", apiSolutionsFunc)
 	http.HandleFunc("/api/2021/05", api202105)
 	http.HandleFunc("/api/2021/09", api202109)
+	http.HandleFunc("/api/2021/11", api202111)
 	// myRouter.HandleFunc("/style.css", cssFunc)
 	// myRouter.HandleFunc("/code.js", jsFunc)
 	// myRouter.HandleFunc("/tachyons.css", tachyonsFunc)
@@ -132,6 +133,18 @@ func api202109(w http.ResponseWriter, r *http.Request) {
 	a := SERVER.application
 	appLogic := a.GetAppLogic(2021)
 	response := appLogic.Api(9)
+	// msgb, _ := json.Marshal(response)
+	// msg := string(msgb)
+	length_str := fmt.Sprintf("%v", len(response))
+	w.Header().Set("Content-Type", "application/json") // this
+	w.Header().Set("Content-Length", length_str)       // this
+	fmt.Fprint(w, response)
+}
+
+func api202111(w http.ResponseWriter, r *http.Request) {
+	a := SERVER.application
+	appLogic := a.GetAppLogic(2021)
+	response := appLogic.Api(11)
 	// msgb, _ := json.Marshal(response)
 	// msg := string(msgb)
 	length_str := fmt.Sprintf("%v", len(response))

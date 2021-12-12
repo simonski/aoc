@@ -374,6 +374,22 @@ func (g *Day11Grid) Debug() string {
 	return line
 }
 
+func (g *Day11Grid) FormALine() string {
+	line := ""
+	for y := 0; y < g.Height; y++ {
+		for x := 0; x < g.Width; x++ {
+			p := g.GetPoint(x, y)
+			value := p.Value
+			if value > 9 {
+				value = 0
+			}
+			l := fmt.Sprintf("%v%v", line, value)
+			line = l
+		}
+	}
+	return line
+}
+
 func (g *Day11Grid) NonFlashingNeighbours(p *Day11Point) []*Day11Point {
 	neighbours := make([]*Day11Point, 0)
 	for nx := p.X - 1; nx <= p.X+1; nx++ {
@@ -546,7 +562,35 @@ func (app *Application) Y2021D11P2() {
 			break
 		}
 	}
+}
 
+type Day11Response struct {
+	Lines []string
+	Index int
+}
+
+func (app *Application) Y2021D11P2Api() *Day11Response {
+
+	data2 := DAY_2021_11_DATA
+	grid2 := NewDay11Grid(data2)
+
+	lines := make([]string, 0)
+	index := 0
+	for {
+		flashes := grid2.Step(false)
+		line := grid2.FormALine()
+		lines = append(lines, line)
+		index++
+		if flashes == 100 {
+			break
+		}
+	}
+	for index := 0; index < 10; index++ {
+		grid2.Step(false)
+		line := grid2.FormALine()
+		lines = append(lines, line)
+	}
+	return &Day11Response{Lines: lines, Index: index}
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!

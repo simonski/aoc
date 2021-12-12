@@ -197,6 +197,11 @@ func (app Application) Api(day int) string {
 		msgb, _ := json.Marshal(grid.GetApiResponse())
 		msg := string(msgb)
 		return msg
+	} else if day == 11 {
+		response := app.Y2021D11P2Api()
+		msgb, _ := json.Marshal(response)
+		msg := string(msgb)
+		return msg
 	}
 	return ""
 }
