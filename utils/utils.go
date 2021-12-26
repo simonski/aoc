@@ -14,12 +14,55 @@ Converts a decimal string to an integer value
 e.g. "11" -> utisl.BinaryStringToInt("11") = 3
 */
 func BinaryStringToInt(v string) int {
+	if len(v) > 64 {
+		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Printf("BinaryStringToInt converting a %v-bit number !!!\n", len(v))
+		fmt.Println(v)
+		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+	}
 	result := 0
 	pow := 1
 	for index := len(v) - 1; index >= 0; index-- {
 		value, _ := strconv.Atoi(v[index : index+1])
 		value *= pow
 		result += value
+		pow += pow
+	}
+	return result
+}
+
+func BinaryStringToInt64(v string) int64 {
+	if len(v) > 64 {
+		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Printf("BinaryStringToInt converting a %v-bit number !!!\n", len(v))
+		fmt.Println(v)
+		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+	}
+	result := int64(0)
+	pow := 1
+	for index := len(v) - 1; index >= 0; index-- {
+		value, _ := strconv.Atoi(v[index : index+1])
+		value *= pow
+		result += int64(value)
+		pow += pow
+	}
+	return result
+}
+
+func BinaryStringToUInt64(v string) uint64 {
+	if len(v) > 64 {
+		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Printf("BinaryStringToInt converting a %v-bit number !!!\n", len(v))
+		fmt.Println(v)
+		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+	}
+	result := uint64(0)
+	pow := uint64(1)
+	for index := len(v) - 1; index >= 0; index-- {
+		value, _ := strconv.Atoi(v[index : index+1])
+		ival := uint64(value)
+		ival *= pow
+		result += ival
 		pow += pow
 	}
 	return result
@@ -40,6 +83,34 @@ func Min(a int, b int) int {
 }
 
 func Max(a int, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func Min64(a int64, b int64) int64 {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func Max64(a int64, b int64) int64 {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func MinU64(a uint64, b uint64) uint64 {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func MaxU64(a uint64, b uint64) uint64 {
 	if a > b {
 		return a
 	}
