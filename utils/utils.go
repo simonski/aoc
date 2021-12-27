@@ -9,6 +9,17 @@ import (
 	"github.com/simonski/goutils"
 )
 
+// https://en.wikipedia.org/wiki/Arithmetic_progression
+// also: https://www.youtube.com/watch?v=uACt9OntiLo
+func ArithmeticProgression(first int, last int) int {
+
+	// number N terms being added (here, 5)
+	// multiplying the sum of the first and last number then divide by 2
+	//
+	return (last * (first + last)) / 2
+
+}
+
 /*
 Converts a decimal string to an integer value
 e.g. "11" -> utisl.BinaryStringToInt("11") = 3
