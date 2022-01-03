@@ -9,6 +9,13 @@ import (
 	"github.com/simonski/goutils"
 )
 
+func StripWhitespace(line string) string {
+	line = strings.ReplaceAll(line, " ", "")
+	line = strings.ReplaceAll(line, "\t", "")
+	line = strings.ReplaceAll(line, "\n", "")
+	return line
+}
+
 // https://en.wikipedia.org/wiki/Arithmetic_progression
 // also: https://www.youtube.com/watch?v=uACt9OntiLo
 func ArithmeticProgression(first int, last int) int {
