@@ -2,6 +2,21 @@
 
 ## DOING
 
+branch feature/website
+    this is up to date against main/develop/2021_19
+        contains current refactored layout
+        intention is to create a github action to deploy
+        AND then create a heatmap for progress
+            WHICH will involve refactoring for every problem to indicate
+                Problem {
+                    Year
+                    Day
+                    State: solved, unsolved, inprogress
+                    Complexity: N
+                    Started: time
+                    Completed: time
+                    Notes: string
+                }
 - writeup github action build for aoc
 - refactor goutils/cli to cli/cli
 - fix all tests to compile and... well, work
