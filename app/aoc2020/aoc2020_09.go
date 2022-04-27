@@ -79,7 +79,7 @@ func AOC_2020_09_part2_attempt1(app *Application) {
 			}
 			slice := ints[index1:index2]
 			total := 0
-			minvalue := 99999999999999
+			minvalue := 99999999
 			maxvalue := 0
 			for _, value3 := range slice {
 				total += value3

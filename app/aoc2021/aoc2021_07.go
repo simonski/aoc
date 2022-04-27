@@ -92,11 +92,11 @@ func (o *OceanOfCrabs) CostOfMoveToPositionPart1(positionToMoveTo int) int {
 	return total
 }
 
-func (o *OceanOfCrabs) CostOfMoveToPositionPart2(positionToMoveTo int) int {
-	total := 0
+func (o *OceanOfCrabs) CostOfMoveToPositionPart2(positionToMoveTo int) int64 {
+	total := int64(0)
 	for _, crab := range o.Crabs {
 		distance := utils.Abs(crab.Position - positionToMoveTo)
-		total += Cost(distance)
+		total += int64(Cost(distance))
 	}
 	return total
 }
@@ -181,12 +181,12 @@ func (app *Application) Y2021D07P2() {
 	// size := len(ocean.Crabs) / 2
 	// mean := ocean.Mean
 	minPosition := -1
-	minCost := 100000000000
+	minCost := int64(100000000000)
 	for index := 0; index < len(positions)/2; index++ {
 		rpos := len(positions)/2 + index
 		lpos := len(positions)/2 - index
 
-		cost = ocean.CostOfMoveToPositionPart2(rpos)
+		cost = int64(ocean.CostOfMoveToPositionPart2(rpos))
 		fmt.Printf("The cost of moving to position %v is %v.\n", rpos, cost)
 		if cost < minCost {
 			minPosition = rpos
