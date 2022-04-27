@@ -33,10 +33,10 @@ e.g. "11" -> utisl.BinaryStringToInt("11") = 3
 */
 func BinaryStringToInt(v string) int {
 	if len(v) > 64 {
-		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Print("\n\n\n\n\n\n\n\n\n\n")
 		fmt.Printf("BinaryStringToInt converting a %v-bit number !!!\n", len(v))
 		fmt.Println(v)
-		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Print("\n\n\n\n\n\n\n\n\n\n")
 	}
 	result := 0
 	pow := 1
@@ -51,10 +51,10 @@ func BinaryStringToInt(v string) int {
 
 func BinaryStringToInt64(v string) int64 {
 	if len(v) > 64 {
-		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Print("\n\n\n\n\n\n\n\n\n\n")
 		fmt.Printf("BinaryStringToInt converting a %v-bit number !!!\n", len(v))
 		fmt.Println(v)
-		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Print("\n\n\n\n\n\n\n\n\n\n")
 	}
 	result := int64(0)
 	pow := 1
@@ -69,10 +69,10 @@ func BinaryStringToInt64(v string) int64 {
 
 func BinaryStringToUInt64(v string) uint64 {
 	if len(v) > 64 {
-		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Print("\n\n\n\n\n\n\n\n\n\n")
 		fmt.Printf("BinaryStringToInt converting a %v-bit number !!!\n", len(v))
 		fmt.Println(v)
-		fmt.Println("\n\n\n\n\n\n\n\n\n\n")
+		fmt.Print("\n\n\n\n\n\n\n\n\n\n")
 	}
 	result := uint64(0)
 	pow := uint64(1)

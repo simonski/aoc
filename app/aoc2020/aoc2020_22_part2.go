@@ -278,6 +278,9 @@ func AOC_2020_22_part2_attempt1(cli *cli.CLI) {
 }
 
 func (c *Combat) PlayDay2() {
+	if true {
+		return
+	}
 	winnerIsP1 := PlayRecursive(c.Player1, c.Player2, 0)
 	if winnerIsP1 {
 		fmt.Printf("P1 is recursive winner, score is %v\n", c.Player1.GetScore())
@@ -340,6 +343,7 @@ func PlayRecursive(player1 *Player, player2 *Player, gameNumber int) bool {
 			return true
 		}
 	}
+
 }
 
 func NewGameHand(player1 *Player, player2 *Player) string {

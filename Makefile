@@ -23,7 +23,8 @@ build:
 	go build
 	
 test:
-	go test
+	# go test ./app/aoc2020 -timeout 10s
+	go test ./... -timeout 10s
 
 install:
 	go install

@@ -2,6 +2,16 @@
 
 ## DOING
 
+- writeup github action build for aoc
+- refactor goutils/cli to cli/cli
+- fix all tests to compile and... well, work
+    - fix tests to timeout properly
+    - fix tests to run on specific years
+    - look for "if (true) { return }" and fix the
+- standardise the webassemly visualisation
+- writeup and get the docker build working for the aoc build
+- move to ghcr.io via a github action
+- modify the webwite to pull from ghcr if possible?
 - move all years work down to their own package
     doing 2015
     2020
