@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -17,7 +18,7 @@ func (app *Application) Y2020D01P2() {
 }
 
 // AOC_2020_01 is the entrypoint to the various attempts for day one
-func AOC_2020_01(cli *goutils.CLI) {
+func AOC_2020_01(cli *cli.CLI) {
 
 	logger := goutils.NewLogger("Day 01-1")
 	logger.ShowTime = false
@@ -31,7 +32,7 @@ func AOC_2020_01(cli *goutils.CLI) {
 
 }
 
-func day_1_load_data(cli *goutils.CLI) []int {
+func day_1_load_data(cli *cli.CLI) []int {
 	data := make([]int, 0)
 	if cli.IndexOf("-input") == -1 {
 		data = make([]int, 0)
@@ -51,7 +52,7 @@ func day_1_load_data(cli *goutils.CLI) []int {
 // this is a brute-force attempt that gets over the line
 // in the spirit of make it work, make it fast, this is make it work
 // so this is 3 inner loops, giving o(n^3) performance I believe - it works, it is not fast.
-func AOC_2020_01_part2_attempt1(cli *goutils.CLI, logger *goutils.Logger) {
+func AOC_2020_01_part2_attempt1(cli *cli.CLI, logger *goutils.Logger) {
 
 	// now we need to find 3 numbers that meet our total
 
@@ -116,7 +117,7 @@ func AOC_2020_01_part2_attempt1(cli *goutils.CLI, logger *goutils.Logger) {
 // AOC_2020_01_part1_attempt1 this is part 1 of day 1, attempt 1
 // a brute-force attempt which as the volume is small works fine
 // we have an inner loop giving o(n^2) which again works but is not fast
-func AOC_2020_01_part1_attempt1(cli *goutils.CLI, logger *goutils.Logger) {
+func AOC_2020_01_part1_attempt1(cli *cli.CLI, logger *goutils.Logger) {
 
 	// make it work
 	// make it right
@@ -170,7 +171,7 @@ func AOC_2020_01_part1_attempt1(cli *goutils.CLI, logger *goutils.Logger) {
 // itself
 // this uses more memory (the inty map in addition to the list) but avoids an initial sort and binsearch
 // I intend to do my own sort and binsearch as an attempt3
-func AOC_2020_01_part1_attempt2(cli *goutils.CLI, logger *goutils.Logger) {
+func AOC_2020_01_part1_attempt2(cli *cli.CLI, logger *goutils.Logger) {
 
 	// make it fast
 	// so now I think sorting the numbers and doing a binary chop will give me o(log n) performance

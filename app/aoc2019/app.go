@@ -7,15 +7,16 @@ import (
 	"strconv"
 
 	"github.com/gookit/color"
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 type Application struct {
-	CLI     *goutils.CLI
+	CLI     *cli.CLI
 	Verbose bool
 }
 
-func NewApplication(cli *goutils.CLI) Application {
+func NewApplication(cli *cli.CLI) Application {
 	app := Application{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
@@ -25,7 +26,7 @@ func (app Application) GetName() string {
 	return "I am 2019"
 }
 
-func (app Application) Run(cli *goutils.CLI) {
+func (app Application) Run(cli *cli.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	// fmt.Printf("Application.Run(%v)", cli.Args)
 	year := cli.GetStringOrDefault("run", "")
@@ -161,7 +162,7 @@ func (app Application) List() string {
 
 }
 
-func (app Application) Render(cli *goutils.CLI) {
+func (app Application) Render(cli *cli.CLI) {
 	USAGE := "Usage: aoc render (year) (day)"
 	// fmt.Printf("Application.Render(%v)", cli.Args)
 	year := cli.GetStringOrDefault("run", "")
@@ -171,7 +172,7 @@ func (app Application) Render(cli *goutils.CLI) {
 	}
 }
 
-func (app Application) Help(cli *goutils.CLI) {
+func (app Application) Help(cli *cli.CLI) {
 }
 
 func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {

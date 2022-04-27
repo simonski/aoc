@@ -23,10 +23,11 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-func AOC_2020_17_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_17_part2_attempt1(cli *cli.CLI) {
 
 	g := NewGrid4D(DAY_17_INPUT)
 	g.Cycle()

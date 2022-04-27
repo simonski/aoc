@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"os"
+	"runtime/debug"
 
 	"github.com/simonski/aoc/api"
 	"github.com/simonski/aoc/app"
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -34,7 +36,7 @@ The commands are:
 `
 
 func main() {
-	c := &goutils.CLI{Args: os.Args}
+	c := &cli.CLI{Args: os.Args}
 	app := app.NewAOCApplication(c)
 	if len(c.Args) == 1 {
 		app.Help(c)
@@ -59,7 +61,12 @@ func main() {
 	}
 }
 
-func Info(cli *goutils.CLI) {
+func Info(cli *cli.CLI) {
 	info := goutils.NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
+
+	buildInfo, ok := debug.ReadBuildInfo()
+	if ok {
+		fmt.Printf("%v\n", buildInfo)
+	}
 }

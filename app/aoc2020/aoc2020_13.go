@@ -57,11 +57,12 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_13 is the entrypoint
-func AOC_2020_13(cli *goutils.CLI) {
+func AOC_2020_13(cli *cli.CLI) {
 	AOC_2020_13_part1_attempt1(cli)
 	AOC_2020_13_part2_attempt1(cli)
 }
@@ -130,7 +131,7 @@ What is the earliest timestamp such that all of the listed bus IDs depart at off
 
 */
 
-func AOC_2020_13_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_13_part2_attempt1(cli *cli.CLI) {
 	// filename := cli.GetFileExistsOrDie("-input")
 	// buses, indexes := ParseDay13FilePart2(filename)
 	// common := 1
@@ -139,7 +140,7 @@ func AOC_2020_13_part2_attempt1(cli *goutils.CLI) {
 	// }
 
 }
-func AOC_2020_13_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_13_part1_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	startTime, buses := ParseDay13FilePart1(filename)
 	fmt.Printf("time=%v\nbuses=%v\n", startTime, buses)

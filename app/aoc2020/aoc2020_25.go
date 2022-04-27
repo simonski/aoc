@@ -44,7 +44,7 @@ import (
 	"fmt"
 	"time"
 
-	goutils "github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
 const DAY_25_DIVIDE_BY = 20201227
@@ -57,18 +57,18 @@ const DAY_25_CARD_PUBLIC_KEY = 335121
 const DAY_25_DOOR_PUBLIC_KEY = 363891
 
 // AOC_2020_25 is the entrypoint
-func AOC_2020_25(cli *goutils.CLI) {
+func AOC_2020_25(cli *cli.CLI) {
 	AOC_2020_25_part1_attempt1(cli)
 	AOC_2020_25_part2_attempt1(cli)
 }
 
-func AOC_2020_25_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_25_part1_attempt1(cli *cli.CLI) {
 	start := time.Now()
 	end := time.Now()
 	fmt.Printf("%v\n", end.Sub(start))
 }
 
-func AOC_2020_25_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_25_part2_attempt1(cli *cli.CLI) {
 	start := time.Now()
 	end := time.Now()
 	fmt.Printf("%v\n", end.Sub(start))

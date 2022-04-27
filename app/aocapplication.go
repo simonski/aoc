@@ -15,6 +15,7 @@ import (
 	aoc2020 "github.com/simonski/aoc/app/aoc2020"
 	aoc2021 "github.com/simonski/aoc/app/aoc2021"
 	"github.com/simonski/aoc/utils"
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -41,17 +42,17 @@ The commands are:
 `
 
 type AOCApplication struct {
-	CLI     *goutils.CLI
+	CLI     *cli.CLI
 	Verbose bool
 }
 
-func NewAOCApplication(cli *goutils.CLI) AOCApplication {
+func NewAOCApplication(cli *cli.CLI) AOCApplication {
 	app := AOCApplication{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
 }
 
-func (app *AOCApplication) Run(cli *goutils.CLI) {
+func (app *AOCApplication) Run(cli *cli.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	year := cli.GetStringOrDefault("run", "")
 	if year == "" {
@@ -68,7 +69,7 @@ func (app *AOCApplication) Run(cli *goutils.CLI) {
 
 }
 
-func (app *AOCApplication) Render(cli *goutils.CLI) {
+func (app *AOCApplication) Render(cli *cli.CLI) {
 	USAGE := "Usage: aoc render (year) (day)"
 	year := cli.GetStringOrDefault("render", "")
 	if year == "" {
@@ -80,7 +81,7 @@ func (app *AOCApplication) Render(cli *goutils.CLI) {
 	al.Render(cli)
 }
 
-func (app *AOCApplication) Help(cli *goutils.CLI) {
+func (app *AOCApplication) Help(cli *cli.CLI) {
 	output := strings.ReplaceAll(USAGE_OVERALL, "LIST", app.List())
 	fmt.Println(output)
 	command := cli.GetStringOrDefault("help", "")

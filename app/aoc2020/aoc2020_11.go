@@ -104,16 +104,17 @@ import (
 	"fmt"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_11 is the entrypoint
-func AOC_2020_11(cli *goutils.CLI) {
+func AOC_2020_11(cli *cli.CLI) {
 	AOC_2020_11_part1_attempt1(cli)
 	AOC_2020_11_part2_attempt1(cli)
 }
 
-func AOC_2020_11_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_11_part1_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
@@ -126,7 +127,7 @@ func AOC_2020_11_part1_attempt1(cli *goutils.CLI) {
 	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
 }
 
-func AOC_2020_11_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_11_part2_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 5
 	searchFar := true

@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	app "github.com/simonski/aoc/app"
-	"github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 
 	_ "embed"
 )
@@ -19,11 +19,11 @@ var SERVER *Server
 
 // https://tutorialedge.net/golang/creating-restful-api-with-golang/
 type Server struct {
-	cli         *goutils.CLI
+	cli         *cli.CLI
 	application *app.AOCApplication
 }
 
-func NewServer(c *goutils.CLI, application *app.AOCApplication) *Server {
+func NewServer(c *cli.CLI, application *app.AOCApplication) *Server {
 	server := &Server{cli: c, application: application}
 	SERVER = server
 	return server

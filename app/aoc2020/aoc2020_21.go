@@ -27,15 +27,15 @@ import (
 	"fmt"
 	"strings"
 
-	goutils "github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
 // AOC_2020_20 is the entrypoint
-func AOC_2020_21(cli *goutils.CLI) {
+func AOC_2020_21(cli *cli.CLI) {
 	AOC_2020_21_part1_attempt1(cli)
 }
 
-func AOC_2020_21_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_21_part1_attempt1(cli *cli.CLI) {
 }
 
 func NewFoodDB(data string) *FoodDB {

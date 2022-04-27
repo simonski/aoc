@@ -170,16 +170,17 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_20 is the entrypoint
-func AOC_2020_20(cli *goutils.CLI) {
+func AOC_2020_20(cli *cli.CLI) {
 	AOC_2020_20_part1_attempt1(cli)
 	AOC_2020_20_part2_attempt1(cli)
 }
 
-func AOC_2020_20_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_20_part1_attempt1(cli *cli.CLI) {
 	image := NewImageFromString(DAY_20_DATA)
 	fmt.Printf("FindCorners\n")
 	data := image.Arrange(false)
@@ -197,7 +198,7 @@ func AOC_2020_20_part1_attempt1(cli *goutils.CLI) {
 	fmt.Printf("Day 20.1: Corners are %v * %v * %v * %v = ?\n", corner1.TileId, corner2.TileId, corner3.TileId, corner4.TileId)
 }
 
-func AOC_2020_20_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_20_part2_attempt1(cli *cli.CLI) {
 	image := NewImageFromString(DAY_20_DATA)
 	image.Arrange(false)
 	hideEdges := false

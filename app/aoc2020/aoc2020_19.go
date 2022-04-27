@@ -61,17 +61,18 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_19 is the entrypoint
-func AOC_2020_19(cli *goutils.CLI) {
+func AOC_2020_19(cli *cli.CLI) {
 	// AOC_2020_19_part1_attempt1(cli)
 	// AOC_2020_19_part2_attempt1(cli)
 	AOC_2020_19_part2_attempt2(cli)
 }
 
-func AOC_2020_19_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_19_part2_attempt1(cli *cli.CLI) {
 
 	/*
 		OK I’m guessing loop detection; a cheap way of doing that would be.. find what gives a loop then exclude any that include that in their rule to begin with
@@ -94,7 +95,7 @@ func AOC_2020_19_part2_attempt1(cli *goutils.CLI) {
 	rre.Debug()
 }
 
-func AOC_2020_19_part2_attempt2(cli *goutils.CLI) {
+func AOC_2020_19_part2_attempt2(cli *cli.CLI) {
 
 	/*
 		I think that this
@@ -277,7 +278,7 @@ func AOC_2020_19_part2_attempt2(cli *goutils.CLI) {
 	// rre.Debug()
 }
 
-func AOC_2020_19_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_19_part1_attempt1(cli *cli.CLI) {
 	rre := NewRegexRuleEngine(DAY_19_INPUT_PART_1)
 	rre.ParseRules(true)
 	total, _ := rre.Apply("0", false)

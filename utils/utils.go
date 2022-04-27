@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
 func StripWhitespace(line string) string {
@@ -228,9 +228,9 @@ func SplitDataToListOfInts(data string, delim string) []int {
 }
 
 type AppLogic interface {
-	Run(cli *goutils.CLI)
-	Render(cli *goutils.CLI)
-	Help(cli *goutils.CLI)
+	Run(cli *cli.CLI)
+	Render(cli *cli.CLI)
+	Help(cli *cli.CLI)
 	GetMethod(methodName string) (reflect.Value, reflect.Value, bool)
 	GetName() string
 	Api(day int) string

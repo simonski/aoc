@@ -111,15 +111,15 @@ import (
 	"strconv"
 	"strings"
 
-	goutils "github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
 // AOC_2020_20 is the entrypoint
-func AOC_2020_22(cli *goutils.CLI) {
+func AOC_2020_22(cli *cli.CLI) {
 	AOC_2020_22_part1_attempt1(cli)
 }
 
-func AOC_2020_22_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_22_part1_attempt1(cli *cli.CLI) {
 }
 
 type Combat struct {

@@ -50,16 +50,16 @@ import (
 	"strconv"
 	"strings"
 
-	goutils "github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
 // AOC_2020_14 is the entrypoint
-func AOC_2020_15(cli *goutils.CLI) {
+func AOC_2020_15(cli *cli.CLI) {
 	AOC_2020_15_part1_attempt1(cli)
 	// AOC_2020_15_part2_attempt1(cli)
 }
 
-func AOC_2020_15_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_15_part1_attempt1(cli *cli.CLI) {
 	sequence := "1,12,0,20,8,16"
 	result := NextInDay15Part1Sequence(sequence, 2020)
 	fmt.Printf("2020th in sequence %v is %v\n", sequence, result)

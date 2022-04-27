@@ -48,16 +48,17 @@ import (
 	"regexp"
 	"strconv"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_14 is the entrypoint
-func AOC_2020_14(cli *goutils.CLI) {
+func AOC_2020_14(cli *cli.CLI) {
 	AOC_2020_14_part1_attempt1(cli)
 	AOC_2020_14_part2_attempt1(cli)
 }
 
-func AOC_2020_14_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_14_part1_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV1()

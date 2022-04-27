@@ -271,10 +271,10 @@ Defend your honor as Raft Captain by playing the small crab in a game of Recursi
 import (
 	"fmt"
 
-	goutils "github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
-func AOC_2020_22_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_22_part2_attempt1(cli *cli.CLI) {
 }
 
 func (c *Combat) PlayDay2() {

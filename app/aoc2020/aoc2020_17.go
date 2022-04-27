@@ -150,6 +150,7 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -170,12 +171,12 @@ const ACTIVE = "#"
 const INACTIVE = "."
 
 // AOC_2020_17 is the entrypoint
-func AOC_2020_17(cli *goutils.CLI) {
+func AOC_2020_17(cli *cli.CLI) {
 	AOC_2020_17_part1_attempt1(cli)
 	AOC_2020_17_part2_attempt1(cli)
 }
 
-func AOC_2020_17_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_17_part1_attempt1(cli *cli.CLI) {
 
 	g := NewGrid3D(DAY_17_INPUT)
 	g.Cycle()

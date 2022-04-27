@@ -53,6 +53,7 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -354,18 +355,18 @@ nearby tickets:
 `
 
 // AOC_2020_16 is the entrypoint
-func AOC_2020_16(cli *goutils.CLI) {
+func AOC_2020_16(cli *cli.CLI) {
 	AOC_2020_16_part1_attempt1(cli)
 	AOC_2020_16_part2_attempt1(cli)
 }
 
-func AOC_2020_16_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_16_part1_attempt1(cli *cli.CLI) {
 	d := NewDay16(DAY_16_INPUT_1)
 	errorRate := d.ErrorRate()
 	fmt.Printf("Error Rate is %v\n", errorRate)
 }
 
-func AOC_2020_16_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_16_part2_attempt1(cli *cli.CLI) {
 	// d := NewDay16(DAY_16_INPUT_2_TEST_DATA)
 	d := NewDay16(DAY_16_INPUT_1)
 	d.DiscardInvalidTickets()

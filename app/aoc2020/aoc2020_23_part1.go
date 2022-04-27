@@ -79,18 +79,19 @@ import (
 	"strconv"
 	"time"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_20 is the entrypoint
-func AOC_2020_23(cli *goutils.CLI) {
+func AOC_2020_23(cli *cli.CLI) {
 	AOC_2020_23_part2_attempt1(cli)
 }
 
-func AOC_2020_23_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_23_part1_attempt1(cli *cli.CLI) {
 }
 
-func AOC_2020_23_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_23_part2_attempt1(cli *cli.CLI) {
 	start := time.Now()
 	input := "198753462"
 	SIZE := 1000000

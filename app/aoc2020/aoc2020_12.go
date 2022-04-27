@@ -44,16 +44,17 @@ import (
 	"fmt"
 	"strconv"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_12 is the entrypoint
-func AOC_2020_12(cli *goutils.CLI) {
+func AOC_2020_12(cli *cli.CLI) {
 	// AOC_2020_12_part1_attempt1(cli)
 	AOC_2020_12_part2_attempt1(cli)
 }
 
-func AOC_2020_12_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_12_part1_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	// p.Debug()
@@ -65,7 +66,7 @@ func AOC_2020_12_part1_attempt1(cli *goutils.CLI) {
 	}
 }
 
-func AOC_2020_12_part2_attempt1(cli *goutils.CLI) {
+func AOC_2020_12_part2_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	s := NewShip2(10, 1)

@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -19,7 +20,7 @@ func (app *Application) Y2020D02P2() {
 }
 
 // AOC_2020_02 is the entrypoint to the various attempts for day two
-func AOC_2020_02(cli *goutils.CLI) {
+func AOC_2020_02(cli *cli.CLI) {
 	verbose := cli.IndexOf("-v") > -1
 	AOC_2020_02_part1_attempt1(cli, verbose)
 	AOC_2020_02_part2_attempt1(cli, verbose)
@@ -28,7 +29,7 @@ func AOC_2020_02(cli *goutils.CLI) {
 // AOC_2020_01_part1_attempt1 this is part 1 of day 1, attempt 1
 // a brute-force attempt which as the volume is small works fine
 // we have an inner loop giving o(n^2) which again works but is not fast
-func AOC_2020_02_part1_attempt1(cli *goutils.CLI, verbose bool) {
+func AOC_2020_02_part1_attempt1(cli *cli.CLI, verbose bool) {
 
 	// make it work
 	// make it right
@@ -57,7 +58,7 @@ func AOC_2020_02_part1_attempt1(cli *goutils.CLI, verbose bool) {
 
 }
 
-func AOC_2020_02_part2_attempt1(cli *goutils.CLI, verbose bool) {
+func AOC_2020_02_part2_attempt1(cli *cli.CLI, verbose bool) {
 
 	// make it work
 	// make it right

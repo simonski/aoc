@@ -40,11 +40,12 @@ import (
 	"regexp"
 	"strings"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2020_18 is the entrypoint
-func AOC_2020_18(cli *goutils.CLI) {
+func AOC_2020_18(cli *cli.CLI) {
 	// AOC_2020_18_part1_attempt1(cli)
 	AOC_2020_18_part1_attempt2(cli)
 }
@@ -425,7 +426,7 @@ const DAY_18_INPUT = `5 + 9 + 3 + ((2 + 8 + 2) + 8 + 9 * (4 * 2 * 5) + 6) * 4
 7 + (7 * 9 * 7 + (8 * 4 + 7 + 7 + 2) * (4 + 5 + 7 + 6 + 6) + 9) * 5 + 5 + 2 + 3
 ((6 + 7 + 8 + 6 + 7) + 8 * 4 + 8 + 8) * (4 * 6) + 7 * 6`
 
-func AOC_2020_18_part1_attempt1(cli *goutils.CLI) {
+func AOC_2020_18_part1_attempt1(cli *cli.CLI) {
 
 	wc := NewWeirdCalculator()
 	wc.Debug("1 + 2 * 3 + 4 * 5", 65)
@@ -445,7 +446,7 @@ func AOC_2020_18_part1_attempt1(cli *goutils.CLI) {
 
 }
 
-func AOC_2020_18_part1_attempt2(cli *goutils.CLI) {
+func AOC_2020_18_part1_attempt2(cli *cli.CLI) {
 
 	wc := NewWeirdCalculator()
 	wc.DebugV2("1 + 2 * 3 + 4 * 5", 105)

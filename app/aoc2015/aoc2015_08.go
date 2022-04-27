@@ -25,16 +25,16 @@ import (
 	"fmt"
 	"strings"
 
-	goutils "github.com/simonski/goutils"
+	cli "github.com/simonski/cli"
 )
 
 // AOC_2015_07 is the entrypoint
-func AOC_2015_08(cli *goutils.CLI) {
+func AOC_2015_08(cli *cli.CLI) {
 	AOC_2015_08_part1_attempt1(cli)
 	AOC_2015_08_part2_attempt1(cli)
 }
 
-func AOC_2015_08_part1_attempt1(cli *goutils.CLI) {
+func AOC_2015_08_part1_attempt1(cli *cli.CLI) {
 
 	data := DAY_2015_08_DATA
 	splits := strings.Split(data, "\n")
@@ -52,7 +52,7 @@ func AOC_2015_08_part1_attempt1(cli *goutils.CLI) {
 
 }
 
-func AOC_2015_08_part2_attempt1(cli *goutils.CLI) {
+func AOC_2015_08_part2_attempt1(cli *cli.CLI) {
 
 	data := DAY_2015_08_DATA
 	splits := strings.Split(data, "\n")

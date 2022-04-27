@@ -3,6 +3,7 @@ package aoc2020
 import (
 	"fmt"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -18,7 +19,7 @@ func (app *Application) Y2020D03P2() {
 }
 
 // AOC_2020_01_part3_attempt1 this is part 1 of day 3, attempt 1
-func AOC_2020_03_part1_attempt1(cli *goutils.CLI, verbose bool) {
+func AOC_2020_03_part1_attempt1(cli *cli.CLI, verbose bool) {
 	filename := cli.GetStringOrDie("-input")
 	tm := NewTobogganMapFromFile(filename)
 	tm.Debug()
@@ -26,7 +27,7 @@ func AOC_2020_03_part1_attempt1(cli *goutils.CLI, verbose bool) {
 	fmt.Printf("For %v,%v We will encounter %v trees.\n", 3, 1, treeCount)
 }
 
-func AOC_2020_03_part1_attempt2(cli *goutils.CLI, verbose bool) {
+func AOC_2020_03_part1_attempt2(cli *cli.CLI, verbose bool) {
 	filename := cli.GetStringOrDie("-input")
 	tm := NewTobogganMapFromFile(filename)
 	treeCount1 := tm.CountTreesWeEncounter(1, 1)
