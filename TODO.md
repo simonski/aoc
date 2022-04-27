@@ -3,6 +3,9 @@
 ## DOING
 
 branch feature/website
+    api/visualisations/home is the temporarylocation for a heatmap of 
+    what I'm working on, what I have worked on etc.
+
     this is up to date against main/develop/2021_19
         contains current refactored layout
         intention is to create a github action to deploy

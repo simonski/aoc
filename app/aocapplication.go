@@ -14,32 +14,11 @@ import (
 	aoc2019 "github.com/simonski/aoc/app/aoc2019"
 	aoc2020 "github.com/simonski/aoc/app/aoc2020"
 	aoc2021 "github.com/simonski/aoc/app/aoc2021"
+	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
-
-const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
-
-Usage:
-    aoc <command> [arguments]
-	
-Status:
-
-LIST
-Commands:
-
-The commands are:
-
-    run    (year) (day)      run a puzzle 
-	
-    render (year) (day)      render a puzzle to an animated gif
-
-    info                     prints computer information
-
-    version                  prints aoc version
-	
-`
 
 type AOCApplication struct {
 	CLI     *cli.CLI
@@ -82,7 +61,7 @@ func (app *AOCApplication) Render(cli *cli.CLI) {
 }
 
 func (app *AOCApplication) Help(cli *cli.CLI) {
-	output := strings.ReplaceAll(USAGE_OVERALL, "LIST", app.List())
+	output := strings.ReplaceAll(constants.USAGE_OVERALL, "LIST", app.List())
 	fmt.Println(output)
 	command := cli.GetStringOrDefault("help", "")
 	if command != "" {
@@ -91,6 +70,7 @@ func (app *AOCApplication) Help(cli *cli.CLI) {
 	}
 }
 
+// builds a table of progress for all problems for the terminal
 func (a *AOCApplication) List() string {
 
 	output := ""
