@@ -15,5 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag aoc:$(date +%s)
+      run: 	GOOS=linux GOARCH=amd64 go build -o aoc_linux && docker build . --file Dockerfile --tag aoc:$(date +%s)
 
