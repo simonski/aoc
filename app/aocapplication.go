@@ -86,7 +86,7 @@ func (a *AOCApplication) List() string {
 
 	dash := "\u2501"
 
-	header := fmt.Sprintf("\u2503      \u2503")
+	header := "\u2503      \u2503"
 	for day := 1; day <= 25; day++ {
 		header = fmt.Sprintf("%v%02d\u2503", header, day)
 	}
@@ -175,8 +175,6 @@ func (a *AOCApplication) List() string {
 func (a *AOCApplication) GetAppLogic(year int) utils.AppLogic {
 	if year == 2015 {
 		return aoc2015.NewApplication(a.CLI)
-	} else if year == 2016 {
-		return aoc2016.NewApplication(a.CLI)
 	} else if year == 2016 {
 		return aoc2016.NewApplication(a.CLI)
 	} else if year == 2017 {

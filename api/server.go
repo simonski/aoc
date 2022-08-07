@@ -9,8 +9,6 @@ import (
 
 	app "github.com/simonski/aoc/app"
 	cli "github.com/simonski/cli"
-
-	_ "embed"
 )
 
 //go:embed css js visualisations api index.html

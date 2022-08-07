@@ -78,7 +78,7 @@ func (app *Application) List() string {
 
 	dash := "\u2501"
 
-	header := fmt.Sprintf("\u2503      \u2503")
+	header := "\u2503      \u2503"
 	for day := 1; day <= 25; day++ {
 		header = fmt.Sprintf("%v%02d\u2503", header, day)
 	}

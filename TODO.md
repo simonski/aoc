@@ -23,7 +23,7 @@ branch feature/2021_19 and website
                 }
 
 - writeup github action build for aoc
-- staticcheck for compliance and go idioms
+- staticcheck for compliance and go idiomsS
 - refactor goutils/cli to cli/cli
 - fix all tests to compile and... well, work
   - fix tests to timeout properly

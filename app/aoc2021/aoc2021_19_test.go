@@ -284,7 +284,7 @@ func Test_AOC2021_19_Add_0(t *testing.T) {
 	}
 	fmt.Println()
 
-	r, _, style = p.DoReduce(style)
+	r, _, _ = p.DoReduce(style)
 	if r != 1 {
 		t.Fatalf("Test_AOC2021_18_Add_0 Step 6: expected 1 reductions, got %v\n", r)
 	}

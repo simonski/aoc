@@ -207,7 +207,7 @@ func (db *HitDB) Debug(title string) {
 
 }
 
-func test_d17_part1(min_x int, max_x int, initial_xv int, max_y int, min_y int, initial_yv int, x_drag int, y_drag int) (*HitDB, *HitDB) {
+func Test_d17_part1(min_x int, max_x int, initial_xv int, max_y int, min_y int, initial_yv int, x_drag int, y_drag int) (*HitDB, *HitDB) {
 
 	x_db := create_velo_map(min_x, max_x, x_drag, initial_xv, true)
 	y_db := create_velo_map(min_y, max_y, y_drag, initial_yv, false)
@@ -459,7 +459,7 @@ func (db *HDB) Debug() string {
 	return line
 }
 
-func demoD17_test() *HDB {
+func DemoD17_test() *HDB {
 
 	db := &HDB{X: make([]*H, 0), Y: make([]*H, 0)}
 
@@ -604,22 +604,22 @@ func (app *Application) Y2021D17P1() {
 		initial_yv = 1000
 	}
 
-	x_db1, y_db1 := test_d17_part1(min_x, max_x, initial_xv, max_y, min_y, initial_yv, x_drag, y_drag)
+	x_db1, y_db1 := Test_d17_part1(min_x, max_x, initial_xv, max_y, min_y, initial_yv, x_drag, y_drag)
 	x_db1.Debug("x")
 	y_db1.Debug("y")
 
 	// retain entries that hit on step
 	x_db2 := NewHitDB()
 	y_db2 := NewHitDB()
-	for step, _ := range x_db1.IndexByStep {
+	for step := range x_db1.IndexByStep {
 		if y_db1.IndexByStep[step] != nil {
 			x_db2.IndexByStep[step] = x_db1.IndexByStep[step]
 			y_db2.IndexByStep[step] = y_db1.IndexByStep[step]
 		}
 	}
 
-	for x_step, _ := range x_db1.ZeroVelocitySteps {
-		for y_step, _ := range y_db1.IndexByStep {
+	for x_step := range x_db1.ZeroVelocitySteps {
+		for y_step := range y_db1.IndexByStep {
 			if y_step >= x_step {
 				y_db2.IndexByStep[y_step] = y_db1.IndexByStep[y_step]
 			}
@@ -671,7 +671,7 @@ func (app *Application) Y2021D17P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) xY2021D17P2() {
+func (app *Application) Y2021D17P2() {
 
 	min_x := 29
 	max_x := 79
@@ -700,22 +700,22 @@ func (app *Application) xY2021D17P2() {
 		initial_yv = 1000
 	}
 
-	x_db1, y_db1 := test_d17_part1(min_x, max_x, initial_xv, max_y, min_y, initial_yv, x_drag, y_drag)
+	x_db1, y_db1 := Test_d17_part1(min_x, max_x, initial_xv, max_y, min_y, initial_yv, x_drag, y_drag)
 	x_db1.Debug("x")
 	y_db1.Debug("y")
 
 	// retain entries that hit on step
 	x_db2 := NewHitDB()
 	y_db2 := NewHitDB()
-	for step, _ := range x_db1.IndexByStep {
+	for step := range x_db1.IndexByStep {
 		if y_db1.IndexByStep[step] != nil {
 			x_db2.IndexByStep[step] = x_db1.IndexByStep[step]
 			y_db2.IndexByStep[step] = y_db1.IndexByStep[step]
 		}
 	}
 
-	for x_step, _ := range x_db1.ZeroVelocitySteps {
-		for y_step, _ := range y_db1.IndexByStep {
+	for x_step := range x_db1.ZeroVelocitySteps {
+		for y_step := range y_db1.IndexByStep {
 			if y_step >= x_step {
 				y_db2.IndexByStep[y_step] = y_db1.IndexByStep[y_step]
 			}
