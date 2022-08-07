@@ -2,11 +2,12 @@
 
 ## DOING
 
-branch feature/website
-    api/visualisations/home is the temporarylocation for a heatmap of
-    what I'm working on, what I have worked on etc.
+branch feature/2021_19 and website
 
-    this is up to date against main/develop/2021_19
+    WEB LANDING PAGE FOR PROBLEMS
+        https://localhost/visualisations and
+        https://localhost/visualisations/home
+        
         contains current refactored layout
         intention is to create a github action to deploy
         AND then create a heatmap for progress
@@ -22,6 +23,7 @@ branch feature/website
                 }
 
 - writeup github action build for aoc
+- staticcheck for compliance and go idioms
 - refactor goutils/cli to cli/cli
 - fix all tests to compile and... well, work
   - fix tests to timeout properly
