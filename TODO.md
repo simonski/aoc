@@ -3,7 +3,7 @@
 ## DOING
 
 branch feature/website
-    api/visualisations/home is the temporarylocation for a heatmap of 
+    api/visualisations/home is the temporarylocation for a heatmap of
     what I'm working on, what I have worked on etc.
 
     this is up to date against main/develop/2021_19
@@ -20,12 +20,13 @@ branch feature/website
                     Completed: time
                     Notes: string
                 }
+
 - writeup github action build for aoc
 - refactor goutils/cli to cli/cli
 - fix all tests to compile and... well, work
-    - fix tests to timeout properly
-    - fix tests to run on specific years
-    - look for "if (true) { return }" and fix the
+  - fix tests to timeout properly
+  - fix tests to run on specific years
+  - look for "if (true) { return }" and fix the
 - standardise the webassemly visualisation
 - writeup and get the docker build working for the aoc build
 - move to ghcr.io via a github action
@@ -34,7 +35,6 @@ branch feature/website
     doing 2015
     2020
     2021
-
 
 ## TODO
 

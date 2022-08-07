@@ -2,35 +2,31 @@
 
 This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.com/) attempts, in go.
 
+You can Install, Run and Extend it
+
 ## Install
 
 If you just want to run it, do this
 
     go get github.com/simonski/aoc
 
-## Building
-
-If you want to build it yourself, try this
+Or build it yourself
 
     git clone github.com/simonski/aoc.git
     cd aoc
-    make all
+    make
 
 This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
 
 ## Runnning
 
-Once you've got it, run it like so
+Type
 
     aoc
 
-After that, have a look at the puzzles
-
-    aoc list
-
 A completed year/day combo will show up as a green star.  If the puzzle has a visualisation it will show as a yellow star.
 
-Let's run 2020, day 1
+Run 2020, day 1
 
     aoc run 2020 01
 
@@ -38,11 +34,15 @@ Let's render day 24, 2020 as an animation
 
     aoc render 2020 24
 
-## Extending
+Run the server and see some visualisations
 
-When you work on a new day, e.g. 2021
+    caddy start
+    ./aoc server
 
-    git checkout -b 2021-01
+## Extend
+
+When you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`:
+
     ./start_problem.sh 2021 01
 
 You can then run it as an application
@@ -50,3 +50,9 @@ You can then run it as an application
     ./aoc run 2021 01
 
 Eventually I'll be finished and can merge back to develop and finally main.
+
+## Deploy
+
+    make docker publish
+
+Will build and push the AOC image, which is then picked up by the server via a `watchtowerr` setup elsewhere.
