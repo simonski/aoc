@@ -177,7 +177,7 @@ func NewTile(id string, data []string) *Tile {
 	return &t
 }
 
-/// Rekey rebuilds the keys for each direction
+// / Rekey rebuilds the keys for each direction
 func (t *Tile) Rekey() *Tile {
 	north := ""
 	south := ""

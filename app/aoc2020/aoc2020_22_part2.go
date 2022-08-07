@@ -359,7 +359,7 @@ func NewGameHand(player1 *Player, player2 *Player) string {
 }
 
 // Copy is a simple copy constructor with one caveat, it only copies the
-//nuuber of cards specified
+// nuuber of cards specified
 func (player *Player) Copy(numberOfCardsToCopy int) *Player {
 	p := Player{}
 	cards := make([]int, 0)

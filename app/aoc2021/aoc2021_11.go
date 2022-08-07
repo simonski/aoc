@@ -537,8 +537,6 @@ func (app *Application) Y2021D11P1() {
 It seems like the individual flashes aren't bright enough to navigate. However, you might have a better option: the flashes seem to be synchronizing!
 
 In the example above, the first time all octopuses flash simultaneously is step 195:
-
-
 */
 func (app *Application) Y2021D11P2() {
 

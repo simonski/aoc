@@ -1,7 +1,7 @@
 default_target: build
 .PHONY : default_target upload
 
-usage:
+help:
 	@echo "The aoc go Makefile"
 	@echo ""
 	@echo "Usage : make <command> "
@@ -11,15 +11,25 @@ usage:
 	@echo "  clean                 - cleans temp files"
 	@echo "  test                  - builds and runs tests"
 	@echo "  build                 - creates binary"
+
 	@echo "  install               - builds and installs"
+	@echo "  docker                - creates aoc docker image"
+	@echo "  publish               - pushes aoc image to dockerhub"
+	@echo "  release               - gorelaser create binary releases"
 	@echo ""
-	@echo "  all                   - all of the above"
-	@echo ""
+
+setup:
+	go install honnef.co/go/tools/cmd/staticcheck@latest
+
+format:
+	staticcheck ./...
 
 clean:
 	go clean
+	rm -rf dist
 	
 build:
+	go fmt ./...
 	go build
 	
 test:
@@ -27,9 +37,6 @@ test:
 	go test ./... -timeout 10s
 
 install:
-	go install
-
-all: clean build test
 	go install
 
 release:

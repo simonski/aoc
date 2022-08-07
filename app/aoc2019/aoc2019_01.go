@@ -20,7 +20,6 @@ For a mass of 100756, the fuel required is 33583.
 Fuel required to launch a given module is based on its mass. Specifically, to
 find the fuel required for a module,
 take its mass, divide by three, round down, and subtract 2.
-
 */
 func (app *Application) FuelRequired(mass int) int {
 	divided := (mass / 3) - 2

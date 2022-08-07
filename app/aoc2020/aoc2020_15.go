@@ -111,7 +111,7 @@ func split_comma_separated_string_to_ints(sequence string) []int {
 	return results
 }
 
-//  split_undecorated_string_to_ints takes a string 5432 returning [ 5, 4, 3, 2 ]
+// split_undecorated_string_to_ints takes a string 5432 returning [ 5, 4, 3, 2 ]
 func split_undecorated_string_to_ints(sequence string) []int {
 	results := make([]int, len(sequence))
 	for index := 0; index < len(sequence); index++ {
