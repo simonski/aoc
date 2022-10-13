@@ -3,7 +3,7 @@ package aoc2018
 import (
 	"fmt"
 
-	utils "github.com/simonski/aoc/utils"
+	utils "github.com/simonski/goutils"
 )
 
 type Grid struct {

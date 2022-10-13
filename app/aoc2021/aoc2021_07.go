@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	"github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 /*
@@ -86,7 +87,7 @@ func (o *OceanOfCrabs) Scan() []int {
 func (o *OceanOfCrabs) CostOfMoveToPositionPart1(positionToMoveTo int) int {
 	total := 0
 	for _, crab := range o.Crabs {
-		expense := utils.Abs(crab.Position - positionToMoveTo)
+		expense := goutils.Abs(crab.Position - positionToMoveTo)
 		total += expense
 	}
 	return total
@@ -95,7 +96,7 @@ func (o *OceanOfCrabs) CostOfMoveToPositionPart1(positionToMoveTo int) int {
 func (o *OceanOfCrabs) CostOfMoveToPositionPart2(positionToMoveTo int) int64 {
 	total := int64(0)
 	for _, crab := range o.Crabs {
-		distance := utils.Abs(crab.Position - positionToMoveTo)
+		distance := goutils.Abs(crab.Position - positionToMoveTo)
 		total += int64(Cost(distance))
 	}
 	return total

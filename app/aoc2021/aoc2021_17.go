@@ -5,7 +5,7 @@ import (
 	"os"
 	"sort"
 
-	utils "github.com/simonski/aoc/utils"
+	utils "github.com/simonski/goutils"
 )
 
 /*
