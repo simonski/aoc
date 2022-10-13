@@ -6,7 +6,7 @@ require (
 	github.com/andybons/gogif v0.0.0-20140526152223-16d573594812
 	github.com/fogleman/gg v1.3.0
 	github.com/gookit/color v1.3.6
-	github.com/simonski/cli v0.0.0-20220424130852-aaf734ce6ee0
+	github.com/simonski/cli v0.0.0-20220911082116-e95cf5ad0c4f
 	github.com/simonski/goutils v0.0.0-20220804183810-521696e55aa5
 )
 

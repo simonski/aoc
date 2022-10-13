@@ -3,6 +3,8 @@ package aoc2018
 import (
 	"fmt"
 	"strings"
+
+	cli "github.com/simonski/cli"
 )
 
 /*
@@ -165,7 +167,7 @@ What message will eventually appear in the sky?
 */
 
 // rename this to the year and day in question
-func (app *Application) Y2018D10P1() {
+func (app *Application) Y2018D10P1(cli *cli.CLI) {
 	lines := strings.Split(DAY_2018_10_DATA_TEST, "\n")
 	g := NewGrid()
 	g.Load(lines)
@@ -271,87 +273,7 @@ func (app *Application) Y2018D10P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2018D10P2() {
-	// return
-	lines := strings.Split(DAY_2018_10_DATA, "\n")
-	g := NewGrid()
-	g.Load(lines)
-	g.Remap()
-	fmt.Printf("There are %v stars.\n", len(g.points))
-
-	step := 0
-
-	// p0 := g.points[0]
-	// p300 := g.points[299]
-
-	width := 0
-	height := 0
-	min_x := 0
-	min_y := 0
-	max_x := 0
-	max_y := 0
-
-	// the max time signature would be.. the last positive moving x passing the last negative moving x
-	// AND
-	// the max time signature would be.. the last positive moving y passing the last negative moving y
-	// this way once we get "past" this time sig, we cannot create any more letters as they will have
-	// passed each other
-	// each time code, find least X of a positive velocity and max x of a negative velocity
-	// each time code, find least y of a positive velocity and max y of a negative velocity
-	// once both exceed, we have crossed our timecode
-
-	for {
-
-		leftMostMovingRight, rightMostMovingLeft, topMostMovingDown, bottomMostMovingUp := g.FindMovingBoundaryPoints()
-		if leftMostMovingRight.position_x > rightMostMovingLeft.position_x {
-			// then our last left star has gone "past" our last right star
-			fmt.Printf("stars have exceeded horizontally\n")
-			break
-		}
-		if topMostMovingDown.position_y > bottomMostMovingUp.position_y {
-			// then our last top star has gone "past" our last bottom star
-			fmt.Printf("stars have exceeded vertically\n")
-			break
-
-		}
-
-		// g.DrawLimited(50, 50)
-		h := g.CountLetters()
-		// fmt.Printf("Step is [%v]\n", step)
-
-		// h := 0
-		// h, i := 0, 0
-		// last_width := width
-		// last_height := height
-
-		// if last_width*last_height < width*height {
-		// fmt.Printf("Last bounds were smaller.")
-		// fmt.Printf("[%v] %v H, grid=(%v,%v->%v,%v) [%v,%v] p0[%v,%v] p300[%v,%v]\n", step, h, min_x, min_y, max_x, max_y, width, height, p0.position_x, p0.position_y, p300.position_x, p300.position_y)
-		// }
-
-		if step%5000 == 0 {
-
-			// width := Abs(max_x) - Abs(min_x)
-			// height := Abs(max_y) - Abs(min_y)
-			// if width < 200 && height < 200 {
-			min_x, min_y, max_x, max_y, width, height = g.Bounds()
-			fmt.Printf("[%v] %v H, grid (minx,miny,maxx,maxy)=(%v,%v->%v,%v) [w=%v,h=%v]\n", step, h, min_x, min_y, max_x, max_y, width, height)
-			// g.Draw()
-		}
-		// }
-		if h > 0 {
-			fmt.Printf("Step %v, H %v\n", step, h)
-			break
-		}
-
-		if h > 0 {
-			return
-		}
-
-		g.Step(true)
-		step += 1
-
-	}
+func (app *Application) Y2018D10P2(cli *cli.CLI) {
 
 }
 
@@ -365,7 +287,7 @@ func (app *Application) Y2018D10P2() {
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y202018D10() {
-	app.Y2018D10P1()
-	app.Y2018D10P2()
+func (app *Application) Y202018D10(cli *cli.CLI) {
+	app.Y2018D10P1(cli)
+	app.Y2018D10P2(cli)
 }

@@ -27,7 +27,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func AOC_2020_17_part2_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D17P2(cli *cli.CLI) {
 
 	g := NewGrid4D(DAY_17_INPUT)
 	g.Cycle()

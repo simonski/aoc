@@ -354,19 +354,18 @@ nearby tickets:
 772,188,73,486,129,78,897,595,426,486,481,772,652,266,548,187,892,692,534,256
 `
 
-// AOC_2020_16 is the entrypoint
-func AOC_2020_16(cli *cli.CLI) {
-	AOC_2020_16_part1_attempt1(cli)
-	AOC_2020_16_part2_attempt1(cli)
+func (app *Application) Y2020D16(cli *cli.CLI) {
+	app.Y2020D16P1(cli)
+	app.Y2020D16P2(cli)
 }
 
-func AOC_2020_16_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D16P1(cli *cli.CLI) {
 	d := NewDay16(DAY_16_INPUT_1)
 	errorRate := d.ErrorRate()
 	fmt.Printf("Error Rate is %v\n", errorRate)
 }
 
-func AOC_2020_16_part2_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D16P2(cli *cli.CLI) {
 	// d := NewDay16(DAY_16_INPUT_2_TEST_DATA)
 	d := NewDay16(DAY_16_INPUT_1)
 	d.DiscardInvalidTickets()

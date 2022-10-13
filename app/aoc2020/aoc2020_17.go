@@ -170,13 +170,12 @@ const DAY_17_TEST_INPUT = `.#.
 const ACTIVE = "#"
 const INACTIVE = "."
 
-// AOC_2020_17 is the entrypoint
-func AOC_2020_17(cli *cli.CLI) {
-	AOC_2020_17_part1_attempt1(cli)
-	AOC_2020_17_part2_attempt1(cli)
+func (app *Application) Y2020D17(cli *cli.CLI) {
+	app.Y2020D17P1(cli)
+	app.Y2020D17P2(cli)
 }
 
-func AOC_2020_17_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D17P1(cli *cli.CLI) {
 
 	g := NewGrid3D(DAY_17_INPUT)
 	g.Cycle()

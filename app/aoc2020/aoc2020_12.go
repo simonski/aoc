@@ -48,13 +48,25 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-// AOC_2020_12 is the entrypoint
-func AOC_2020_12(cli *cli.CLI) {
-	// AOC_2020_12_part1_attempt1(cli)
-	AOC_2020_12_part2_attempt1(cli)
+func (app *Application) Y2020D12(cli *cli.CLI) {
+	app.Y2020D12P1(cli)
+	app.Y2020D12P2(cli)
 }
 
-func AOC_2020_12_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D12P1(cli *cli.CLI) {
+	filename := cli.GetFileExistsOrDie("-input")
+	tolerance := 4
+	sp := NewSeatingPlanFromFile(filename, tolerance, false)
+	for {
+		if sp.Tick() == 0 {
+			break
+		}
+	}
+	fmt.Printf("Tick Count is     : %v\n", sp.TickCount)
+	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
+}
+
+func (app *Application) Y2020D12P1_x(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	// p.Debug()
@@ -66,7 +78,7 @@ func AOC_2020_12_part1_attempt1(cli *cli.CLI) {
 	}
 }
 
-func AOC_2020_12_part2_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D12P2(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	s := NewShip2(10, 1)

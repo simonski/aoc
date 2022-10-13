@@ -61,17 +61,16 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-// AOC_2020_24 is the entrypoint
-func AOC_2020_24(cli *cli.CLI) {
-	AOC_2020_24_part1_attempt1(cli)
-	AOC_2020_24_part2_attempt1(cli)
+func (app *Application) Y2020D24(cli *cli.CLI) {
+	app.Y2020D24P1(cli)
+	app.Y2020D24P2(cli)
 }
 
-func (app *Application) Y2020D24P1() {
+func (app *Application) Y2020D24P1(cli *cli.CLI) {
 	AOC_2020_24_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D24P2() {
+func (app *Application) Y2020D24P2(cli *cli.CLI) {
 	AOC_2020_24_part2_attempt1(app.CLI)
 }
 
@@ -621,7 +620,7 @@ func (grid *HexGrid) RenderAnimation(data string, filename string, days int, Del
 	bounds := frame.Bounds()
 	palettedImage := image.NewPaletted(bounds, nil)
 	quantizer := gogif.MedianCutQuantizer{NumColor: 64}
-	quantizer.Quantize(palettedImage, bounds, frame, image.ZP)
+	quantizer.Quantize(palettedImage, bounds, frame, image.Point{})
 
 	outGif := gif.GIF{}
 	outGif.Image = append(outGif.Image, palettedImage)
@@ -639,7 +638,7 @@ func (grid *HexGrid) RenderAnimation(data string, filename string, days int, Del
 		bounds := frame.Bounds()
 		palettedImage := image.NewPaletted(bounds, nil)
 		quantizer := gogif.MedianCutQuantizer{NumColor: 64}
-		quantizer.Quantize(palettedImage, bounds, frame, image.ZP)
+		quantizer.Quantize(palettedImage, bounds, frame, image.Point{})
 
 		outGif.Image = append(outGif.Image, palettedImage)
 		outGif.Delay = append(outGif.Delay, Delay)
@@ -922,7 +921,7 @@ func (grid *HexGrid) RenderFrame(dc *gg.Context, day int) image.Image {
 
 func (grid *HexGrid) Keys() []string {
 	arr := make([]string, 0)
-	for key, _ := range grid.Cache {
+	for key := range grid.Cache {
 		arr = append(arr, key)
 	}
 	return arr

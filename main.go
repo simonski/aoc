@@ -13,13 +13,14 @@ import (
 
 func main() {
 	c := &cli.CLI{Args: os.Args}
+	c.Shift()
+	command := c.GetCommand()
 	app := app.NewAOCApplication(c)
-	if len(c.Args) == 1 {
+
+	if command == "" {
 		app.Help(c)
 		os.Exit(1)
-	}
-	command := c.Args[1]
-	if command == "run" {
+	} else if command == "run" {
 		app.Run(c)
 	} else if command == "render" {
 		app.Render(c)
@@ -33,14 +34,12 @@ func main() {
 	} else {
 		fmt.Printf("I don't know how to '%v'.\n", command)
 		os.Exit(1)
-		// app.Help(c)
 	}
 }
 
 func Info(cli *cli.CLI) {
 	info := goutils.NewSysInfo()
 	fmt.Printf("Platform %v CPU %v RAM %v\n", info.Platform, info.CPU, info.RAM)
-
 	buildInfo, ok := debug.ReadBuildInfo()
 	if ok {
 		fmt.Printf("%v\n", buildInfo)

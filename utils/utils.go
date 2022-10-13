@@ -202,7 +202,7 @@ func DrawLetter(l []string) {
 	}
 }
 
-func applyrange(value int, changeby int, lowerbound int, upperbound int) int {
+func Applyrange(value int, changeby int, lowerbound int, upperbound int) int {
 	value += changeby
 	if value < lowerbound {
 		// we went under the lowerbound, wrap around to the upperbound
@@ -235,14 +235,3 @@ type AppLogic interface {
 	GetName() string
 	Api(day int) string
 }
-
-// func GetMethod(appLogic AppLogic, methodName string) (reflect.Value, reflect.Value, bool) {
-// 	rvalue := reflect.ValueOf(&appLogic)
-// 	mvalue := rvalue.MethodByName(methodName)
-// 	exists := false
-// 	if reflect.Value.IsValid(mvalue) {
-// 		exists = true
-// 	}
-// 	fmt.Printf("GetMethod(rvalue=%v, mvalue=%v, appLogic=%v, methodName=%v, exists=%v\n", rvalue, mvalue, appLogic.GetName(), methodName, exists)
-// 	return rvalue, mvalue, exists
-// }

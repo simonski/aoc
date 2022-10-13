@@ -2,11 +2,27 @@
 
 ## DOING
 
-branch feature/website
-    api/visualisations/home is the temporarylocation for a heatmap of 
-    what I'm working on, what I have worked on etc.
+branch feature/website and any open feature/202x_xx branches are incomplete.
 
-    this is up to date against main/develop/2021_19
+    WEB LANDING PAGE FOR PROBLEMS
+        https://localhost/visualisations and
+        https://localhost/visualisations/home
+        
+     /api/visualisations/home/index.html and sketch.js to create a heatmap of 
+     each solution I've worked on by year.   
+
+     Each block should be able to render the completion status, noetes etc.   
+
+    fetch results from /api/solutions  (returns json)
+    for each result
+     for year
+        start row
+        for day 01..24
+            start col
+            render star
+            end col
+        end row
+
         contains current refactored layout
         intention is to create a github action to deploy
         AND then create a heatmap for progress
@@ -20,12 +36,14 @@ branch feature/website
                     Completed: time
                     Notes: string
                 }
+
 - writeup github action build for aoc
+- staticcheck for compliance and go idiomsS
 - refactor goutils/cli to cli/cli
 - fix all tests to compile and... well, work
-    - fix tests to timeout properly
-    - fix tests to run on specific years
-    - look for "if (true) { return }" and fix the
+  - fix tests to timeout properly
+  - fix tests to run on specific years
+  - look for "if (true) { return }" and fix the
 - standardise the webassemly visualisation
 - writeup and get the docker build working for the aoc build
 - move to ghcr.io via a github action
@@ -34,7 +52,6 @@ branch feature/website
     doing 2015
     2020
     2021
-
 
 ## TODO
 

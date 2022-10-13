@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
+	"time"
 
 	app "github.com/simonski/aoc/app"
+	"github.com/simonski/aoc/app/constants"
 	cli "github.com/simonski/cli"
-
-	_ "embed"
 )
 
 //go:embed css js visualisations api index.html
@@ -83,7 +84,7 @@ func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 
 	a := SERVER.application
 
-	for year := 2015; year <= 2021; year++ {
+	for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
 		appLogic := a.GetAppLogic(year)
 		for day := 1; day <= 25; day++ {
 			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
@@ -112,7 +113,9 @@ func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexFunc(w http.ResponseWriter, r *http.Request) {
-	msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC 2021 <a href='/api/solutions'>[solutions]</a></body>\n</html>"
+	msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC {YEAR} <a href='/api/solutions'>[solutions]</a></body>\n</html>"
+
+	msg = strings.ReplaceAll(msg, "{YEAR}", fmt.Sprintf("%v", time.Now().Year()))
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, msg)
 }
