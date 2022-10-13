@@ -10,6 +10,7 @@ import (
 	"time"
 
 	app "github.com/simonski/aoc/app"
+	"github.com/simonski/aoc/app/constants"
 	cli "github.com/simonski/cli"
 )
 
@@ -83,7 +84,7 @@ func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 
 	a := SERVER.application
 
-	for year := 2015; year <= 2021; year++ {
+	for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
 		appLogic := a.GetAppLogic(year)
 		for day := 1; day <= 25; day++ {
 			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
