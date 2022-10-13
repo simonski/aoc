@@ -4,6 +4,18 @@
 
 branch feature/website and any open feature/202x_xx branches are incomplete.
 
+ - refactor landing/default page to show a table of progress
+ - refactor the API so I can determine the state of problem, its complexity and notes, if it has a visualisation.
+	struct Problem
+		day
+		part
+		solved
+		effort
+		notes
+		labels
+ - figure out MVP for the common javascript (if any?) and then render the page.	
+
+
     WEB LANDING PAGE FOR PROBLEMS
         https://localhost/visualisations and
         https://localhost/visualisations/home

@@ -150,7 +150,6 @@ import (
 	"strconv"
 	"strings"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -170,12 +169,12 @@ const DAY_17_TEST_INPUT = `.#.
 const ACTIVE = "#"
 const INACTIVE = "."
 
-func (app *Application) Y2020D17(cli *cli.CLI) {
-	app.Y2020D17P1(cli)
-	app.Y2020D17P2(cli)
+func (app *Application) Y2020D17() {
+	app.Y2020D17P1()
+	app.Y2020D17P2()
 }
 
-func (app *Application) Y2020D17P1(cli *cli.CLI) {
+func (app *Application) Y2020D17P1() {
 
 	g := NewGrid3D(DAY_17_INPUT)
 	g.Cycle()

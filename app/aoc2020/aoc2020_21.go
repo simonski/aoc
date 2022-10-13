@@ -26,18 +26,16 @@ Determine which ingredients cannot possibly contain any of the allergens in your
 import (
 	"fmt"
 	"strings"
-
-	cli "github.com/simonski/cli"
 )
 
-func (app *Application) Y2020D21(cli *cli.CLI) {
-	app.Y2020D21P1(cli)
-	app.Y2020D21P2(cli)
+func (app *Application) Y2020D21() {
+	app.Y2020D21P1()
+	app.Y2020D21P2()
 }
 
-func (app *Application) Y2020D21P1(cli *cli.CLI) {
+func (app *Application) Y2020D21P1() {
 }
-func (app *Application) Y2020D21P2(cli *cli.CLI) {
+func (app *Application) Y2020D21P2() {
 }
 
 func NewFoodDB(data string) *FoodDB {

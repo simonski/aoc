@@ -104,17 +104,16 @@ import (
 	"fmt"
 	"strings"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D11(cli *cli.CLI) {
-	app.Y2020D11P1(cli)
-	app.Y2020D11P2(cli)
+func (app *Application) Y2020D11() {
+	app.Y2020D11P1()
+	app.Y2020D11P2()
 }
 
-func (app *Application) Y2020D11P1(cli *cli.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
+func (app *Application) Y2020D11P1() {
+	filename := app.CLI.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
 	for {
@@ -126,7 +125,7 @@ func (app *Application) Y2020D11P1(cli *cli.CLI) {
 	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
 }
 
-func (app *Application) Y2020D11P2(cli *cli.CLI) {
+func (app *Application) Y2020D11P2() {
 }
 
 // Tick performs one round of the seating change logic, returning the

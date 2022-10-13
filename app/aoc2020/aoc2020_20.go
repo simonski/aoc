@@ -170,16 +170,15 @@ import (
 	"strconv"
 	"strings"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D20(cli *cli.CLI) {
-	app.Y2020D20P1(cli)
-	app.Y2020D20P2(cli)
+func (app *Application) Y2020D20() {
+	app.Y2020D20P1()
+	app.Y2020D20P2()
 }
 
-func (app *Application) Y2020D20P1(cli *cli.CLI) {
+func (app *Application) Y2020D20P1() {
 	image := NewImageFromString(DAY_20_DATA)
 	fmt.Printf("FindCorners\n")
 	data := image.Arrange(false)
@@ -197,7 +196,7 @@ func (app *Application) Y2020D20P1(cli *cli.CLI) {
 	fmt.Printf("Day 20.1: Corners are %v * %v * %v * %v = ?\n", corner1.TileId, corner2.TileId, corner3.TileId, corner4.TileId)
 }
 
-func (app *Application) Y2020D20P2(cli *cli.CLI) {
+func (app *Application) Y2020D20P2() {
 	image := NewImageFromString(DAY_20_DATA)
 	image.Arrange(false)
 	hideEdges := false

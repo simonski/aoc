@@ -79,18 +79,17 @@ import (
 	"strconv"
 	"time"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D23(cli *cli.CLI) {
-	app.Y2020D23P1(cli)
-	app.Y2020D23P2(cli)
+func (app *Application) Y2020D23() {
+	app.Y2020D23P1()
+	app.Y2020D23P2()
 }
 
-func (app *Application) Y2020D23P1(cli *cli.CLI) {
+func (app *Application) Y2020D23P1() {
 }
-func (app *Application) Y2020D23P2(cli *cli.CLI) {
+func (app *Application) Y2020D23P2() {
 
 	start := time.Now()
 	input := "198753462"

@@ -56,18 +56,18 @@ const DAY_25_TEST_CARD_SUBJECT_NUMBER = 7
 const DAY_25_CARD_PUBLIC_KEY = 335121
 const DAY_25_DOOR_PUBLIC_KEY = 363891
 
-func (app *Application) Y2020D25(cli *cli.CLI) {
-	app.Y2020D25P1(cli)
-	app.Y2020D25P2(cli)
+func (app *Application) Y2020D25() {
+	app.Y2020D25P1()
+	app.Y2020D25P2()
 }
 
-func (app *Application) Y2020D25P1(cli *cli.CLI) {
+func (app *Application) Y2020D25P1() {
 	start := time.Now()
 	end := time.Now()
 	fmt.Printf("%v\n", end.Sub(start))
 }
 
-func (app *Application) Y2020D25P2(cli *cli.CLI) {
+func (app *Application) Y2020D25P2() {
 }
 
 func AOC_2020_25_part2_attempt1(cli *cli.CLI) {

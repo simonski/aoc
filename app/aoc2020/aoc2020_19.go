@@ -65,12 +65,12 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D19(cli *cli.CLI) {
-	app.Y2020D19P1(cli)
-	app.Y2020D19P2(cli)
+func (app *Application) Y2020D19() {
+	app.Y2020D19P1()
+	app.Y2020D19P2()
 }
 
-func (app *Application) Y2020D19P1(cli *cli.CLI) {
+func (app *Application) Y2020D19P1() {
 
 	/*
 		OK I’m guessing loop detection; a cheap way of doing that would be.. find what gives a loop then exclude any that include that in their rule to begin with
@@ -93,7 +93,7 @@ func (app *Application) Y2020D19P1(cli *cli.CLI) {
 	rre.Debug()
 }
 
-func (app *Application) Y2020D19P2(cli *cli.CLI) {
+func (app *Application) Y2020D19P2() {
 
 	/*
 		I think that this

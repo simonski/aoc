@@ -44,17 +44,16 @@ import (
 	"strconv"
 	"strings"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
 // AOC_2015_07 is the entrypoint
-func (app *Application) Y2015D07(cli *cli.CLI) {
-	app.Y2015D07P1(cli)
-	app.Y2015D07P2(cli)
+func (app *Application) Y2015D07() {
+	app.Y2015D07P1()
+	app.Y2015D07P2()
 }
 
-func (app *Application) Y2015D07P1(cli *cli.CLI) {
+func (app *Application) Y2015D07P1() {
 	circuit := NewCircuit(DAY_2015_07_DATA)
 	circuit.Evaluate()
 
@@ -65,7 +64,7 @@ func (app *Application) Y2015D07P1(cli *cli.CLI) {
 	fmt.Printf("a: %v\n", circuit.GetSignalValue("a"))
 }
 
-func (app *Application) Y2015D07P2(cli *cli.CLI) {
+func (app *Application) Y2015D07P2() {
 
 	circuit1 := NewCircuit(DAY_2015_07_DATA)
 	circuit1.Evaluate()
