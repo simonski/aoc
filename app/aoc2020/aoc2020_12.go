@@ -48,13 +48,13 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D12(cli *cli.CLI) {
-	app.Y2020D12P1(cli)
-	app.Y2020D12P2(cli)
+func (app *Application) Y2020D12() {
+	app.Y2020D12P1()
+	app.Y2020D12P2()
 }
 
-func (app *Application) Y2020D12P1(cli *cli.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
+func (app *Application) Y2020D12P1() {
+	filename := app.CLI.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
 	for {
@@ -78,8 +78,8 @@ func (app *Application) Y2020D12P1_x(cli *cli.CLI) {
 	}
 }
 
-func (app *Application) Y2020D12P2(cli *cli.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
+func (app *Application) Y2020D12P2() {
+	filename := app.CLI.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	s := NewShip2(10, 1)
 	fmt.Printf("START\n  Ship2(%v,%v %v) WP (%v,%v)\n", s.X, s.Y, s.Angle, s.Waypoint.X, s.Waypoint.Y)

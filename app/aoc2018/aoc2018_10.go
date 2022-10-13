@@ -3,8 +3,6 @@ package aoc2018
 import (
 	"fmt"
 	"strings"
-
-	cli "github.com/simonski/cli"
 )
 
 /*
@@ -167,7 +165,7 @@ What message will eventually appear in the sky?
 */
 
 // rename this to the year and day in question
-func (app *Application) Y2018D10P1(cli *cli.CLI) {
+func (app *Application) Y2018D10P1() {
 	lines := strings.Split(DAY_2018_10_DATA_TEST, "\n")
 	g := NewGrid()
 	g.Load(lines)
@@ -273,7 +271,7 @@ func (app *Application) Y2018D10P1(cli *cli.CLI) {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2018D10P2(cli *cli.CLI) {
+func (app *Application) Y2018D10P2() {
 
 }
 
@@ -287,7 +285,7 @@ func (app *Application) Y2018D10P2(cli *cli.CLI) {
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y202018D10(cli *cli.CLI) {
-	app.Y2018D10P1(cli)
-	app.Y2018D10P2(cli)
+func (app *Application) Y202018D10() {
+	app.Y2018D10P1()
+	app.Y2018D10P2()
 }

@@ -53,7 +53,6 @@ import (
 	"strconv"
 	"strings"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -354,18 +353,18 @@ nearby tickets:
 772,188,73,486,129,78,897,595,426,486,481,772,652,266,548,187,892,692,534,256
 `
 
-func (app *Application) Y2020D16(cli *cli.CLI) {
-	app.Y2020D16P1(cli)
-	app.Y2020D16P2(cli)
+func (app *Application) Y2020D16() {
+	app.Y2020D16P1()
+	app.Y2020D16P2()
 }
 
-func (app *Application) Y2020D16P1(cli *cli.CLI) {
+func (app *Application) Y2020D16P1() {
 	d := NewDay16(DAY_16_INPUT_1)
 	errorRate := d.ErrorRate()
 	fmt.Printf("Error Rate is %v\n", errorRate)
 }
 
-func (app *Application) Y2020D16P2(cli *cli.CLI) {
+func (app *Application) Y2020D16P2() {
 	// d := NewDay16(DAY_16_INPUT_2_TEST_DATA)
 	d := NewDay16(DAY_16_INPUT_1)
 	d.DiscardInvalidTickets()

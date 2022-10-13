@@ -110,18 +110,16 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	cli "github.com/simonski/cli"
 )
 
-func (app *Application) Y2020D22(cli *cli.CLI) {
-	app.Y2020D22P1(cli)
-	app.Y2020D22P2(cli)
+func (app *Application) Y2020D22() {
+	app.Y2020D22P1()
+	app.Y2020D22P2()
 }
 
-func (app *Application) Y2020D22P1(cli *cli.CLI) {
+func (app *Application) Y2020D22P1() {
 }
-func (app *Application) Y2020D22P2(cli *cli.CLI) {
+func (app *Application) Y2020D22P2() {
 }
 
 type Combat struct {

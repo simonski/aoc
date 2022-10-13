@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -57,8 +56,8 @@ Execute the initialization program using an emulator for a version 2 decoder chi
 
 */
 
-func (app *Application) Y2020D14P2(cli *cli.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
+func (app *Application) Y2020D14P2() {
+	filename := app.CLI.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV2()
 	p.Debug()

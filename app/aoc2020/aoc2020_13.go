@@ -62,17 +62,17 @@ import (
 )
 
 // AOC_2020_13 is the entrypoint
-func (app *Application) Y2020D13(cli *cli.CLI) {
-	app.Y2020D13P1(cli)
-	app.Y2020D13P2(cli)
+func (app *Application) Y2020D13() {
+	app.Y2020D13P1()
+	app.Y2020D13P2()
 }
 
-func (app *Application) Y2020D13P1(cli *cli.CLI) {
-	AOC_2020_13_part1_attempt1(cli)
+func (app *Application) Y2020D13P1() {
+	AOC_2020_13_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D13P2(cli *cli.CLI) {
-	AOC_2020_13_part2_attempt1(cli)
+func (app *Application) Y2020D13P2() {
+	AOC_2020_13_part2_attempt1(app.CLI)
 }
 
 /*

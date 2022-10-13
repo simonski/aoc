@@ -49,16 +49,14 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	cli "github.com/simonski/cli"
 )
 
-func (app *Application) Y2020D15(cli *cli.CLI) {
-	app.Y2020D15P1(cli)
-	app.Y2020D15P2(cli)
+func (app *Application) Y2020D15() {
+	app.Y2020D15P1()
+	app.Y2020D15P2()
 }
 
-func (app *Application) Y2020D15P1(cli *cli.CLI) {
+func (app *Application) Y2020D15P1() {
 	sequence := "1,12,0,20,8,16"
 	result := NextInDay15Part1Sequence(sequence, 2020)
 	fmt.Printf("2020th in sequence %v is %v\n", sequence, result)
@@ -67,7 +65,7 @@ func (app *Application) Y2020D15P1(cli *cli.CLI) {
 	fmt.Printf("30000000th in sequence %v is %v\n", sequence, result2)
 }
 
-func (app *Application) Y2020D15P2(cli *cli.CLI) {
+func (app *Application) Y2020D15P2() {
 	fmt.Println("cannot find.")
 }
 

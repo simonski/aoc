@@ -48,17 +48,16 @@ import (
 	"regexp"
 	"strconv"
 
-	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D14(cli *cli.CLI) {
-	app.Y2020D14P1(cli)
-	app.Y2020D14P2(cli)
+func (app *Application) Y2020D14() {
+	app.Y2020D14P1()
+	app.Y2020D14P2()
 }
 
-func (app *Application) Y2020D14P1(cli *cli.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
+func (app *Application) Y2020D14P1() {
+	filename := app.CLI.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV1()
 	p.Debug()

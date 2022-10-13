@@ -8,17 +8,17 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D05(cli *cli.CLI) {
-	app.Y2020D05P1(cli)
-	app.Y2020D05P2(cli)
+func (app *Application) Y2020D05() {
+	app.Y2020D05P1()
+	app.Y2020D05P2()
 }
 
-func (app *Application) Y2020D05P1(cli *cli.CLI) {
-	app.AOC_2020_05_part1_attempt1(cli)
+func (app *Application) Y2020D05P1() {
+	app.AOC_2020_05_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D05P2(cli *cli.CLI) {
-	app.AOC_2020_05_part2_attempt1(cli)
+func (app *Application) Y2020D05P2() {
+	app.AOC_2020_05_part2_attempt1(app.CLI)
 }
 
 func (app *Application) AOC_2020_05_part1_attempt1(cli *cli.CLI) {

@@ -61,16 +61,16 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D24(cli *cli.CLI) {
-	app.Y2020D24P1(cli)
-	app.Y2020D24P2(cli)
+func (app *Application) Y2020D24() {
+	app.Y2020D24P1()
+	app.Y2020D24P2()
 }
 
-func (app *Application) Y2020D24P1(cli *cli.CLI) {
+func (app *Application) Y2020D24P1() {
 	AOC_2020_24_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D24P2(cli *cli.CLI) {
+func (app *Application) Y2020D24P2() {
 	AOC_2020_24_part2_attempt1(app.CLI)
 }
 
