@@ -28,6 +28,8 @@ github.com/simonski/cli v0.0.0-20220911082116-e95cf5ad0c4f h1:aKAwgK/Tr/MVWJg++9
 github.com/simonski/cli v0.0.0-20220911082116-e95cf5ad0c4f/go.mod h1:1sTHBhM1VYHc6TNPvptxnLysQIfJB8aRoTHtGvE0Bd8=
 github.com/simonski/goutils v0.0.0-20220804183810-521696e55aa5 h1:EcNQHmT/1q3hHvQIktMOM4DU4BZPFzT2ME7S/DtUBMg=
 github.com/simonski/goutils v0.0.0-20220804183810-521696e55aa5/go.mod h1:/2qTe1dkvRQynVWyJLvEi3eJL1//w4Sr1fbsZb8GaZo=
+github.com/simonski/goutils v0.0.0-20221013050613-ad1da6fd9c4b h1:3F5m58osfhp8AC8XZe+q0iGqBCchMr4uTMLdgmJdDKI=
+github.com/simonski/goutils v0.0.0-20221013050613-ad1da6fd9c4b/go.mod h1:/2qTe1dkvRQynVWyJLvEi3eJL1//w4Sr1fbsZb8GaZo=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=

@@ -14,7 +14,7 @@ import (
 	cli "github.com/simonski/cli"
 )
 
-//go:embed css js visualisations api index.html
+//go:embed css visualisations api index.html
 var staticFiles embed.FS
 var SERVER *Server
 

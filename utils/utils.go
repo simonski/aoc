@@ -7,25 +7,8 @@ import (
 	"strings"
 
 	cli "github.com/simonski/cli"
+	goutils "github.com/simonski/goutils"
 )
-
-func StripWhitespace(line string) string {
-	line = strings.ReplaceAll(line, " ", "")
-	line = strings.ReplaceAll(line, "\t", "")
-	line = strings.ReplaceAll(line, "\n", "")
-	return line
-}
-
-// https://en.wikipedia.org/wiki/Arithmetic_progression
-// also: https://www.youtube.com/watch?v=uACt9OntiLo
-func ArithmeticProgression(first int, last int) int {
-
-	// number N terms being added (here, 5)
-	// multiplying the sum of the first and last number then divide by 2
-	//
-	return (last * (first + last)) / 2
-
-}
 
 /*
 Converts a decimal string to an integer value
@@ -84,64 +67,6 @@ func BinaryStringToUInt64(v string) uint64 {
 		pow += pow
 	}
 	return result
-}
-
-func Abs(a int) int {
-	if a < 0 {
-		return -a
-	}
-	return a
-}
-
-func Min(a int, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func Max(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func Min64(a int64, b int64) int64 {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func Max64(a int64, b int64) int64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func MinU64(a uint64, b uint64) uint64 {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func MaxU64(a uint64, b uint64) uint64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func Factorial(a uint64) uint64 {
-	if a > 1 {
-		a = a * Factorial(a-1)
-		return a
-	} else {
-		return a
-	}
 }
 
 func NewH() []string {
@@ -206,11 +131,11 @@ func Applyrange(value int, changeby int, lowerbound int, upperbound int) int {
 	value += changeby
 	if value < lowerbound {
 		// we went under the lowerbound, wrap around to the upperbound
-		diff := Abs(value - lowerbound)
+		diff := goutils.Abs(value - lowerbound)
 		value = upperbound - diff
 	} else if value > upperbound {
 		// we went over the upperbound, wrap aroudn to the lowerbound
-		diff := Abs(value - upperbound)
+		diff := goutils.Abs(value - upperbound)
 		value = lowerbound + diff
 	}
 	return value

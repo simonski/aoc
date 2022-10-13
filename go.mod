@@ -7,7 +7,7 @@ require (
 	github.com/fogleman/gg v1.3.0
 	github.com/gookit/color v1.3.6
 	github.com/simonski/cli v0.0.0-20220911082116-e95cf5ad0c4f
-	github.com/simonski/goutils v0.0.0-20220804183810-521696e55aa5
+	github.com/simonski/goutils v0.0.0-20221013050613-ad1da6fd9c4b
 )
 
 require (

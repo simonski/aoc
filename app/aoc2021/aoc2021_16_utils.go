@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	utils "github.com/simonski/aoc/utils"
-	"github.com/simonski/goutils"
+	goutils "github.com/simonski/goutils"
 )
 
 type PacketD16 struct {
@@ -210,14 +210,14 @@ func (p *PacketD16) GetValue() uint64 {
 		p1 := p.Subpackets[0]
 		max := p1.GetValue()
 		for _, sp := range p.Subpackets {
-			max = utils.MaxU64(max, sp.GetValue())
+			max = goutils.MaxU64(max, sp.GetValue())
 		}
 		return max
 	} else if p.IsTypeOperatorMin() {
 		p1 := p.Subpackets[0]
 		min := p1.GetValue()
 		for _, sp := range p.Subpackets {
-			min = utils.MinU64(min, sp.GetValue())
+			min = goutils.MinU64(min, sp.GetValue())
 		}
 		return min
 	} else if p.IsTypeOperatorSum() {

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/aoc/utils"
+	utils "github.com/simonski/goutils"
 )
 
 /*
