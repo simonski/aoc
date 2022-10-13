@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
+	"time"
 
 	app "github.com/simonski/aoc/app"
 	cli "github.com/simonski/cli"
@@ -110,7 +112,9 @@ func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexFunc(w http.ResponseWriter, r *http.Request) {
-	msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC 2021 <a href='/api/solutions'>[solutions]</a></body>\n</html>"
+	msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC {YEAR} <a href='/api/solutions'>[solutions]</a></body>\n</html>"
+
+	msg = strings.ReplaceAll(msg, "{YEAR}", fmt.Sprintf("%v", time.Now().Year()))
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, msg)
 }

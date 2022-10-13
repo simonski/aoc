@@ -2,12 +2,27 @@
 
 ## DOING
 
-branch feature/2021_19 and website
+branch feature/website and any open feature/202x_xx branches are incomplete.
 
     WEB LANDING PAGE FOR PROBLEMS
         https://localhost/visualisations and
         https://localhost/visualisations/home
         
+     /api/visualisations/home/index.html and sketch.js to create a heatmap of 
+     each solution I've worked on by year.   
+
+     Each block should be able to render the completion status, noetes etc.   
+
+    fetch results from /api/solutions  (returns json)
+    for each result
+     for year
+        start row
+        for day 01..24
+            start col
+            render star
+            end col
+        end row
+
         contains current refactored layout
         intention is to create a github action to deploy
         AND then create a heatmap for progress

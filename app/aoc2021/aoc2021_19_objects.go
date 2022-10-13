@@ -1,22 +1,71 @@
 package aoc2021
 
-type PositionXYZ struct {
-	X int
-	Y int
-	Z int
-}
-type Beacon struct {
-	PositionXYZ
-}
+import "fmt"
 
 type Scanner struct {
-	PositionXYZ
-	PositionCalculated bool
+	Beacons []*Beacon
 }
+
+// a scanner shoudl be able to provide 24 variations of beacon placement by
+// order of beacon position x,y,z - 4 varieties
+// sign of each - 6 varieties; 24 varieties of beacon
 
 type Ocean struct {
 	Beacons  []*Beacon
 	Scanners []*Scanner
+}
+
+type Beacon struct {
+	X int
+	Y int
+	Z int
+}
+
+func (b *Beacon) Debug() string {
+	return fmt.Sprintf("X: %v, Y: %v, Z: %v", b.X, b.Y, b.Z)
+}
+
+func (b *Beacon) Permutations() []*Beacon {
+	results := make([]*Beacon, 0)
+	results = append(results, &Beacon{X: b.X, Y: b.Y, Z: b.Z})
+	results = append(results, &Beacon{X: b.X, Y: b.Z, Z: b.Y})
+	results = append(results, &Beacon{X: b.Y, Y: b.X, Z: b.Z})
+	results = append(results, &Beacon{X: b.Y, Y: b.Z, Z: b.X})
+	results = append(results, &Beacon{X: b.Z, Y: b.X, Z: b.Y})
+	results = append(results, &Beacon{X: b.Z, Y: b.Y, Z: b.X})
+
+	r := make([]*Beacon, 0)
+	for _, b := range results {
+		r = append(r, b.Rotate()...)
+		// for _, p := range b.Rotate() {
+		// 	r = append(r, p)
+		// }
+	}
+	// r2 := v[0], v[2], v[1]
+	// r3 := v[1], v[0], v[2]
+	// r4 := v[1], v[2], v[0]
+	// r5 := v[2], v[0], v[1]
+	// r6 := v[2], v[1], v[0]
+
+	return r
+}
+
+func (b *Beacon) Rotate() []*Beacon {
+	// 1 x > -y, y > x, z->z
+	// 2 x > -x, y -> -y, z -> z
+	// 3 x > y, y -> -z, z -> z
+	results := make([]*Beacon, 0)
+	b1 := b
+	b2 := &Beacon{b.Y, -b.X, b.Z}
+	b3 := &Beacon{-b.X, -b.Y, b.Z}
+	b4 := &Beacon{-b.Y, b.X, b.Z}
+
+	results = append(results, b1)
+	results = append(results, b2)
+	results = append(results, b3)
+	results = append(results, b4)
+	return results
+
 }
 
 /*

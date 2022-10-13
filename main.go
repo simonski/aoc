@@ -13,6 +13,7 @@ import (
 
 func main() {
 	c := &cli.CLI{Args: os.Args}
+	c.Shift()
 	app := app.NewAOCApplication(c)
 	if len(c.Args) == 1 {
 		app.Help(c)

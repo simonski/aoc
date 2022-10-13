@@ -17,6 +17,10 @@ help:
 	@echo "  publish               - pushes aoc image to dockerhub"
 	@echo "  release               - gorelaser create binary releases"
 	@echo ""
+	@echo "  server                - runs the aoc server in production mode"
+	@echo "  devserver             - runs the aoc server in developent mode"	
+	@echo "                          (serves files from disk)."
+	@echo ""
 
 setup:
 	go install honnef.co/go/tools/cmd/staticcheck@latest
@@ -31,7 +35,13 @@ clean:
 build:
 	go fmt ./...
 	go build
-	
+
+server: build
+	./aoc server
+
+devserver: build
+	./aoc server -fs ./api
+
 test:
 	# go test ./app/aoc2020 -timeout 10s
 	go test ./... -timeout 10s
