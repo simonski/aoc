@@ -4,17 +4,24 @@ import (
 	"fmt"
 	"sort"
 
+	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-// AOC_2020_05 is the entrypoint
-func (app *Application) Y2020D05P1() {
-	AOC_2020_05_part1_attempt1(app)
-	AOC_2020_05_part2_attempt1(app)
+func (app *Application) Y2020D05(cli *cli.CLI) {
+	app.Y2020D05P1(cli)
+	app.Y2020D05P2(cli)
 }
 
-func AOC_2020_05_part1_attempt1(app *Application) {
-	cli := app.CLI
+func (app *Application) Y2020D05P1(cli *cli.CLI) {
+	app.AOC_2020_05_part1_attempt1(cli)
+}
+
+func (app *Application) Y2020D05P2(cli *cli.CLI) {
+	app.AOC_2020_05_part2_attempt1(cli)
+}
+
+func (app *Application) AOC_2020_05_part1_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	passes := LoadBoardingPassesFromFile(filename)
 	maxPass := passes[0]
@@ -30,8 +37,7 @@ func AOC_2020_05_part1_attempt1(app *Application) {
 	fmt.Printf("Highest seatId is %v, pass is %v", maxSeatId, maxPass.line)
 }
 
-func AOC_2020_05_part2_attempt1(app *Application) {
-	cli := app.CLI
+func (app *Application) AOC_2020_05_part2_attempt1(cli *cli.CLI) {
 	// so the seat ids with -1 and +1 will be present
 	// only one will be missing
 	// two ways of checking

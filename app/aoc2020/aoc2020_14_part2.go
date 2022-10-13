@@ -57,7 +57,7 @@ Execute the initialization program using an emulator for a version 2 decoder chi
 
 */
 
-func AOC_2020_14_part2_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D14P2(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV2()

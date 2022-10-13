@@ -108,13 +108,12 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-// AOC_2020_11 is the entrypoint
-func AOC_2020_11(cli *cli.CLI) {
-	AOC_2020_11_part1_attempt1(cli)
-	AOC_2020_11_part2_attempt1(cli)
+func (app *Application) Y2020D11(cli *cli.CLI) {
+	app.Y2020D11P1(cli)
+	app.Y2020D11P2(cli)
 }
 
-func AOC_2020_11_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D11P1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
@@ -127,18 +126,7 @@ func AOC_2020_11_part1_attempt1(cli *cli.CLI) {
 	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
 }
 
-func AOC_2020_11_part2_attempt1(cli *cli.CLI) {
-	filename := cli.GetFileExistsOrDie("-input")
-	tolerance := 5
-	searchFar := true
-	sp := NewSeatingPlanFromFile(filename, tolerance, searchFar)
-	for {
-		if sp.Tick() == 0 {
-			break
-		}
-	}
-	fmt.Printf("Tick Count is     : %v\n", sp.TickCount)
-	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
+func (app *Application) Y2020D11P2(cli *cli.CLI) {
 }
 
 // Tick performs one round of the seating change logic, returning the

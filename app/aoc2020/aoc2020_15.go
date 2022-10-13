@@ -53,19 +53,22 @@ import (
 	cli "github.com/simonski/cli"
 )
 
-// AOC_2020_14 is the entrypoint
-func AOC_2020_15(cli *cli.CLI) {
-	AOC_2020_15_part1_attempt1(cli)
-	// AOC_2020_15_part2_attempt1(cli)
+func (app *Application) Y2020D15(cli *cli.CLI) {
+	app.Y2020D15P1(cli)
+	app.Y2020D15P2(cli)
 }
 
-func AOC_2020_15_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D15P1(cli *cli.CLI) {
 	sequence := "1,12,0,20,8,16"
 	result := NextInDay15Part1Sequence(sequence, 2020)
 	fmt.Printf("2020th in sequence %v is %v\n", sequence, result)
 
 	result2 := NextInDay15Part1Sequence(sequence, 30000000)
 	fmt.Printf("30000000th in sequence %v is %v\n", sequence, result2)
+}
+
+func (app *Application) Y2020D15P2(cli *cli.CLI) {
+	fmt.Println("cannot find.")
 }
 
 func NextInDay15Part1Sequence(sequence string, iterations int) int {

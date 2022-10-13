@@ -49,12 +49,12 @@ import (
 )
 
 // AOC_2015_07 is the entrypoint
-func AOC_2015_07(cli *cli.CLI) {
-	AOC_2015_07_part1_attempt1(cli)
-	AOC_2015_07_part2_attempt1(cli)
+func (app *Application) Y2015D07(cli *cli.CLI) {
+	app.Y2015D07P1(cli)
+	app.Y2015D07P2(cli)
 }
 
-func AOC_2015_07_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2015D07P1(cli *cli.CLI) {
 	circuit := NewCircuit(DAY_2015_07_DATA)
 	circuit.Evaluate()
 
@@ -65,7 +65,7 @@ func AOC_2015_07_part1_attempt1(cli *cli.CLI) {
 	fmt.Printf("a: %v\n", circuit.GetSignalValue("a"))
 }
 
-func AOC_2015_07_part2_attempt1(cli *cli.CLI) {
+func (app *Application) Y2015D07P2(cli *cli.CLI) {
 
 	circuit1 := NewCircuit(DAY_2015_07_DATA)
 	circuit1.Evaluate()

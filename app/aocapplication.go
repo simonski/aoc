@@ -14,6 +14,7 @@ import (
 	aoc2019 "github.com/simonski/aoc/app/aoc2019"
 	aoc2020 "github.com/simonski/aoc/app/aoc2020"
 	aoc2021 "github.com/simonski/aoc/app/aoc2021"
+	aoc2022 "github.com/simonski/aoc/app/aoc2022"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
@@ -75,8 +76,8 @@ func (a *AOCApplication) List() string {
 
 	output := ""
 
-	max_year := 2021
-	min_year := 2015
+	max_year := constants.MAX_YEAR
+	min_year := constants.MIN_YEAR
 
 	tick := "\u2713"
 	star := "\u2606"
@@ -86,7 +87,7 @@ func (a *AOCApplication) List() string {
 
 	dash := "\u2501"
 
-	header := "\u2503      \u2503"
+	header := "\u2503           \u2503"
 	for day := 1; day <= 25; day++ {
 		header = fmt.Sprintf("%v%02d\u2503", header, day)
 	}
@@ -98,10 +99,10 @@ func (a *AOCApplication) List() string {
 
 	// repeat := 80
 	// bigline1 := "\u250f" + repeatstring(dash, repeat) + "\u2513"
-	bigline1 := "\u250F" + goutils.Repeatstring(dash, 5) + goutils.Repeatstring(biggydown, 24) + "\u2513"
+	bigline1 := "\u250F" + goutils.Repeatstring(dash, 10) + goutils.Repeatstring(biggydown, 24) + "\u2513"
 	// bigline2 := "\u2523" + repeatstring(dash, repeat) + "\u252b"
-	bigline2 := "\u2523" + goutils.Repeatstring(dash, 5) + goutils.Repeatstring(biggyup, 24) + "\u252b"
-	bigline3 := "\u2517" + goutils.Repeatstring(dash, 5) + goutils.Repeatstring(biggyuponly, 24) + "\u251b"
+	bigline2 := "\u2523" + goutils.Repeatstring(dash, 10) + goutils.Repeatstring(biggyup, 24) + "\u252b"
+	bigline3 := "\u2517" + goutils.Repeatstring(dash, 10) + goutils.Repeatstring(biggyuponly, 24) + "\u251b"
 
 	output += bigline1
 	output += "\n"
@@ -109,9 +110,13 @@ func (a *AOCApplication) List() string {
 	output += "\n"
 	output += bigline2
 	output += "\n"
+	totalStars := 0
+	totalAvailableStars := 0
 	for year := max_year; year >= min_year; year-- {
 		app := a.GetAppLogic(year)
-		line := fmt.Sprintf("\u2503 %04d \u2503", year)
+		line := ""
+		stars := 0
+		totalAvailableStars += 25
 		for day := 1; day <= 25; day++ {
 			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
 			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
@@ -130,27 +135,17 @@ func (a *AOCApplication) List() string {
 
 			if m1exists {
 				part1 = tick
-				// if m1existsRender {
-				// 	part1 = tick
-				// }
-				// } else {
-				// 	part1 = tick + tick
+				stars++
 			} else {
 				part1 = cross
 			}
 
 			if m2exists {
 				part2 = tick
+				stars++
 			} else {
 				part2 = cross
 			}
-			// 	if m2existsRender {
-			// 		part2 = tick
-			// 	}
-			// } else {
-			// 	part2 = tick + tick
-
-			// }
 
 			if m1existsRender {
 				part1 = gold(part1)
@@ -162,11 +157,15 @@ func (a *AOCApplication) List() string {
 			line = fmt.Sprintf("%v%v%v\u2503", line, part1, part2)
 
 		}
+		totalStars += stars
+		line = fmt.Sprintf("\u2503 %04d (%02v) \u2503", year, stars) + line
+
 		output += line
 		output += "\n"
 	}
 	output += bigline3
 	output += "\n"
+	output += fmt.Sprintf("(Total Stars %v/%v)\n", totalStars, totalAvailableStars)
 
 	return output
 
@@ -187,6 +186,8 @@ func (a *AOCApplication) GetAppLogic(year int) utils.AppLogic {
 		return aoc2020.NewApplication(a.CLI)
 	} else if year == 2021 {
 		return aoc2021.NewApplication(a.CLI)
+	} else if year == 2022 {
+		return aoc2022.NewApplication(a.CLI)
 	} else {
 		return nil
 	}

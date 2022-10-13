@@ -62,8 +62,16 @@ import (
 )
 
 // AOC_2020_13 is the entrypoint
-func AOC_2020_13(cli *cli.CLI) {
+func (app *Application) Y2020D13(cli *cli.CLI) {
+	app.Y2020D13P1(cli)
+	app.Y2020D13P2(cli)
+}
+
+func (app *Application) Y2020D13P1(cli *cli.CLI) {
 	AOC_2020_13_part1_attempt1(cli)
+}
+
+func (app *Application) Y2020D13P2(cli *cli.CLI) {
 	AOC_2020_13_part2_attempt1(cli)
 }
 

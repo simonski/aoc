@@ -56,3 +56,14 @@ Eventually I'll be finished and can merge back to develop and finally main.
     make docker publish
 
 Will build and push the AOC image, which is then picked up by the server via a `watchtowerr` setup elsewhere.
+
+
+
+// AOC_2015_07 is the entrypoint
+func (app *Application) Y2015D08(cli *cli.CLI) {
+	app.Y2015D08P1(cli)
+	app.Y2015D08P2_inprogress(cli)
+}
+
+Where _inprogress is an in progress development entrypoint
+where removing the _inprogress means it is complete.

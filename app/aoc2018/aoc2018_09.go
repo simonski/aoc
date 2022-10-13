@@ -2,6 +2,8 @@ package aoc2018
 
 import (
 	"fmt"
+
+	cli "github.com/simonski/cli"
 )
 
 /*
@@ -58,7 +60,7 @@ a to b = distance
 */
 
 // rename this to the year and day in question
-func (app *Application) Y2018D09P1() {
+func (app *Application) Y2018D09P1_inprogress(cli *cli.CLI) {
 	rl := NewRouteLogic(DAY_2018_09_TEST_DATA)
 	fmt.Printf("There are %v locations, %v test routes.\n", len(rl.Locations), len(rl.Routes))
 
@@ -83,7 +85,7 @@ func (app *Application) Y2018D09P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2018D09P2() {
+func (app *Application) Y2018D09P2_inprogress(cli *cli.CLI) {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
@@ -96,7 +98,7 @@ func (app *Application) Y2018D09P2() {
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y202018D09() {
-	app.Y2018D09P1()
-	app.Y2018D09P2()
+func (app *Application) Y202018D09(cli *cli.CLI) {
+	app.Y2018D09P1_inprogress(cli)
+	app.Y2018D09P2_inprogress(cli)
 }

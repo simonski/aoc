@@ -114,12 +114,14 @@ import (
 	cli "github.com/simonski/cli"
 )
 
-// AOC_2020_20 is the entrypoint
-func AOC_2020_22(cli *cli.CLI) {
-	AOC_2020_22_part1_attempt1(cli)
+func (app *Application) Y2020D22(cli *cli.CLI) {
+	app.Y2020D22P1(cli)
+	app.Y2020D22P2(cli)
 }
 
-func AOC_2020_22_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D22P1(cli *cli.CLI) {
+}
+func (app *Application) Y2020D22P2(cli *cli.CLI) {
 }
 
 type Combat struct {

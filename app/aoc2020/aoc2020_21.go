@@ -30,12 +30,14 @@ import (
 	cli "github.com/simonski/cli"
 )
 
-// AOC_2020_20 is the entrypoint
-func AOC_2020_21(cli *cli.CLI) {
-	AOC_2020_21_part1_attempt1(cli)
+func (app *Application) Y2020D21(cli *cli.CLI) {
+	app.Y2020D21P1(cli)
+	app.Y2020D21P2(cli)
 }
 
-func AOC_2020_21_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2020D21P1(cli *cli.CLI) {
+}
+func (app *Application) Y2020D21P2(cli *cli.CLI) {
 }
 
 func NewFoodDB(data string) *FoodDB {

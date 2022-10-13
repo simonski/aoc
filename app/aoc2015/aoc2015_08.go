@@ -29,12 +29,12 @@ import (
 )
 
 // AOC_2015_07 is the entrypoint
-func AOC_2015_08(cli *cli.CLI) {
-	AOC_2015_08_part1_attempt1(cli)
-	AOC_2015_08_part2_attempt1(cli)
+func (app *Application) Y2015D08(cli *cli.CLI) {
+	app.Y2015D08P1(cli)
+	app.Y2015D08P2_inprogress(cli)
 }
 
-func AOC_2015_08_part1_attempt1(cli *cli.CLI) {
+func (app *Application) Y2015D08P1(cli *cli.CLI) {
 
 	data := DAY_2015_08_DATA
 	splits := strings.Split(data, "\n")
@@ -52,7 +52,7 @@ func AOC_2015_08_part1_attempt1(cli *cli.CLI) {
 
 }
 
-func AOC_2015_08_part2_attempt1(cli *cli.CLI) {
+func (app *Application) Y2015D08P2_inprogress(cli *cli.CLI) {
 
 	data := DAY_2015_08_DATA
 	splits := strings.Split(data, "\n")

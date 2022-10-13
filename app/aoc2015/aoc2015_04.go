@@ -24,6 +24,10 @@ func (app *Application) Y2015D04() {
 	app.Y2015D04P1()
 }
 
+func (app *Application) Y2015D04P2() {
+	fmt.Println("Solved with no code.")
+}
+
 func (app *Application) Y2015D04P1() {
 	prefix := "bgvyzdsv"
 	// prefix = "abcdef"
