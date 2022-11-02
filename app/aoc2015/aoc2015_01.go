@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/simonski/aoc/utils"
 )
 
 /*
@@ -36,6 +38,12 @@ const DAY_2015_01_DATA = `((((()(()(((((((()))(((()((((()())(())()(((()((((((()(
 func (app *Application) AOC_2015_01() {
 	app.Y2015D01P1()
 	app.Y2015D01P2()
+}
+
+func (app *Application) Y2015D01_Summary() *utils.Summary {
+	s := utils.Summary{}
+	s.Name = "hi there"
+	return &s
 }
 
 func (app *Application) Y2015D01P1() {

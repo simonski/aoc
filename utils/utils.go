@@ -7,8 +7,17 @@ import (
 	"strings"
 
 	cli "github.com/simonski/cli"
-	goutils "github.com/simonski/goutils"
 )
+
+type AppLogic interface {
+	Run(cli *cli.CLI)
+	Render(cli *cli.CLI)
+	Help(cli *cli.CLI)
+	GetMethod(methodName string) (reflect.Value, reflect.Value, bool)
+	GetName() string
+	Api(day int) string
+	Summary(year int, day int) *Summary
+}
 
 /*
 Converts a decimal string to an integer value
@@ -69,78 +78,6 @@ func BinaryStringToUInt64(v string) uint64 {
 	return result
 }
 
-func NewH() []string {
-	// an H is a 5x8 grid
-	// #...#
-	// #...#
-	// #...#
-	// #####
-	// #...#
-	// #...#
-	// #...#
-	// #...#
-	var letter []string
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#####")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	letter = append(letter, "#...#")
-	return letter
-}
-
-func NewI() []string {
-	// an I is a 3x8 grid
-	// ###
-	// .#.
-	// .#.
-	// .#.
-	// .#.
-	// .#.
-	// .#.
-	// ###
-	var letter []string
-	letter = append(letter, "###")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, ".#.")
-	letter = append(letter, "###")
-	return letter
-
-}
-
-func DebugLetter(letter []string) {
-	for index := 0; index < len(letter); index++ {
-		line := letter[index]
-		fmt.Printf("%v\n", line)
-	}
-}
-
-func DrawLetter(l []string) {
-	for _, line := range l {
-		fmt.Printf("%v\n", line)
-	}
-}
-
-func Applyrange(value int, changeby int, lowerbound int, upperbound int) int {
-	value += changeby
-	if value < lowerbound {
-		// we went under the lowerbound, wrap around to the upperbound
-		diff := goutils.Abs(value - lowerbound)
-		value = upperbound - diff
-	} else if value > upperbound {
-		// we went over the upperbound, wrap aroudn to the lowerbound
-		diff := goutils.Abs(value - upperbound)
-		value = lowerbound + diff
-	}
-	return value
-}
-
 // reads some test data to a slice of ints
 func SplitDataToListOfInts(data string, delim string) []int {
 	results := make([]int, 0)
@@ -152,11 +89,74 @@ func SplitDataToListOfInts(data string, delim string) []int {
 	return results
 }
 
-type AppLogic interface {
-	Run(cli *cli.CLI)
-	Render(cli *cli.CLI)
-	Help(cli *cli.CLI)
-	GetMethod(methodName string) (reflect.Value, reflect.Value, bool)
-	GetName() string
-	Api(day int) string
-}
+// func NewH() []string {
+// 	// an H is a 5x8 grid
+// 	// #...#
+// 	// #...#
+// 	// #...#
+// 	// #####
+// 	// #...#
+// 	// #...#
+// 	// #...#
+// 	// #...#
+// 	var letter []string
+// 	letter = append(letter, "#...#")
+// 	letter = append(letter, "#...#")
+// 	letter = append(letter, "#...#")
+// 	letter = append(letter, "#####")
+// 	letter = append(letter, "#...#")
+// 	letter = append(letter, "#...#")
+// 	letter = append(letter, "#...#")
+// 	letter = append(letter, "#...#")
+// 	return letter
+// }
+
+// func NewI() []string {
+// 	// an I is a 3x8 grid
+// 	// ###
+// 	// .#.
+// 	// .#.
+// 	// .#.
+// 	// .#.
+// 	// .#.
+// 	// .#.
+// 	// ###
+// 	var letter []string
+// 	letter = append(letter, "###")
+// 	letter = append(letter, ".#.")
+// 	letter = append(letter, ".#.")
+// 	letter = append(letter, ".#.")
+// 	letter = append(letter, ".#.")
+// 	letter = append(letter, ".#.")
+// 	letter = append(letter, ".#.")
+// 	letter = append(letter, "###")
+// 	return letter
+
+// }
+
+// func DebugLetter(letter []string) {
+// 	for index := 0; index < len(letter); index++ {
+// 		line := letter[index]
+// 		fmt.Printf("%v\n", line)
+// 	}
+// }
+
+// func DrawLetter(l []string) {
+// 	for _, line := range l {
+// 		fmt.Printf("%v\n", line)
+// 	}
+// }
+
+// func Applyrange(value int, changeby int, lowerbound int, upperbound int) int {
+// 	value += changeby
+// 	if value < lowerbound {
+// 		// we went under the lowerbound, wrap around to the upperbound
+// 		diff := goutils.Abs(value - lowerbound)
+// 		value = upperbound - diff
+// 	} else if value > upperbound {
+// 		// we went over the upperbound, wrap aroudn to the lowerbound
+// 		diff := goutils.Abs(value - upperbound)
+// 		value = lowerbound + diff
+// 	}
+// 	return value
+// }

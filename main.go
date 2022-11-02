@@ -15,7 +15,7 @@ func main() {
 	c := &cli.CLI{Args: os.Args}
 	c.Shift()
 	command := c.GetCommand()
-	app := app.NewAOCApplication(c)
+	app := app.NewAOC(c)
 
 	if command == "" {
 		app.Help(c)
@@ -27,6 +27,8 @@ func main() {
 	} else if command == "server" {
 		server := api.NewServer(c, &app)
 		server.Run()
+	} else if command == "summary" {
+		app.Summary(c)
 	} else if command == "info" {
 		Info(c)
 	} else if command == "version" {

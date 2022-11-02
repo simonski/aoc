@@ -72,6 +72,7 @@ func (app *Application) Y2020D24P1() {
 
 func (app *Application) Y2020D24P2() {
 	AOC_2020_24_part2_attempt1(app.CLI)
+	app.Y2020D24P2Render()
 }
 
 func (app *Application) Y2020D24P2Render() {

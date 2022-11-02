@@ -8,31 +8,24 @@ import (
 
 	"github.com/gookit/color"
 	aoc2015 "github.com/simonski/aoc/app/aoc2015"
-	aoc2016 "github.com/simonski/aoc/app/aoc2016"
-	aoc2017 "github.com/simonski/aoc/app/aoc2017"
-	aoc2018 "github.com/simonski/aoc/app/aoc2018"
-	aoc2019 "github.com/simonski/aoc/app/aoc2019"
-	aoc2020 "github.com/simonski/aoc/app/aoc2020"
-	aoc2021 "github.com/simonski/aoc/app/aoc2021"
-	aoc2022 "github.com/simonski/aoc/app/aoc2022"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
-type AOCApplication struct {
+type AOC struct {
 	CLI     *cli.CLI
 	Verbose bool
 }
 
-func NewAOCApplication(cli *cli.CLI) AOCApplication {
-	app := AOCApplication{CLI: cli}
+func NewAOC(cli *cli.CLI) AOC {
+	app := AOC{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
 }
 
-func (app *AOCApplication) Run(cli *cli.CLI) {
+func (app *AOC) Run(cli *cli.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	year := cli.GetStringOrDefault("run", "")
 	if year == "" {
@@ -46,10 +39,35 @@ func (app *AOCApplication) Run(cli *cli.CLI) {
 		return
 	}
 	al.Run(cli)
+}
+
+func (app *AOC) Summary(cli *cli.CLI) {
+	USAGE := "Usage: aoc summary (year) (day)"
+	year := cli.GetStringOrDefault("summary", "")
+	if year == "" {
+		fmt.Printf("%v\n", USAGE)
+		os.Exit(1)
+	}
+	iyear, _ := strconv.Atoi(year)
+
+	day := cli.GetStringOrDefault(year, "")
+	iday, _ := strconv.Atoi(day)
+
+	al := app.GetAppLogic(iyear)
+	if al == nil {
+		fmt.Printf("Sorry, we don't have year %v\n", year)
+		return
+	}
+	summary := al.Summary(iyear, iday)
+	if summary != nil {
+		fmt.Println("I havea  asummary.")
+	} else {
+		fmt.Println("No summary.")
+	}
 
 }
 
-func (app *AOCApplication) Render(cli *cli.CLI) {
+func (app *AOC) Render(cli *cli.CLI) {
 	USAGE := "Usage: aoc render (year) (day)"
 	year := cli.GetStringOrDefault("render", "")
 	if year == "" {
@@ -61,7 +79,7 @@ func (app *AOCApplication) Render(cli *cli.CLI) {
 	al.Render(cli)
 }
 
-func (app *AOCApplication) Help(cli *cli.CLI) {
+func (app *AOC) Help(cli *cli.CLI) {
 	output := strings.ReplaceAll(constants.USAGE_OVERALL, "LIST", app.List())
 	fmt.Println(output)
 	command := cli.GetStringOrDefault("help", "")
@@ -72,7 +90,7 @@ func (app *AOCApplication) Help(cli *cli.CLI) {
 }
 
 // builds a table of progress for all problems for the terminal
-func (a *AOCApplication) List() string {
+func (a *AOC) List() string {
 
 	output := ""
 
@@ -171,23 +189,23 @@ func (a *AOCApplication) List() string {
 
 }
 
-func (a *AOCApplication) GetAppLogic(year int) utils.AppLogic {
+func (a *AOC) GetAppLogic(year int) utils.AppLogic {
 	if year == 2015 {
 		return aoc2015.NewApplication(a.CLI)
-	} else if year == 2016 {
-		return aoc2016.NewApplication(a.CLI)
-	} else if year == 2017 {
-		return aoc2017.NewApplication(a.CLI)
-	} else if year == 2018 {
-		return aoc2018.NewApplication(a.CLI)
-	} else if year == 2019 {
-		return aoc2019.NewApplication(a.CLI)
-	} else if year == 2020 {
-		return aoc2020.NewApplication(a.CLI)
-	} else if year == 2021 {
-		return aoc2021.NewApplication(a.CLI)
-	} else if year == 2022 {
-		return aoc2022.NewApplication(a.CLI)
+		// } else if year == 2016 {
+		// 	return aoc2016.NewApplication(a.CLI)
+		// } else if year == 2017 {
+		// 	return aoc2017.NewApplication(a.CLI)
+		// } else if year == 2018 {
+		// 	return aoc2018.NewApplication(a.CLI)
+		// } else if year == 2019 {
+		// 	return aoc2019.NewApplication(a.CLI)
+		// } else if year == 2020 {
+		// 	return aoc2020.NewApplication(a.CLI)
+		// } else if year == 2021 {
+		// 	return aoc2021.NewApplication(a.CLI)
+		// } else if year == 2022 {
+		// 	return aoc2022.NewApplication(a.CLI)
 	} else {
 		return nil
 	}

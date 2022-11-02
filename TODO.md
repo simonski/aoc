@@ -2,17 +2,12 @@
 
 ## DOING
 
+-- Verify an example "new day" call for a new problem
+-- Implement the now-implemented Summary() calls acrosss the problems
+-- Refactor landing/default page to show a table of progress
+
 branch feature/website and any open feature/202x_xx branches are incomplete.
 
- - refactor landing/default page to show a table of progress
- - refactor the API so I can determine the state of problem, its complexity and notes, if it has a visualisation.
-	struct Problem
-		day
-		part
-		solved
-		effort
-		notes
-		labels
  - figure out MVP for the common javascript (if any?) and then render the page.	
 
 
@@ -80,3 +75,17 @@ This is my TODO list for AOC 2020.
 - all days: code style, comments.
 - day1 part1, sort and binchop
 - day1 part2, go look at algos book again
+
+## 2022-11-02
+
+-- DONE Include a function that returns the summary for a day YyyyyDdd_Summary() *utils.Summary
+
+-- DONE  - refactor the API so I can determine the state of problem, its complexity and notes, if it has a visualisation.
+	struct Problem
+		day
+		part
+		solved
+		effort
+		notes
+		labels
+

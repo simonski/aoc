@@ -5,6 +5,14 @@ package app
 
 */
 
+// func (app *Application) YyyyyDdd_Summary() *utils.Summary {
+// 	s := utils.Summary{}
+// 	s.Name = "hi there"
+//  s.Year = yyyy
+//  s.Day = dd
+// 	return &s
+// }
+
 // rename this to the year and day in question
 // func (app *Application) YyyyyDddP1_inprogress() {
 // }

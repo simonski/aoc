@@ -21,10 +21,10 @@ var SERVER *Server
 // https://tutorialedge.net/golang/creating-restful-api-with-golang/
 type Server struct {
 	cli         *cli.CLI
-	application *app.AOCApplication
+	application *app.AOC
 }
 
-func NewServer(c *cli.CLI, application *app.AOCApplication) *Server {
+func NewServer(c *cli.CLI, application *app.AOC) *Server {
 	server := &Server{cli: c, application: application}
 	SERVER = server
 	return server
