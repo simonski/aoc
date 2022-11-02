@@ -23,7 +23,15 @@ type Summary struct {
 	DateStarted     string   // date time
 	DateCompleted   string   // date time
 	Concepts        string   // what CS concepts, algos, data structures did I use
-	Entries         []Entry
+	Entries         []*Entry
+}
+
+func NewSummary(year int, day int) *Summary {
+	s := Summary{Year: year, Day: day}
+	s.Entries = make([]*Entry, 0)
+	s.ProgressP1 = Unknown
+	s.ProgressP2 = Unknown
+	return &s
 }
 
 type Entry struct {

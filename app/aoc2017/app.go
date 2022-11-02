@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gookit/color"
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
@@ -21,7 +22,18 @@ func NewApplication(cli *cli.CLI) Application {
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
 }
-
+func (app Application) Summary(year int, day int) *utils.Summary {
+	methodName := fmt.Sprintf("Y%vD%02d_Summary", year, day)
+	_, rvar, exists := app.GetMethod(methodName)
+	if exists {
+		results := rvar.Call([]reflect.Value{})
+		v := results[0]
+		concrete, _ := reflect.ValueOf(v).Interface().(utils.Summary)
+		return &concrete
+	} else {
+		return nil
+	}
+}
 func (app Application) GetName() string {
 	return "I am 2017"
 }

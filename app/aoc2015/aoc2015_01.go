@@ -41,9 +41,11 @@ func (app *Application) AOC_2015_01() {
 }
 
 func (app *Application) Y2015D01_Summary() *utils.Summary {
-	s := utils.Summary{}
-	s.Name = "hi there"
-	return &s
+	s := utils.NewSummary(2015, 01)
+	s.Name = "Not quite lisp."
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D01P1() {

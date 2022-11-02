@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -8,6 +9,13 @@ import (
 
 	"github.com/gookit/color"
 	aoc2015 "github.com/simonski/aoc/app/aoc2015"
+	"github.com/simonski/aoc/app/aoc2016"
+	"github.com/simonski/aoc/app/aoc2017"
+	"github.com/simonski/aoc/app/aoc2018"
+	"github.com/simonski/aoc/app/aoc2019"
+	"github.com/simonski/aoc/app/aoc2020"
+	"github.com/simonski/aoc/app/aoc2021"
+	"github.com/simonski/aoc/app/aoc2022"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
@@ -60,7 +68,8 @@ func (app *AOC) Summary(cli *cli.CLI) {
 	}
 	summary := al.Summary(iyear, iday)
 	if summary != nil {
-		fmt.Println("I havea  asummary.")
+		j, _ := json.MarshalIndent(summary, "", "  ")
+		fmt.Printf("%v\n", string(j))
 	} else {
 		fmt.Println("No summary.")
 	}
@@ -132,6 +141,10 @@ func (a *AOC) List() string {
 	totalAvailableStars := 0
 	for year := max_year; year >= min_year; year-- {
 		app := a.GetAppLogic(year)
+		if app == nil {
+			fmt.Printf("AppLogic for year %v does not exist.\n", year)
+			continue
+		}
 		line := ""
 		stars := 0
 		totalAvailableStars += 25
@@ -192,21 +205,38 @@ func (a *AOC) List() string {
 func (a *AOC) GetAppLogic(year int) utils.AppLogic {
 	if year == 2015 {
 		return aoc2015.NewApplication(a.CLI)
-		// } else if year == 2016 {
-		// 	return aoc2016.NewApplication(a.CLI)
-		// } else if year == 2017 {
-		// 	return aoc2017.NewApplication(a.CLI)
-		// } else if year == 2018 {
-		// 	return aoc2018.NewApplication(a.CLI)
-		// } else if year == 2019 {
-		// 	return aoc2019.NewApplication(a.CLI)
-		// } else if year == 2020 {
-		// 	return aoc2020.NewApplication(a.CLI)
-		// } else if year == 2021 {
-		// 	return aoc2021.NewApplication(a.CLI)
-		// } else if year == 2022 {
-		// 	return aoc2022.NewApplication(a.CLI)
+	} else if year == 2016 {
+		return aoc2016.NewApplication(a.CLI)
+	} else if year == 2017 {
+		return aoc2017.NewApplication(a.CLI)
+	} else if year == 2018 {
+		return aoc2018.NewApplication(a.CLI)
+	} else if year == 2019 {
+		return aoc2019.NewApplication(a.CLI)
+	} else if year == 2020 {
+		return aoc2020.NewApplication(a.CLI)
+	} else if year == 2021 {
+		return aoc2021.NewApplication(a.CLI)
+	} else if year == 2022 {
+		return aoc2022.NewApplication(a.CLI)
 	} else {
 		return nil
 	}
+}
+
+func (a *AOC) GetSummary(year int, day int) *utils.Summary {
+	appLogic := a.GetAppLogic(year)
+	return appLogic.Summary(year, day)
+}
+
+func (a *AOC) GetSummaries() map[string]*utils.Summary {
+	results := make(map[string]*utils.Summary)
+	for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
+		for day := 1; day <= 25; day++ {
+			key := fmt.Sprintf("%v%02d", year, day)
+			summary := a.GetSummary(year, day)
+			results[key] = summary
+		}
+	}
+	return results
 }
