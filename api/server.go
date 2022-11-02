@@ -53,8 +53,9 @@ func (server *Server) Run() {
 	// myRouter := mux.NewRouter().StrictSlash(true)
 	// http.HandleFunc("/", indexFunc)
 	http.HandleFunc("/blog", blogFunc)
-	http.HandleFunc("/api/solutions", apiSolutionsFunc)
-	http.HandleFunc("/api/summary", apiSummaryFunc)
+	http.HandleFunc("/attempts", attemptsFunc)
+	// http.HandleFunc("/api/solutions", apiSolutionsFunc)
+	// http.HandleFunc("/api/summary", apiSummaryFunc)
 	http.HandleFunc("/api/2021/05", api202105)
 	http.HandleFunc("/api/2021/09", api202109)
 	http.HandleFunc("/api/2021/11", api202111)
@@ -139,6 +140,59 @@ func apiSummaryFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func blogFunc(w http.ResponseWriter, r *http.Request) {
+	// msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC {YEAR} <a href='/api/solutions'>[solutions]</a></body>\n</html>"
+	a := SERVER.application
+	// sort by lastmodified, then by year/day in reverse
+	summaries := a.GetSummaries()
+	// s := make([]*utils.Summary, 0)
+	// for _, v := range summaries {
+	// 	s = append(s, v)
+	// }
+
+	sort.Slice(summaries, func(i1 int, i2 int) bool {
+		s1 := summaries[i1]
+		s2 := summaries[i2]
+		if s1 == nil {
+			return false
+		}
+		if s2 == nil {
+			return true
+		}
+		// fmt.Printf("i1=%v, i2=%v, s1=%v, s2=%v\n", i1, i2, s1, s2)
+		if s1.LastModified > s2.LastModified {
+			return true
+		}
+		s1Key := fmt.Sprintf("%v%02d", s1.Year, s1.Day)
+		s2Key := fmt.Sprintf("%v%02d", s2.Year, s2.Day)
+		return s1Key > s2Key
+	})
+
+	lines := ""
+	for _, v := range summaries {
+		if v == nil {
+			continue
+		}
+		ticks := ""
+		if v.ProgressP1 == utils.Completed && v.ProgressP2 == utils.Completed {
+			ticks = "&#9733"
+		} else if v.ProgressP1 == utils.Completed || v.ProgressP2 == utils.Completed {
+			ticks = "&#9734;"
+		} else if v.ProgressP1 == utils.Started || v.ProgressP2 == utils.Started {
+			ticks = "&#9775;"
+		} else {
+			ticks = "&#9776;"
+		}
+		href := fmt.Sprintf("https://adventofcode.com/%v/day/%v", v.Year, v.Day)
+		line := fmt.Sprintf("<li>%v %v %02d <a href='%v'>%v</a></li>\n", ticks, v.Year, v.Day, href, v.Name)
+		lines += line
+	}
+
+	// msg = strings.ReplaceAll(msg, "{YEAR}", fmt.Sprintf("%v", time.Now().Year()))
+	w.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(w, lines)
+}
+
+func attemptsFunc(w http.ResponseWriter, r *http.Request) {
 	// msg := "<!DOCTYPE html>\n<!--\nHi!\n\nThis is my Rube Goldberg Advent of Code visualisations attempt.\n\nThere isn't anything to see here yet - but there is an api at /api/solutions \n-->\n<html>\n\t<head>\n\t\t<title>AOC</title>\n\t</head>\n\t<body>AOC {YEAR} <a href='/api/solutions'>[solutions]</a></body>\n</html>"
 	a := SERVER.application
 	// sort by lastmodified, then by year/day in reverse
