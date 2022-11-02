@@ -226,16 +226,19 @@ func (a *AOC) GetAppLogic(year int) utils.AppLogic {
 
 func (a *AOC) GetSummary(year int, day int) *utils.Summary {
 	appLogic := a.GetAppLogic(year)
-	return appLogic.Summary(year, day)
+	if appLogic != nil {
+		return appLogic.Summary(year, day)
+	} else {
+		return nil
+	}
 }
 
-func (a *AOC) GetSummaries() map[string]*utils.Summary {
-	results := make(map[string]*utils.Summary)
+func (a *AOC) GetSummaries() []*utils.Summary {
+	results := make([]*utils.Summary, 0)
 	for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
 		for day := 1; day <= 25; day++ {
-			key := fmt.Sprintf("%v%02d", year, day)
 			summary := a.GetSummary(year, day)
-			results[key] = summary
+			results = append(results, summary)
 		}
 	}
 	return results

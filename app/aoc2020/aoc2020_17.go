@@ -150,6 +150,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -168,6 +169,14 @@ const DAY_17_TEST_INPUT = `.#.
 
 const ACTIVE = "#"
 const INACTIVE = "."
+
+func (app *Application) Y2020D17_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 17)
+	s.Name = "Conway Cubes"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D17() {
 	app.Y2020D17P1()

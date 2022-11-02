@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 const SMALL = `acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf`
@@ -18,6 +20,14 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`
+
+func (app *Application) Y2021D08_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 8)
+	s.Name = "Seven Segment Search"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2021D08P1() {
 	runPart1(BIG)

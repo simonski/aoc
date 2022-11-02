@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 /*
@@ -301,6 +303,14 @@ After 100 steps, there have been a total of 1656 flashes.
 
 Given the starting energy levels of the dumbo octopuses in your cavern, simulate 100 steps. How many total flashes are there after 100 steps?
 */
+
+func (app *Application) Y2021D11_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 11)
+	s.Name = "Dumbo Octopus"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 type Day11Point struct {
 	X       int

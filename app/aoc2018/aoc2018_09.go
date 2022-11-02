@@ -2,6 +2,8 @@ package aoc2018
 
 import (
 	"fmt"
+
+	"github.com/simonski/aoc/utils"
 )
 
 /*
@@ -56,6 +58,14 @@ a to b = distance
 
 
 */
+
+func (app *Application) Y2018D09_Summary() *utils.Summary {
+	s := utils.NewSummary(2018, 9)
+	s.Name = "Marble Mania"
+	s.ProgressP1 = utils.Started
+	s.ProgressP2 = utils.Started
+	return s
+}
 
 // rename this to the year and day in question
 func (app *Application) Y2018D09P1_inprogress() {

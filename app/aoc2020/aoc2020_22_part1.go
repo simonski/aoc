@@ -110,7 +110,17 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
+
+func (app *Application) Y2020D22_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 22)
+	s.Name = "Crab Combat"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D22() {
 	app.Y2020D22P1()

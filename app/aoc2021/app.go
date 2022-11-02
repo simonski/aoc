@@ -30,10 +30,10 @@ func (app Application) Summary(year int, day int) *utils.Summary {
 	if exists {
 		results := rvar.Call([]reflect.Value{})
 		v := results[0]
-		concrete, _ := reflect.ValueOf(v).Interface().(utils.Summary)
-		return &concrete
+		concrete, _ := v.Interface().(*utils.Summary)
+		return concrete
 	} else {
-		return nil
+		return utils.NewSummary(year, day)
 	}
 }
 

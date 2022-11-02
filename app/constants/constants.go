@@ -1,7 +1,7 @@
 package constants
 
 const MIN_YEAR = 2015
-const MAX_YEAR = 2022
+const MAX_YEAR = 2023
 
 const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
 

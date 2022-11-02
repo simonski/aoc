@@ -4,7 +4,17 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
+
+func (app *Application) Y2019D01_Summary() *utils.Summary {
+	s := utils.NewSummary(2019, 1)
+	s.Name = "The Tyranny of the Rocket Equation"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 /*
 --- Day XX: Description ---

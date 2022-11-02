@@ -5,9 +5,18 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D02_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 2)
+	s.Name = "Password Philosophy"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D02P1() {
 	verbose := app.CLI.IndexOf("-v") > -1

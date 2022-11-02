@@ -22,12 +22,22 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 // AOC_2015_05 is the entrypoint
 func (app *Application) Y2015D06() {
 	app.Y2015D06P1()
 	app.Y2015D06P2()
+}
+
+func (app *Application) Y2015D06_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 6)
+	s.Name = "Probably a Fire Hazard"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D06P1() {

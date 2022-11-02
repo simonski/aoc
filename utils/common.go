@@ -22,6 +22,7 @@ type Summary struct {
 	EffortP2        int      // how hard did I have to work (so, it might have been easy but took a lot because of data wrangling)
 	DateStarted     string   // date time
 	DateCompleted   string   // date time
+	LastModified    string   // date time
 	Concepts        string   // what CS concepts, algos, data structures did I use
 	Entries         []*Entry
 }
@@ -31,6 +32,7 @@ func NewSummary(year int, day int) *Summary {
 	s.Entries = make([]*Entry, 0)
 	s.ProgressP1 = Unknown
 	s.ProgressP2 = Unknown
+	s.Name = "Never attempted"
 	return &s
 }
 

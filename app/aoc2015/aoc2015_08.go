@@ -24,12 +24,22 @@ For example, given the four strings above, the total number of characters of str
 import (
 	"fmt"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 // AOC_2015_07 is the entrypoint
 func (app *Application) Y2015D08() {
 	app.Y2015D08P1() // cli)
 	app.Y2015D08P2_inprogress()
+}
+
+func (app *Application) Y2015D08_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 8)
+	s.Name = "Matchsticks"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D08P1() { // cli *cli.CLI) {

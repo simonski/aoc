@@ -49,7 +49,17 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
+
+func (app *Application) Y2020D15_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 15)
+	s.Name = "Rambunctious Recitation"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D15() {
 	app.Y2020D15P1()

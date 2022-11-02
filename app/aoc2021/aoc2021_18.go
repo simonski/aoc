@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	utils "github.com/simonski/goutils"
+	"github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 /*
@@ -171,6 +172,14 @@ The magnitude of this final sum is 4140.
 Add up all of the snailfish numbers from the homework assignment in the order they appear. What is the magnitude of the final sum?
 */
 
+func (app *Application) Y2021D18_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 18)
+	s.Name = "Snailfish"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 func (app *Application) Y2021D18P1() {
 	splits := strings.Split(DAY_2021_18_DATA, "\n")
 	p := NewPair(splits[0])
@@ -198,14 +207,14 @@ func (app *Application) Y2021D18P2() {
 			p.Reduce()
 			m := p.Magnitude()
 			fmt.Printf("%v\n", m)
-			max = utils.Max(max, m)
+			max = goutils.Max(max, m)
 
 			p = NewPair(line2)
 			p.Add(line1)
 			p.Reduce()
 			m = p.Magnitude()
 			fmt.Printf("%v\n", m)
-			max = utils.Max(max, m)
+			max = goutils.Max(max, m)
 
 		}
 	}

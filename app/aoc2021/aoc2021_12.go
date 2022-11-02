@@ -3,6 +3,8 @@ package aoc2021
 import (
 	"fmt"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 /*
@@ -102,6 +104,14 @@ start-RW
 How many paths through this cave system are there that visit small caves at most once?
 
 */
+
+func (app *Application) Y2021D12_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 12)
+	s.Name = "Passage Pathing"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 type Cave struct {
 	Name       string

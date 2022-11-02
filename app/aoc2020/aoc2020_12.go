@@ -44,9 +44,18 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D12_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 12)
+	s.Name = "Rain Risk"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D12() {
 	app.Y2020D12P1()

@@ -26,7 +26,17 @@ Determine which ingredients cannot possibly contain any of the allergens in your
 import (
 	"fmt"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
+
+func (app *Application) Y2020D21_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 21)
+	s.Name = "Allergen Assessment"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D21() {
 	app.Y2020D21P1()

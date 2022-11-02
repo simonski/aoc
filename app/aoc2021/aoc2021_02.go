@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 /*
@@ -39,6 +41,14 @@ Calculate the horizontal position and depth you would have after following the p
 
 
 */
+
+func (app *Application) Y2021D02_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 2)
+	s.Name = "Dive!"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // rename this to the year and day in question
 func (app *Application) Y2021D02P1() {

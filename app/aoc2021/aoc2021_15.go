@@ -6,6 +6,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 	// utils "github.com/simonski/aoc/utils"
 )
 
@@ -45,6 +47,14 @@ The total risk of this path is 40 (the starting position is never entered, so it
 What is the lowest total risk of any path from the top left to the bottom right?
 
 */
+
+func (app *Application) Y2021D15_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 15)
+	s.Name = "Chiton"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 type PointGraph struct {
 	Points map[string]*XPoint

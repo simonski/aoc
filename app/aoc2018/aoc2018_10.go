@@ -3,6 +3,8 @@ package aoc2018
 import (
 	"fmt"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 /*
@@ -268,6 +270,14 @@ func (app *Application) Y2018D10P1() {
 	fmt.Printf("There is %v H.\n", h)
 	g.Draw()
 
+}
+
+func (app *Application) Y2018D10_Summary() *utils.Summary {
+	s := utils.NewSummary(2018, 10)
+	s.Name = "The Stars Align"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 // rename this to the year and day in question

@@ -17,6 +17,7 @@ For example:
 import (
 	"fmt"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -24,6 +25,14 @@ import (
 func (app *Application) Y2015D03() {
 	app.Y2015D03P1()
 	app.Y2015D03P2()
+}
+
+func (app *Application) Y2015D03_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 3)
+	s.Name = "Perfectly Spherical Houses in a Vacuum"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D03P1() {

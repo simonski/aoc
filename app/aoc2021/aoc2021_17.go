@@ -5,7 +5,8 @@ import (
 	"os"
 	"sort"
 
-	utils "github.com/simonski/goutils"
+	"github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 /*
@@ -111,6 +112,14 @@ In the above example, using an initial velocity of 6,9 is the best you can do, c
 Find the initial velocity that causes the probe to reach the highest y position and still eventually be within the target area after any step. What is the highest y position it reaches on this trajectory?
 */
 
+func (app *Application) Y2021D17_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 17)
+	s.Name = "Trick Shot"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 type Hit struct {
 	VelocityAtStart int
 	VelocityAtEnd   int
@@ -127,7 +136,7 @@ func (hit *Hit) CalculateMax() int {
 	for step := 0; step <= hit.Step; step++ {
 		p += v
 		v -= 1
-		max = utils.Max(max, p)
+		max = goutils.Max(max, p)
 	}
 	return max
 
@@ -240,7 +249,7 @@ func create_velo_map(min int, max int, drag int, initial int, clamp_to_zero bool
 			}
 
 			if position > max_value {
-				max_value = utils.Max(max_value, position)
+				max_value = goutils.Max(max_value, position)
 				max_value_step = step
 			}
 
@@ -477,7 +486,7 @@ func DemoD17_test() *HDB {
 
 	max_steps := 0
 	for _, yhit := range db.Y {
-		max_steps = utils.Max(max_steps, yhit.Steps)
+		max_steps = goutils.Max(max_steps, yhit.Steps)
 	}
 	fmt.Printf("Max steps for Y is %v\n", max_steps)
 
@@ -519,7 +528,7 @@ func demoD17_real() *HDB {
 
 	max_steps := 0
 	for _, yhit := range db.Y {
-		max_steps = utils.Max(max_steps, yhit.Steps)
+		max_steps = goutils.Max(max_steps, yhit.Steps)
 	}
 	fmt.Printf("Max steps for Y is %v\n", max_steps)
 

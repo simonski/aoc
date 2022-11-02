@@ -57,9 +57,18 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D13_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 13)
+	s.Name = "Shuttle Search"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // AOC_2020_13 is the entrypoint
 func (app *Application) Y2020D13() {

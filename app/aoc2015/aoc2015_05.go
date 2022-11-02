@@ -24,12 +24,22 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 // AOC_2015_05 is the entrypoint
 func (app *Application) Y2015D05() {
 	app.Y2015D05P1()
 	app.Y2015D05P2()
+}
+
+func (app *Application) Y2015D05_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 5)
+	s.Name = "Doesn't He Have Intern-Elves For This?"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D05P1() {

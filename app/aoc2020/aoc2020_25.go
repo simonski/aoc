@@ -44,6 +44,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 )
 
@@ -55,6 +56,14 @@ const DAY_25_TEST_CARD_SUBJECT_NUMBER = 7
 
 const DAY_25_CARD_PUBLIC_KEY = 335121
 const DAY_25_DOOR_PUBLIC_KEY = 363891
+
+func (app *Application) Y2020D25_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 25)
+	s.Name = "Combo Breaker"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D25() {
 	app.Y2020D25P1()

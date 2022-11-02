@@ -53,6 +53,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -352,6 +353,14 @@ nearby tickets:
 822,192,207,222,830,295,894,187,599,135,798,933,894,253,822,423,383,170,438,288
 772,188,73,486,129,78,897,595,426,486,481,772,652,266,548,187,892,692,534,256
 `
+
+func (app *Application) Y2020D16_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 16)
+	s.Name = "Ticket Translation"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D16() {
 	app.Y2020D16P1()

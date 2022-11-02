@@ -61,6 +61,14 @@ Find a way to simulate lanternfish. How many lanternfish would there be after 80
 
 */
 
+func (app *Application) Y2021D06_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 6)
+	s.Name = "Lanternfish"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 // rename this to the year and day in question
 func (app *Application) Y2021D06P1() {
 	bruteForceAttempt(80, DAY_2021_06_TEST_DATA)

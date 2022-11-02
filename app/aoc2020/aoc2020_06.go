@@ -19,8 +19,17 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D06_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 6)
+	s.Name = "Custom Customs"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // AOC_2020_06 is the entrypoint
 func (app *Application) Y2020D06P1() {

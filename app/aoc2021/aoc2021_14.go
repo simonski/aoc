@@ -3,6 +3,8 @@ package aoc2021
 import (
 	"fmt"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 /*
@@ -58,6 +60,14 @@ Apply 10 steps of pair insertion to the polymer template and find the most and l
 
 
 */
+
+func (app *Application) Y2021D14_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 14)
+	s.Name = "Extended Polymerization"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 var DEBUG_TIMING = false
 

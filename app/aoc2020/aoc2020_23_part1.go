@@ -79,8 +79,17 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D23_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 23)
+	s.Name = "Crab Cups"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D23() {
 	app.Y2020D23P1()

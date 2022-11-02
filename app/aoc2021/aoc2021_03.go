@@ -46,6 +46,14 @@ Use the binary numbers in your diagnostic report to calculate the gamma rate and
 
 */
 
+func (app *Application) Y2021D03_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 3)
+	s.Name = "Binary Diagnostic"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 // rename this to the year and day in question
 func (app *Application) Y2021D03P1() {
 	RunD1With(DAY_2021_03_TEST_DATA)

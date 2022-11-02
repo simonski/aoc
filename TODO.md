@@ -5,6 +5,9 @@
 -- Verify an example "new day" call for a new problem
 -- Implement the now-implemented Summary() calls acrosss the problems
 -- Refactor landing/default page to show a table of progress
+-- API for summaries
+-- GUI on website for summaries for each day.
+-- embed the whole app so I can see the source online also... urgh
 
 branch feature/website and any open feature/202x_xx branches are incomplete.
 

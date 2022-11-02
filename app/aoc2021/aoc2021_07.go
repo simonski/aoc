@@ -42,6 +42,14 @@ This costs a total of 37 fuel. This is the cheapest possible outcome; more expen
 Determine the horizontal position that the crabs can align to using the least fuel possible. How much fuel must they spend to align to that position?
 */
 
+func (app *Application) Y2021D07_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 7)
+	s.Name = "The Treachery Of Whales"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 type Crab struct {
 	Initial  int
 	Position int

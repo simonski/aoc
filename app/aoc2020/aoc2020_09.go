@@ -54,8 +54,17 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D09_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 9)
+	s.Name = "Encoding Error"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // AOC_2020_09 is the entrypoint
 func (app *Application) Y2020D09P1() {

@@ -48,8 +48,17 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D14_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 14)
+	s.Name = "Docking Data"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D14() {
 	app.Y2020D14P1()

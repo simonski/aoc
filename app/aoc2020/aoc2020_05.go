@@ -4,9 +4,18 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D05_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 5)
+	s.Name = "Binary Boarding"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D05() {
 	app.Y2020D05P1()

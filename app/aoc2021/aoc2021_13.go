@@ -5,7 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/goutils"
+	"github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 /*
@@ -113,6 +114,14 @@ The transparent paper is pretty big, so for now, focus on just completing the fi
 How many dots are visible after completing just the first fold instruction on your transparent paper?
 */
 
+func (app *Application) Y2021D13_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 13)
+	s.Name = "Transparent Origami"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 type Day13Point struct {
 	X int
 	Y int
@@ -170,8 +179,8 @@ func (g *Day13Grid) Fold(f *Day13Fold) {
 	height := 0
 	for _, p := range g.Points {
 		pointsMap[p.Key()] = p
-		width = utils.Max(width, p.X)
-		height = utils.Max(height, p.Y)
+		width = goutils.Max(width, p.X)
+		height = goutils.Max(height, p.Y)
 	}
 	g.PointsMap = pointsMap
 	g.Width = width
@@ -217,8 +226,8 @@ func NewDay13Grid(data string) *Day13Grid {
 			p := &Day13Point{X: x, Y: y}
 			points = append(points, p)
 			pointsMap[p.Key()] = p
-			width = utils.Max(width, x)
-			height = utils.Max(height, y)
+			width = goutils.Max(width, x)
+			height = goutils.Max(height, y)
 
 		} else {
 			// fold along y=7

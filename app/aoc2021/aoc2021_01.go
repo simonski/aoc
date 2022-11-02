@@ -51,6 +51,14 @@ In this example, there are 7 measurements that are larger than the previous meas
 How many measurements are larger than the previous measurement?
 */
 
+func (app *Application) Y2021D01_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 1)
+	s.Name = "Sonar Sweep"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 func (app *Application) Y2021D01P1() {
 	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA, "\n")
 	last_value := 0

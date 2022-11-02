@@ -5,7 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/simonski/goutils"
+	"github.com/simonski/aoc/utils"
+	goutils "github.com/simonski/goutils"
 )
 
 /*
@@ -50,6 +51,14 @@ Consider only horizontal and vertical lines. At how many points do at least two 
 
 */
 
+func (app *Application) Y2021D05_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 5)
+	s.Name = "Hydrothermal Venture"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 type Grid struct {
 	Width  int     `json:"width"`
 	Height int     `json:"height"`
@@ -68,15 +77,15 @@ func NewGrid(data string) *Grid {
 		line := NewLine(line_s)
 		lines = append(lines, line)
 		// fmt.Print(line.Debug())
-		minx = utils.Min(minx, line.X1)
-		minx = utils.Min(minx, line.X2)
-		maxx = utils.Max(maxx, line.X1)
-		maxx = utils.Max(maxx, line.X2)
+		minx = goutils.Min(minx, line.X1)
+		minx = goutils.Min(minx, line.X2)
+		maxx = goutils.Max(maxx, line.X1)
+		maxx = goutils.Max(maxx, line.X2)
 
-		miny = utils.Min(miny, line.Y1)
-		miny = utils.Min(miny, line.Y2)
-		maxy = utils.Max(maxy, line.Y1)
-		maxy = utils.Max(maxy, line.Y2)
+		miny = goutils.Min(miny, line.Y1)
+		miny = goutils.Min(miny, line.Y2)
+		maxy = goutils.Max(maxy, line.Y1)
+		maxy = goutils.Max(maxy, line.Y2)
 	}
 	// fmt.Printf("minx=%v, miny=%v, maxx=%v, maxy=%v\n", minx, miny, maxx, maxy)
 	width := maxx - minx
@@ -90,8 +99,8 @@ func (grid *Grid) PlayPartOne() int {
 	for _, line := range grid.Lines {
 		// fmt.Printf("Line[%v] %v", index, line.Debug())
 		if line.IsHorizontal() {
-			min_x := utils.Min(line.X1, line.X2)
-			max_x := utils.Max(line.X1, line.X2)
+			min_x := goutils.Min(line.X1, line.X2)
+			max_x := goutils.Max(line.X1, line.X2)
 
 			for x := min_x; x <= max_x; x++ {
 				key := fmt.Sprintf("%v,%v", x, line.Y1)
@@ -103,8 +112,8 @@ func (grid *Grid) PlayPartOne() int {
 				// }
 			}
 		} else if line.IsVertical() {
-			min_y := utils.Min(line.Y1, line.Y2)
-			max_y := utils.Max(line.Y1, line.Y2)
+			min_y := goutils.Min(line.Y1, line.Y2)
+			max_y := goutils.Max(line.Y1, line.Y2)
 			for y := min_y; y <= max_y; y++ {
 				key := fmt.Sprintf("%v,%v", line.X1, y)
 				value := counts[key]
@@ -134,8 +143,8 @@ func (grid *Grid) PlayPartTwo() int {
 	for _, line := range grid.Lines {
 		// fmt.Printf("Line[%v] %v", index, line.Debug())
 		if line.IsHorizontal() {
-			min_x := utils.Min(line.X1, line.X2)
-			max_x := utils.Max(line.X1, line.X2)
+			min_x := goutils.Min(line.X1, line.X2)
+			max_x := goutils.Max(line.X1, line.X2)
 
 			for x := min_x; x <= max_x; x++ {
 				key := fmt.Sprintf("%v,%v", x, line.Y1)
@@ -148,8 +157,8 @@ func (grid *Grid) PlayPartTwo() int {
 			}
 
 		} else if line.IsVertical() {
-			min_y := utils.Min(line.Y1, line.Y2)
-			max_y := utils.Max(line.Y1, line.Y2)
+			min_y := goutils.Min(line.Y1, line.Y2)
+			max_y := goutils.Max(line.Y1, line.Y2)
 			for y := min_y; y <= max_y; y++ {
 				key := fmt.Sprintf("%v,%v", line.X1, y)
 				value := counts[key]

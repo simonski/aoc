@@ -3,9 +3,18 @@ package aoc2020
 import (
 	"fmt"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D03_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 3)
+	s.Name = "Toboggan Trajectory"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // AOC_2020_03 is the entrypoint
 func (app *Application) Y2020D03P1() {

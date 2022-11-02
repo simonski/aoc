@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 /*
@@ -355,6 +357,14 @@ func isCorrupt(line string) (bool, string, int) {
 // 	app.Y2021D10P1()
 // 	app.Y2021D10P2()
 // }
+
+func (app *Application) Y2021D10_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 10)
+	s.Name = "Syntax Scoring"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // rename this to the year and day in question
 func (app *Application) Y2021D10P1() {

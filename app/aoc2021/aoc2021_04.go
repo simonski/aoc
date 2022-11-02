@@ -67,6 +67,14 @@ To guarantee victory against the giant squid, figure out which board will win fi
 
 */
 
+func (app *Application) Y2021D04_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 4)
+	s.Name = "Giant Squid"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 // rename this to the year and day in question
 func (app *Application) Y2021D04P1() {
 	playGameD1(DAY_2021_04_TEST_DATA)

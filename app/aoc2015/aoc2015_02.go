@@ -18,6 +18,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -25,6 +26,14 @@ import (
 func (app *Application) Y2015D02() {
 	app.Y2015D02P1()
 	app.Y2015D02P1()
+}
+
+func (app *Application) Y2015D02_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 02)
+	s.Name = "I Was Told There Would Be No Math"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D02P1() {

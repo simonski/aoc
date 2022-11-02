@@ -3,6 +3,7 @@ package aoc2021
 import (
 	"fmt"
 
+	utils "github.com/simonski/aoc/utils"
 	"github.com/simonski/goutils"
 )
 
@@ -121,6 +122,14 @@ C0015000016115A2E0802F182340 has the same structure as the previous example, but
 A0016C880162017C3686B18A3D4780 is an operator packet that contains an operator packet that contains an operator packet that contains five literal values; it has a version sum of 31.
 Decode the structure of your hexadecimal-encoded BITS transmission; what do you get if you add up the version numbers in all packets?
 */
+
+func (app *Application) Y2021D16_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 16)
+	s.Name = "Packet Decoder"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // rename this to the year and day in question
 func (app *Application) Y2021D16P1() {

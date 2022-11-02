@@ -61,9 +61,18 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D19_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 19)
+	s.Name = "Monster Mesages"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D19() {
 	app.Y2020D19P1()

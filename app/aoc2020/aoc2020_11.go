@@ -104,8 +104,17 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D11_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 11)
+	s.Name = "Seating System"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D11() {
 	app.Y2020D11P1()

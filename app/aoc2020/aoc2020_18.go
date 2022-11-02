@@ -40,8 +40,17 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D18_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 18)
+	s.Name = "Operation Order"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D18() {
 	app.Y2020D18P1()

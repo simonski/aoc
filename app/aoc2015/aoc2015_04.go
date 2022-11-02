@@ -17,11 +17,21 @@ import (
 	"crypto/md5"
 	"fmt"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 // AOC_2015_03 is the entrypoint
 func (app *Application) Y2015D04() {
 	app.Y2015D04P1()
+}
+
+func (app *Application) Y2015D04_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 4)
+	s.Name = "The Ideal Stocking Stuffer"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D04P2() {

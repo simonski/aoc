@@ -170,8 +170,17 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D20_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 20)
+	s.Name = "Jurassic Jigsaw"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 func (app *Application) Y2020D20() {
 	app.Y2020D20P1()

@@ -5,6 +5,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	utils "github.com/simonski/aoc/utils"
 )
 
 /*
@@ -30,6 +32,14 @@ The risk level of a low point is 1 plus its height. In the above example, the ri
 
 Find all of the low points on your heightmap. What is the sum of the risk levels of all low points on your heightmap?
 */
+
+func (app *Application) Y2021D09_Summary() *utils.Summary {
+	s := utils.NewSummary(2021, 9)
+	s.Name = "Smoke Basin"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 type Point struct {
 	X         int    `json:"x"`

@@ -44,6 +44,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -51,6 +52,14 @@ import (
 func (app *Application) Y2015D07() {
 	app.Y2015D07P1()
 	app.Y2015D07P2()
+}
+
+func (app *Application) Y2015D07_Summary() *utils.Summary {
+	s := utils.NewSummary(2015, 7)
+	s.Name = "Some Assembly Required"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (app *Application) Y2015D07P1() {

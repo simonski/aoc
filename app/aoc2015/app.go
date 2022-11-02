@@ -32,8 +32,7 @@ func (app Application) Summary(year int, day int) *utils.Summary {
 		concrete, _ := v.Interface().(*utils.Summary)
 		return concrete
 	} else {
-		fmt.Println("Nope")
-		return nil
+		return utils.NewSummary(year, day)
 	}
 }
 

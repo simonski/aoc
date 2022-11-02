@@ -90,8 +90,17 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/simonski/aoc/utils"
 	goutils "github.com/simonski/goutils"
 )
+
+func (app *Application) Y2020D10_Summary() *utils.Summary {
+	s := utils.NewSummary(2020, 10)
+	s.Name = "Adapter Array"
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
 
 // AOC_2020_10 is the entrypoint
 func (app *Application) Y2020D10P1() {
