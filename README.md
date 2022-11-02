@@ -2,7 +2,7 @@
 
 This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.com/) attempts, in go.
 
-You can Install, Run and Extend it
+You can install, run and extend it
 
 ## Install
 
@@ -17,6 +17,18 @@ Or build it yourself
     make
 
 This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
+
+## Extend
+
+When you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`:
+
+    ./start_problem.sh 2021 01
+
+You can then run it as an application
+
+    ./aoc run 2021 01
+
+Eventually I'll be finished and can merge back to `develop` and finally `main`, at which point an image is built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).
 
 ## Runnning
 
@@ -34,22 +46,15 @@ Let's render day 24, 2020 as an animation
 
     aoc render 2020 24
 
+Let's see what I thought of day 14, 2019 
+
+    aoc summary 2019 14
+
 Run the server and see some visualisations
 
     caddy start
     ./aoc server
 
-## Extend
-
-When you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`:
-
-    ./start_problem.sh 2021 01
-
-You can then run it as an application
-
-    ./aoc run 2021 01
-
-Eventually I'll be finished and can merge back to develop and finally main.
 
 ## Deploy
 

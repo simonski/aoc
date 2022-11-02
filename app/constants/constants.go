@@ -13,6 +13,8 @@ The commands are:
 
     run    (year) (day)      run a puzzle 
     render (year) (day)      render a puzzle to an animated gif
+    summary (year) (day)     prints a summary of a given problem
+    
     info                     prints build & environment information
     server                   runs the webserver   (-p port [-fs path])
     version                  prints aoc version
