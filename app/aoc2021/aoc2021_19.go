@@ -373,6 +373,21 @@ func (app *Application) Y2021D19_Summary() *utils.Summary {
 	s.Name = "Beacon Scanner"
 	s.ProgressP1 = utils.Started
 	s.ProgressP2 = utils.NotStarted
+
+	entry := &utils.Entry{}
+	entry.Date = "2021-12-19"
+	entry.Title = "This day ius hard."
+	entry.Notes = "I cannot do this one. It's vray.."
+	entry.Summary = s
+	s.Entries = append(s.Entries, entry)
+
+	entry = &utils.Entry{}
+	entry.Date = "2021-12-20"
+	entry.Title = "Got it now."
+	entry.Notes = "This has beeen tricky but I think I'm there."
+	entry.Summary = s
+	s.Entries = append(s.Entries, entry)
+
 	return s
 }
 

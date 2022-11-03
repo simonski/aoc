@@ -37,9 +37,14 @@ func NewSummary(year int, day int) *Summary {
 }
 
 type Entry struct {
-	Date  string
-	Title string
-	Notes string
+	Date    string
+	Title   string
+	Notes   string
+	Summary *Summary
+}
+
+func NewEntry(date string, title string, notes string, s *Summary) *Entry {
+	return &Entry{Date: date, Title: title, Notes: notes, Summary: s}
 }
 
 type Progress int

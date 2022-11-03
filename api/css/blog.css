@@ -1,0 +1,23 @@
+html,
+body {
+    /* height: 100%;
+    width: 100%;  */
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.entry {
+    padding: 10px
+}
+
+.entry_date {
+    padding: 10px
+}
+
+.entry_title {
+    padding: 10px
+}
+
+.entry_notes {
+    padding: 10px
+}
