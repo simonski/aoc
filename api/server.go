@@ -172,10 +172,14 @@ func blogFunc(w http.ResponseWriter, r *http.Request) {
 	msg += "<title>AOC Blog</title>"
 	msg += "<meta charset=\"UTF-8\">"
 	msg += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+	msg += "<link rel=\"stylesheet\" href=\"/css/style.css\" />"
 	msg += "<link rel=\"stylesheet\" href=\"/css/blog.css\" />"
 	msg += "</head>"
 
 	msg += "<body>"
+	msg += "AOC 2022"
+	msg += "<p>This is my set of solutions for <a href=\"https://www.adventofcode.com\">Advent Of Code</a>.  The code is available on <a href=\"https://github.com/simonski/aoc\">github.com/simonski/aoc</a></p>"
+
 	msg += "<table>"
 	for _, entry := range blogEntries {
 		msg += "<div class='entry'>"
