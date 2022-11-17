@@ -7,17 +7,15 @@ import (
 	"log"
 	"net/http"
 	"sort"
-	"strconv"
 	"strings"
 	"time"
 
 	app "github.com/simonski/aoc/app"
-	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 )
 
-//go:embed css visualisations api index.html
+//go:embed css visualisations index.html
 var staticFiles embed.FS
 var SERVER *Server
 
@@ -55,11 +53,14 @@ func (server *Server) Run() {
 	http.HandleFunc("/rss", rssFunc)
 	http.HandleFunc("/blog", blogFunc)
 	http.HandleFunc("/attempts", attemptsFunc)
-	// http.HandleFunc("/api/solutions", apiSolutionsFunc)
-	// http.HandleFunc("/api/summary", apiSummaryFunc)
+
 	http.HandleFunc("/api/2021/05", api202105)
 	http.HandleFunc("/api/2021/09", api202109)
 	http.HandleFunc("/api/2021/11", api202111)
+
+	// http.HandleFunc("/api/solutions", apiSolutionsFunc)
+	http.HandleFunc("/api/summary", apiSummaryFunc)
+
 	// myRouter.HandleFunc("/style.css", cssFunc)
 	// myRouter.HandleFunc("/code.js", jsFunc)
 	// myRouter.HandleFunc("/tachyons.css", tachyonsFunc)
@@ -84,60 +85,94 @@ type Progress struct {
 	YearEnd   int                  `json:"end"`
 }
 
-func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
+// func apiSolutionsFunc(w http.ResponseWriter, r *http.Request) {
 
-	progress := Progress{YearStart: 2015, YearEnd: 2021}
-	solutions := make(map[string]*Solution)
+// 	progress := Progress{YearStart: 2015, YearEnd: 2021}
+// 	solutions := make(map[string]*Solution)
 
-	a := SERVER.application
+// 	a := SERVER.application
 
-	for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
-		appLogic := a.GetAppLogic(year)
-		for day := 1; day <= 25; day++ {
-			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
-			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
-			methodNamePart1Api := fmt.Sprintf("Y%vD%02dP1Api", year, day)
-			methodNamePart2Api := fmt.Sprintf("Y%vD%02dP2Api", year, day)
+// 	for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
+// 		appLogic := a.GetAppLogic(year)
+// 		for day := 1; day <= 25; day++ {
+// 			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
+// 			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
+// 			methodNamePart1Api := fmt.Sprintf("Y%vD%02dP1Api", year, day)
+// 			methodNamePart2Api := fmt.Sprintf("Y%vD%02dP2Api", year, day)
 
-			_, _, m1exists := appLogic.GetMethod(methodNamePart1)
-			_, _, m2exists := appLogic.GetMethod(methodNamePart2)
-			_, _, m1existsApi := appLogic.GetMethod(methodNamePart1Api)
-			_, _, m2existsApi := appLogic.GetMethod(methodNamePart2Api)
+// 			_, _, m1exists := appLogic.GetMethod(methodNamePart1)
+// 			_, _, m2exists := appLogic.GetMethod(methodNamePart2)
+// 			_, _, m1existsApi := appLogic.GetMethod(methodNamePart1Api)
+// 			_, _, m2existsApi := appLogic.GetMethod(methodNamePart2Api)
 
-			s := &Solution{Part1Solution: m1exists, Part2Solution: m2exists, Part1Api: m1existsApi, Part2Api: m2existsApi}
-			key := fmt.Sprintf("%v.%v", year, day)
-			solutions[key] = s
-		}
-	}
+// 			s := &Solution{Part1Solution: m1exists, Part2Solution: m2exists, Part1Api: m1existsApi, Part2Api: m2existsApi}
+// 			key := fmt.Sprintf("%v.%v", year, day)
+// 			solutions[key] = s
+// 		}
+// 	}
 
-	progress.Solutions = solutions
-	msgb, _ := json.Marshal(progress)
-	msg := string(msgb)
-	length_str := fmt.Sprintf("%v", len(msg))
-	w.Header().Set("Content-Type", "application/json") // this
-	w.Header().Set("Content-Length", length_str)       // this
-	fmt.Fprint(w, msg)
-}
+// 	progress.Solutions = solutions
+// 	msgb, _ := json.Marshal(progress)
+// 	msg := string(msgb)
+// 	length_str := fmt.Sprintf("%v", len(msg))
+// 	w.Header().Set("Content-Type", "application/json") // this
+// 	w.Header().Set("Content-Length", length_str)       // this
+// 	fmt.Fprint(w, msg)
+// }
 
 func apiSummaryFunc(w http.ResponseWriter, r *http.Request) {
 
-	year := r.URL.Query().Get("year")
-	day := r.URL.Query().Get("day")
 	a := SERVER.application
+	// m := make([]*utils.Summary, 0)
+	// for year := constants.MIN_YEAR; year <= constants.MAX_YEAR; year++ {
 
-	// splits := strings.Split(r.URL.Path, "/")
-	// year := splits[len(splits)-2]
-	// day := splits[len(splits)-3]
-	iyear, _ := strconv.Atoi(year)
-	iday, _ := strconv.Atoi(day)
-	summary := a.GetSummary(iyear, iday)
+	// 	for day := 1; day <= 25; day++ {
 
-	msgb, _ := json.MarshalIndent(summary, "", "   ")
+	// 		// splits := strings.Split(r.URL.Path, "/")
+	// 		// year := splits[len(splits)-2]
+	// 		// day := splits[len(splits)-3]
+	// 		// iyear, _ := strconv.Atoi(year)
+	// 		// iday, _ := strconv.Atoi(day)
+	// 		summary := a.GetSummary(year, day)
+	// 		m = append(m, summary)
+	// 		// if summary != nil {
+
+	// 		// 	msgb, _ := json.Marshal(summary)
+	// 		// 	// msgb, _ := json.MarshalIndent(summary, "", "   ")
+	// 		// 	msg := string(msgb) + "\n"
+	// 		// 	// fmt.Println(msg)
+
+	// 		// 	key := fmt.Sprintf("%v_%v", year, day)
+	// 		// 	value := summary
+
+	// 		// 	m[key] = value
+	// 		// 	fmt.Printf("key=%v\n", key)
+	// 		// }
+	// 	}
+	// }
+	// fmt.Println(m)
+	// type F struct {
+	// 	A string
+	// 	B string
+	// }
+	// f1 := &F{A: "hi", B: "foo"}
+	// f2 := &F{A: "hi", B: "foo"}
+	// var s utils.Summary
+	arr := make([]*utils.Summary, 0)
+	for _, s := range a.GetSummaries() {
+		arr = append(arr, s)
+	}
+	// arr = append(arr, f1)
+	// arr = append(arr, f2)
+
+	msgb, _ := json.MarshalIndent(arr, "", "   ")
 	msg := string(msgb) + "\n"
+	fmt.Println(msg)
 	length_str := fmt.Sprintf("%v", len(msg))
 	w.Header().Set("Content-Type", "application/json") // this
 	w.Header().Set("Content-Length", length_str)       // this
 	fmt.Fprint(w, msg)
+
 }
 
 func filterBlogEntries(summaries []*utils.Summary) []*utils.Entry {
@@ -265,6 +300,7 @@ func rssFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, msg)
 
 }
+
 func sortSummaries(summaries []*utils.Summary) []*utils.Summary {
 	sort.Slice(summaries, func(i1 int, i2 int) bool {
 		s1 := summaries[i1]
@@ -296,30 +332,56 @@ func attemptsFunc(w http.ResponseWriter, r *http.Request) {
 	// 	s = append(s, v)
 	// }
 
+	msg := ""
+	msg += "<DOCTYPE html>"
+	msg += "<html>"
+	msg += "<head>"
+	msg += "<title>AOC Blog</title>"
+	msg += "<meta charset=\"UTF-8\">"
+	msg += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+	msg += "<link rel=\"stylesheet\" href=\"/css/style.css\" />"
+	msg += "<link rel=\"stylesheet\" href=\"/css/blog.css\" />"
+	msg += "</head>"
+
+	msg += "<body>"
+	msg += "AOC 2022"
+	msg += "<p>This is my set of solutions for <a href=\"https://www.adventofcode.com\">Advent Of Code</a>.  The code is available on <a href=\"https://github.com/simonski/aoc\">github.com/simonski/aoc</a></p>"
+
+	msg += "<table>"
+
 	summaries = sortSummaries(summaries)
-	lines := ""
 	for _, v := range summaries {
 		if v == nil {
 			continue
 		}
 		ticks := ""
-		if v.ProgressP1 == utils.Completed && v.ProgressP2 == utils.Completed {
-			ticks = "&#9733"
-		} else if v.ProgressP1 == utils.Completed || v.ProgressP2 == utils.Completed {
-			ticks = "&#9734;"
-		} else if v.ProgressP1 == utils.Started || v.ProgressP2 == utils.Started {
-			ticks = "&#9775;"
-		} else {
-			ticks = "&#9776;"
+		if v.ProgressP1 == utils.Completed {
+			ticks += "&#9733;"
+		} else if v.ProgressP1 == utils.Started {
+			ticks += "&#9775;"
 		}
+
+		if v.ProgressP2 == utils.Completed {
+			ticks += "&#9733;"
+		} else if v.ProgressP2 == utils.Started {
+			ticks += "&#9775;"
+		}
+
 		href := fmt.Sprintf("https://adventofcode.com/%v/day/%v", v.Year, v.Day)
-		line := fmt.Sprintf("<li>%v %v %02d <a href='%v'>%v</a></li>\n", ticks, v.Year, v.Day, href, v.Name)
-		lines += line
+		line := "<tr>"
+		line += fmt.Sprintf("<td>%v<td>", ticks)
+		line += fmt.Sprintf("<td>%v %02d</td><td><a href='%v'>%v</a></td>\n", v.Year, v.Day, href, v.Name)
+		line += "</tr>\n"
+
+		msg += line
 	}
+	msg += "</table>"
+	msg += "</body>"
+	msg += "</html>"
 
 	// msg = strings.ReplaceAll(msg, "{YEAR}", fmt.Sprintf("%v", time.Now().Year()))
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprint(w, lines)
+	fmt.Fprint(w, msg)
 }
 
 func indexFunc(w http.ResponseWriter, r *http.Request) {

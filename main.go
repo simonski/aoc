@@ -7,6 +7,7 @@ import (
 
 	"github.com/simonski/aoc/api"
 	"github.com/simonski/aoc/app"
+	"github.com/simonski/aoc/app/constants"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
@@ -32,7 +33,7 @@ func main() {
 	} else if command == "info" {
 		Info(c)
 	} else if command == "version" {
-		fmt.Printf("%v\n", VERSION)
+		fmt.Printf("%v\n", constants.VERSION)
 	} else {
 		fmt.Printf("I don't know how to '%v'.\n", command)
 		os.Exit(1)

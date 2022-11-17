@@ -1,5 +1,7 @@
 package constants
 
+const VERSION = "0.0.1"
+
 const MIN_YEAR = 2015
 const MAX_YEAR = 2023
 
