@@ -2,15 +2,7 @@
 
 This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.com/) attempts, in go.
 
-You can install, run and extend it
-
 ## Install
-
-If you just want to run it, do this
-
-    go get github.com/simonski/aoc
-
-Or build it yourself
 
     git clone github.com/simonski/aoc.git
     cd aoc
@@ -18,57 +10,48 @@ Or build it yourself
 
 This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
 
+### Webserver time
+
+The whole thing is wrapped as a server.  Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls.
+
+I use a complicated arrangement of javascript talking back to the server for a `d3.js` visualisation. Good luck with that part next year :).  There's a bunch of dead and unused code in there that I'll tidy up.
+
+```bash
+cd $CODE/aoc
+caddy start
+make
+./aoc server
+```
+
+
+
+## Run
+
+Type `aoc`
+
+A calendar will be printed with the completion stars. Each day can be run using `aoc run <year> <day>`
+
 ## Extend
 
-When you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`:
+Let's say you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`.  I do this with a script, `start_problem.sh` which token-switches some template code:
 
-    ./start_problem.sh 2021 01
+```bash
+./start_problem.sh 2022 01
+```
 
 You can then run it as an application
 
-    ./aoc run 2021 01
+```bash
+make
+aoc run 2022 01
+```
 
-Eventually I'll be finished and can merge back to `develop` and finally `main`, at which point an image is built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).
-
-## Runnning
-
-Type
-
-    aoc
-
-A completed year/day combo will show up as a green star.  If the puzzle has a visualisation it will show as a yellow star.
-
-Run 2020, day 1
-
-    aoc run 2020 01
-
-Let's render day 24, 2020 as an animation
-
-    aoc render 2020 24
-
-Let's see what I thought of day 14, 2019 
-
-    aoc summary 2019 14
-
-Run the server and see some visualisations
-
-    caddy start
-    ./aoc server
-
+Eventually I'll be finished and can merge back to `develop` and finally `main`, at which point an image is built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).  I do this by running `make docker publish`.
 
 ## Deploy
 
-    make docker publish
+Build and push the AOC image to `ghcr.io`, which is then picked up by my server via a `watchtowerr`.
 
-Will build and push the AOC image, which is then picked up by the server via a `watchtowerr` setup elsewhere.
-
-
-
-// AOC_2015_07 is the entrypoint
-func (app *Application) Y2015D08(cli *cli.CLI) {
-	app.Y2015D08P1(cli)
-	app.Y2015D08P2_inprogress(cli)
-}
-
-Where _inprogress is an in progress development entrypoint
-where removing the _inprogress means it is complete.
+```bash
+make docker publish
+```
