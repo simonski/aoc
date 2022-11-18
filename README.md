@@ -10,69 +10,48 @@ This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.c
 
 This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
 
-## Extend
+### Webserver time
 
-When you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`:
+The whole thing is wrapped as a server.  Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls.
 
-    ./start_problem.sh 2022 01
-
-You can then run it as an application
-
-    ./aoc run 2022 01
-
-Eventually I'll be finished and can merge back to `develop` and finally `main`, at which point an image is built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).  I do this by running `make docker publish`.
-
-## Runnning
-
-Type `aoc`
-
-A calendar will be printed with the completion stars.
-
-When working on a given problem, I use a unit test for that day
+I use a complicated arrangement of javascript talking back to the server for a `d3.js` visualisation. Good luck with that part next year :).  There's a bunch of dead and unused code in there that I'll tidy up.
 
 ```bash
-aoc run 2020 01
-```
-
-Run 2020, day 1
-
-```bash
-aoc run 2020 01
-```
-
-Let's render day 24, 2020 as an animation
-
-```bash
-aoc render 2020 24
-```
-
-Let's see what I thought of day 14, 2019 
-
-```bash
-aoc summary 2019 14
-```
-
-Run the server and see some visualisations
-
-```bash
+cd $CODE/aoc
 caddy start
+make
 ./aoc server
 ```
 
+
+
+## Run
+
+Type `aoc`
+
+A calendar will be printed with the completion stars. Each day can be run using `aoc run <year> <day>`
+
+## Extend
+
+Let's say you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`.  I do this with a script, `start_problem.sh` which token-switches some template code:
+
+```bash
+./start_problem.sh 2022 01
+```
+
+You can then run it as an application
+
+```bash
+make
+aoc run 2022 01
+```
+
+Eventually I'll be finished and can merge back to `develop` and finally `main`, at which point an image is built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).  I do this by running `make docker publish`.
+
 ## Deploy
+
+Build and push the AOC image to `ghcr.io`, which is then picked up by my server via a `watchtowerr`.
 
 ```bash
 make docker publish
 ```
-
-Will build and push the AOC image, which is then picked up by the server via a `watchtowerr` setup elsewhere.
-
-
-```go
-// AOC_2015_07 is the entrypoint
-func (app *Application) Y2015D08(cli *cli.CLI) {
-	app.Y2015D08P1(cli)
-	app.Y2015D08P2_inprogress(cli)
-}
-```
-
