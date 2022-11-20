@@ -24,6 +24,7 @@ help:
 
 setup:
 	go install honnef.co/go/tools/cmd/staticcheck@latest
+	go get github.com/simonski/bn
 
 format:
 	staticcheck ./...
@@ -33,6 +34,7 @@ clean:
 	rm -rf dist
 	
 build:
+	bn revision
 	go fmt ./...
 	go build
 

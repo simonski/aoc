@@ -1,16 +1,27 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"os"
 	"runtime/debug"
+	"strings"
 
 	"github.com/simonski/aoc/api"
 	"github.com/simonski/aoc/app"
-	"github.com/simonski/aoc/app/constants"
 	cli "github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
+
+//go:embed Buildnumber
+var Buildnumber embed.FS
+
+func BinaryVersion() string {
+	data, _ := Buildnumber.ReadFile("Buildnumber")
+	v := string(data)
+	v = strings.ReplaceAll(v, "\n", "")
+	return v
+}
 
 func main() {
 	c := &cli.CLI{Args: os.Args}
@@ -33,7 +44,7 @@ func main() {
 	} else if command == "info" {
 		Info(c)
 	} else if command == "version" {
-		fmt.Printf("%v\n", constants.VERSION)
+		fmt.Printf("%v\n", BinaryVersion())
 	} else {
 		fmt.Printf("I don't know how to '%v'.\n", command)
 		os.Exit(1)
