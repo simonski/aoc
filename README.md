@@ -4,15 +4,17 @@ This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.c
 
 ## Install
 
-    git clone github.com/simonski/aoc.git
-    cd aoc
-    make
+```bash
+git clone github.com/simonski/aoc.git
+cd aoc
+make
+```
 
 This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
 
 ### Webserver time
 
-The whole thing is wrapped as a server.  Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls.
+The whole thing is wrapped as a toy server.  Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls.
 
 I use a complicated arrangement of javascript talking back to the server for a `d3.js` visualisation. Good luck with that part next year :).  There's a bunch of dead and unused code in there that I'll tidy up.
 

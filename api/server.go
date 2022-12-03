@@ -17,6 +17,10 @@ import (
 
 //go:embed css visualisations index.html
 var staticFiles embed.FS
+
+//go:embed blog
+var blogFiles embed.FS
+
 var SERVER *Server
 
 // https://tutorialedge.net/golang/creating-restful-api-with-golang/
