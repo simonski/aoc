@@ -13,7 +13,6 @@ func Test_AOC2022_03_Part1(t *testing.T) {
 	rs := NewRucksack(splits[0])
 	fmt.Printf("SumCommon: %v\n", rs.SumCommon())
 	log.Fatal("fooo")
-	rs.Debug()
 }
 
 func Test_AOC2022_03_Part11(t *testing.T) {
@@ -64,8 +63,7 @@ func Test_AOC2022_03_Part2_Test(t *testing.T) {
 
 		for i := 0; i < len(f1); i++ {
 			if f1[i] > 0 && f2[i] > 0 && f3[i] > 0 {
-				// value := IntValue(AZ[i : i+1])
-				value := (i + 1) // IntValue(AZ[i:i+1]) + 1
+				value := (i + 1)
 				total += value
 				fmt.Printf("group[%v] shares %v, int value %v, total=%v\n", index/3, AZ[i:i+1], value, total)
 			}
@@ -94,8 +92,7 @@ func Test_AOC2022_03_Part2_TestX(t *testing.T) {
 
 		for i := 0; i < len(f1); i++ {
 			if f1[i] > 0 && f2[i] > 0 && f3[i] > 0 {
-				// value := IntValue(AZ[i : i+1])
-				value := (i + 1) // IntValue(AZ[i:i+1]) + 1
+				value := (i + 1)
 				total += value
 				fmt.Printf("group[%v] shares %v, int value %v, total=%v\n", index/3, AZ[i:i+1], value, total)
 			}

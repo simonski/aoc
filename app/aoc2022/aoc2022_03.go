@@ -142,10 +142,6 @@ func IntValue(c string) int {
 
 }
 
-func (rs *Rucksack) Debug() {
-
-}
-
 func (logic Y2022D3) Load(data string) {
 	splits := strings.Split(data, "\n")
 	rucksacks := make([]*Rucksack, 0)
@@ -162,14 +158,6 @@ func (app *Application) Y2022D03P1() {
 // rename this to the year and day in question
 func (app *Application) Y2022D03P2() {
 }
-
-// rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
-// }
-
-// rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
-// }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 func (app *Application) Y2022D03() {
