@@ -4,3 +4,12 @@ html, body {
     padding: 10px;
     font-family: 'Courier New', Courier, monospace;
 }
+
+.entry_title {
+    font-weight: bold;
+}
+
+.entry_date {
+    font-weight: bold;
+}
+

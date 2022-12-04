@@ -8,8 +8,17 @@ package app
 // func (app *Application) YyyyyDdd_Summary() *utils.Summary {
 // 	s := utils.Summary{}
 // 	s.Name = "hi there"
-//  s.Year = yyyy
-//  s.Day = dd
+// 	s.Year = yyyy
+// 	s.Day = dd
+
+// 	entry := &utils.Entry{}
+// 	entry.Date = "2022-12-04"
+// 	entry.Title = "The title."
+// 	entry.Notes = `A multiline
+// 	explanation.
+// 	`
+// 	entry.Summary = s
+// 	s.Entries = append(s.Entries, entry)
 // 	return &s
 // }
 
