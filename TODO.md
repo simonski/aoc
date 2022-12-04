@@ -2,6 +2,8 @@
 
 ## DOING
 
+- move ALL days to their own package a la aoc/2022/03/main.go "package 03" (or "d03")
+
 -- Verify an example "new day" call for a new problem
 -- Implement the now-implemented Summary() calls acrosss the problems
 -- Refactor landing/default page to show a table of progress

@@ -17,8 +17,9 @@ import (
 func (app *Application) Y2022D01_Summary() *utils.Summary {
 	s := utils.NewSummary(2022, 1)
 	s.Name = "Calorie Counting"
-	s.ProgressP1 = utils.Started
-	s.ProgressP2 = utils.NotStarted
+
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
 
 	// entry := &utils.Entry{}
 	// entry.Date = "2022-12-01"

@@ -15,8 +15,9 @@ import (
 func (app *Application) Y2022D02_Summary() *utils.Summary {
 	s := utils.NewSummary(2022, 2)
 	s.Name = "Rock Paper Scissors"
-	s.ProgressP1 = utils.Started
-	s.ProgressP2 = utils.NotStarted
+
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
 
 	// entry := &utils.Entry{}
 	// entry.Date = "2022-12-01"

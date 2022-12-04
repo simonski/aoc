@@ -376,7 +376,7 @@ func (app *Application) Y2021D19_Summary() *utils.Summary {
 
 	entry := &utils.Entry{}
 	entry.Date = "2021-12-19"
-	entry.Title = "This day ius hard."
+	entry.Title = "This day is hard."
 	entry.Notes = "I cannot do this one. It's very hard!"
 	entry.Summary = s
 	s.Entries = append(s.Entries, entry)

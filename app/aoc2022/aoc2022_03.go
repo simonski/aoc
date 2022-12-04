@@ -15,8 +15,12 @@ import (
 func (app *Application) Y2022D03_Summary() *utils.Summary {
 	s := utils.Summary{}
 	s.Name = "Rucksack Reorganization"
-	s.Year = 2023
+	s.Year = 2022
 	s.Day = 03
+
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+
 	return &s
 }
 
