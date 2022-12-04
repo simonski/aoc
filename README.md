@@ -35,13 +35,16 @@ A calendar will be printed with the completion stars. Each day can be run using 
 
 ## Extend
 
-Let's say you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`.  I do this with a script, `start_problem.sh` which token-switches some template code:
+Let's say you work on a new day, for example 1st December 2022.  Each day goes in its own `feature/YYYY_DD` branch taken from `develop`.  I do this with a script, `start.sh` which token-switches some template code:
 
 ```bash
-./start_problem.sh 2022 01
+./start.sh
+YEAR: 2022
+DAY: 01
+TITLE: "Whatever Eric calls today"
 ```
 
-You can then run it as an application
+You can then run it as an application (<b>edit</b> not true: run via tests until I integrate.)
 
 ```bash
 make

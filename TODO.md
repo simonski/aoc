@@ -3,6 +3,9 @@
 ## DOING
 
 - move ALL days to their own package a la aoc/2022/03/main.go "package 03" (or "d03")
+    "via start.sh" - it is not integrated to the "./aoc run " but I think the separation across
+    days helps design.
+    the "Puzzle" struct does enough - loading and enough structure to call and test.
 
 -- Verify an example "new day" call for a new problem
 -- Implement the now-implemented Summary() calls acrosss the problems
