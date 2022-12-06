@@ -15,10 +15,14 @@ type Puzzle struct {
 	lines []string
 }
 
-func NewPuzzle(input string) *Puzzle {
+func NewPuzzleWithData(input string) *Puzzle {
 	p := Puzzle{year: "TOKEN_YEAR", day: "TOKEN_DAY", title: "TOKEN_TITLE"}
 	p.Load(input)
 	return &p
+}
+
+func NewPuzzle() *Puzzle {
+	return NewPuzzleWithData(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Load(input string) {

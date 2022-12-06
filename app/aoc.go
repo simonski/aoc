@@ -16,6 +16,7 @@ import (
 	"github.com/simonski/aoc/app/aoc2020"
 	"github.com/simonski/aoc/app/aoc2021"
 	"github.com/simonski/aoc/app/aoc2022"
+	aoc2022d06 "github.com/simonski/aoc/app/aoc2022/d06"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
@@ -41,12 +42,26 @@ func (app *AOC) Run(cli *cli.CLI) {
 		os.Exit(1)
 	}
 	iyear, _ := strconv.Atoi(year)
-	al := app.GetAppLogic(iyear)
-	if al == nil {
-		fmt.Printf("Sorry, we don't have year %v\n", year)
-		return
+	if iyear < 2022 {
+		al := app.GetAppLogic(iyear)
+		if al == nil {
+			fmt.Printf("Sorry, we don't have year %v\n", year)
+			return
+		}
+		al.Run(cli)
+	} else {
+		// iyear, _ := strconv.Atoi(year)
+		day := cli.GetStringOrDie(year)
+		// iday, _ := strconv.Atoi(day)
+		puzzle := app.GetPuzzle(year, day)
+		if puzzle == nil {
+			fmt.Printf("Sorry, we don't have year %v\n", year)
+			return
+		} else {
+			puzzle.Run()
+		}
+
 	}
-	al.Run(cli)
 }
 
 func (app *AOC) Summary(cli *cli.CLI) {
@@ -200,6 +215,32 @@ func (a *AOC) List() string {
 
 	return output
 
+}
+
+func (a *AOC) GetPuzzle(year string, day string) utils.Puzzle {
+	if year == "2022" {
+		if day == "06" {
+			return aoc2022d06.NewPuzzle()
+			// } else if day == "05" {
+			// 	return aoc2022d05.NewPuzzle()
+			// } else if day == "04" {
+			// 	return aoc2022d04.NewPuzzle()
+			// } else if day == "03" {
+			// 	return aoc2022d03.NewPuzzle()
+			// } else if day == "02" {
+			// 	return aoc2022d02.NewPuzzle()
+			// } else if day == "01" {
+			// 	return aoc2022d01.NewPuzzle()
+		} else {
+			return nil
+		}
+
+	} else {
+		return nil
+	}
+	// concreteTypeName := fmt.Sprintf("app.aoc%v.d%v.Puzzle", year, day)
+	// puzzle := reflect.TypeOf(concreteTypeName)
+	// return &puzzle
 }
 
 func (a *AOC) GetAppLogic(year int) utils.AppLogic {

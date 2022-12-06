@@ -6,6 +6,6 @@ import (
 )
 
 func Test_1(t *testing.T) {
-	p := NewPuzzle(TEST_DATA)
+	p := NewPuzzleWithData(TEST_DATA)
 	fmt.Printf("There are %v lines.\n", len(p.lines))
 }

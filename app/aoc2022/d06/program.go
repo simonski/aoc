@@ -18,10 +18,14 @@ type Puzzle struct {
 	lines []string
 }
 
-func NewPuzzle(input string) *Puzzle {
+func NewPuzzleWithData(input string) *Puzzle {
 	p := Puzzle{year: "2022", day: "06", title: "Tuning Trouble"}
 	p.Load(input)
 	return &p
+}
+
+func NewPuzzle() *Puzzle {
+	return NewPuzzleWithData(REAL_DATA)
 }
 
 func (p *Puzzle) NextPacketMarker(buffer_size int) int {
@@ -64,10 +68,12 @@ func (puzzle *Puzzle) Load(input string) {
 
 func (puzzle *Puzzle) Part1() {
 	puzzle.Load(REAL_DATA)
+	fmt.Printf("202206P1: %v\n", puzzle.NextPacketMarker(4))
 }
 
 func (puzzle *Puzzle) Part2() {
 	puzzle.Load(REAL_DATA)
+	fmt.Printf("202206P2: %v\n", puzzle.NextPacketMarker(14))
 }
 
 func (puzzle *Puzzle) Run() {

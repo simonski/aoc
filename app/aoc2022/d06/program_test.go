@@ -29,7 +29,7 @@ func Test_Day2(t *testing.T) {
 }
 
 func requireMarker(input string, expected int, t *testing.T) {
-	p := NewPuzzle(input)
+	p := NewPuzzleWithData(input)
 	actual := p.NextPacketMarker(4)
 	if actual != expected {
 		t.Fatalf("Input %v expected %v but was %v.\n", input, expected, actual)
@@ -37,7 +37,7 @@ func requireMarker(input string, expected int, t *testing.T) {
 }
 
 func requireMarker14(input string, expected int, t *testing.T) {
-	p := NewPuzzle(input)
+	p := NewPuzzleWithData(input)
 	actual := p.NextPacketMarker(14)
 	if actual != expected {
 		t.Fatalf("Input %v expected %v but was %v.\n", input, expected, actual)

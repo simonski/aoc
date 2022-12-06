@@ -22,10 +22,10 @@ type Puzzle struct {
 	Pairs []*Pair
 }
 
-func NewPuzzle(input string) *Puzzle {
+func NewPuzzle(input string) Puzzle {
 	p := Puzzle{year: "2022", day: "04", title: "Camp Cleanup"}
 	p.Load(input)
-	return &p
+	return p
 }
 
 func (puzzle *Puzzle) Load(input string) {
@@ -46,7 +46,7 @@ func (puzzle *Puzzle) Part2() {
 	puzzle.Load(REAL_DATA)
 }
 
-func (puzzle *Puzzle) Run() {
+func (puzzle Puzzle) Run() {
 	puzzle.Part1()
 	puzzle.Part2()
 }
