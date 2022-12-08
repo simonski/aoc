@@ -51,7 +51,7 @@ make
 aoc run 2022 01
 ```
 
-Eventually I'll be finished and can merge back to `develop` and finally `main`, at which point an image is built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).  I do this by running `make docker publish`.
+Eventually I'll be finished and can merge back to `main`, at which point if I addded a visualisation or blogged it at all, an image can be built and redeployed to [https://aoc.simonski.com](https://aoc.simonski.com).  I do this by running `make docker publish`.
 
 ## Deploy
 
