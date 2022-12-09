@@ -51,7 +51,7 @@ func Test_1_BoardB2(t *testing.T) {
 	// fmt.Printf("There are %v lines.\n", len(p.lines))
 
 	size := 2
-	b := NewBoardP2(TEST_DATA, false, size, 6, 6)
+	b := NewBoardP2(TEST_DATA, false, size, 6, 6, 0, 0)
 	b.RunInstructions(false)
 	tail := b.Knots[size-1]
 	for key, value := range tail.data {
@@ -67,7 +67,7 @@ func Test_1_BoardB02_10(t *testing.T) {
 	// fmt.Printf("There are %v lines.\n", len(p.lines))
 
 	size := 10
-	b := NewBoardP2(TEST_DATA, false, size, 6, 6)
+	b := NewBoardP2(TEST_DATA, false, size, 6, 6, 0, 0)
 	b.RunInstructions(true)
 	tail := b.Knots[size-1]
 	for key, value := range tail.data {
@@ -83,7 +83,7 @@ func Test_1_BoardB02_10_p2(t *testing.T) {
 	// fmt.Printf("There are %v lines.\n", len(p.lines))
 
 	size := 10
-	b := NewBoardP2(TEST_DATA_02, false, size, 26, 26)
+	b := NewBoardP2(TEST_DATA_02, false, size, 26, 26, 5, 11)
 	b.RunInstructions(true)
 	tail := b.Knots[size-1]
 	for key, value := range tail.data {
@@ -99,13 +99,14 @@ func Test_1_BoardB02_10_p2_real(t *testing.T) {
 	// fmt.Printf("There are %v lines.\n", len(p.lines))
 
 	size := 10
-	b := NewBoardP2(REAL_DATA, false, size, 26, 26)
+	b := NewBoardP2(REAL_DATA, false, size, 26, 26, 5, 11)
 	b.RunInstructions(true)
 	tail := b.Knots[size-1]
 	for key, value := range tail.data {
 		fmt.Printf("%v=%v\n", key, value)
 	}
 	fmt.Printf("Tail Visits: %v\n", b.CountTailVisits())
+	fmt.Printf("Size row=%v, cols=%v\n", b.rows, b.cols)
 
 	t.Fatalf("mm")
 }

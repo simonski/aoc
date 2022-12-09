@@ -22,10 +22,12 @@ type Grid struct {
 	max_col     int
 }
 
-func NewGrid() *Grid {
+func NewGrid(start_row int, start_col int) *Grid {
 	data := make(map[string]int)
 	g := Grid{data: data}
-	g.Increment(0, 0)
+	g.current_row = start_row
+	g.current_col = start_col
+	g.Increment(start_row, start_col)
 	return &g
 }
 
@@ -100,8 +102,8 @@ type Board struct {
 
 func NewBoard(input string, verbose bool) *Board {
 	b := Board{}
-	b.Head = NewGrid()
-	b.Tail = NewGrid()
+	b.Head = NewGrid(0, 0)
+	b.Tail = NewGrid(0, 0)
 	b.VERBOSE = verbose
 	b.Instructions = strings.Split(input, "\n")
 	return &b

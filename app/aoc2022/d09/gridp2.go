@@ -19,11 +19,11 @@ type BoardP2 struct {
 	cols         int
 }
 
-func NewBoardP2(input string, verbose bool, size int, rows int, cols int) *BoardP2 {
+func NewBoardP2(input string, verbose bool, size int, rows int, cols int, start_row int, start_col int) *BoardP2 {
 	b := BoardP2{}
 	b.Knots = make([]*Grid, size)
 	for index := 0; index < size; index++ {
-		b.Knots[index] = NewGrid()
+		b.Knots[index] = NewGrid(start_row, start_col)
 	}
 	b.VERBOSE = verbose
 	b.Instructions = strings.Split(input, "\n")
