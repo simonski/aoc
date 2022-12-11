@@ -8,18 +8,18 @@ import (
 
 type Monkey struct {
 	Id                 string
-	Items              []int
+	Items              []uint64
 	Operation          string
 	OperationOp        string
-	OperationValue     int
+	OperationValue     uint64
 	UseOperationValue  bool
-	Test               int
+	Test               uint64
 	OutcomeMonkeyTrue  string
 	OutcomeMonkeyFalse string
-	InspectCount       int
+	InspectCount       uint64
 }
 
-func (m *Monkey) Turn(monkeyIndex int, DEBUG bool, t *Troupe) {
+func (m *Monkey) Turn(monkeyIndex int, DEBUG bool, t *Troupe, divideBy uint64) {
 	if len(m.Items) == 0 {
 		return
 	}
@@ -37,7 +37,7 @@ func (m *Monkey) Turn(monkeyIndex int, DEBUG bool, t *Troupe) {
 		if DEBUG {
 			fmt.Printf("    Worry level %v becomes %v\n", item, newItem)
 		}
-		newItem = newItem / 3
+		newItem = newItem / divideBy
 		if DEBUG {
 			fmt.Printf("    Monkey bored, new value is %v\n", newItem)
 		}
@@ -55,11 +55,11 @@ func (m *Monkey) Turn(monkeyIndex int, DEBUG bool, t *Troupe) {
 			t.Get(monkeyId).Add(newItem)
 		}
 	}
-	m.Items = make([]int, 0)
+	m.Items = make([]uint64, 0)
 }
 
-func (m *Monkey) Inspect(item int) int {
-	var value int
+func (m *Monkey) Inspect(item uint64) uint64 {
+	var value uint64
 	if m.UseOperationValue {
 		value = item
 	} else {
@@ -90,7 +90,7 @@ func NewMonkey(id string, items_line string, operation_line string, test_line st
 	return &m
 }
 
-func (m *Monkey) Add(item int) {
+func (m *Monkey) Add(item uint64) {
 	m.Items = append(m.Items, item)
 }
 
@@ -102,21 +102,21 @@ func (m *Monkey) ParseId(input string) string {
 	return s
 }
 
-func (m *Monkey) ParseItems(input string) []int {
+func (m *Monkey) ParseItems(input string) []uint64 {
 	// "Starting items: 87, 57, 63, 86, 87, 53"
 	s := strings.Trim(input, " ")
 	s = strings.ReplaceAll(s, "Starting items: ", "")
 	s = strings.ReplaceAll(s, " ", "")
 	splits := strings.Split(s, ",")
-	results := make([]int, 0)
+	results := make([]uint64, 0)
 	for _, value := range splits {
 		v, _ := strconv.Atoi(value)
-		results = append(results, v)
+		results = append(results, uint64(v))
 	}
 	return results
 }
 
-func (m *Monkey) ParseOperation(input string) (string, int) {
+func (m *Monkey) ParseOperation(input string) (string, uint64) {
 	// "Operation: new = old * 19"
 	s := strings.Trim(input, " ")
 	s = strings.ReplaceAll(s, "Operation: ", "")
@@ -124,20 +124,20 @@ func (m *Monkey) ParseOperation(input string) (string, int) {
 	operation := splits[3]
 	if splits[4] == "old" {
 		m.UseOperationValue = true
-		return operation, -1
+		return operation, 0
 	} else {
 		m.UseOperationValue = false
 		value, _ := strconv.Atoi(splits[4])
-		return operation, value
+		return operation, uint64(value)
 	}
 }
 
-func (m *Monkey) ParseTest(input string) int {
+func (m *Monkey) ParseTest(input string) uint64 {
 	// Test: divisible by 2
 	s := strings.Trim(input, " ")
 	s = strings.ReplaceAll(s, "Test: divisible by ", "")
 	value, _ := strconv.Atoi(s)
-	return value
+	return uint64(value)
 
 }
 

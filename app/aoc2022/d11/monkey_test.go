@@ -95,11 +95,11 @@ func Test_NewTroupe_RealData(t *testing.T) {
 	}
 }
 
-func Test_NewTroupe_Test(t *testing.T) {
+func Test_NewTroupe_Test_Part1(t *testing.T) {
 	troupe := NewTroupe(TEST_DATA)
 
 	for index := 0; index < 20; index++ {
-		troupe.Round(false)
+		troupe.Round(false, 3)
 		fmt.Printf("\nRound %v\n", troupe.RoundNum)
 		troupe.Debug()
 	}
@@ -110,17 +110,32 @@ func Test_NewTroupe_Test(t *testing.T) {
 
 }
 
-func Test_NewTroupe_Real(t *testing.T) {
+func Test_NewTroupe_Real_Part1(t *testing.T) {
 	troupe := NewTroupe(REAL_DATA)
 
 	for index := 0; index < 20; index++ {
-		troupe.Round(false)
+		troupe.Round(false, 3)
 		fmt.Printf("\nRound %v\n", troupe.RoundNum)
 		troupe.Debug()
 	}
 
 	for index, monkey := range troupe.Monkeys {
 		fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)
+	}
+
+}
+
+func Test_NewTroupe_Test_Part2(t *testing.T) {
+	troupe := NewTroupe(TEST_DATA)
+
+	for index := 0; index < 1000; index++ {
+		troupe.Round(true, 1)
+		fmt.Printf("\nRound %v\n", troupe.RoundNum)
+		// troupe.Debug()
+
+		for index, monkey := range troupe.Monkeys {
+			fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)
+		}
 	}
 
 }
