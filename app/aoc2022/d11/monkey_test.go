@@ -1,6 +1,7 @@
 package d11
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -28,13 +29,7 @@ func Test_MonkeyParseItems(t *testing.T) {
 
 func Test_MonkeyParseOperation(t *testing.T) {
 	m := Monkey{}
-	first, second, operation, value := m.ParseOperation("Operation: new = old * 19")
-	if first != "new" {
-		t.Fatalf("first should be new, was %v\n", first)
-	}
-	if second != "old" {
-		t.Fatalf("second should be old, was %v\n", second)
-	}
+	operation, value := m.ParseOperation("Operation: new = old * 19")
 	if operation != "*" {
 		t.Fatalf("operation shoudl be *, was %v\n", operation)
 	}
@@ -45,13 +40,7 @@ func Test_MonkeyParseOperation(t *testing.T) {
 
 func Test_MonkeyParseOperation2(t *testing.T) {
 	m := Monkey{}
-	first, second, operation, value := m.ParseOperation("Operation: old = new / 119")
-	if first != "old" {
-		t.Fatalf("first should be old, was %v\n", first)
-	}
-	if second != "new" {
-		t.Fatalf("second should be new, was %v\n", second)
-	}
+	operation, value := m.ParseOperation("Operation: old = new / 119")
 	if operation != "/" {
 		t.Fatalf("operation shoudl be /, was %v\n", operation)
 	}
@@ -62,13 +51,7 @@ func Test_MonkeyParseOperation2(t *testing.T) {
 
 func Test_MonkeyParseOperation3(t *testing.T) {
 	m := Monkey{}
-	first, second, operation, value := m.ParseOperation("Operation: old = new - 5")
-	if first != "old" {
-		t.Fatalf("first should be old, was %v\n", first)
-	}
-	if second != "new" {
-		t.Fatalf("second should be new, was %v\n", second)
-	}
+	operation, value := m.ParseOperation("Operation: old = new - 5")
 	if operation != "-" {
 		t.Fatalf("operation shoudl be -, was %v\n", operation)
 	}
@@ -98,9 +81,46 @@ func Test_MonkeyParseThrowTo(t *testing.T) {
 	}
 }
 
-func Test_NewTroupe(t *testing.T) {
+func Test_NewTroupe_TestData(t *testing.T) {
 	troupe := NewTroupe(TEST_DATA)
-	if troupe.Size() != 7 {
-		t.Fatalf("Troupe size should %v, was %v\n", 7, troupe.Size())
+	if troupe.Size() != 4 {
+		t.Fatalf("Troupe size should %v, was %v\n", 4, troupe.Size())
 	}
+}
+
+func Test_NewTroupe_RealData(t *testing.T) {
+	troupe := NewTroupe(REAL_DATA)
+	if troupe.Size() != 8 {
+		t.Fatalf("Troupe size should %v, was %v\n", 8, troupe.Size())
+	}
+}
+
+func Test_NewTroupe_Test(t *testing.T) {
+	troupe := NewTroupe(TEST_DATA)
+
+	for index := 0; index < 20; index++ {
+		troupe.Round(false)
+		fmt.Printf("\nRound %v\n", troupe.RoundNum)
+		troupe.Debug()
+	}
+
+	for index, monkey := range troupe.Monkeys {
+		fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)
+	}
+
+}
+
+func Test_NewTroupe_Real(t *testing.T) {
+	troupe := NewTroupe(REAL_DATA)
+
+	for index := 0; index < 20; index++ {
+		troupe.Round(false)
+		fmt.Printf("\nRound %v\n", troupe.RoundNum)
+		troupe.Debug()
+	}
+
+	for index, monkey := range troupe.Monkeys {
+		fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)
+	}
+
 }

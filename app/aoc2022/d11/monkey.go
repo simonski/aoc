@@ -1,6 +1,7 @@
 package d11
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -9,17 +10,72 @@ type Monkey struct {
 	Id                 string
 	Items              []int
 	Operation          string
-	OperationNew       string
-	OperationOld       string
 	OperationOp        string
 	OperationValue     int
+	UseOperationValue  bool
 	Test               int
 	OutcomeMonkeyTrue  string
 	OutcomeMonkeyFalse string
+	InspectCount       int
 }
 
-func (d *Monkey) Throw() {
+func (m *Monkey) Turn(monkeyIndex int, DEBUG bool, t *Troupe) {
+	if len(m.Items) == 0 {
+		return
+	}
 
+	if DEBUG {
+		fmt.Printf("\nRound [%v] Monkey[%v]\n", t.RoundNum, monkeyIndex)
+		fmt.Printf("  Starting items %v\n", m.Items)
+	}
+	for _, item := range m.Items {
+		m.InspectCount += 1
+		if DEBUG {
+			fmt.Printf("  Monkey inspects %v\n", item)
+		}
+		newItem := m.Inspect(item)
+		if DEBUG {
+			fmt.Printf("    Worry level %v becomes %v\n", item, newItem)
+		}
+		newItem = newItem / 3
+		if DEBUG {
+			fmt.Printf("    Monkey bored, new value is %v\n", newItem)
+		}
+		if newItem%m.Test == 0 {
+			monkeyId := m.OutcomeMonkeyTrue
+			if DEBUG {
+				fmt.Printf("    Item %v is thrown to monkey %v\n", newItem, monkeyId)
+			}
+			t.Get(monkeyId).Add(newItem)
+		} else {
+			monkeyId := m.OutcomeMonkeyFalse
+			if DEBUG {
+				fmt.Printf("    Item %v is thrown to monkey %v\n", newItem, monkeyId)
+			}
+			t.Get(monkeyId).Add(newItem)
+		}
+	}
+	m.Items = make([]int, 0)
+}
+
+func (m *Monkey) Inspect(item int) int {
+	var value int
+	if m.UseOperationValue {
+		value = item
+	} else {
+		value = m.OperationValue
+	}
+	if m.OperationOp == "/" {
+		return item / value
+	} else if m.OperationOp == "*" {
+		return item * value
+	} else if m.OperationOp == "+" {
+		return item + value
+	} else if m.OperationOp == "-" {
+		return item - value
+	} else {
+		return item
+	}
 }
 
 func NewMonkey(id string, items_line string, operation_line string, test_line string, true_id_line string, false_id_line string) *Monkey {
@@ -27,44 +83,15 @@ func NewMonkey(id string, items_line string, operation_line string, test_line st
 	m.Id = m.ParseId(id)
 	m.Items = m.ParseItems(items_line)
 	m.Operation = operation_line
-	m.OperationNew, m.OperationOld, m.OperationOp, m.OperationValue = m.ParseOperation(operation_line)
+	m.OperationOp, m.OperationValue = m.ParseOperation(operation_line)
 	m.Test = m.ParseTest(test_line)
 	m.OutcomeMonkeyTrue = m.ParseThrow(true_id_line)
 	m.OutcomeMonkeyFalse = m.ParseThrow(false_id_line)
 	return &m
 }
 
-type Troupe struct {
-	Monkeys map[string]*Monkey
-}
-
-func (t *Troupe) Add(monkey *Monkey) {
-	t.Monkeys[monkey.Id] = monkey
-}
-
-func (t *Troupe) Size() int {
-	return len(t.Monkeys)
-}
-
-func (t *Troupe) Get(id string) *Monkey {
-	return t.Monkeys[id]
-}
-
-func NewTroupe(input string) *Troupe {
-	lines := strings.Split(input, "\n")
-	monkeys := make(map[string]*Monkey)
-	troupe := &Troupe{Monkeys: monkeys}
-	for index := 0; index < len(lines)-8; index += 7 {
-		idline := lines[index]
-		items := lines[index+1]
-		operation := lines[index+2]
-		test := lines[index+3]
-		outcome_true := lines[index+4]
-		outcome_false := lines[index+5]
-		monkey := NewMonkey(idline, items, operation, test, outcome_true, outcome_false)
-		troupe.Add(monkey)
-	}
-	return troupe
+func (m *Monkey) Add(item int) {
+	m.Items = append(m.Items, item)
 }
 
 func (m *Monkey) ParseId(input string) string {
@@ -89,16 +116,20 @@ func (m *Monkey) ParseItems(input string) []int {
 	return results
 }
 
-func (m *Monkey) ParseOperation(input string) (string, string, string, int) {
+func (m *Monkey) ParseOperation(input string) (string, int) {
 	// "Operation: new = old * 19"
 	s := strings.Trim(input, " ")
 	s = strings.ReplaceAll(s, "Operation: ", "")
 	splits := strings.Split(s, " ")
-	first := splits[0]
-	second := splits[2]
 	operation := splits[3]
-	value, _ := strconv.Atoi(splits[4])
-	return first, second, operation, value
+	if splits[4] == "old" {
+		m.UseOperationValue = true
+		return operation, -1
+	} else {
+		m.UseOperationValue = false
+		value, _ := strconv.Atoi(splits[4])
+		return operation, value
+	}
 }
 
 func (m *Monkey) ParseTest(input string) int {
