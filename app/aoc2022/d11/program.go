@@ -1,6 +1,9 @@
 package d11
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 /*
 --- Day 05:  ---
@@ -32,11 +35,20 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	troupe := NewTroupe(REAL_DATA)
+
+	for index := 0; index < 10000; index++ {
+		troupe.Round(false, 1)
+		fmt.Printf("\nRound %v\n", troupe.RoundNum)
+
+		for index, monkey := range troupe.Monkeys {
+			// fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)
+			fmt.Printf("Monkey[%v] %v inspections, %v entries.\n", index, monkey.InspectCount, len(monkey.Items))
+		}
+	}
 }
 
 func (puzzle *Puzzle) Run() {

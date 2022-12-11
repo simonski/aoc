@@ -19,10 +19,10 @@ func Test_MonkeyParseItems(t *testing.T) {
 	if len(items) != 6 {
 		t.Fatalf("items() should be len 6, was %v\n", len(items))
 	}
-	if items[0] != 87 {
+	if items[0].Int64() != 87 {
 		t.Fatalf("items[0] should be 87, was %v\n", items[0])
 	}
-	if items[3] != 86 {
+	if items[3].Int64() != 86 {
 		t.Fatalf("items[0] should be 86, was %v\n", items[3])
 	}
 }
@@ -33,7 +33,7 @@ func Test_MonkeyParseOperation(t *testing.T) {
 	if operation != "*" {
 		t.Fatalf("operation shoudl be *, was %v\n", operation)
 	}
-	if value != 19 {
+	if value.Int64() != 19 {
 		t.Fatalf("operation should be 19, was %v\n", value)
 	}
 }
@@ -44,7 +44,7 @@ func Test_MonkeyParseOperation2(t *testing.T) {
 	if operation != "/" {
 		t.Fatalf("operation shoudl be /, was %v\n", operation)
 	}
-	if value != 119 {
+	if value.Int64() != 119 {
 		t.Fatalf("operation should be 119, was %v\n", value)
 	}
 }
@@ -55,7 +55,7 @@ func Test_MonkeyParseOperation3(t *testing.T) {
 	if operation != "-" {
 		t.Fatalf("operation shoudl be -, was %v\n", operation)
 	}
-	if value != 5 {
+	if value.Int64() != 5 {
 		t.Fatalf("operation should be 5, was %v\n", value)
 	}
 }
@@ -63,7 +63,7 @@ func Test_MonkeyParseOperation3(t *testing.T) {
 func Test_MonkeyParseTest(t *testing.T) {
 	m := Monkey{}
 	value := m.ParseTest("Test: divisible by 2")
-	if value != 2 {
+	if value.Int64() != 2 {
 		t.Fatalf("value shoud lbe 2, was %v\n", value)
 	}
 }
@@ -129,9 +129,8 @@ func Test_NewTroupe_Test_Part2(t *testing.T) {
 	troupe := NewTroupe(TEST_DATA)
 
 	for index := 0; index < 1000; index++ {
-		troupe.Round(true, 1)
+		troupe.Round(false, 1)
 		fmt.Printf("\nRound %v\n", troupe.RoundNum)
-		// troupe.Debug()
 
 		for index, monkey := range troupe.Monkeys {
 			fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)

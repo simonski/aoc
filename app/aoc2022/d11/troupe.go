@@ -9,6 +9,7 @@ type Troupe struct {
 	Monkeys   []*Monkey
 	MonkeyMap map[string]*Monkey
 	RoundNum  int
+	Cache     map[string]int
 }
 
 func (t *Troupe) Add(monkey *Monkey) {
@@ -28,7 +29,8 @@ func NewTroupe(input string) *Troupe {
 	lines := strings.Split(input, "\n")
 	monkeyMap := make(map[string]*Monkey)
 	monkeys := make([]*Monkey, 0)
-	troupe := &Troupe{MonkeyMap: monkeyMap, Monkeys: monkeys}
+	cache := make(map[string]int)
+	troupe := &Troupe{MonkeyMap: monkeyMap, Monkeys: monkeys, Cache: cache}
 	for index := 0; index < len(lines); index += 7 {
 		idline := lines[index]
 		items := lines[index+1]
