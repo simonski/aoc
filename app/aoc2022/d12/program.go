@@ -1,9 +1,6 @@
-package d11
+package d12
 
-import (
-	"fmt"
-	"strings"
-)
+import "strings"
 
 /*
 --- Day 05:  ---
@@ -19,7 +16,7 @@ type Puzzle struct {
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
-	p := Puzzle{year: "2022", day: "11", title: "Monkey In The Middle"}
+	p := Puzzle{year: "2022", day: "12", title: "Hill Climbing Algorithm"}
 	p.Load(input)
 	return &p
 }
@@ -35,19 +32,11 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
+	puzzle.Load(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Part2() {
-	troupe := NewTroupe(REAL_DATA)
-
-	for index := 0; index < 10000; index++ {
-		troupe.Round(false, 1)
-		fmt.Printf("\nRound %v\n", troupe.RoundNum)
-
-		for index, monkey := range troupe.Monkeys {
-			fmt.Printf("Monkey[%v] %v inspections, %v entries.\n", index, monkey.InspectCount, len(monkey.Items))
-		}
-	}
+	puzzle.Load(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Run() {

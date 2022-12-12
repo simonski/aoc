@@ -34,30 +34,31 @@ func (m *Monkey) Turn(monkeyIndex int, DEBUG bool, troupe *Troupe, divideBy uint
 		if DEBUG {
 			fmt.Printf("  Monkey inspects %v\n", item)
 		}
-		newItem := m.Inspect(item)
+		worry := m.Inspect(item)
 		if DEBUG {
-			fmt.Printf("    Worry level %v becomes %v\n", item, newItem)
+			fmt.Printf("    Worry level %v becomes %v\n", item, worry)
 		}
 		if divideBy > 1 {
-			newItem = newItem / divideBy //newItem.Div(newItem, big.NewInt(int64(divideBy)))
+			worry = worry / divideBy //newItem.Div(newItem, big.NewInt(int64(divideBy)))
 		}
 		if DEBUG {
-			fmt.Printf("    Monkey bored, new value is %v\n", newItem)
+			fmt.Printf("    Monkey bored, new value is %v\n", worry)
 		}
 
-		if newItem%m.Test == 0 {
-			newItem = m.Test
+		worry = worry % troupe.Lcm // curses
+
+		if worry%m.Test == 0 {
 			monkeyId := m.OutcomeMonkeyTrue
 			if DEBUG {
-				fmt.Printf("    Item %v is thrown to monkey %v\n", newItem, monkeyId)
+				fmt.Printf("    Item %v is thrown to monkey %v\n", worry, monkeyId)
 			}
-			troupe.Get(monkeyId).Add(newItem)
+			troupe.Get(monkeyId).Add(worry)
 		} else {
 			monkeyId := m.OutcomeMonkeyFalse
 			if DEBUG {
-				fmt.Printf("    Item %v is thrown to monkey %v\n", newItem, monkeyId)
+				fmt.Printf("    Item %v is thrown to monkey %v\n", worry, monkeyId)
 			}
-			troupe.Get(monkeyId).Add(newItem)
+			troupe.Get(monkeyId).Add(worry)
 		}
 	}
 	m.Items = make([]uint, 0)

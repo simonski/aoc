@@ -128,7 +128,7 @@ func Test_NewTroupe_Real_Part1(t *testing.T) {
 func Test_NewTroupe_Test_Part2(t *testing.T) {
 	troupe := NewTroupe(TEST_DATA)
 
-	for index := 0; index < 1000; index++ {
+	for index := 0; index < 10000; index++ {
 		troupe.Round(false, 1)
 		fmt.Printf("\nRound %v\n", troupe.RoundNum)
 
@@ -136,5 +136,6 @@ func Test_NewTroupe_Test_Part2(t *testing.T) {
 			fmt.Printf("Monkey[%v] %v inspections.\n", index, monkey.InspectCount)
 		}
 	}
+	t.Fatalf("f")
 
 }

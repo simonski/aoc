@@ -3,6 +3,8 @@ package d11
 import (
 	"fmt"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 type Troupe struct {
@@ -10,6 +12,7 @@ type Troupe struct {
 	MonkeyMap map[string]*Monkey
 	RoundNum  int
 	Cache     map[string]int
+	Lcm       uint
 }
 
 func (t *Troupe) Add(monkey *Monkey) {
@@ -41,6 +44,13 @@ func NewTroupe(input string) *Troupe {
 		monkey := NewMonkey(idline, items, operation, test, outcome_true, outcome_false)
 		troupe.Add(monkey)
 	}
+	divisors := make([]uint, 0)
+	for _, mx := range troupe.Monkeys {
+		divisors = append(divisors, mx.Test)
+	}
+	lcm := utils.Compute_lcms(divisors)
+	troupe.Lcm = lcm
+
 	return troupe
 }
 

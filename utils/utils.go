@@ -160,3 +160,53 @@ func SplitDataToListOfInts(data string, delim string) []int {
 // 	}
 // 	return value
 // }
+
+// # Recursive function to return gcd of a and b
+func Gcd(a uint, b uint) uint {
+	if a == 0 {
+		return b
+	}
+	return Gcd(b%a, a)
+}
+
+// # Function to return LCM of two numbers
+func Lcm(a uint, b uint) uint {
+	return (a / Gcd(a, b)) * b
+}
+
+func Lcm_x(data []uint) uint {
+	result := Lcm(data[0], data[1])
+	for index := 1; index < len(data); index++ {
+		result = Lcm(result, data[index])
+	}
+	return result
+}
+
+func Compute_lcms(data []uint) uint {
+	lcm := Compute_lcm(data[0], data[1])
+	for index := 1; index < len(data); index++ {
+		lcm = Compute_lcm(lcm, data[index])
+	}
+	return lcm
+}
+
+func Compute_lcm(x uint, y uint) uint {
+
+	//    # choose the greater number
+	var greater uint
+	if x > y {
+		greater = x
+	} else {
+		greater = y
+	}
+
+	var lcm uint
+	for {
+		if (greater%x == 0) && (greater%y == 0) {
+			lcm = greater
+			break
+		}
+		greater += 1
+	}
+	return lcm
+}
