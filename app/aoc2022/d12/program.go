@@ -1,6 +1,9 @@
 package d12
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 /*
 --- Day 05:  ---
@@ -32,11 +35,16 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	grid := NewGrid(REAL_DATA)
+	path := HillClimb(true, grid)
+	fmt.Printf("%v\n", path)
+	fmt.Printf("\nBest path size is %v\n", path.Size())
+	for index, p := range path.Points {
+		fmt.Printf("[%v] %v\n", index, p)
+	}
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Run() {
