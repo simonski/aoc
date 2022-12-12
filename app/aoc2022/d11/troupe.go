@@ -44,7 +44,7 @@ func NewTroupe(input string) *Troupe {
 	return troupe
 }
 
-func (t *Troupe) Round(DEBUG bool, divideBy uint64) {
+func (t *Troupe) Round(DEBUG bool, divideBy uint) {
 	t.RoundNum += 1
 	for index, monkey := range t.Monkeys {
 		monkey.Turn(index, DEBUG, t, divideBy)

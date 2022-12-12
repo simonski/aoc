@@ -38,9 +38,9 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
-	troupe := NewTroupe(REAL_DATA)
+	troupe := NewTroupe(TEST_DATA)
 
-	for index := 0; index < 10000; index++ {
+	for index := 0; index < 1000; index++ {
 		troupe.Round(false, 1)
 		fmt.Printf("\nRound %v\n", troupe.RoundNum)
 
