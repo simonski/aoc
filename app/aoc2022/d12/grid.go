@@ -3,6 +3,7 @@ package d12
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strings"
 )
 
@@ -12,6 +13,8 @@ type Grid struct {
 	Destination *Point
 	Cols        int
 	Rows        int
+	BestPath    *Path
+	Iteration   int
 }
 
 func (g *Grid) Debug(path *Path) string {
@@ -20,7 +23,7 @@ func (g *Grid) Debug(path *Path) string {
 	for row := 0; row < g.Rows; row++ {
 		line := ""
 		for col := 0; col < g.Cols; col++ {
-			point := g.GetPoint(row, col)
+			point := g.Get(row, col)
 			if point.IsStart {
 				point.VisitDirection = "S"
 			} else if point.IsDestination {
@@ -40,8 +43,12 @@ func (g *Grid) Debug(path *Path) string {
 					}
 				}
 
+				if pathIndex == len(path.Points)-1 {
+					point.VisitDirection = "*"
+				}
+
 				if pathIndex == -1 {
-					// point.VisitDirection = point.Letter
+					point.VisitDirection = "." // point.Letter
 				}
 
 			}
@@ -98,7 +105,6 @@ func (p *Path) IndexOf(point *Point) int {
 		}
 	}
 	return -1
-
 }
 
 func (p *Path) Contains(point *Point) bool {
@@ -164,10 +170,10 @@ func NewGrid(data string) *Grid {
 
 func (g *Grid) Neighbours(point *Point) []*Point {
 	results := make([]*Point, 0)
-	up := g.GetPoint(point.Row-1, point.Col)
-	down := g.GetPoint(point.Row+1, point.Col)
-	left := g.GetPoint(point.Row, point.Col-1)
-	right := g.GetPoint(point.Row, point.Col+1)
+	up := g.Get(point.Row-1, point.Col)
+	down := g.Get(point.Row+1, point.Col)
+	left := g.Get(point.Row, point.Col-1)
+	right := g.Get(point.Row, point.Col+1)
 	if up != nil {
 		results = append(results, up)
 	}
@@ -251,7 +257,7 @@ func (g *Grid) DebugVisitDirection() string {
 	result := ""
 	for rowNum := 0; rowNum < g.Rows; rowNum++ {
 		for colNum := 0; colNum < g.Cols; colNum++ {
-			result = fmt.Sprintf("%v%v", result, g.GetPoint(rowNum, colNum).VisitDirection)
+			result = fmt.Sprintf("%v%v", result, g.Get(rowNum, colNum).VisitDirection)
 		}
 		result = fmt.Sprintf("%v\n", result)
 	}
@@ -262,7 +268,7 @@ func (g *Grid) DebugValue() string {
 	result := ""
 	for rowNum := 0; rowNum < g.Rows; rowNum++ {
 		for colNum := 0; colNum < g.Cols; colNum++ {
-			result = fmt.Sprintf("%v %v", result, g.GetPoint(rowNum, colNum).Value)
+			result = fmt.Sprintf("%v %v", result, g.Get(rowNum, colNum).Value)
 		}
 		result = fmt.Sprintf("%v\n", result)
 	}
@@ -273,7 +279,7 @@ func (g *Grid) DebugLetter() string {
 	result := ""
 	for rowNum := 0; rowNum < g.Rows; rowNum++ {
 		for colNum := 0; colNum < g.Cols; colNum++ {
-			result = fmt.Sprintf("%v%v", result, g.GetPoint(rowNum, colNum).Letter)
+			result = fmt.Sprintf("%v%v", result, g.Get(rowNum, colNum).Letter)
 		}
 		result = fmt.Sprintf("%v\n", result)
 	}
@@ -302,10 +308,10 @@ func (g *Grid) UnvisitedNeighbours(origin *Point) []*Point { //, visited map[*XP
 	results := make([]*Point, 0)
 	x := origin.Col
 	y := origin.Row
-	up := g.GetPoint(y-1, x)
-	down := g.GetPoint(y+1, x)
-	left := g.GetPoint(y, x-1)
-	right := g.GetPoint(y, x+1)
+	up := g.Get(y-1, x)
+	down := g.Get(y+1, x)
+	left := g.Get(y, x-1)
+	right := g.Get(y, x+1)
 	if up != nil && up != origin && !up.Visited { //!visited[up] {
 		results = append(results, up)
 	}
@@ -321,9 +327,14 @@ func (g *Grid) UnvisitedNeighbours(origin *Point) []*Point { //, visited map[*XP
 	return results
 }
 
-func (graph *Grid) GetPoint(row int, col int) *Point {
+func (graph *Grid) Get(row int, col int) *Point {
 	key := fmt.Sprintf("%v_%v", col, row)
 	return graph.Points[key]
+}
+
+func (graph *Grid) Put(row int, col int, point *Point) {
+	key := fmt.Sprintf("%v_%v", col, row)
+	graph.Points[key] = point
 }
 
 func (p *Point) Debug() string {
@@ -448,3 +459,22 @@ func (p *Point) Debug() string {
 
 // 	fmt.Printf("Visited count is %v, Score is %v\n", visitedCount, destination.TentativeDistance)
 // }
+
+func (g *Grid) NeighboursNotInPath(point *Point, path *Path) []*Point {
+	neighbours := g.Neighbours(point)
+	results := make([]*Point, 0)
+	for _, n := range neighbours {
+		if path.IndexOf(n) == -1 {
+			if n.Value <= point.Value || n.Value == point.Value+1 {
+				results = append(results, n)
+			}
+		}
+	}
+	sort.Slice(results, func(i int, o int) bool {
+		a := neighbours[i]
+		b := neighbours[o]
+		return a.Col < b.Col
+	})
+
+	return results
+}

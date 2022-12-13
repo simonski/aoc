@@ -61,7 +61,7 @@ func Test_Grid2(t *testing.T) {
 
 func Test_HillClimb(t *testing.T) {
 	grid := NewGrid(TEST_DATA)
-	path := HillClimb(false, grid)
+	path := HillClimb(true, grid)
 	fmt.Printf("%v\n", path)
 
 	fmt.Printf("\n\nBest path size is %v\n\n", path.Size())
