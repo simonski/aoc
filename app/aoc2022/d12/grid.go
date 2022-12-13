@@ -18,7 +18,10 @@ type Grid struct {
 }
 
 func (g *Grid) Debug(path *Path) string {
-	// fmt.Printf("Grid.Debug() Rows=%v, Cols=%v\n", g.Rows, g.Cols)
+	// in this debug I build the direction by zooming over hte grid, then
+	// seeing if the point in question exists in the path, in which case
+	// I figre outthe direction from the prior point in the path
+	// note: I make the "current" tail a * to stand out
 	result := ""
 	for row := 0; row < g.Rows; row++ {
 		line := ""
