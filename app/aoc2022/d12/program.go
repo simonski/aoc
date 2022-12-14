@@ -2,8 +2,6 @@ package d12
 
 import (
 	"fmt"
-	"os"
-	"strconv"
 	"strings"
 )
 
@@ -82,15 +80,6 @@ func (puzzle *Puzzle) Part2() {
 }
 
 func (puzzle *Puzzle) Run() {
-	// puzzle.Part1()
+	puzzle.Part1()
 	puzzle.Part2()
-}
-
-func Attempt3() {
-	db := NewDB(REAL_DATA)
-	// mod, _ := strconv.Atoi(os.Args[4])
-	verbose := os.Args[4] == "1"
-	mod, _ := strconv.Atoi(os.Args[5])
-	showDot := os.Args[6]
-	db.Walk(mod, verbose, showDot == "Y", true)
 }

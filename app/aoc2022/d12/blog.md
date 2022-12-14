@@ -1,5 +1,7 @@
 Hill Climbing
 
+Dijkstra's revenge!
+
 
 if the grid is a tree, then each node can have the following 
     node

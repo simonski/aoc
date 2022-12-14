@@ -383,3 +383,16 @@ func (g *Grid) NeighboursNotInPath(point *Point, path *Path) []*Point {
 
 	return results
 }
+
+func isHeightOk(a *Point, b *Point) bool {
+	if a.Value > b.Value { // e.g. c to a
+		return true
+	}
+	if a.Value == b.Value { // sameies ok
+		return true
+	}
+	if a.Value+1 == b.Value { // a to b
+		return true
+	}
+	return false
+}
