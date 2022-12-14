@@ -1,7 +1,6 @@
 package d12
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -59,14 +58,18 @@ func Test_Grid2(t *testing.T) {
 // 	}
 // }
 
-func Test_HillClimb(t *testing.T) {
-	grid := NewGrid(TEST_DATA)
-	path := HillClimb(true, grid)
-	fmt.Printf("%v\n", path)
+func Test_Map(t *testing.T) {
+	m := make(map[string]*Point)
+	m["foo"] = &Point{Col: 4, Row: 9}
 
-	fmt.Printf("\n\nBest path size is %v\n\n", path.Size())
-
-	if grid.Rows != 1 {
-		t.Fatalf("Expected 5 rows, got %v\n", grid.Rows)
+	testPoint := m["bar"]
+	testPoint2 := m["foo"]
+	if testPoint != nil {
+		t.Fatal("a")
 	}
+
+	if testPoint2 == nil {
+		t.Fatal("b")
+	}
+
 }

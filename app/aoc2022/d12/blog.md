@@ -1,13 +1,34 @@
 Hill Climbing
 
 
+if the grid is a tree, then each node can have the following 
+    node
+        possible neighbours are N S E W unless already taken
+
+    so S -> N 
+         -> E
+         -> W
+
+        Each neighbour is viable if it is NOT currently in the PATH and meets the depth.
+
+    
+
+    
+        
+
+
+, then I want to get to the destination from the start
+the start has connections, each of which to be evaluated
+start -> a, b, c
+
+
+
 2022-12-13 
 
 I have this thing about perhaps I need a tree for the paths investigated, where node could have a visited 
 so that I can discount it from future endevours.   Honestly, I dunnno.  The visualisation ehlps thioguht.
 
 I'm guessing, so I think I should go read about hill climbing again.
-
 
 Ok, so it's Dijkstra. Except, not quite.  The visualisation is a bit of a pain so while I'm
 tempted to go write a GUI (fyne?) I know deep down it's all just about the algo.  Really the terminal
