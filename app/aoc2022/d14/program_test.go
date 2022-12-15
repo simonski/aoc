@@ -71,7 +71,7 @@ func Test_DebugSteps(t *testing.T) {
 	t.Fatal("mm")
 }
 
-func Test_DebugSteps_Real(t *testing.T) {
+func Test_DebugSteps_Real_Part1(t *testing.T) {
 	p := NewPuzzleWithData(false, REAL_DATA)
 	x, _, max_x, max_y := p.Bounds()
 	// fmt.Printf("bounds(%v,%v)->(%v,%v)\n", x, y, max_x, max_y)
@@ -92,14 +92,15 @@ func Test_DebugSteps_Real(t *testing.T) {
 	t.Fatal("mm")
 }
 
-func Test_DebugSteps_Test(t *testing.T) {
+func Test_DebugSteps_Test_Part1(t *testing.T) {
 	p := NewPuzzleWithData(false, TEST_DATA)
-	x, _, max_x, max_y := p.Bounds()
+	// x, _, max_x, max_y := p.Bounds()
 	// fmt.Printf("bounds(%v,%v)->(%v,%v)\n", x, y, max_x, max_y)
 	// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+1))
 
 	for index := 0; index < 905; index++ {
 		// landed, block := p.Step()
+		x, _, max_x, max_y := p.Bounds()
 		result, _, _ := p.AddSand(max_y)
 		// p.AddSand(max_y)
 		fmt.Printf("[%v]\n", index+1)
@@ -110,5 +111,121 @@ func Test_DebugSteps_Test(t *testing.T) {
 			break
 		}
 	}
+	t.Fatal("mm")
+}
+
+func Test_DebugSteps_Test_Part2(t *testing.T) {
+	p := NewPuzzleWithData(false, TEST_DATA)
+	x, _, max_x, max_y := p.Bounds()
+
+	// make a floor at max_y + 2, rather wide.
+	p.SetFloor(max_y + 2)
+	// fmt.Printf("bounds(%v,%v)->(%v,%v)\n", x, y, max_x, max_y)
+	// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+1))
+	x, _, max_x, max_y = p.Bounds()
+
+	grains := 0
+	for {
+		// landed, block := p.Step()
+		result, _, _ := p.AddSand(max_y)
+		if result {
+			grains += 1
+			// p.AddSand(max_y)
+			fmt.Printf("[%v]\n", grains+1)
+			fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+1))
+			fmt.Println("")
+		} else {
+			if !result {
+				fmt.Printf("Grains: %v\n", grains)
+				break
+			}
+		}
+	}
+	t.Fatal("mm")
+}
+
+func Test_DebugSteps_Real_Part2(t *testing.T) {
+	p := NewPuzzleWithData(false, REAL_DATA)
+	x, _, max_x, max_y := p.Bounds()
+
+	// make a floor at max_y + 2, rather wide.
+	p.SetFloor(max_y + 2)
+	// fmt.Printf("bounds(%v,%v)->(%v,%v)\n", x, y, max_x, max_y)
+	// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+1))
+	x, _, max_x, max_y = p.Bounds()
+
+	grains := 0
+	for {
+		// landed, block := p.Step()
+		result, block, _ := p.AddSand(max_y)
+		if result {
+			grains += 1
+			// p.AddSand(max_y)
+			// fmt.Printf("[%v]\n", grains+1)
+			// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			// fmt.Println("")
+		} else {
+			// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			fmt.Printf("result false, Grains: %v\n", grains)
+			break
+		}
+
+		// 24350
+		// 24320
+
+		if block.X == p.Origin.X && block.Y == p.Origin.Y {
+			// if grains > 24100 {
+			// x, _, max_x, max_y = p.Bounds()
+			fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			break
+		}
+		// if grains > 1400 {
+		// 	break
+		// }
+	}
+	fmt.Printf("grains=%v\n", grains)
+	t.Fatal("mm")
+}
+
+func Test_DebugSteps_Real_Part3(t *testing.T) {
+	p := NewPuzzleWithData(false, TEST_DATA)
+	x, _, max_x, max_y := p.Bounds()
+
+	// make a floor at max_y + 2, rather wide.
+	p.SetFloor(max_y + 2)
+	// fmt.Printf("bounds(%v,%v)->(%v,%v)\n", x, y, max_x, max_y)
+	// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+1))
+	x, _, max_x, max_y = p.Bounds()
+
+	grains := 0
+	for {
+		// landed, block := p.Step()
+		result, block, _ := p.AddSand(max_y)
+		if result {
+			grains += 1
+			// p.AddSand(max_y)
+			// fmt.Printf("[%v]\n", grains+1)
+			// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			// fmt.Println("")
+		} else {
+			// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			fmt.Printf("result false, Grains: %v\n", grains)
+			break
+		}
+
+		// 24350
+		// 24320
+
+		if block.X == p.Origin.X && block.Y == p.Origin.Y {
+			// if grains > 24100 {
+			// x, _, max_x, max_y = p.Bounds()
+			fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			break
+		}
+		// if grains > 1400 {
+		// 	break
+		// }
+	}
+	fmt.Printf("grains=%v\n", grains)
 	t.Fatal("mm")
 }

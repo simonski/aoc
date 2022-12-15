@@ -37,15 +37,17 @@ func NewBlock(x int, y int, blockType BlockType) *Block {
 }
 
 type Puzzle struct {
-	title  string
-	year   string
-	day    string
-	input  string
-	Lines  []string
-	Rows   int
-	Cols   int
-	Grid   map[string]*Block
-	Origin *Block
+	title    string
+	year     string
+	day      string
+	input    string
+	Lines    []string
+	Rows     int
+	Cols     int
+	Grid     map[string]*Block
+	Origin   *Block
+	HasFloor bool
+	Floor    int
 }
 
 func NewPuzzleWithData(VERBOSE bool, input string) *Puzzle {
@@ -53,6 +55,11 @@ func NewPuzzleWithData(VERBOSE bool, input string) *Puzzle {
 	p.Load(VERBOSE, input)
 	p.Origin = p.Put(500, 0, ORIGIN)
 	return &p
+}
+
+func (puzzle *Puzzle) SetFloor(floor int) {
+	puzzle.HasFloor = true
+	puzzle.Floor = floor
 }
 
 func NewPuzzle() *Puzzle {
@@ -69,11 +76,17 @@ func (p *Puzzle) Put(x int, y int, value BlockType) *Block {
 
 func (p *Puzzle) Get(x int, y int) *Block {
 	key := fmt.Sprintf("%v_%v", x, y)
+	if p.HasFloor && y >= p.Floor {
+		return NewBlock(x, p.Floor, ROCK)
+	}
 	return p.Grid[key]
 }
 
 func (p *Puzzle) Contains(x int, y int) bool {
 	key := fmt.Sprintf("%v_%v", x, y)
+	if p.HasFloor && y >= p.Floor {
+		return true
+	}
 	return p.Grid[key] != nil
 }
 
@@ -217,7 +230,8 @@ func (puzzle *Puzzle) Run() {
 func (puzzle *Puzzle) AddSand(max_y int) (bool, *Block, int) {
 	origin := puzzle.Origin
 	x := origin.X
-	y := origin.Y + 1
+	y := origin.Y
+
 	sand := NewBlock(x, y, SAND)
 
 	// if we can move down, move down
@@ -226,9 +240,6 @@ func (puzzle *Puzzle) AddSand(max_y int) (bool, *Block, int) {
 		steps += 1
 		cx := sand.X
 		cy := sand.Y + 1
-		if cy > max_y {
-			return false, sand, steps
-		}
 		if !puzzle.Contains(cx, cy) {
 			// drop down one
 			fmt.Printf("[%v] DOWN (%v,%v)->(%v,%v)\n", steps, sand.X, sand.Y, cx, cy)
@@ -244,10 +255,20 @@ func (puzzle *Puzzle) AddSand(max_y int) (bool, *Block, int) {
 			fmt.Printf("[%v] RGHT (%v,%v)->(%v,%v)\n", steps, sand.X, sand.Y, cx+1, cy)
 			sand.X = cx + 1
 			sand.Y = cy
+
+		} else if cy > max_y && puzzle.HasFloor && cy > puzzle.Floor {
+
+			fmt.Printf("[%v] cy>max_y (%v,%v), floor=%v\n", steps, cx, max_y, puzzle.Floor)
+			return false, sand, steps
+
 		} else {
 			// cannot drop in any way
 			fmt.Printf("[%v] STAY (%v,%v)\n", steps, sand.X, sand.Y)
 			puzzle.Put(sand.X, sand.Y, SAND)
+			break
+		}
+
+		if steps == 1000 {
 			break
 		}
 	}
