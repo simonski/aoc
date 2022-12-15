@@ -1,6 +1,9 @@
 package d15
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 /*
 --- Day 05:  ---
@@ -32,7 +35,25 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	// not 5129731 (too low)
+	//     5129730
+	//     5129730
+	//     5129730
+
+	// data := TEST_DATA
+	// row := 10
+	// 174,580,378
+	data := REAL_DATA
+	row := 2000000
+
+	g := NewGrid(data)
+	minx, miny, maxx, maxy := g.Bounds()
+	width := g.Width()
+	height := g.Height()
+	fmt.Printf("Grid bounds (%v,%v,%v,%v)\nHeight=%v\nWidth=%v\nVolume=%v\nSensors=%v\nBeacons=%v\n", minx, miny, maxx, maxy, height, width, height*width, len(g.Sensors), len(g.Beacons))
+	could_be_beacon, could_not_be_beacon := g.CountCannotsForRow_V2(row)
+	// could_be_beacon, could_not_be_beacon := g.CountCannotsForRow(row)
+	fmt.Printf("could_be_beacon=%v, could_not_be_beacon=%v\n", could_be_beacon, could_not_be_beacon)
 }
 
 func (puzzle *Puzzle) Part2() {
