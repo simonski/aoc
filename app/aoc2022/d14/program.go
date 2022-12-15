@@ -215,11 +215,48 @@ func (puzzle *Puzzle) Load(VERBOSE bool, input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(false, REAL_DATA)
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(false, REAL_DATA)
+	p := NewPuzzleWithData(false, REAL_DATA)
+	x, _, max_x, max_y := p.Bounds()
+
+	// make a floor at max_y + 2, rather wide.
+	p.SetFloor(max_y + 2)
+	// fmt.Printf("bounds(%v,%v)->(%v,%v)\n", x, y, max_x, max_y)
+	// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+1))
+	x, _, max_x, max_y = p.Bounds()
+
+	grains := 0
+	for {
+		// landed, block := p.Step()
+		result, block, _ := p.AddSand(max_y)
+		if result {
+			grains += 1
+			// p.AddSand(max_y)
+			// fmt.Printf("[%v]\n", grains+1)
+			// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			// fmt.Println("")
+		} else {
+			// fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			fmt.Printf("result false, Grains: %v\n", grains)
+			break
+		}
+
+		// 24350
+		// 24320
+
+		if block.X == p.Origin.X && block.Y == p.Origin.Y {
+			// if grains > 24100 {
+			// x, _, max_x, max_y = p.Bounds()
+			fmt.Println(p.DebugFrame(x, 0, max_x+1, max_y+3))
+			break
+		}
+		// if grains > 1400 {
+		// 	break
+		// }
+	}
+	fmt.Printf("grains=%v\n", grains)
 }
 
 func (puzzle *Puzzle) Run() {
