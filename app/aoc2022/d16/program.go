@@ -32,6 +32,7 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
+	LoadGraph(TEST_DATA)
 	puzzle.Load(REAL_DATA)
 }
 
