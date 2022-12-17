@@ -78,3 +78,27 @@ func Test_1_DebugGrid_3(t *testing.T) {
 	detectable, undetectable := g.CountCannotsForRow(2000000)
 	t.Fatalf("detectable=%v, undetectable=%v", detectable, undetectable)
 }
+
+func Test_CountMissingOnRow1(t *testing.T) {
+	g := NewGrid(TEST_DATA)
+	missing := g.CountMissing(true, 11)
+	t.Fatalf("missing should be %v, was %v\n", 14, missing)
+}
+
+func Test_CountMissingOnRow2(t *testing.T) {
+	g := NewGrid(REAL_DATA)
+	result := make([]int, 0)
+	resultrow := 0
+	for row := 0; row < 4000000; row++ {
+		if row%10000 == 0 {
+			fmt.Println(row)
+		}
+		missing := g.CountMissing(false, row)
+		if len(missing) == 1 {
+			result = missing
+			resultrow = row
+			break
+		}
+	}
+	t.Fatalf("row is %v, col is %v\n", resultrow, result)
+}
