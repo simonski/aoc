@@ -2,7 +2,6 @@ package d15
 
 import (
 	"fmt"
-	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -49,14 +48,13 @@ func (p *Point) DistanceTo(x int, y int) int {
 }
 
 type Grid struct {
-	data       map[string]*Point
-	MinX       int
-	MaxX       int
-	MaxY       int
-	MinY       int
-	Beacons    []*Beacon
-	Sensors    []*Sensor
-	x_detected map[int]bool
+	data    map[string]*Point
+	MinX    int
+	MaxX    int
+	MaxY    int
+	MinY    int
+	Beacons []*Beacon
+	Sensors []*Sensor
 }
 
 func NewGrid(data string) *Grid {
@@ -166,159 +164,6 @@ func (g *Grid) Contains(x int, y int, p *Point) bool {
 	return g.Get(x, y) != nil
 }
 
-func (g *Grid) CountCannotsForRow(row int) (int, int) {
-	// go over each point left to right
-
-	// remove any sensors whose distance is too great - that is,
-	// it cannot reach the point even under the best of circumstances (a straight line to it)
-	sensors := make([]*Sensor, 0)
-	for _, sensor := range g.Sensors {
-		strength := sensor.Strength
-		distance := sensor.Point.DistanceTo(sensor.Point.X, row)
-		if distance <= strength {
-			// it has the distance
-			sensors = append(sensors, sensor)
-			fmt.Printf("Sensor %v strength %v could detect (distance is %v)\n", sensor, sensor.Strength, distance)
-		} else {
-			fmt.Printf("Sensor %v strength %v cannot detect (distance is %v)\n", sensor, sensor.Strength, distance)
-		}
-	}
-	// sensors := g.Sensors
-	fmt.Printf("We will search %v out of %v sensors.\n", len(sensors), len(g.Sensors))
-	// fmt.Println(g.Debug())
-
-	// line := ""
-	could_be_beacon := 0
-	could_not_be_beacon := 0
-	iteration := 0
-	totalIterations := g.Width() * len(sensors)
-	for x := g.MinX; x <= g.MaxX; x++ {
-		p := g.Get(x, row)
-		within_signal_strength := false
-		if p != nil {
-
-		} else {
-			// if p == nil {
-			// could be
-			for _, sensor := range sensors {
-				iteration++
-				fmt.Printf("%v/%v\n", iteration, totalIterations)
-				distance := sensor.Point.DistanceTo(x, row)
-				if distance <= sensor.Strength {
-					// fmt.Printf("Sensor %v can detect (strength=%v) checking point (%v,%v), distance=%v\n", sensor, sensor.Strength, x, row, distance)
-					within_signal_strength = true
-					break
-				} else {
-					// fmt.Printf("Sensor %v cannot detect (strength=%v) checking point (%v,%v), distance=%v\n", sensor, sensor.Strength, x, row, distance)
-
-				}
-
-			}
-		}
-
-		if within_signal_strength {
-			// fmt.Printf("(%v,%v) IS detectable by a sensor\n", x, row)
-			could_not_be_beacon += 1
-			// line += "."
-		} else {
-			// fmt.Printf("(%v,%v) IS NOT detectable by any sensor\n", x, row)
-			could_be_beacon += 1
-			// line += "#"
-		}
-
-		// line += "."
-		// } else if p != nil && p.Sensor != nil {
-		// 	// it's a sensor
-		// 	line += "S"
-		// } else if p != nil && p.Beacon != nil {
-		// 	// it's a beacon
-		// 	line += "B"
-		// }
-
-	}
-	return could_be_beacon, could_not_be_beacon // , line
-}
-
-func (g *Grid) CountCannotsForRow_V2(row int) (int, int, map[int]bool, int) {
-	// go over each point left to right
-
-	// remove any sensors whose distance is too great - that is,
-	// it cannot reach the point even under the best of circumstances (a straight line to it)
-	// sensors := make([]*Sensor, 0)
-	// for _, sensor := range g.Sensors {
-	// 	strength := sensor.Strength
-	// 	distance := sensor.Point.DistanceTo(sensor.Point.X, row)
-	// 	if distance <= strength {
-	// 		// it has the distance
-	// 		sensors = append(sensors, sensor)
-	// 	} else {
-	// 	}
-	// }
-
-	result := make(map[int]bool)
-
-	min_x := math.MaxInt
-	for _, sensor := range g.Sensors {
-
-		// for each sensor, make a straight line to the row as the shortest distance
-		// then we can go left by the different and right by the difference
-		// x = sensor.Point.X
-		distance := sensor.Point.DistanceTo(sensor.Point.X, row)
-		strength := sensor.Strength
-		difference := strength - distance
-		if difference <= 0 {
-			continue
-		}
-		difference = goutils.Abs(difference)
-		for x := sensor.Point.X - difference; x < sensor.Point.X+difference; x++ {
-			p := g.Get(x, row)
-			if p == nil {
-				result[x] = true /// true means we can detect it, so it cannot be a signal
-			}
-		}
-		min_x = goutils.Min(min_x, sensor.Point.X-difference)
-	}
-
-	known := 0
-	unknown := 0
-	for _, value := range result {
-		if value {
-			known++
-		} else {
-			unknown++
-		}
-	}
-	// known -= removeSensors
-
-	// for x := sensor.Point.X - difference; x < sensor.Point.X+difference; x++ {
-	// 	p := g.Get(x, row)
-	// 	if p == nil {
-	// 		result[x] = true /// true means we can detect it, so it cannot be a signal
-	// 	}
-	// }
-
-	// if within_signal_strength {
-	// 	// fmt.Printf("(%v,%v) IS detectable by a sensor\n", x, row)
-	// 	could_not_be_beacon += 1
-	// 	// line += "."
-	// } else {
-	// 	// fmt.Printf("(%v,%v) IS NOT detectable by any sensor\n", x, row)
-	// 	could_be_beacon += 1
-	// 	// line += "#"
-	// }
-
-	// line += "."
-	// } else if p != nil && p.Sensor != nil {
-	// 	// it's a sensor
-	// 	line += "S"
-	// } else if p != nil && p.Beacon != nil {
-	// 	// it's a beacon
-	// 	line += "B"
-	// }
-
-	return unknown, known, result, min_x // could_be_beacon, could_not_be_beacon // , line
-}
-
 type Segment struct {
 	MinX int
 	MaxX int
@@ -333,7 +178,7 @@ func (s *Segment) String() string {
 }
 
 func (s *Segment) IsInsideOf(other *Segment) bool {
-	return s.MinX >= s.MinX && s.MaxX <= other.MaxX
+	return s.MinX >= other.MinX && s.MaxX <= other.MaxX
 }
 
 func (s *Segment) OverlapsToLeftOf(other *Segment) bool {
@@ -341,7 +186,7 @@ func (s *Segment) OverlapsToLeftOf(other *Segment) bool {
 }
 
 func (s *Segment) OverlapsToRightOf(other *Segment) bool {
-	return s.MinX >= s.MinX && s.MinX <= other.MaxX && s.MaxX > other.MaxX
+	return s.MinX >= other.MinX && s.MinX <= other.MaxX && s.MaxX > other.MaxX
 }
 
 func (s *Segment) IsOverlappedBy(other *Segment) bool {

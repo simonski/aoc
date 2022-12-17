@@ -66,18 +66,18 @@ func Test_Distance(t *testing.T) {
 	t.Fatalf("Distance")
 }
 
-func Test_1_DebugGrid_2(t *testing.T) {
-	g := NewGrid(TEST_DATA)
-	detectable, undetectable := g.CountCannotsForRow(10)
-	if undetectable != 26 {
-		t.Fatalf("Cannot count should be 26, was %v, detectable was %v\n.", undetectable, detectable)
-	}
-}
-func Test_1_DebugGrid_3(t *testing.T) {
-	g := NewGrid(REAL_DATA)
-	detectable, undetectable := g.CountCannotsForRow(2000000)
-	t.Fatalf("detectable=%v, undetectable=%v", detectable, undetectable)
-}
+// func Test_1_DebugGrid_2(t *testing.T) {
+// 	g := NewGrid(TEST_DATA)
+// 	detectable, undetectable := g.CountCannotsForRow(10)
+// 	if undetectable != 26 {
+// 		t.Fatalf("Cannot count should be 26, was %v, detectable was %v\n.", undetectable, detectable)
+// 	}
+// }
+// func Test_1_DebugGrid_3(t *testing.T) {
+// 	g := NewGrid(REAL_DATA)
+// 	detectable, undetectable := g.CountCannotsForRow(2000000)
+// 	t.Fatalf("detectable=%v, undetectable=%v", detectable, undetectable)
+// }
 
 func Test_CountMissingOnRow1(t *testing.T) {
 	g := NewGrid(TEST_DATA)
