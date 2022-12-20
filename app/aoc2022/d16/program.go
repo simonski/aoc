@@ -58,16 +58,7 @@ func (puzzle *Puzzle) Part1() {
 	fmt.Println("")
 	fmt.Println("")
 
-	// graph := LoadGraph(TEST_DATA)
-	// aa := graph.Get("AA")
-	// path := NewPathX()
-	// time := 0
-	// MAX_TIME := 30
-	// VERBOSE := true
-	// best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
-	// fmt.Printf("\nBest=\n%v\n", best_path)
-
-	graph := LoadGraph(REAL_DATA)
+	graph := LoadGraph(TEST_DATA)
 	aa := graph.Get("AA")
 	path := NewPathX()
 	time := 0
@@ -75,6 +66,15 @@ func (puzzle *Puzzle) Part1() {
 	VERBOSE := true
 	best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
 	fmt.Printf("\nBest=\n%v\n", best_path)
+
+	// graph := LoadGraph(REAL_DATA)
+	// aa := graph.Get("AA")
+	// path := NewPathX()
+	// time := 0
+	// MAX_TIME := 30
+	// VERBOSE := true
+	// best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
+	// fmt.Printf("\nBest=\n%v\n", best_path)
 
 }
 

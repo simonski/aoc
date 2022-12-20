@@ -5,8 +5,8 @@ import "fmt"
 // there is something about "knowing" from your current path the best achieveable score
 // so we need access to the current "best" scores.  If our route *cannot* give us a better score
 // then we can quit out of it quickly - avoiding all permutations and therefore reducing the search space
-ABOVE NEEDS INTEGRATING
-CODE NEEDS COMMITTING
+// ABOVE NEEDS INTEGRATING
+// CODE NEEDS COMMITTING
 
 func (g *Graph) walkies(source *Node, current_path *Path, time int, MAX_TIME int, VERBOSE bool) *Path {
 	// from SOURCE, list available path
