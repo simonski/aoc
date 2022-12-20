@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/andybons/gogif v0.0.0-20140526152223-16d573594812
+	github.com/ernestosuarez/itertools v0.0.0-20190516153236-40a02c159e7b
 	github.com/fogleman/gg v1.3.0
 	github.com/gookit/color v1.3.6
 	github.com/simonski/cli v0.0.0-20220919133012-ba6c528d0d37
