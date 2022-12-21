@@ -10,13 +10,19 @@ import "fmt"
 
 func (g *Graph) dfs(source *Node, current_path *Path, time int, MAX_TIME int, VERBOSE bool) *Path {
 	// from SOURCE, list available path
+
+	result, hit := g.Cache.Get(source, current_path, time)
+	if hit {
+		return result
+	}
+
 	if time == MAX_TIME {
 		if VERBOSE {
-			fmt.Printf("walkies[t=%v] exiting with path %v\n", time, current_path)
+			fmt.Printf("dfs[t=%v] exiting with path %v\n", time, current_path)
 		}
 		return current_path
 	}
-	fmt.Printf("walkies[t=%v] path %v\n", time, current_path)
+	fmt.Printf("dfs[t=%v] path %v\n", time, current_path)
 
 	// get all closed nodes to find their paths from here
 	available_nodes := make([]*Node, 0)
@@ -54,8 +60,16 @@ func (g *Graph) dfs(source *Node, current_path *Path, time int, MAX_TIME int, VE
 				break
 			}
 		}
+		if this_time == MAX_TIME {
+			continue
+		}
+
 		this_time += 1
 		subpath.Open(destination)
+
+		if this_time == MAX_TIME {
+			continue
+		}
 
 		// open NODE
 		// assign NODE to results (time, value, node)
@@ -73,6 +87,8 @@ func (g *Graph) dfs(source *Node, current_path *Path, time int, MAX_TIME int, VE
 		}
 
 	}
+
+	g.Cache.Put(source, best_path, time, best_path)
 
 	return best_path
 

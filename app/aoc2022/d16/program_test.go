@@ -6,13 +6,13 @@ import (
 )
 
 func Test_1(t *testing.T) {
-	graph := LoadGraph(TEST_DATA)
+	graph := NewGraph(TEST_DATA)
 	fmt.Printf("There are %v nodes.\n", graph.Size())
 	t.Fatalf("mm")
 }
 
 func Test_Relationships(t *testing.T) {
-	graph := LoadGraph(TEST_DATA)
+	graph := NewGraph(TEST_DATA)
 	nodeAA := graph.Get("AA")
 	if nodeAA == nil {
 		t.Fatalf("AA should not be nil.")

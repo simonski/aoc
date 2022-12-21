@@ -39,7 +39,7 @@ func (puzzle *Puzzle) Load(input string) {
 func (puzzle *Puzzle) Part1() {
 
 	if os.Args[4] == "test" {
-		graph := LoadGraph(TEST_DATA)
+		graph := NewGraph(TEST_DATA)
 		aa := graph.Get("AA")
 		path := NewPathX()
 		time := 0
@@ -49,7 +49,7 @@ func (puzzle *Puzzle) Part1() {
 		fmt.Printf("\nBest=\n%v\n", best_path)
 
 	} else if os.Args[4] == "live" {
-		graph := LoadGraph(REAL_DATA)
+		graph := NewGraph(REAL_DATA)
 		aa := graph.Get("AA")
 		path := NewPathX()
 		time := 0
@@ -99,7 +99,7 @@ in best order of weights
 */
 
 func (puzzle *Puzzle) Part1Attempt1() {
-	graph := LoadGraph(TEST_DATA)
+	graph := NewGraph(TEST_DATA)
 
 	// while time < 0
 	// 1. build a list of paths to closed values with a score

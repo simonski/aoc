@@ -11,7 +11,7 @@ import (
 
 */
 
-func LoadGraph(input string) *Graph {
+func NewGraph(input string) *Graph {
 	splits := strings.Split(input, "\n")
 	// Valve AA has flow rate=0; tunnels lead to valves DD, II, BB
 	nodeMap := make(map[string]*Node)
@@ -32,7 +32,10 @@ func LoadGraph(input string) *Graph {
 
 	graph2 := LoadGraph2(TEST_DATA)
 
-	return &Graph{NodeMap: nodeMap, Nodes: nodes, Graph2: graph2}
+	g := &Graph{NodeMap: nodeMap, Nodes: nodes, Graph2: graph2}
+	cache := NewCache(g)
+	g.Cache = cache
+	return g
 
 }
 
@@ -41,6 +44,7 @@ type Graph struct {
 	Nodes   []*Node
 	Time    int
 	Graph2  *graph
+	Cache   *Cache
 }
 
 func (g *Graph) CalculatePathScore(path []*Node) int {
