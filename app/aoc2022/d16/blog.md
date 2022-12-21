@@ -93,4 +93,8 @@ Sunday 15:43 Ok am back and am going to try something like
     4. repeat the above for the remaining paths "from" the new node position
 
 
-https://dev.to/douglasmakey/implementation-of-dijkstra-using-heap-in-go-6e3
+-----
+
+Wed 18:02: Part 1 done. I had this tension between "I can't brute force it" and then got to caching fragments.  
+The annoying thing was I had the TEST_DATA loading into the graph, so I probably spent and hour running and being
+confused that it wasn't working.

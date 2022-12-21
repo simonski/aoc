@@ -85,13 +85,13 @@ func (p *Path) Size() int {
 	return len(p.Actions)
 }
 
-func NewPathX() *Path {
+func NewPath() *Path {
 	p := Path{Actions: make([]*PathEntry, 0), Nodes: make(map[string]*Node)}
 	return &p
 }
 
 func (p *Path) Clone() *Path {
-	p2 := NewPathX()
+	p2 := NewPath()
 	for _, e := range p.Actions {
 		p2.Actions = append(p2.Actions, e.Clone())
 	}
