@@ -2,6 +2,7 @@ package d16
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -60,6 +61,12 @@ func (g *Graph) GetScoredNodes() []*Node {
 			nodes = append(nodes, node)
 		}
 	}
+
+	sort.Slice(nodes, func(i int, j int) bool {
+		n1 := nodes[i]
+		n2 := nodes[j]
+		return n1.ID < n2.ID
+	})
 	return nodes
 }
 

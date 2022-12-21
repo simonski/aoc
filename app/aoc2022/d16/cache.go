@@ -1,9 +1,17 @@
 package d16
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
 type Cache struct {
+	Graph       *Graph
 	nodeIndexes map[string]int
+	hits        int
+	misses      int
+	keys        map[string]bool
+	data        map[string]int
 }
 
 func NewCache(g *Graph) *Cache {
@@ -21,6 +29,9 @@ func NewCache(g *Graph) *Cache {
 
 	cache := Cache{}
 	cache.nodeIndexes = nodeIndexes
+	cache.keys = make(map[string]bool)
+	cache.data = make(map[string]int)
+	cache.Graph = g
 	return &cache
 }
 
@@ -28,10 +39,27 @@ func (c *Cache) GetNodeIndex(node *Node) int {
 	return c.nodeIndexes[node.ID]
 }
 
-func (c *Cache) Get(node *Node, path *Path, time int) (*Path, bool) {
-	return nil, false
+func (g *Graph) CreateKey(node *Node, path *Path, time int) string {
+	key := fmt.Sprintf("%v_%v_%v", node.ID, path.Key(g), time)
+	return key
 }
 
-func (c *Cache) Put(node *Node, path *Path, time int, bestPath *Path) {
+func (c *Cache) Get(node *Node, path *Path, time int) (int, bool) {
+	key := c.Graph.CreateKey(node, path, time)
+	if c.keys[key] {
+		fmt.Printf("Cache(%v) HIT, value=%v\n", key, c.data[key])
+		c.hits += 1
+		return c.data[key], true
+	} else {
+		fmt.Printf("Cache(%v) MISS, value=%v\n", key, c.data[key])
+		c.misses += 1
+		return 0, false
+	}
+}
 
+func (c *Cache) Put(node *Node, path *Path, time int, value int) {
+	key := c.Graph.CreateKey(node, path, time)
+	fmt.Printf("Cache(%v) PUT, value=%v\n", key, c.data[key])
+	c.keys[key] = true
+	c.data[key] = value
 }

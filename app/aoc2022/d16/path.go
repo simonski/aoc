@@ -20,6 +20,19 @@ type Path struct {
 	Nodes   map[string]*Node
 }
 
+func (p *Path) Key(g *Graph) string {
+	scored_nodes := g.GetScoredNodes()
+	key := ""
+	for _, node := range scored_nodes {
+		if p.Nodes[node.ID] != nil {
+			key = fmt.Sprintf("%v1", key)
+		} else {
+			key = fmt.Sprintf("%v0", key)
+		}
+	}
+	return key
+}
+
 func (p *Path) String() string {
 	line := ""
 	for index, action := range p.Actions {

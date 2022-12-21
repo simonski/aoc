@@ -47,6 +47,7 @@ func (puzzle *Puzzle) Part1() {
 		VERBOSE := true
 		best_path := graph.dfs(aa, path, time, MAX_TIME, VERBOSE)
 		fmt.Printf("\nBest=\n%v\n", best_path)
+		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", graph.Cache.misses, graph.Cache.hits, graph.Cache.misses)
 
 	} else if os.Args[4] == "live" {
 		graph := NewGraph(REAL_DATA)
@@ -57,6 +58,7 @@ func (puzzle *Puzzle) Part1() {
 		VERBOSE := true
 		best_path := graph.dfs(aa, path, time, MAX_TIME, VERBOSE)
 		fmt.Printf("\nBest=\n%v\n", best_path)
+		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", graph.Cache.misses, graph.Cache.hits, graph.Cache.misses)
 
 	}
 }
