@@ -8,7 +8,7 @@ import "fmt"
 // ABOVE NEEDS INTEGRATING
 // CODE NEEDS COMMITTING
 
-func (g *Graph) walkies(source *Node, current_path *Path, time int, MAX_TIME int, VERBOSE bool) *Path {
+func (g *Graph) dfs(source *Node, current_path *Path, time int, MAX_TIME int, VERBOSE bool) *Path {
 	// from SOURCE, list available path
 	if time == MAX_TIME {
 		if VERBOSE {
@@ -60,7 +60,7 @@ func (g *Graph) walkies(source *Node, current_path *Path, time int, MAX_TIME int
 		// open NODE
 		// assign NODE to results (time, value, node)
 
-		result := g.walkies(destination, subpath, this_time, MAX_TIME, VERBOSE)
+		result := g.dfs(destination, subpath, this_time, MAX_TIME, VERBOSE)
 		if best_path == nil {
 			best_path = result
 		}

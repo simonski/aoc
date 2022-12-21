@@ -45,8 +45,9 @@ func (puzzle *Puzzle) Part1() {
 		time := 0
 		MAX_TIME := 30
 		VERBOSE := true
-		best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
+		best_path := graph.dfs(aa, path, time, MAX_TIME, VERBOSE)
 		fmt.Printf("\nBest=\n%v\n", best_path)
+
 	} else if os.Args[4] == "live" {
 		graph := LoadGraph(REAL_DATA)
 		aa := graph.Get("AA")
@@ -54,7 +55,7 @@ func (puzzle *Puzzle) Part1() {
 		time := 0
 		MAX_TIME := 30
 		VERBOSE := true
-		best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
+		best_path := graph.dfs(aa, path, time, MAX_TIME, VERBOSE)
 		fmt.Printf("\nBest=\n%v\n", best_path)
 
 	}
