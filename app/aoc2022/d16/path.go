@@ -47,8 +47,8 @@ func (p *Path) String() string {
 			line = fmt.Sprintf(action.Node.ID)
 		}
 	}
-	line = fmt.Sprintf("%v (%v)", line, p.Score())
-	line = fmt.Sprintf("%v, %vm", line, len(p.Actions))
+	line = fmt.Sprintf("%v (score=%v)", line, p.Score())
+	line = fmt.Sprintf("%v, (actions=%v)", line, len(p.Actions))
 	return line
 }
 

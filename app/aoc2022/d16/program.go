@@ -42,23 +42,28 @@ func (puzzle *Puzzle) Part1() {
 		graph := NewGraph(TEST_DATA)
 		aa := graph.Get("AA")
 		path := NewPathX()
-		time := 0
-		MAX_TIME := 30
+		time := 30
 		VERBOSE := true
-		best_path := graph.dfs(aa, path, time, MAX_TIME, VERBOSE)
+		best_path := graph.dfs(aa, path, time, VERBOSE)
 		fmt.Printf("\nBest=\n%v\n", best_path)
-		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", graph.Cache.misses, graph.Cache.hits, graph.Cache.misses)
+		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", len(graph.Cache.data), graph.Cache.hits, graph.Cache.misses)
+		fmt.Printf("best value in cache %v, path=%v\n", graph.Cache.max_value, graph.Cache.path)
 
 	} else if os.Args[4] == "live" {
 		graph := NewGraph(REAL_DATA)
 		aa := graph.Get("AA")
 		path := NewPathX()
-		time := 0
-		MAX_TIME := 30
+		time := 30
 		VERBOSE := true
-		best_path := graph.dfs(aa, path, time, MAX_TIME, VERBOSE)
+		best_path := graph.dfs(aa, path, time, VERBOSE)
 		fmt.Printf("\nBest=\n%v\n", best_path)
-		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", graph.Cache.misses, graph.Cache.hits, graph.Cache.misses)
+		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", len(graph.Cache.data), graph.Cache.hits, graph.Cache.misses)
+		for key, value := range graph.Cache.data {
+			if value == best_path {
+				fmt.Println(key)
+			}
+		}
+		fmt.Printf("best value in cache %v, path=%v\n", graph.Cache.max_value, graph.Cache.path)
 
 	}
 }

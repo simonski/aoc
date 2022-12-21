@@ -8,15 +8,16 @@ import "fmt"
 // ABOVE NEEDS INTEGRATING
 // CODE NEEDS COMMITTING
 
-func (g *Graph) dfs(source *Node, current_path *Path, time int, MAX_TIME int, VERBOSE bool) int {
-	// from SOURCE, list available path
+// from SOURCE, list available path
+func (g *Graph) dfs(source *Node, current_path *Path, time int, VERBOSE bool) int {
 
+	// not 5336 - too high
 	result, hit := g.Cache.Get(source, current_path, time)
 	if hit {
 		return result
 	}
 
-	fmt.Printf("dfs[t=%v] path %v\n", time, current_path)
+	// fmt.Printf("dfs[t=%v] path %v\n", time, current_path)
 
 	// get all closed nodes to find their paths from here
 	available_nodes := make([]*Node, 0)
@@ -26,48 +27,51 @@ func (g *Graph) dfs(source *Node, current_path *Path, time int, MAX_TIME int, VE
 		}
 	}
 
-	best := current_path.Score()
+	best := 0 // current_path.Score()
+	// if len(available_nodes) == 0 {
+
+	// var best_path *Path
+	// }
 	for _, destination := range available_nodes {
 
-		this_time := time
+		time_remaining := time
 		// we check each one - rather than have some heuristics, we just walk the path
 		// th}e "winner" (which should be a complete path) is the best score
 		subpath := current_path.Clone()
 		_, steps := g.Graph2.getPath(source.ID, destination.ID)
 
+		// fmt.Printf("source=%v, destination=%v, steps=%v\n", source, destination, steps)
 		// steps is the sequence of steps required to get to this destination
 		// so we will add each entry into our new subpath
 		for index := 1; index < len(steps); index++ { // first step is origin
 			node_id := steps[index]
-			this_time += 1
 			nodeToMoveTo := g.Get(node_id)
 			subpath.Move(nodeToMoveTo)
-			if this_time == MAX_TIME {
-				break
-			}
 		}
-		if this_time == MAX_TIME {
+		time_remaining = time - (len(steps) - 1) - 1
+		if time_remaining <= 0 {
 			continue
 		}
-
-		this_time += 1
 		subpath.Open(destination)
 
-		if this_time == MAX_TIME {
-			continue
+		if len(available_nodes) == 1 {
+			fmt.Println(subpath)
 		}
-
 		// open NODE
 		// assign NODE to results (time, value, node)
-
-		result := g.dfs(destination, subpath, this_time, MAX_TIME, VERBOSE)
+		result := g.dfs(destination, subpath, time_remaining, VERBOSE) + destination.Value*time_remaining
 		if result > best {
 			best = result
+			// g.Cache.Put(source, subpath, this_time, best)
+			// best_path = subpath.Clone()
 		}
 
 	}
 
 	g.Cache.Put(source, current_path, time, best)
+	// if best_path != nil {
+	// g.Cache.Put(source, best_path, time, best)
+	// }
 
 	return best
 

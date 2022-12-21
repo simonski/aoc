@@ -31,7 +31,7 @@ func NewGraph(input string) *Graph {
 		}
 	}
 
-	graph2 := LoadGraph2(TEST_DATA)
+	graph2 := LoadGraph2(input)
 
 	g := &Graph{NodeMap: nodeMap, Nodes: nodes, Graph2: graph2}
 	cache := NewCache(g)

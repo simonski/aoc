@@ -12,6 +12,8 @@ type Cache struct {
 	misses      int
 	keys        map[string]bool
 	data        map[string]int
+	max_value   int
+	path        *Path
 }
 
 func NewCache(g *Graph) *Cache {
@@ -40,18 +42,19 @@ func (c *Cache) GetNodeIndex(node *Node) int {
 }
 
 func (g *Graph) CreateKey(node *Node, path *Path, time int) string {
-	key := fmt.Sprintf("%v_%v_%v", node.ID, path.Key(g), time)
+	key := fmt.Sprintf("%v|%v|%v", node.ID, path.Key(g), time)
+	// key := fmt.Sprintf("%v_%v", node.ID, path.Key(g)) //, time)
 	return key
 }
 
 func (c *Cache) Get(node *Node, path *Path, time int) (int, bool) {
 	key := c.Graph.CreateKey(node, path, time)
 	if c.keys[key] {
-		fmt.Printf("Cache(%v) HIT, value=%v\n", key, c.data[key])
+		// fmt.Printf("Cache(%v) HIT, value=%v\n", key, c.data[key])
 		c.hits += 1
 		return c.data[key], true
 	} else {
-		fmt.Printf("Cache(%v) MISS, value=%v\n", key, c.data[key])
+		// fmt.Printf("Cache(%v) MISS, value=%v\n", key, c.data[key])
 		c.misses += 1
 		return 0, false
 	}
@@ -59,7 +62,12 @@ func (c *Cache) Get(node *Node, path *Path, time int) (int, bool) {
 
 func (c *Cache) Put(node *Node, path *Path, time int, value int) {
 	key := c.Graph.CreateKey(node, path, time)
-	fmt.Printf("Cache(%v) PUT, value=%v\n", key, c.data[key])
+	// fmt.Printf("Cache(%v) PUT, value=%v\n", key, c.data[key])
 	c.keys[key] = true
 	c.data[key] = value
+
+	if value > c.max_value {
+		c.max_value = value
+		c.path = path
+	}
 }
