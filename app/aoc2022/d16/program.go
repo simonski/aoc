@@ -37,45 +37,27 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	graph2 := LoadGraph2(TEST_DATA)
-	n1 := os.Args[4]
-	n2 := os.Args[5]
-	fmt.Println(graph2.getPath(n1, n2))
 
-	puzzle.Part1Attempt1()
+	if os.Args[4] == "test" {
+		graph := LoadGraph(TEST_DATA)
+		aa := graph.Get("AA")
+		path := NewPathX()
+		time := 0
+		MAX_TIME := 30
+		VERBOSE := true
+		best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
+		fmt.Printf("\nBest=\n%v\n", best_path)
+	} else if os.Args[4] == "live" {
+		graph := LoadGraph(REAL_DATA)
+		aa := graph.Get("AA")
+		path := NewPathX()
+		time := 0
+		MAX_TIME := 30
+		VERBOSE := true
+		best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
+		fmt.Printf("\nBest=\n%v\n", best_path)
 
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("xxxxxxxxxxxxxxxx")
-	fmt.Println("xxxxxxxxxxxxxxxx")
-	fmt.Println("xxxxxxxxxxxxxxxx")
-	fmt.Println("xxxxxxxxxxxxxxxx")
-	fmt.Println("xxxxxxxxxxxxxxxx")
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
-
-	graph := LoadGraph(TEST_DATA)
-	aa := graph.Get("AA")
-	path := NewPathX()
-	time := 0
-	MAX_TIME := 30
-	VERBOSE := true
-	best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
-	fmt.Printf("\nBest=\n%v\n", best_path)
-
-	// graph := LoadGraph(REAL_DATA)
-	// aa := graph.Get("AA")
-	// path := NewPathX()
-	// time := 0
-	// MAX_TIME := 30
-	// VERBOSE := true
-	// best_path := graph.walkies(aa, path, time, MAX_TIME, VERBOSE)
-	// fmt.Printf("\nBest=\n%v\n", best_path)
-
+	}
 }
 
 func NewPath(path []int) []int {
