@@ -1,6 +1,9 @@
 package d16
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type PathEntry struct {
 	Action string
@@ -31,6 +34,20 @@ func (p *Path) Key(g *Graph) string {
 		}
 	}
 	return key
+}
+
+func (p *Path) KeyAllOnes(g *Graph) string {
+	scored_nodes := g.GetScoredNodes()
+	key := ""
+	for _ = range scored_nodes {
+		key = fmt.Sprintf("%v1", key)
+	}
+	return key
+}
+
+func (p *Path) IntValue(g *Graph) int64 {
+	intvalue, _ := strconv.ParseInt(p.Key(g), 2, 64)
+	return intvalue
 }
 
 func (p *Path) String() string {

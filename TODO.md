@@ -1,5 +1,18 @@
 # AOC TODO
 
+## To Learn ()
+TODO
+
+BFS
+DFS 
+BIG-O
+Stacks
+Queues 
+Deques
+
+copying arrays in go
+testing in go 
+
 ## DOING
 
 - move ALL days to their own package a la aoc/2022/03/main.go "package 03" (or "d03")

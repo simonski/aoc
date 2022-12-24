@@ -1,7 +1,6 @@
 package d16
 
 import (
-	"fmt"
 	"sort"
 	"strconv"
 	"strings"
@@ -36,24 +35,27 @@ func NewGraph(input string) *Graph {
 	g := &Graph{NodeMap: nodeMap, Nodes: nodes, Graph2: graph2}
 	cache := NewCache(g)
 	g.Cache = cache
+	g.ScoredNodes = g._GetScoredNodes()
+	g.PathCache = make(map[int64]*Path)
 	return g
-
 }
 
 type Graph struct {
-	NodeMap map[string]*Node
-	Nodes   []*Node
-	Time    int
-	Graph2  *graph
-	Cache   *Cache
+	NodeMap     map[string]*Node
+	Nodes       []*Node
+	Time        int
+	Graph2      *graph
+	Cache       *Cache
+	ScoredNodes []*Node
+	PathCache   map[int64]*Path
 }
 
-func (g *Graph) CalculatePathScore(path []*Node) int {
-	return 0
-}
-
-// returns all nodes with a Value > 0
+// returns all nodes with a Value > 0 sorted by ID
 func (g *Graph) GetScoredNodes() []*Node {
+	return g.ScoredNodes
+}
+
+func (g *Graph) _GetScoredNodes() []*Node {
 
 	nodes := make([]*Node, 0)
 	for _, node := range g.NodeMap {
@@ -74,96 +76,39 @@ func (g *Graph) Get(id string) *Node {
 	return g.NodeMap[id]
 }
 
-func (g *Graph) IsOpen() bool {
-	return true
-}
-
 func (g *Graph) Size() int {
 	return len(g.NodeMap)
 }
 
-func (g *Graph) Tick() int {
-	return 0
+func (g *Graph) NewPathAllOn() *Path {
+	scored_nodes := g.GetScoredNodes()
+	p := NewPath()
+	for _, node := range scored_nodes {
+		p.Open(node)
+	}
+	return p
 }
 
-type Node struct {
-	ID                         string
-	Children                   []*Node
-	ChildrenIDs                []string
-	IsOpen                     bool
-	Value                      int
-	OpenedAtMinute             int
-	Parent                     *Node
-	Dijkstra_TentativeDistance int
-	Dijkstra_Visited           bool
-}
+func (g *Graph) NewPathFromInt(value int64) *Path {
+	p := g.PathCache[value]
+	if p != nil {
+		return p.Clone()
+	}
+	path := NewPath()
+	binary_value := strconv.FormatInt(value, 2) // 1111011
+	scored_nodes := g.GetScoredNodes()
+	for index := 0; len(binary_value) < len(scored_nodes); index++ {
+		binary_value = "0" + binary_value
+	}
 
-func (n *Node) String() string {
-	return n.ID
-}
-
-func (n *Node) Djikstra_UnvisitedNeighbours() []*Node {
-	results := make([]*Node, 0)
-	for _, node := range n.Children {
-		if !node.Dijkstra_Visited {
-			results = append(results, node)
+	for index := 0; index < len(binary_value); index++ {
+		value := binary_value[index : index+1]
+		if value == "1" {
+			node := scored_nodes[index]
+			path.Open(node)
 		}
 	}
-	return results
-}
+	g.PathCache[value] = path
 
-func NewNode(input string) *Node {
-	line := strings.ReplaceAll(input, "Valve ", "")
-	line = strings.ReplaceAll(line, "has flow rate=", "")
-	line = strings.ReplaceAll(line, " tunnels lead to valves ", "")
-	line = strings.ReplaceAll(line, " tunnel leads to valve ", "")
-	line = strings.ReplaceAll(line, " tunnel lead to valves ", "")
-	// fmt.Printf("'%v' becomes '%v'\n", input, line)
-	node_splits := strings.Split(line, ";")
-	n1 := strings.Split(node_splits[0], " ")
-	node_id := n1[0]
-	flow_rate, _ := strconv.Atoi(n1[1])
-	children_ids := strings.Split(strings.ReplaceAll(node_splits[1], " ", ""), ",")
-	node := Node{ID: node_id, IsOpen: false, Value: flow_rate, ChildrenIDs: children_ids, Children: make([]*Node, 0)}
-	return &node
-}
-
-// returns the total unopened value when walking this path in the tree
-func (n *Node) UnopenedValue() int {
-	fmt.Printf("n.UnopenedValue(%v)\n", n.ID)
-	if len(n.Children) == 0 {
-		if n.IsOpen {
-			return 0
-		} else {
-			return n.Value
-		}
-	} else {
-		value := 0
-		if !n.IsOpen {
-			value += n.Value
-		}
-		for _, child := range n.Children {
-			if child.Parent != n {
-				value += child.UnopenedValue()
-			}
-		}
-		return value
-	}
-}
-
-func (n *Node) CountUnopenedChildren() int {
-	if len(n.Children) == 0 {
-		return 0
-	} else {
-		value := 0
-		if !n.IsOpen {
-			value += 1
-		}
-		for _, child := range n.Children {
-			if child.Parent != n {
-				value += child.CountUnopenedChildren()
-			}
-		}
-		return value
-	}
+	return path
 }

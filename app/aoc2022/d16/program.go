@@ -37,7 +37,7 @@ func (puzzle *Puzzle) Load(input string) {
 
 func (puzzle *Puzzle) Part1() {
 
-	if os.Args[4] == "test" {
+	if os.Args[5] == "test" {
 		graph := NewGraph(TEST_DATA)
 		aa := graph.Get("AA")
 		path := NewPath()
@@ -48,7 +48,7 @@ func (puzzle *Puzzle) Part1() {
 		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", len(graph.Cache.data), graph.Cache.hits, graph.Cache.misses)
 		fmt.Printf("best value in cache %v, path=%v\n", graph.Cache.max_value, graph.Cache.path)
 
-	} else if os.Args[4] == "live" {
+	} else if os.Args[5] == "real" {
 		graph := NewGraph(REAL_DATA)
 		aa := graph.Get("AA")
 		path := NewPath()
@@ -68,10 +68,48 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	if os.Args[5] == "test" {
+		graph := NewGraph(TEST_DATA)
+		aa := graph.Get("AA")
+		path := NewPath()
+		time := 30
+		VERBOSE := true
+		best_path := graph.dfs2(aa, path, time, VERBOSE)
+		fmt.Printf("\nBest=\n%v\n", best_path)
+		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", len(graph.Cache.data), graph.Cache.hits, graph.Cache.misses)
+		fmt.Printf("best value in cache %v, path=%v\n", graph.Cache.max_value, graph.Cache.path)
+
+	} else if os.Args[5] == "real" {
+		graph := NewGraph(REAL_DATA)
+		aa := graph.Get("AA")
+		path := NewPath()
+		time := 30
+		VERBOSE := true
+		best_path := graph.dfs2(aa, path, time, VERBOSE)
+		fmt.Printf("\nBest=\n%v\n", best_path)
+		fmt.Printf("Cache size %v, hits=%v, misses=%v\n", len(graph.Cache.data), graph.Cache.hits, graph.Cache.misses)
+		for key, value := range graph.Cache.data {
+			if value == best_path {
+				fmt.Println(key)
+			}
+		}
+		fmt.Printf("best value in cache %v, path=%v\n", graph.Cache.max_value, graph.Cache.path)
+
+	}
+
 }
 
 func (puzzle *Puzzle) Run() {
-	puzzle.Part1()
-	puzzle.Part2()
+	USAGE := "Usage: aoc run 2022 16 P1|P2 test|real (-v)"
+	if len(os.Args) != 6 {
+		fmt.Println(USAGE)
+		os.Exit(1)
+	} else if os.Args[4] == "P1" {
+		puzzle.Part1()
+	} else if os.Args[4] == "P2" {
+		puzzle.Part2()
+	} else {
+		fmt.Println(USAGE)
+		os.Exit(1)
+	}
 }

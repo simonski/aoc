@@ -98,3 +98,36 @@ Sunday 15:43 Ok am back and am going to try something like
 Wed 18:02: Part 1 done. I had this tension between "I can't brute force it" and then got to caching fragments.  
 The annoying thing was I had the TEST_DATA loading into the graph, so I probably spent and hour running and being
 confused that it wasn't working.
+
+Wed 19:23 Part 2.
+
+So I *think* this is extending the depth-first to run both a depth and breadth-first, where they both share the
+ state of the "open" nodes (the graph).
+
+Now I just need to read about a bfs so I make sure I am happy. If I recall, this would be something that walks each sibling, then rotates back to the first sibling and descends, etc.
+
+https://en.wikipedia.org/wiki/Breadth-first_search
+
+So now I will implement (I think) a test of a BFS so I can demo to myself I can do it.
+Then I might implement a DFS again again and compare the order of searching.
+
+-----
+
+Thursday 22, 08:50.
+
+Things to learn
+
+BFS
+DFS 
+BIG-O
+Stacks
+Queues 
+Deques
+
+copying arrays in go
+testing in go 
+
+
+Saturday 0105 D16 P2 I hope this is it.  The cache takes time to fill up but then we get to a reasonable state.
+
+If it doesnt' work as-is I am going back to fix my cache and path to make it a bitset operation.

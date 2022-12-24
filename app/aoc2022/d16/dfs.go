@@ -1,5 +1,12 @@
 package d16
 
+import (
+	"fmt"
+	"strconv"
+
+	"github.com/simonski/goutils"
+)
+
 // CACHE time on the DFS brute force -
 // there is something about "knowing" from your current path the best achieveable score
 // so we need access to the current "best" scores.  If our route *cannot* give us a better score
@@ -57,4 +64,30 @@ func (g *Graph) dfs(source *Node, current_path *Path, time int, VERBOSE bool) in
 
 	return best
 
+}
+
+func (g *Graph) dfs2(source *Node, current_path *Path, time int, VERBOSE bool) int {
+
+	all_on := g.NewPathAllOn()
+	imax, _ := strconv.ParseInt(all_on.Key(g), 2, 64)
+
+	m := 0
+	b := g.NewPathAllOn()
+	ib := b.IntValue(g)
+
+	aa := g.Get("AA")
+	maxvalue := (imax + 1) / 2
+	var i int64
+	for i = 0; i < maxvalue; i++ {
+		path1 := g.NewPathFromInt(i)
+		path2 := g.NewPathFromInt(ib ^ i)
+
+		fmt.Printf("path1=%v, i=%v, intval=%v\n", path1.Key(g), i, path1.IntValue(g))
+		fmt.Printf("path2=%v, ib^i=%v, intval=%v\n", path2.Key(g), ib^i, path2.IntValue(g))
+
+		m = goutils.Max(m, g.dfs(aa, path1, 26, VERBOSE)+g.dfs(aa, path2, 26, VERBOSE))
+		fmt.Printf("m=%v, i=%v, max=%v\n", m, i, maxvalue)
+	}
+
+	return m
 }
