@@ -3,8 +3,6 @@ package d17
 import (
 	"fmt"
 	"strings"
-
-	"github.com/simonski/goutils"
 )
 
 type Rock struct {
@@ -14,6 +12,7 @@ type Rock struct {
 	input  string
 	x      int
 	y      int
+	Number int
 }
 
 func NewRock(input string) *Rock {
@@ -24,8 +23,10 @@ func NewRock(input string) *Rock {
 	for y, row := range rows {
 		for x := 0; x < len(row); x++ {
 			value := row[x : x+1]
-			p := NewPiece(x, y, value == "#")
-			rock.AddPiece(p)
+			if value != "." {
+				p := NewPiece(x, y)
+				rock.AddPiece(p)
+			}
 		}
 	}
 	rock.height = len(rows)
@@ -42,73 +43,158 @@ func (r *Rock) Equals(rock *Rock) bool {
 }
 
 func (r *Rock) Occupies(x int, y int) bool {
-
 	r_minx := r.x
 	r_maxx := r.x + r.width
-
 	r_miny := r.y - r.height
 	r_maxy := r.y
-
 	return x >= r_minx && x <= r_maxx && y >= r_miny && y <= r_maxy
-
-	// return (x >= r.x && x <= (r.x+r.width)) && (y >= r.y && y <= (r.y+r.height))
 }
 
-func (r *Rock) GetPiece(x int, y int) *Piece {
+func (r *Rock) GetPieceAbsoluteXY(x int, y int) *Piece {
+	key := fmt.Sprintf("%v_%v", x, y)
+	value := r.pieces[key]
+	// if value == nil {
+	// 	fmt.Printf("rock.GetPieceAbsolute(%v,%v) is nil\n", x, y)
+	// }
+	return value
+}
+
+func (r *Rock) GetPieceChamberXY(x int, y int, DEBUG bool) *Piece {
 	xx := x - r.x
-	yy := goutils.Abs(y - r.y) // r.height
+	// yy := goutils.Abs(y - r.y) // r.height
+	yy := r.y - y // - r.y // r.height
+
+	if DEBUG {
+		fmt.Printf("rock.getPieceChamberXY(%v,%v) (Rock=%v,%v), (x=%v, y=%v)\n", x, y, r.x, r.y, xx, yy)
+	}
+
+	if xx < 0 || xx > r.width-1 {
+		return nil
+	}
+	if yy < 0 || yy > r.height-1 {
+		return nil
+	}
 	key := fmt.Sprintf("%v_%v", xx, yy)
 	value := r.pieces[key]
-	// fmt.Printf("rock.getPiece(%v,%v) (x=%v, y=%v) = %v\n", x, y, xx, yy, value)
+	// fmt.Printf("rock.getPieceChamberXY(%v,%v) (Rock=%v,%v), (x=%v, y=%v) = %v\n", x, y, r.x, r.y, xx, yy, value)
 	return value
 }
 
 func (r *Rock) Debug() string {
-	result := ""
-	for index, line := range strings.Split(r.input, ",") {
-		if index > 0 {
-			result = fmt.Sprintf("%v\n%v", result, line)
-		} else {
-			result = line
+	line := ""
+	for row := r.height - 1; row >= 0; row-- {
+		for col := 0; col < r.width; col++ {
+			piece := r.GetPieceAbsoluteXY(col, row)
+			if piece != nil {
+				line = fmt.Sprintf("%v%v", line, "#")
+			} else {
+				line = fmt.Sprintf("%v%v", line, ".")
+			}
+		}
+		if row > 0 {
+			line = fmt.Sprintf("%v\n", line)
 		}
 	}
-	return result
+	return line
 }
 
 func (r *Rock) AddPiece(p *Piece) {
 	r.pieces[p.Key()] = p
 }
 
-func (r *Rock) GetLeftmostPieces() []*Piece {
+func (r *Rock) GetLeftmostPieces(c *Chamber) []*Piece {
 	result := make([]*Piece, 0)
-	for _, piece := range r.pieces {
-		if piece.x == 0 {
-			result = append(result, piece)
+	if r.Equals(c.ROCK_PLUS) {
+		result = append(result, r.GetPieceAbsoluteXY(1, 0))
+		result = append(result, r.GetPieceAbsoluteXY(0, 1))
+		result = append(result, r.GetPieceAbsoluteXY(1, 2))
+	} else if r.Equals(c.ROCK_L) {
+		result = append(result, r.GetPieceAbsoluteXY(2, 0))
+		result = append(result, r.GetPieceAbsoluteXY(2, 1))
+		result = append(result, r.GetPieceAbsoluteXY(0, 2))
+	} else if r.Equals(c.ROCK_HORIZONTAL) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 0))
+	} else if r.Equals(c.ROCK_VERTICAL) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 0))
+		result = append(result, r.GetPieceAbsoluteXY(0, 1))
+		result = append(result, r.GetPieceAbsoluteXY(0, 2))
+		result = append(result, r.GetPieceAbsoluteXY(0, 3))
+	} else if r.Equals(c.ROCK_SQUARE) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 0))
+		result = append(result, r.GetPieceAbsoluteXY(0, 1))
+	} else {
+		for _, piece := range r.pieces {
+			if piece.x == 0 {
+				result = append(result, piece)
+			}
 		}
 	}
 	return result
 }
 
-func (r *Rock) GetRightmostPieces() []*Piece {
+func (r *Rock) GetRightmostPieces(c *Chamber) []*Piece {
 	result := make([]*Piece, 0)
-	for _, piece := range r.pieces {
-		is_right := piece.x+1 == r.width
-		// fmt.Printf("piece(%v,%v), rock width %v right?=%v\n", piece.x, piece.y, r.width, is_right)
-		if is_right {
-			result = append(result, piece)
+	if r.Equals(c.ROCK_PLUS) {
+		result = append(result, r.GetPieceAbsoluteXY(1, 0))
+		result = append(result, r.GetPieceAbsoluteXY(2, 1))
+		result = append(result, r.GetPieceAbsoluteXY(1, 2))
+	} else if r.Equals(c.ROCK_L) {
+		result = append(result, r.GetPieceAbsoluteXY(2, 0))
+		result = append(result, r.GetPieceAbsoluteXY(2, 1))
+		result = append(result, r.GetPieceAbsoluteXY(2, 2))
+	} else if r.Equals(c.ROCK_HORIZONTAL) {
+		result = append(result, r.GetPieceAbsoluteXY(3, 0))
+	} else if r.Equals(c.ROCK_VERTICAL) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 0))
+		result = append(result, r.GetPieceAbsoluteXY(0, 1))
+		result = append(result, r.GetPieceAbsoluteXY(0, 2))
+		result = append(result, r.GetPieceAbsoluteXY(0, 3))
+	} else if r.Equals(c.ROCK_SQUARE) {
+		result = append(result, r.GetPieceAbsoluteXY(1, 0))
+		result = append(result, r.GetPieceAbsoluteXY(1, 1))
+
+	} else {
+		for _, piece := range r.pieces {
+			is_right := piece.x+1 == r.width
+			// fmt.Printf("piece(%v,%v), rock width %v right?=%v\n", piece.x, piece.y, r.width, is_right)
+			if is_right {
+				result = append(result, piece)
+			}
 		}
 	}
 	// fmt.Printf(":this rock has %v rightmost pieces\n", len(result))
 	return result
 }
 
-func (r *Rock) GetBottomPieces() []*Piece {
+func (r *Rock) GetBottomPieces(c *Chamber) []*Piece {
 	result := make([]*Piece, 0)
-	for _, piece := range r.pieces {
-		outcome := piece.y+1 == r.height
-		// fmt.Printf("bottom(%v,%v) on rock height %v, result=%v\n", piece.x, piece.y, r.height, outcome)
-		if outcome {
-			result = append(result, piece)
+	if r.Equals(c.ROCK_PLUS) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 1))
+		result = append(result, r.GetPieceAbsoluteXY(1, 2))
+		result = append(result, r.GetPieceAbsoluteXY(2, 1))
+	} else if r.Equals(c.ROCK_L) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 2))
+		result = append(result, r.GetPieceAbsoluteXY(1, 2))
+		result = append(result, r.GetPieceAbsoluteXY(2, 2))
+	} else if r.Equals(c.ROCK_HORIZONTAL) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 0))
+		result = append(result, r.GetPieceAbsoluteXY(1, 0))
+		result = append(result, r.GetPieceAbsoluteXY(2, 0))
+		result = append(result, r.GetPieceAbsoluteXY(3, 0))
+	} else if r.Equals(c.ROCK_VERTICAL) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 3))
+	} else if r.Equals(c.ROCK_SQUARE) {
+		result = append(result, r.GetPieceAbsoluteXY(0, 1))
+		result = append(result, r.GetPieceAbsoluteXY(1, 1))
+
+	} else {
+		result = make([]*Piece, 0)
+		for _, piece := range r.pieces {
+			outcome := piece.y+1 == r.height
+			// fmt.Printf("bottom(%v,%v) on rock height %v, result=%v\n", piece.x, piece.y, r.height, outcome)
+			if outcome {
+				result = append(result, piece)
+			}
 		}
 	}
 	return result

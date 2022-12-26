@@ -20,5 +20,7 @@ The chamber will have a debug, once it works we can then generate the chamber kn
 
 Rock, Piece, Chamber.  I'll cool my jets a little and put some TDD Around these as there are some assumptiosn I'd like to get correct first time if possible. 
 
+2022-12-23 1518 - all together and then I go and mistake the leftmost/rightmost and bottom-most entries for the "funny" shapes.  So I incur a 5m penalty.  Let's see, I *should* get it right next time...
+
 
 

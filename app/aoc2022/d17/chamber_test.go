@@ -28,7 +28,6 @@ func Test_RockP(t *testing.T) {
 	if pc.Equals(c.ROCK_HORIZONTAL) {
 		t.Fatalf("CLoned PLUS must not equal ROCK_L")
 	}
-
 }
 
 func Test_RockH(t *testing.T) {
@@ -55,14 +54,13 @@ func Test_RockH(t *testing.T) {
 		t.Fatalf("CLoned H must not equal ROCK_SQUARE")
 	}
 
-	if !rock.GetPiece(0, 0).solid {
+	if rock.GetPieceChamberXY(0, 0, false) == nil {
 		t.Fatalf("Piece(0,0) in SQUARE should be solid.")
 	}
 
-	if rock.GetPiece(5, 5) != nil {
+	if rock.GetPieceChamberXY(5, 5, false) != nil {
 		t.Fatalf("Piece(5,5) in SQUARE should be nil.")
 	}
-
 }
 
 func Test_NewRock(t *testing.T) {
@@ -108,7 +106,6 @@ func Test_NewRock(t *testing.T) {
 		fmt.Println(r7.Debug())
 		t.Fatalf("7th rock should be PLUS (tick=%v).", c.rockTick)
 	}
-
 }
 
 func Test_Debug(t *testing.T) {
@@ -119,7 +116,6 @@ func Test_Debug(t *testing.T) {
 		fmt.Println(c.Debug())
 		t.Fatalf("")
 	}
-
 }
 
 func Test_DebugTicks(t *testing.T) {
@@ -129,14 +125,355 @@ func Test_DebugTicks(t *testing.T) {
 		fmt.Println("")
 		fmt.Println(c.Debug())
 	}
+}
 
+func requireRock(rock1 *Rock, rock2 *Rock, t *testing.T) {
+	if !rock1.Equals(rock2) {
+		t.Fatal("Rock differs.")
+	}
+}
+func Test_DebugRocks(t *testing.T) {
+	c := NewChamber(TEST_DATA)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
+	requireRock(c.NewRock(), c.ROCK_PLUS, t)
+	requireRock(c.NewRock(), c.ROCK_L, t)
+	requireRock(c.NewRock(), c.ROCK_VERTICAL, t)
+	requireRock(c.NewRock(), c.ROCK_SQUARE, t)
+}
+
+func Test_Rock_equals(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	horiz := c.ROCK_HORIZONTAL.Clone()
+	vert := c.ROCK_VERTICAL.Clone()
+	l := c.ROCK_L.Clone()
+	plus := c.ROCK_PLUS.Clone()
+	sq := c.ROCK_SQUARE.Clone()
+	if !horiz.Equals(c.ROCK_HORIZONTAL) {
+		t.Fatal("horiz is not equal.\n")
+	}
+	if len(horiz.pieces) != 4 {
+		t.Fatalf("horiz shoudl have 4 pieces, has %v\n", len(horiz.pieces))
+	}
+
+	if !sq.Equals(c.ROCK_SQUARE) {
+		t.Fatal("square is not equal.\n")
+	}
+	if len(sq.pieces) != 4 {
+		t.Fatalf("sq shoudl have 4 pieces, has %v\n", len(sq.pieces))
+	}
+
+	if !vert.Equals(c.ROCK_VERTICAL) {
+		t.Fatal("vertical is not equal.\n")
+	}
+	if len(vert.pieces) != 4 {
+		t.Fatalf("vert shoudl have 4 pieces, has %v\n", len(vert.pieces))
+	}
+
+	if !plus.Equals(c.ROCK_PLUS) {
+		t.Fatal("plus is not equal.\n")
+	}
+	if len(plus.pieces) != 9 {
+		t.Fatalf("plus shoudl have 9 pieces, has %v\n", len(plus.pieces))
+	}
+
+	if !l.Equals(c.ROCK_L) {
+		t.Fatal("l is not equal.\n")
+	}
+	if len(l.pieces) != 9 {
+		t.Fatalf("vert should have 9 pieces, has %v\n", len(l.pieces))
+	}
+}
+
+func requirePieceXY(rock *Rock, x int, y int, solid bool, t *testing.T) {
+	p := rock.GetPieceAbsoluteXY(x, y)
+	if p == nil {
+		t.Fatalf("rock should contain a piece at %v,%v\n", x, y)
+	}
+	if p.x != x || p.y != y {
+		t.Fatalf("requirePiece, x=%v, should be %v, y=%v, should be %v", p.x, x, p.y, y)
+	}
+}
+func requireNilPieceXY(rock *Rock, x int, y int, t *testing.T) {
+	p := rock.GetPieceAbsoluteXY(x, y)
+	if p != nil {
+		t.Fatalf("rock should not contain a piece at %v,%v\n", x, y)
+	}
+}
+
+func Test_Piece_Horizontal(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	h := c.ROCK_HORIZONTAL.Clone()
+	requirePieceXY(h, 0, 0, true, t)
+	requirePieceXY(h, 1, 0, true, t)
+	requirePieceXY(h, 2, 0, true, t)
+	requirePieceXY(h, 3, 0, true, t)
+	requireNilPieceXY(h, 4, 0, t)
+}
+
+func Test_Piece_Vertical(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	h := c.ROCK_VERTICAL.Clone()
+	requirePieceXY(h, 0, 0, true, t)
+	requirePieceXY(h, 0, 1, true, t)
+	requirePieceXY(h, 0, 2, true, t)
+	requirePieceXY(h, 0, 3, true, t)
+	requireNilPieceXY(h, 1, 3, t)
+}
+
+func Test_Piece_Square(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	h := c.ROCK_SQUARE.Clone()
+	requirePieceXY(h, 0, 0, true, t)
+	requirePieceXY(h, 1, 0, true, t)
+	requirePieceXY(h, 0, 1, true, t)
+	requirePieceXY(h, 1, 1, true, t)
+	requireNilPieceXY(h, 2, 2, t)
+}
+
+func Test_Piece_L(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	h := c.ROCK_L.Clone()
+	requirePieceXY(h, 2, 0, true, t)
+	requirePieceXY(h, 2, 1, true, t)
+	requirePieceXY(h, 2, 2, true, t)
+	requirePieceXY(h, 1, 2, true, t)
+	requirePieceXY(h, 0, 2, true, t)
+
+	requireNilPieceXY(h, 0, 0, t)
+	requireNilPieceXY(h, 1, 0, t)
+	requireNilPieceXY(h, 1, 1, t)
+	requireNilPieceXY(h, 1, 1, t)
+}
+
+func Test_Piece_Plus(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	h := c.ROCK_PLUS.Clone()
+	requireNilPieceXY(h, 0, 0, t)
+	requirePieceXY(h, 1, 0, true, t)
+	requireNilPieceXY(h, 2, 0, t)
+
+	requirePieceXY(h, 0, 1, true, t)
+	requirePieceXY(h, 1, 1, true, t)
+	requirePieceXY(h, 2, 1, true, t)
+
+	requireNilPieceXY(h, 0, 2, t)
+	requirePieceXY(h, 1, 2, true, t)
+	requireNilPieceXY(h, 2, 2, t)
+}
+
+func Test_Edges_Horizontal(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	left := c.ROCK_HORIZONTAL.GetLeftmostPieces(c)
+	bottom := c.ROCK_HORIZONTAL.GetBottomPieces(c)
+	right := c.ROCK_HORIZONTAL.GetRightmostPieces(c)
+
+	if len(left) != 1 {
+		t.Fatalf("HORIZONTAL should have 1 left most but has %v\n", len(left))
+	}
+	if len(right) != 1 {
+		t.Fatalf("HORIZONTAL should have 1 right most but has %v\n%v\n", len(right), right)
+	}
+	if len(bottom) != 4 {
+		t.Fatalf("HORIZONTAL should have 4 bottom most but has %v\n", len(bottom))
+	}
+}
+
+func Test_Edges_Vertical(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	left := c.ROCK_VERTICAL.GetLeftmostPieces(c)
+	right := c.ROCK_VERTICAL.GetRightmostPieces(c)
+	bottom := c.ROCK_VERTICAL.GetBottomPieces(c)
+	if len(left) != 4 {
+		t.Fatalf("ROCK_VERTICAL should have 4 left most but has %v\n", len(left))
+	}
+	if len(bottom) != 1 {
+		t.Fatalf("ROCK_VERTICAL should have 1 bottom most but has %v\n", len(bottom))
+	}
+	if len(right) != 4 {
+		t.Fatalf("ROCK_VERTICAL should have 4 right most but has %v\n", len(right))
+	}
+}
+
+func Test_Edges_Square(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	left := c.ROCK_SQUARE.GetLeftmostPieces(c)
+	right := c.ROCK_SQUARE.GetRightmostPieces(c)
+	bottom := c.ROCK_SQUARE.GetBottomPieces(c)
+	if len(left) != 2 {
+		t.Fatalf("ROCK_SQUARE should have 2 left most but has %v\n", len(left))
+	}
+	if len(bottom) != 2 {
+		t.Fatalf("ROCK_SQUARE should have 2 bottom most but has %v\n", len(bottom))
+	}
+	if len(right) != 2 {
+		t.Fatalf("ROCK_SQUARE should have 2 right most but has %v\n", len(right))
+	}
+}
+
+func Test_Edges_L(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	left := c.ROCK_L.GetLeftmostPieces(c)
+	bottom := c.ROCK_L.GetRightmostPieces(c)
+	right := c.ROCK_L.GetBottomPieces(c)
+	if len(left) != 3 {
+		t.Fatalf("ROCK_L should have 3 left most but has %v\n", len(left))
+	}
+	if len(bottom) != 3 {
+		t.Fatalf("ROCK_L should have 3 bottom most but has %v\n", len(bottom))
+	}
+	if len(right) != 3 {
+		t.Fatalf("ROCK_L should have 3 right most but has %v\n", len(right))
+	}
+}
+
+func Test_Edges_Plus(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	left := c.ROCK_PLUS.GetLeftmostPieces(c)
+	bottom := c.ROCK_PLUS.GetRightmostPieces(c)
+	right := c.ROCK_PLUS.GetBottomPieces(c)
+	if len(left) != 3 {
+		t.Fatalf("ROCK_PLUS should have 3 left most but has %v\n", len(left))
+	}
+	if len(bottom) != 3 {
+		t.Fatalf("ROCK_PLUS should have 3 bottom most but has %v\n", len(bottom))
+	}
+	if len(right) != 3 {
+		t.Fatalf("ROCK_PLUS should have 3 right most but has %v\n", len(right))
+	}
 }
 
 func Test_DebugTicks5(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
+	// c.Run(true, 20)
+	c.Run(false, 2022)
+	fmt.Println(c.Debug())
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height())
+}
+
+func Test_DebugTicks6(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	fmt.Println(c.Debug())
+
+	// 3111 too low
+	// 3162 too high
+	// 3133? no, 5m wait (4th attempt)
+	// 3140? no, another 5m wait.
+	// 3159 no, 5m wait
+
 	c.Run(false, 2022)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height())
 
+}
+
+// check the abolute positioning
+
+func Test_It(t *testing.T) {
+	Test_RockP(t)
+	Test_RockH(t)
+	Test_NewRock(t)
+	Test_Debug(t)
+	Test_DebugTicks(t)
+	Test_DebugRocks(t)
 }
