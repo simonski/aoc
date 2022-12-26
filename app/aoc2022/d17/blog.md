@@ -24,3 +24,18 @@ Rock, Piece, Chamber.  I'll cool my jets a little and put some TDD Around these 
 
 
 
+
+2022-12-26 
+
+Got up at 6am very tired and unwell with my cold, but I got P1 done. I messed about and got completely tangled in figuring out the position of pieces.  In the end I rewrote a piececache and found a - instead of + bug.  Ho-hum. Should have taken 3 hours, took day.s  but that's okay!
+
+P2 - cycle detection I think. My approach is: 
+
+- Find a repeating pattern - a key - by grabbing a few rows and looking for them repeating. 
+- Then take the difference (between the repeats) and verify *it* repeats.
+- Then look for the first occurance of that to get the row.  
+- Then figure out the rock number and what that pattern looks like.
+
+I think the "find a pattern" happens *after* some preamble of rows.  Additionally, a single repeating row won't be 
+enough - I'll need a few, or quite a few (I don't know).  So it needs to be something I can vary.   This part I think
+will be a bit of stdout etc; semi-automated via tests etc.

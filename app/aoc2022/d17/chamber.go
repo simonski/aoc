@@ -14,11 +14,14 @@ type Chamber struct {
 	ROCK_PLUS       *Rock
 	ROCK_L          *Rock
 	ROCK_SQUARE     *Rock
-	Rocks           []*Rock
+	Rocks           map[int]*Rock
 	CurrentRock     *Rock
+	MaxPieceY       int
 	Width           int
 	Height          int
-	Pieces          map[string]*Piece
+	PieceCache      map[string]*Piece
+	Floor           int
+	RockCount       int
 }
 
 func NewChamber(input string) *Chamber {
@@ -29,7 +32,9 @@ func NewChamber(input string) *Chamber {
 	c.ROCK_VERTICAL = NewRock("V", "#,#,#,#")
 	c.ROCK_SQUARE = NewRock("SQ", "##,##")
 	c.Width = 7
-	c.Pieces = make(map[string]*Piece)
+	c.PieceCache = make(map[string]*Piece)
+	c.Floor = 0
+	c.Rocks = make(map[int]*Rock)
 	return &c
 }
 
@@ -55,20 +60,6 @@ func (c *Chamber) NewRock() *Rock {
 	}
 }
 
-// func (c *Chamber) Height() int {
-
-// 	if len(c.Rocks) == 0 {
-// 		return 0
-// 	}
-// 	y := 0
-// 	for _, rock := range c.Rocks {
-// 		if rock.y > y {
-// 			y = rock.y
-// 		}
-// 	}
-// 	return y + 1
-// }
-
 func (c *Chamber) AddRock(rock *Rock) {
 	// reset the height
 	maxY := c.Height
@@ -78,8 +69,8 @@ func (c *Chamber) AddRock(rock *Rock) {
 	// fmt.Println(rock.Debug())
 
 	c.CurrentRock = rock
-	c.Rocks = append(c.Rocks, rock)
-	rock.Number = len(c.Rocks)
+	rock.Number = len(c.Rocks) + 1
+	c.Rocks[rock.Number] = rock
 
 	// make this rock 2 units space left three units above highest rock (or floor)
 	rock.x = 2
@@ -87,7 +78,7 @@ func (c *Chamber) AddRock(rock *Rock) {
 	rock.y = maxY + 3 + (rock.height - 1)
 	c.Height = rock.y + 1
 
-	c.AddRockToMap(rock)
+	c.AddRockToCache(rock)
 
 	// rock.y =
 	// fmt.Printf("AddRock - rock x,y is (%v,%v), width=%v, height=%v\n", rock.x, rock.y, rock.width, rock.height)
@@ -143,39 +134,45 @@ func (c *Chamber) CanRockMoveDown(rock *Rock) bool {
 }
 
 func (c *Chamber) MoveLeft(rock *Rock) {
-	c.RemoveRockFromMap(rock)
+	c.RemoveRockFromCache(rock)
 	rock.x -= 1
-	c.AddRockToMap(rock)
+	c.AddRockToCache(rock)
 }
 
 func (c *Chamber) MoveRight(rock *Rock) {
-	c.RemoveRockFromMap(rock)
+	c.RemoveRockFromCache(rock)
 	rock.x += 1
-	c.AddRockToMap(rock)
+	c.AddRockToCache(rock)
 }
 
 func (c *Chamber) MoveDown(rock *Rock) {
-	c.RemoveRockFromMap(rock)
+	c.RemoveRockFromCache(rock)
 	rock.y -= 1
-	c.AddRockToMap(rock)
+	c.AddRockToCache(rock)
 	y := 0
 	for _, r := range c.Rocks {
 		y = goutils.Max(y, r.y)
 	}
+
+	// for k, _ := range c.PieceCache {
+	// 	splits := strings.Split(k, "_")
+	// 	ycandidate, _ := strconv.Atoi(splits[1])
+	// 	y = goutils.Max(y, ycandidate)
+	// }
+
 	if y == 0 {
 		y = 1
 		c.Height = y
 	} else {
 		c.Height = y + 1
-
 	}
 
 }
 
-func (c *Chamber) RemoveRockFromMap(rock *Rock) {
+func (c *Chamber) RemoveRockFromCache(rock *Rock) {
 	remove := make([]string, 0)
-	for key := range c.Pieces {
-		piece := c.Pieces[key]
+	for key := range c.PieceCache {
+		piece := c.PieceCache[key]
 		if piece != nil {
 			if piece.Rock == rock {
 				remove = append(remove, key)
@@ -184,27 +181,41 @@ func (c *Chamber) RemoveRockFromMap(rock *Rock) {
 	}
 
 	for _, key := range remove {
-		delete(c.Pieces, key)
+		delete(c.PieceCache, key)
 	}
 
 }
 
-func (c *Chamber) AddRockToMap(rock *Rock) {
+func (c *Chamber) AddRockToCache(rock *Rock) {
+	c.AddRockToCache_V2(rock)
+}
 
-	// fmt.Printf("AddRockToMap(%v,%v)\n%v\n", rock.x, rock.y, rock.Debug())
+func (c *Chamber) AddRockToCache_V2(rock *Rock) {
+	for _, piece := range rock.pieces {
+		x := rock.x + piece.x
+		y := rock.y - piece.y
+		key := fmt.Sprintf("%v_%v", x, y)
+		c.MaxPieceY = goutils.Max(c.MaxPieceY, y)
+		c.PieceCache[key] = piece
+	}
+
+}
+
+func (c *Chamber) AddRockToCache_V1(rock *Rock) {
+
 	// reset the pieces in the map
-	for row := 0; row < rock.height; row++ {
+	for row := c.Floor; row < rock.height; row++ {
 		for col := 0; col < rock.width; col++ {
 			new_x := col + rock.x
 			new_y := rock.y - row
 			key := fmt.Sprintf("%v_%v", new_x, new_y)
 			piece := rock.GetPieceAbsoluteXY(col, row)
 			if piece != nil {
-				if c.Pieces[key] == nil {
-					c.Pieces[key] = piece
+				if c.PieceCache[key] == nil {
+					c.PieceCache[key] = piece
 				} else {
 					fmt.Println(c.Debug())
-					otherRock := c.Pieces[key].Rock
+					otherRock := c.PieceCache[key].Rock
 					fmt.Printf("Rock %v is trying to overwrite a piece from rock %v at position [%v] ", rock.Number, otherRock.Number, key)
 					panic("foo")
 				}
@@ -219,12 +230,12 @@ func (c *Chamber) Tick(instruction string, VERBOSE bool, VERY_VERBOSE bool) bool
 		if c.CanRockMoveLeft(c.CurrentRock) {
 			c.MoveLeft(c.CurrentRock)
 			if VERY_VERBOSE {
-				fmt.Println("Jet of gas pushes rock left:")
+				fmt.Printf("Jet of gas pushes rock left (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
 				fmt.Println(c.Debug())
 			}
 		} else {
 			if VERY_VERBOSE {
-				fmt.Println("Jet of gas pushes rock left, but nothing happens:")
+				fmt.Printf("Jet of gas pushes rock left, but nothing happens (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
 				fmt.Println(c.Debug())
 			}
 		}
@@ -232,12 +243,12 @@ func (c *Chamber) Tick(instruction string, VERBOSE bool, VERY_VERBOSE bool) bool
 		if c.CanRockMoveRight(c.CurrentRock) {
 			c.MoveRight(c.CurrentRock)
 			if VERY_VERBOSE {
-				fmt.Println("Jet of gas pushes rock right")
+				fmt.Printf("Jet of gas pushes rock right (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
 				fmt.Println(c.Debug())
 			}
 		} else {
 			if VERY_VERBOSE {
-				fmt.Println("Jet of gas pushes rock right, but nothing happens:")
+				fmt.Printf("Jet of gas pushes rock right, but nothing happens: (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
 				fmt.Println(c.Debug())
 			}
 
@@ -266,7 +277,7 @@ func (c *Chamber) Run(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 	if VERBOSE {
 		fmt.Printf("\n[%v] %v\n%v\n", 0, "BEGIN", c.Debug())
 	}
-	rockCount := 1
+	c.RockCount = 1
 	index := -1
 	for {
 		index++
@@ -277,7 +288,7 @@ func (c *Chamber) Run(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 		instruction := c.Input[index : index+1]
 		if !c.Tick(instruction, VERBOSE, VERY_VERBOSE) {
 			c.CurrentRock = nil
-			if rockCount >= breakAfterRock {
+			if c.RockCount >= breakAfterRock {
 				return
 			}
 
@@ -286,20 +297,105 @@ func (c *Chamber) Run(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 			if VERBOSE {
 				fmt.Printf("A new rock begins falling\n%v\n", c.Debug())
 			}
-			rockCount++
+			c.RockCount++
 
-			if rockCount%1000 == 0 {
+			if c.RockCount%1000 == 0 {
 				max := 1000000000000
-				pct := (100 / max) * rockCount
-				fmt.Printf("%v%% (%v/%v)\n", pct, rockCount, max)
-				fmt.Println(c.Debug())
+				pct := (100 / max) * c.RockCount
+				fmt.Printf("%v%% (%v/%v) - %v rocks in cache, %v pieces in cache\n", pct, c.RockCount, max, len(c.Rocks), len(c.PieceCache))
+				if VERBOSE {
+					fmt.Println(c.Debug())
+				}
+
+				// go from the "first" rock and work out when we get to a seal
+				col1 := false
+				col2 := false
+				col3 := false
+				col4 := false
+				col5 := false
+				col6 := false
+				col7 := false
+
+				closingLine := -1
+
+				// walk up from the bottom finding the first row that "closes" horizontally.
 
 				// see if we can find a line that means we can drop the number of rocks and pieces we have
+
+				for row := c.Height - 1; row > c.Floor; row-- {
+					col1 = c.IsOccupied(0, row) || c.IsOccupied(0, row-1)
+					col2 = c.IsOccupied(1, row) || c.IsOccupied(1, row-1)
+					col3 = c.IsOccupied(2, row) || c.IsOccupied(2, row-1)
+					col4 = c.IsOccupied(3, row) || c.IsOccupied(3, row-1)
+					col5 = c.IsOccupied(4, row) || c.IsOccupied(4, row-1)
+					col6 = c.IsOccupied(5, row) || c.IsOccupied(5, row-1)
+					col7 = c.IsOccupied(6, row) || c.IsOccupied(6, row-1)
+
+					if col1 && col2 && col3 && col4 && col5 && col6 && col7 {
+						closingLine = row - 1
+						break
+					}
+				}
+
+				for row := c.Floor; row < c.Height; row++ {
+					value := c.DebugRow(row)
+					if value == "#######" {
+						fmt.Printf("row [%v] = %v\n", row, value)
+					}
+				}
+
+				if closingLine > -1 {
+
+					// if c.RockCount >= 9000 {
+					// 	VERBOSE = true
+					// 	// VERY_VERBOSE = true
+					// }
+
+					oldFloor := c.Floor
+					if VERBOSE {
+						fmt.Printf("Terminating line is %v, old floor was %v, setting new floor to be %v\n", closingLine, oldFloor, closingLine-1)
+						fmt.Printf("Remove all pieces and rocks from the floor to just under this new floor")
+					}
+					c.Floor = closingLine - 1
+					// get rid of anything "lower" than closingLine-1
+
+					for index := oldFloor; index < closingLine; index++ {
+						for col := 0; col < 7; col++ {
+							key := fmt.Sprintf("%v_%v", col, index)
+							// fmt.Printf("Removing piece %v\n", key)
+							delete(c.PieceCache, key)
+						}
+					}
+
+					remove_rock := make([]int, 0)
+					for rock_key, rock := range c.Rocks {
+						if rock.y < closingLine {
+							remove_rock = append(remove_rock, rock_key)
+						}
+					}
+					for _, key := range remove_rock {
+						delete(c.Rocks, key)
+					}
+
+					if VERBOSE {
+						fmt.Printf("After cleaning, graph is\n\n%v\n", c.Debug())
+					}
+				}
+				// os.Exit(1)
 
 			}
 
 		}
 	}
+}
+
+func (c *Chamber) DebugRow(row int) string {
+	line := ""
+	for col := 0; col < c.Width; col++ {
+		piece := c.GetRockPieceString(col, row)
+		line = fmt.Sprintf("%v%v", line, piece)
+	}
+	return line
 }
 
 func (c *Chamber) Debug() string {
@@ -313,7 +409,8 @@ func (c *Chamber) Debug() string {
 	// fmt.Println(rock.Debug())
 	// }
 	line := ""
-	for row := c.Height - 1; row >= 0; row-- {
+	maxY := goutils.Max(c.MaxPieceY, c.Height)
+	for row := maxY - 1; row >= c.Floor; row-- {
 		line = fmt.Sprintf("%v|", line)
 		for col := 0; col < c.Width; col++ {
 			piece := c.GetRockPieceString(col, row)
@@ -326,18 +423,18 @@ func (c *Chamber) Debug() string {
 		line = fmt.Sprintf("%v     %v\n", line, row)
 	}
 	line = fmt.Sprintf("%v+-------+", line)
-	fmt.Printf("Rocks=%v, Height=%v\n", len(c.Rocks), c.Height)
+	fmt.Printf("Rocks=%v, Height=%v\n", c.RockCount, c.Height)
 	return line
 }
 
 func (c *Chamber) GetRockPiece(x int, y int) *Piece {
 	key := fmt.Sprintf("%v_%v", x, y)
-	return c.Pieces[key]
+	return c.PieceCache[key]
 }
 
 func (c *Chamber) GetRockPieceString(x int, y int) string {
 	key := fmt.Sprintf("%v_%v", x, y)
-	piece := c.Pieces[key]
+	piece := c.PieceCache[key]
 	// fmt.Printf("GetRockPieceString(%v,%v)=%v\n", x, y, piece)
 	if piece == nil {
 		return "."
