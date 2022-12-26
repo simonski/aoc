@@ -36,22 +36,29 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	c := NewChamber(TEST_DATA)
-	// fmt.Println(c.Debug())
-	c.Run(false, false, 2022)
-	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+	if os.Args[5] == "test" {
+		c := NewChamber(TEST_DATA)
+		// fmt.Println(c.Debug())
+		c.RunPart1(false, false, 2022)
+		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+	} else if os.Args[5] == "real" {
+		c := NewChamber(REAL_DATA)
+		// fmt.Println(c.Debug())
+		c.RunPart1(false, false, 2022)
+		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+	}
 }
 
 func (puzzle *Puzzle) Part2() {
 	if os.Args[5] == "test" {
 		c := NewChamber(TEST_DATA)
 		fmt.Println(c.Debug())
-		c.Run(false, false, 1000000000000)
+		c.RunPart2(false, false, 1000000000000)
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 	} else if os.Args[5] == "real" {
 		c := NewChamber(REAL_DATA)
 		fmt.Println(c.Debug())
-		c.Run(false, false, 1000000000000)
+		c.RunPart2(false, false, 1000000000000)
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 	}
 }

@@ -125,7 +125,7 @@ func Test_Debug(t *testing.T) {
 
 func Test_DebugTicks(t *testing.T) {
 	c := NewChamber(TEST_DATA)
-	c.Run(true, false, -1)
+	c.RunPart1(true, false, -1)
 	if true {
 		fmt.Println("")
 		fmt.Println(c.Debug())
@@ -451,7 +451,7 @@ func Test_Part1_Test(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
 	// c.Run(true, true, 41)
-	c.Run(false, false, 2022)
+	c.RunPart1(false, false, 2022)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
@@ -466,7 +466,7 @@ func Test_Part1_Real(t *testing.T) {
 	// 3140? no, another 5m wait.
 	// 3159 no, 5m wait
 
-	c.Run(false, false, 2022)
+	c.RunPart1(false, false, 2022)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 
@@ -477,13 +477,13 @@ func Test_Part1_Real(t *testing.T) {
 func Test_Part2_Test(t *testing.T) {
 	c := NewChamber(REAL_DATA)
 	fmt.Println(c.Debug())
-	c.Run(false, false, 1000000000000)
+	c.RunPart2(false, false, 1000000000000)
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func Test_Part2_Real(t *testing.T) {
 	c := NewChamber(REAL_DATA)
 	fmt.Println(c.Debug())
-	c.Run(false, false, 1000000000000)
+	c.RunPart2(false, false, 1000000000000)
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
