@@ -70,12 +70,12 @@ func (c *Chamber) RunPart2(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) 
 					}
 				}
 
-				for row := c.Floor; row < c.Height; row++ {
-					value := c.DebugRow(row)
-					if value == "#######" {
-						fmt.Printf("row [%v] = %v\n", row, value)
-					}
-				}
+				// for row := c.Floor; row < c.Height; row++ {
+				// 	value := c.DebugRow(row)
+				// 	if value == "#######" {
+				// 		fmt.Printf("row [%v] = %v\n", row, value)
+				// 	}
+				// }
 
 				if closingLine > -1 {
 

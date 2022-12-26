@@ -450,7 +450,6 @@ func Test_Piece_Plus(t *testing.T) {
 func Test_Part1_Test(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
-	// c.Run(true, true, 41)
 	c.RunPart1(false, false, 2022, false)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
@@ -500,7 +499,7 @@ func Test_Part1_Real_FindFloor(t *testing.T) {
 // check the abolute positioning
 
 func Test_Part2_Test(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
 	c.RunPart2(false, false, 1000000000000)
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
