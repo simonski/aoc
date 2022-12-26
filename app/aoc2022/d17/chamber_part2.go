@@ -4,52 +4,6 @@ import (
 	"fmt"
 )
 
-func (c *Chamber) TickPart2(instruction string, VERBOSE bool, VERY_VERBOSE bool) bool {
-	if instruction == "<" {
-		if c.CanRockMoveLeft(c.CurrentRock) {
-			c.MoveLeft(c.CurrentRock)
-			if VERY_VERBOSE {
-				fmt.Printf("Jet of gas pushes rock left (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
-				fmt.Println(c.Debug())
-			}
-		} else {
-			if VERY_VERBOSE {
-				fmt.Printf("Jet of gas pushes rock left, but nothing happens (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
-				fmt.Println(c.Debug())
-			}
-		}
-	} else if instruction == ">" {
-		if c.CanRockMoveRight(c.CurrentRock) {
-			c.MoveRight(c.CurrentRock)
-			if VERY_VERBOSE {
-				fmt.Printf("Jet of gas pushes rock right (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
-				fmt.Println(c.Debug())
-			}
-		} else {
-			if VERY_VERBOSE {
-				fmt.Printf("Jet of gas pushes rock right, but nothing happens: (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
-				fmt.Println(c.Debug())
-			}
-
-		}
-	}
-
-	if c.CanRockMoveDown(c.CurrentRock) {
-		c.MoveDown(c.CurrentRock)
-		if VERY_VERBOSE {
-			fmt.Println("Rock falls 1 unit:")
-			fmt.Println(c.Debug())
-		}
-		return true
-	} else {
-		if VERY_VERBOSE {
-			fmt.Println("Rock falls 1 unit, causing it to come to rest:")
-			fmt.Println(c.Debug())
-		}
-	}
-	return false
-}
-
 func (c *Chamber) RunPart2(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 	rock := c.NewRock()
 	c.AddRock(rock)
@@ -166,4 +120,50 @@ func (c *Chamber) RunPart2(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) 
 
 		}
 	}
+}
+
+func (c *Chamber) TickPart2(instruction string, VERBOSE bool, VERY_VERBOSE bool) bool {
+	if instruction == "<" {
+		if c.CanRockMoveLeft(c.CurrentRock) {
+			c.MoveLeft(c.CurrentRock)
+			if VERY_VERBOSE {
+				fmt.Printf("Jet of gas pushes rock left (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
+				fmt.Println(c.Debug())
+			}
+		} else {
+			if VERY_VERBOSE {
+				fmt.Printf("Jet of gas pushes rock left, but nothing happens (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
+				fmt.Println(c.Debug())
+			}
+		}
+	} else if instruction == ">" {
+		if c.CanRockMoveRight(c.CurrentRock) {
+			c.MoveRight(c.CurrentRock)
+			if VERY_VERBOSE {
+				fmt.Printf("Jet of gas pushes rock right (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
+				fmt.Println(c.Debug())
+			}
+		} else {
+			if VERY_VERBOSE {
+				fmt.Printf("Jet of gas pushes rock right, but nothing happens: (current rock is %v, (%v,%v):\n", c.CurrentRock.Name, c.CurrentRock.x, c.CurrentRock.y)
+				fmt.Println(c.Debug())
+			}
+
+		}
+	}
+
+	if c.CanRockMoveDown(c.CurrentRock) {
+		c.MoveDown(c.CurrentRock)
+		if VERY_VERBOSE {
+			fmt.Println("Rock falls 1 unit:")
+			fmt.Println(c.Debug())
+		}
+		return true
+	} else {
+		if VERY_VERBOSE {
+			fmt.Println("Rock falls 1 unit, causing it to come to rest:")
+			fmt.Println(c.Debug())
+		}
+	}
+	return false
 }

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/simonski/cli"
 )
 
 /*
@@ -36,15 +38,23 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
+	cli := cli.New(os.Args)
+	verbose := cli.Contains("-v")
+	very_verbose := cli.Contains("-vv")
+	if very_verbose {
+		verbose = true
+	}
 	if os.Args[5] == "test" {
 		c := NewChamber(TEST_DATA)
 		// fmt.Println(c.Debug())
-		c.RunPart1(false, false, 2022)
+		c.RunPart1(verbose, very_verbose, 2022, false)
+		fmt.Println(c.Debug())
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 	} else if os.Args[5] == "real" {
 		c := NewChamber(REAL_DATA)
 		// fmt.Println(c.Debug())
-		c.RunPart1(false, false, 2022)
+		c.RunPart1(verbose, very_verbose, 2022, true)
+		fmt.Println(c.Debug())
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 	}
 }
@@ -65,7 +75,7 @@ func (puzzle *Puzzle) Part2() {
 
 func (puzzle *Puzzle) Run() {
 	USAGE := "Usage: aoc run 2022 17 P1|P2 test|real (-v)"
-	if len(os.Args) != 6 {
+	if len(os.Args) < 6 {
 		fmt.Println(USAGE)
 		os.Exit(1)
 	} else if os.Args[4] == "P1" {

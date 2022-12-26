@@ -125,7 +125,7 @@ func Test_Debug(t *testing.T) {
 
 func Test_DebugTicks(t *testing.T) {
 	c := NewChamber(TEST_DATA)
-	c.RunPart1(true, false, -1)
+	c.RunPart1(true, false, -1, false)
 	if true {
 		fmt.Println("")
 		fmt.Println(c.Debug())
@@ -451,7 +451,16 @@ func Test_Part1_Test(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
 	// c.Run(true, true, 41)
-	c.RunPart1(false, false, 2022)
+	c.RunPart1(false, false, 2022, false)
+	fmt.Println(c.Debug())
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+}
+
+func Test_Part1_Test_FindFloor(t *testing.T) {
+	c := NewChamber(TEST_DATA)
+	fmt.Println(c.Debug())
+	// c.Run(true, true, 41)
+	c.RunPart1(false, false, 2022, true)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
@@ -466,7 +475,23 @@ func Test_Part1_Real(t *testing.T) {
 	// 3140? no, another 5m wait.
 	// 3159 no, 5m wait
 
-	c.RunPart1(false, false, 2022)
+	c.RunPart1(false, false, 2022, false)
+	fmt.Println(c.Debug())
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+
+}
+
+func Test_Part1_Real_FindFloor(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	fmt.Println(c.Debug())
+
+	// 3111 too low
+	// 3162 too high
+	// 3133? no, 5m wait (4th attempt)
+	// 3140? no, another 5m wait.
+	// 3159 no, 5m wait
+
+	c.RunPart1(false, false, 2022, true)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 
