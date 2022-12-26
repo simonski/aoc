@@ -14,12 +14,11 @@ type Chamber struct {
 	ROCK_PLUS       *Rock
 	ROCK_L          *Rock
 	ROCK_SQUARE     *Rock
-	// RocksXY         map[string]*Rock
-	Rocks       []*Rock
-	CurrentRock *Rock
-	Width       int
-	Height      int
-	Pieces      map[string]*Piece
+	Rocks           []*Rock
+	CurrentRock     *Rock
+	Width           int
+	Height          int
+	Pieces          map[string]*Piece
 }
 
 func NewChamber(input string) *Chamber {
@@ -104,27 +103,7 @@ func (c *Chamber) CanRockMoveLeft(rock *Rock) bool {
 	for _, piece := range rock.pieces {
 		x := rock.x + piece.x - 1
 		y := rock.y - piece.y
-		// answer := c.IsOccupiedByRockOrEmpty(x, y, rock)
-		// if rock.Number == 8 || rock.Number == 9 {
-		// 	r := c.GetRock(x, y)
-		// 	reason := ""
-		// 	if r == nil {
-		// 		reason = "rock is nil"
-		// 	} else {
-		// 		reason = "rock is not nil"
-		// 		if r == rock {
-		// 			reason += ", rock is same"
-		// 		} else {
-		// 			reason += fmt.Sprintf(", rock is not same (%v != %v)", r.Number, rock.Number)
-		// 		}
-		// 	}
-
-		// 	fmt.Printf("CanRockMoveLeft(rock=%v), (rock x,y=%v,%v), (piece x,y=%v,%v), (chamber x,y=%v,%v), answer %v, reason=%v\n", rock.Number, rock.x, rock.y, piece.x, piece.y, x, y, answer, reason)
-		// }
-
 		if !c.IsOccupiedByRockOrEmpty(x, y, rock) {
-			// if c.IsOccupied(x, y) || rock.GetPieceChamberXY(x, y, false) != nil {
-			// obscured
 			return false
 		}
 	}
@@ -136,7 +115,7 @@ func (c *Chamber) CanRockMoveRight(rock *Rock) bool {
 		return false
 	}
 	// otherwise, is it obscured by anything if it goes left?
-	for _, piece := range rock.pieces { // GetRightmostPieces(c) {
+	for _, piece := range rock.pieces {
 		x := rock.x + piece.x + 1
 		if x > c.Width {
 			return false
@@ -144,23 +123,12 @@ func (c *Chamber) CanRockMoveRight(rock *Rock) bool {
 		y := rock.y - piece.y
 		if !c.IsOccupiedByRockOrEmpty(x, y, rock) {
 			return false
-
-			// 	occupied := c.IsOccupied(x, y) || rock.GetPieceChamberXY(x, y, false) != nil
-
-			// // fmt.Printf("There are %v rightmost pieces, this piece is (%v,%v) on rock (%v,%v) which is (%v,%v) on the chamber, occupied=%v\n", len(rock.GetRightmostPieces()), rock.x, rock.y, piece.x, piece.y, x, y, occupied)
-			// if occupied {
-			// 	// obscured
 		}
 	}
 	return true
 }
 
 func (c *Chamber) CanRockMoveDown(rock *Rock) bool {
-	// if rock.y-1 < 0 {
-	// 	return false
-	// }
-	// otherwise, is it obscured by anything if it goes left?
-
 	for _, piece := range rock.pieces {
 		x := rock.x + piece.x
 		y := rock.y - piece.y - 1
@@ -168,10 +136,6 @@ func (c *Chamber) CanRockMoveDown(rock *Rock) bool {
 			return false
 		}
 		if !c.IsOccupiedByRockOrEmpty(x, y, rock) {
-			// outcome := c.IsOccupied(x, y) || rock.GetPieceChamberXY(x, y, false) != nil
-			// // fmt.Printf("bottom piece (%v,%v) which is (%v,%v) in the chamber, outcome=%v\n", piece.x, piece.y, x, y, outcome)
-			// if outcome {
-			// obscured
 			return false
 		}
 	}
@@ -236,10 +200,6 @@ func (c *Chamber) AddRockToMap(rock *Rock) {
 			key := fmt.Sprintf("%v_%v", new_x, new_y)
 			piece := rock.GetPieceAbsoluteXY(col, row)
 			if piece != nil {
-				// if rock.Number == 22 {
-				// 	piece_exists := piece != nil
-				// 	fmt.Printf("AddRockToMap(rock=%v) col,row=%v,%v, new_x=%v, new_y=%v, key=%v, exists=%v\n", rock.Number, col, row, new_x, new_y, key, piece_exists)
-				// }
 				if c.Pieces[key] == nil {
 					c.Pieces[key] = piece
 				} else {
@@ -247,7 +207,6 @@ func (c *Chamber) AddRockToMap(rock *Rock) {
 					otherRock := c.Pieces[key].Rock
 					fmt.Printf("Rock %v is trying to overwrite a piece from rock %v at position [%v] ", rock.Number, otherRock.Number, key)
 					panic("foo")
-					// os.os.Exit(1)
 				}
 			}
 		}
@@ -312,10 +271,6 @@ func (c *Chamber) Run(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 	for {
 		index++
 
-		// if index+2 == breakAfterRock {
-		// 	VERBOSE = true
-		// 	VERY_VERBOSE = true
-		// }
 		if index == len(c.Input) {
 			index = 0
 		}
@@ -323,10 +278,6 @@ func (c *Chamber) Run(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 		if !c.Tick(instruction, VERBOSE, VERY_VERBOSE) {
 			c.CurrentRock = nil
 			if rockCount >= breakAfterRock {
-				// if VERBOSE {
-				// 	fmt.Println(c.Debug())
-				// }
-				// fmt.Printf("After %v rocks, size is %v\n", rockCount, c.Height)
 				return
 			}
 
@@ -336,10 +287,18 @@ func (c *Chamber) Run(VERBOSE bool, VERY_VERBOSE bool, breakAfterRock int) {
 				fmt.Printf("A new rock begins falling\n%v\n", c.Debug())
 			}
 			rockCount++
+
+			if rockCount%1000 == 0 {
+				max := 1000000000000
+				pct := (100 / max) * rockCount
+				fmt.Printf("%v%% (%v/%v)\n", pct, rockCount, max)
+				fmt.Println(c.Debug())
+
+				// see if we can find a line that means we can drop the number of rocks and pieces we have
+
+			}
+
 		}
-		// if VERBOSE {
-		// 	fmt.Printf("[%v] after %v, still moving\n%v\n", index, instruction, c.Debug())
-		// }
 	}
 }
 
@@ -412,49 +371,3 @@ func (c *Chamber) GetRock(x int, y int) *Rock {
 		return nil
 	}
 }
-
-// returns the piece of rock (or air)
-// func (c *Chamber) GetRockPiece(x int, y int) string {
-// 	// rocks might overlap
-// 	rocks := make([]*Rock, 0)
-// 	for _, rock := range c.Rocks {
-// 		// if rock.Occupies(x, y) {
-// 		piece := rock.GetPieceChamberXY(x, y, false)
-// 		if piece != nil {
-// 			rocks = append(rocks, rock)
-// 		}
-// 		// }
-// 	}
-// 	if len(rocks) > 1 {
-// 		fmt.Println(">>>>>>")
-// 		fmt.Printf("GetRockPiece(%v,%v) has %v rocks - this is WRONG.\n", x, y, len(rocks))
-// 		for _, r := range rocks {
-// 			fmt.Printf("Rock[%v], (%v,%v)\n", r.Number, r.x, r.y)
-// 			fmt.Println(r.Debug())
-// 			fmt.Println("")
-// 			piece := r.GetPieceChamberXY(x, y, true)
-// 			fmt.Printf("%v\n", piece)
-// 			fmt.Println("")
-// 		}
-// 		fmt.Println(">>>>>>")
-// 	}
-
-// 	for _, rock := range c.Rocks {
-// 		// if rock.Occupies(x, y) {
-// 		piece := rock.GetPieceChamberXY(x, y, false)
-// 		if piece != nil {
-// 			if rock == c.CurrentRock {
-// 				// fmt.Printf("%v,%v=%v\n", x, y, "@")
-// 				return "@"
-// 			} else {
-// 				// fmt.Printf("%v,%v=%v\n", x, y, "#")
-// 				return "#"
-// 			}
-// 		}
-// 		// }
-// 	}
-
-// 	return "."
-// 	// for each rockpiece, get the piece at that place - air is overridden by solid
-
-// }

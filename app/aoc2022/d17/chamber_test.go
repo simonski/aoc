@@ -447,7 +447,7 @@ func Test_Piece_Plus(t *testing.T) {
 // 	}
 // }
 
-func Test_DebugTicks5(t *testing.T) {
+func Test_Part1_Test(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
 	// c.Run(true, true, 41)
@@ -456,7 +456,7 @@ func Test_DebugTicks5(t *testing.T) {
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
-func Test_DebugTicks6(t *testing.T) {
+func Test_Part1_Real(t *testing.T) {
 	c := NewChamber(REAL_DATA)
 	fmt.Println(c.Debug())
 
@@ -474,11 +474,16 @@ func Test_DebugTicks6(t *testing.T) {
 
 // check the abolute positioning
 
-func Test_It(t *testing.T) {
-	Test_RockP(t)
-	Test_RockH(t)
-	Test_NewRock(t)
-	Test_Debug(t)
-	Test_DebugTicks(t)
-	Test_DebugRocks(t)
+func Test_Part2_Test(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	fmt.Println(c.Debug())
+	c.Run(false, false, 1000000000000)
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+}
+
+func Test_Part2_Real(t *testing.T) {
+	c := NewChamber(REAL_DATA)
+	fmt.Println(c.Debug())
+	c.Run(false, false, 1000000000000)
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }

@@ -1,6 +1,10 @@
 package d17
 
-import "strings"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 /*
 --- Day 05:  ---
@@ -32,14 +36,30 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	c := NewChamber(TEST_DATA)
+	// fmt.Println(c.Debug())
+	c.Run(false, false, 1000000000000)
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	c := NewChamber(REAL_DATA)
+	fmt.Println(c.Debug())
+	c.Run(false, false, 1000000000000)
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func (puzzle *Puzzle) Run() {
-	puzzle.Part1()
-	puzzle.Part2()
+	USAGE := "Usage: aoc run 2022 17 P1|P2 test|real (-v)"
+	if len(os.Args) != 6 {
+		fmt.Println(USAGE)
+		os.Exit(1)
+	} else if os.Args[4] == "P1" {
+		puzzle.Part1()
+	} else if os.Args[4] == "P2" {
+		puzzle.Part2()
+	} else {
+		fmt.Println(USAGE)
+		os.Exit(1)
+	}
 }
