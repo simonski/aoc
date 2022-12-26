@@ -5,8 +5,9 @@ import (
 )
 
 type Piece struct {
-	x int
-	y int
+	x    int
+	y    int
+	Rock *Rock
 }
 
 func (p *Piece) String() string {
@@ -16,9 +17,10 @@ func (p *Piece) String() string {
 func (p *Piece) Key() string {
 	return fmt.Sprintf("%v_%v", p.x, p.y)
 }
-func NewPiece(x int, y int) *Piece {
+func NewPiece(x int, y int, rock *Rock) *Piece {
 	p := Piece{}
 	p.x = x
 	p.y = y
+	p.Rock = rock
 	return &p
 }

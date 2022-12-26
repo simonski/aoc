@@ -108,19 +108,24 @@ func Test_NewRock(t *testing.T) {
 	}
 }
 
+func verifyPieceAt(c *Chamber, x int, y int, expect string, t *testing.T) {
+	if c.GetRockPieceString(x, y) != expect {
+		t.Fatalf("Piece at %v,%v should be %v\n", x, y, expect)
+	}
+}
+
 func Test_Debug(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	r1 := c.NewRock()
 	c.AddRock(r1)
-	if true {
-		fmt.Println(c.Debug())
-		t.Fatalf("")
-	}
+	fmt.Println(c.Debug())
+	verifyPieceAt(c, 0, 0, ".", t)
+	verifyPieceAt(c, 2, 3, "#", t)
 }
 
 func Test_DebugTicks(t *testing.T) {
 	c := NewChamber(TEST_DATA)
-	c.Run(true, -1)
+	c.Run(true, false, -1)
 	if true {
 		fmt.Println("")
 		fmt.Println(c.Debug())
@@ -361,94 +366,94 @@ func Test_Piece_Plus(t *testing.T) {
 	requireNilPieceXY(h, 2, 2, t)
 }
 
-func Test_Edges_Horizontal(t *testing.T) {
-	c := NewChamber(REAL_DATA)
-	left := c.ROCK_HORIZONTAL.GetLeftmostPieces(c)
-	bottom := c.ROCK_HORIZONTAL.GetBottomPieces(c)
-	right := c.ROCK_HORIZONTAL.GetRightmostPieces(c)
+// func Test_Edges_Horizontal(t *testing.T) {
+// 	c := NewChamber(REAL_DATA)
+// 	left := c.ROCK_HORIZONTAL.GetLeftmostPieces(c)
+// 	bottom := c.ROCK_HORIZONTAL.GetBottomPieces(c)
+// 	right := c.ROCK_HORIZONTAL.GetRightmostPieces(c)
 
-	if len(left) != 1 {
-		t.Fatalf("HORIZONTAL should have 1 left most but has %v\n", len(left))
-	}
-	if len(right) != 1 {
-		t.Fatalf("HORIZONTAL should have 1 right most but has %v\n%v\n", len(right), right)
-	}
-	if len(bottom) != 4 {
-		t.Fatalf("HORIZONTAL should have 4 bottom most but has %v\n", len(bottom))
-	}
-}
+// 	if len(left) != 1 {
+// 		t.Fatalf("HORIZONTAL should have 1 left most but has %v\n", len(left))
+// 	}
+// 	if len(right) != 1 {
+// 		t.Fatalf("HORIZONTAL should have 1 right most but has %v\n%v\n", len(right), right)
+// 	}
+// 	if len(bottom) != 4 {
+// 		t.Fatalf("HORIZONTAL should have 4 bottom most but has %v\n", len(bottom))
+// 	}
+// }
 
-func Test_Edges_Vertical(t *testing.T) {
-	c := NewChamber(REAL_DATA)
-	left := c.ROCK_VERTICAL.GetLeftmostPieces(c)
-	right := c.ROCK_VERTICAL.GetRightmostPieces(c)
-	bottom := c.ROCK_VERTICAL.GetBottomPieces(c)
-	if len(left) != 4 {
-		t.Fatalf("ROCK_VERTICAL should have 4 left most but has %v\n", len(left))
-	}
-	if len(bottom) != 1 {
-		t.Fatalf("ROCK_VERTICAL should have 1 bottom most but has %v\n", len(bottom))
-	}
-	if len(right) != 4 {
-		t.Fatalf("ROCK_VERTICAL should have 4 right most but has %v\n", len(right))
-	}
-}
+// func Test_Edges_Vertical(t *testing.T) {
+// 	c := NewChamber(REAL_DATA)
+// 	left := c.ROCK_VERTICAL.GetLeftmostPieces(c)
+// 	right := c.ROCK_VERTICAL.GetRightmostPieces(c)
+// 	bottom := c.ROCK_VERTICAL.GetBottomPieces(c)
+// 	if len(left) != 4 {
+// 		t.Fatalf("ROCK_VERTICAL should have 4 left most but has %v\n", len(left))
+// 	}
+// 	if len(bottom) != 1 {
+// 		t.Fatalf("ROCK_VERTICAL should have 1 bottom most but has %v\n", len(bottom))
+// 	}
+// 	if len(right) != 4 {
+// 		t.Fatalf("ROCK_VERTICAL should have 4 right most but has %v\n", len(right))
+// 	}
+// }
 
-func Test_Edges_Square(t *testing.T) {
-	c := NewChamber(REAL_DATA)
-	left := c.ROCK_SQUARE.GetLeftmostPieces(c)
-	right := c.ROCK_SQUARE.GetRightmostPieces(c)
-	bottom := c.ROCK_SQUARE.GetBottomPieces(c)
-	if len(left) != 2 {
-		t.Fatalf("ROCK_SQUARE should have 2 left most but has %v\n", len(left))
-	}
-	if len(bottom) != 2 {
-		t.Fatalf("ROCK_SQUARE should have 2 bottom most but has %v\n", len(bottom))
-	}
-	if len(right) != 2 {
-		t.Fatalf("ROCK_SQUARE should have 2 right most but has %v\n", len(right))
-	}
-}
+// func Test_Edges_Square(t *testing.T) {
+// 	c := NewChamber(REAL_DATA)
+// 	left := c.ROCK_SQUARE.GetLeftmostPieces(c)
+// 	right := c.ROCK_SQUARE.GetRightmostPieces(c)
+// 	bottom := c.ROCK_SQUARE.GetBottomPieces(c)
+// 	if len(left) != 2 {
+// 		t.Fatalf("ROCK_SQUARE should have 2 left most but has %v\n", len(left))
+// 	}
+// 	if len(bottom) != 2 {
+// 		t.Fatalf("ROCK_SQUARE should have 2 bottom most but has %v\n", len(bottom))
+// 	}
+// 	if len(right) != 2 {
+// 		t.Fatalf("ROCK_SQUARE should have 2 right most but has %v\n", len(right))
+// 	}
+// }
 
-func Test_Edges_L(t *testing.T) {
-	c := NewChamber(REAL_DATA)
-	left := c.ROCK_L.GetLeftmostPieces(c)
-	bottom := c.ROCK_L.GetRightmostPieces(c)
-	right := c.ROCK_L.GetBottomPieces(c)
-	if len(left) != 3 {
-		t.Fatalf("ROCK_L should have 3 left most but has %v\n", len(left))
-	}
-	if len(bottom) != 3 {
-		t.Fatalf("ROCK_L should have 3 bottom most but has %v\n", len(bottom))
-	}
-	if len(right) != 3 {
-		t.Fatalf("ROCK_L should have 3 right most but has %v\n", len(right))
-	}
-}
+// func Test_Edges_L(t *testing.T) {
+// 	c := NewChamber(REAL_DATA)
+// 	left := c.ROCK_L.GetLeftmostPieces(c)
+// 	bottom := c.ROCK_L.GetRightmostPieces(c)
+// 	right := c.ROCK_L.GetBottomPieces(c)
+// 	if len(left) != 3 {
+// 		t.Fatalf("ROCK_L should have 3 left most but has %v\n", len(left))
+// 	}
+// 	if len(bottom) != 3 {
+// 		t.Fatalf("ROCK_L should have 3 bottom most but has %v\n", len(bottom))
+// 	}
+// 	if len(right) != 3 {
+// 		t.Fatalf("ROCK_L should have 3 right most but has %v\n", len(right))
+// 	}
+// }
 
-func Test_Edges_Plus(t *testing.T) {
-	c := NewChamber(REAL_DATA)
-	left := c.ROCK_PLUS.GetLeftmostPieces(c)
-	bottom := c.ROCK_PLUS.GetRightmostPieces(c)
-	right := c.ROCK_PLUS.GetBottomPieces(c)
-	if len(left) != 3 {
-		t.Fatalf("ROCK_PLUS should have 3 left most but has %v\n", len(left))
-	}
-	if len(bottom) != 3 {
-		t.Fatalf("ROCK_PLUS should have 3 bottom most but has %v\n", len(bottom))
-	}
-	if len(right) != 3 {
-		t.Fatalf("ROCK_PLUS should have 3 right most but has %v\n", len(right))
-	}
-}
+// func Test_Edges_Plus(t *testing.T) {
+// 	c := NewChamber(REAL_DATA)
+// 	left := c.ROCK_PLUS.GetLeftmostPieces(c)
+// 	bottom := c.ROCK_PLUS.GetRightmostPieces(c)
+// 	right := c.ROCK_PLUS.GetBottomPieces(c)
+// 	if len(left) != 3 {
+// 		t.Fatalf("ROCK_PLUS should have 3 left most but has %v\n", len(left))
+// 	}
+// 	if len(bottom) != 3 {
+// 		t.Fatalf("ROCK_PLUS should have 3 bottom most but has %v\n", len(bottom))
+// 	}
+// 	if len(right) != 3 {
+// 		t.Fatalf("ROCK_PLUS should have 3 right most but has %v\n", len(right))
+// 	}
+// }
 
 func Test_DebugTicks5(t *testing.T) {
 	c := NewChamber(TEST_DATA)
 	fmt.Println(c.Debug())
-	// c.Run(true, 20)
-	c.Run(false, 2022)
+	// c.Run(true, true, 41)
+	c.Run(false, false, 2022)
 	fmt.Println(c.Debug())
-	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height())
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func Test_DebugTicks6(t *testing.T) {
@@ -461,9 +466,9 @@ func Test_DebugTicks6(t *testing.T) {
 	// 3140? no, another 5m wait.
 	// 3159 no, 5m wait
 
-	c.Run(false, 2022)
+	c.Run(false, false, 2022)
 	fmt.Println(c.Debug())
-	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height())
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 
 }
 

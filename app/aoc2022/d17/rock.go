@@ -12,11 +12,13 @@ type Rock struct {
 	input  string
 	x      int
 	y      int
+	Name   string
 	Number int
 }
 
-func NewRock(input string) *Rock {
+func NewRock(name, input string) *Rock {
 	rock := &Rock{}
+	rock.Name = name
 	rock.input = input
 	rock.pieces = make(map[string]*Piece)
 	rows := strings.Split(input, ",")
@@ -24,7 +26,7 @@ func NewRock(input string) *Rock {
 		for x := 0; x < len(row); x++ {
 			value := row[x : x+1]
 			if value != "." {
-				p := NewPiece(x, y)
+				p := NewPiece(x, y, rock)
 				rock.AddPiece(p)
 			}
 		}
@@ -35,7 +37,7 @@ func NewRock(input string) *Rock {
 }
 
 func (r *Rock) Clone() *Rock {
-	return NewRock(r.input)
+	return NewRock(r.Name, r.input)
 }
 
 func (r *Rock) Equals(rock *Rock) bool {
@@ -102,7 +104,7 @@ func (r *Rock) AddPiece(p *Piece) {
 	r.pieces[p.Key()] = p
 }
 
-func (r *Rock) GetLeftmostPieces(c *Chamber) []*Piece {
+func (r *Rock) GetLeftmostPiecesX(c *Chamber) []*Piece {
 	result := make([]*Piece, 0)
 	if r.Equals(c.ROCK_PLUS) {
 		result = append(result, r.GetPieceAbsoluteXY(1, 0))
@@ -123,16 +125,12 @@ func (r *Rock) GetLeftmostPieces(c *Chamber) []*Piece {
 		result = append(result, r.GetPieceAbsoluteXY(0, 0))
 		result = append(result, r.GetPieceAbsoluteXY(0, 1))
 	} else {
-		for _, piece := range r.pieces {
-			if piece.x == 0 {
-				result = append(result, piece)
-			}
-		}
+		panic("no leftmost rock piece")
 	}
 	return result
 }
 
-func (r *Rock) GetRightmostPieces(c *Chamber) []*Piece {
+func (r *Rock) GetRightmostPiecesX(c *Chamber) []*Piece {
 	result := make([]*Piece, 0)
 	if r.Equals(c.ROCK_PLUS) {
 		result = append(result, r.GetPieceAbsoluteXY(1, 0))
@@ -154,19 +152,14 @@ func (r *Rock) GetRightmostPieces(c *Chamber) []*Piece {
 		result = append(result, r.GetPieceAbsoluteXY(1, 1))
 
 	} else {
-		for _, piece := range r.pieces {
-			is_right := piece.x+1 == r.width
-			// fmt.Printf("piece(%v,%v), rock width %v right?=%v\n", piece.x, piece.y, r.width, is_right)
-			if is_right {
-				result = append(result, piece)
-			}
-		}
+		panic("no rightmost rock piece")
 	}
+
 	// fmt.Printf(":this rock has %v rightmost pieces\n", len(result))
 	return result
 }
 
-func (r *Rock) GetBottomPieces(c *Chamber) []*Piece {
+func (r *Rock) GetBottomPiecesX(c *Chamber) []*Piece {
 	result := make([]*Piece, 0)
 	if r.Equals(c.ROCK_PLUS) {
 		result = append(result, r.GetPieceAbsoluteXY(0, 1))
@@ -188,14 +181,7 @@ func (r *Rock) GetBottomPieces(c *Chamber) []*Piece {
 		result = append(result, r.GetPieceAbsoluteXY(1, 1))
 
 	} else {
-		result = make([]*Piece, 0)
-		for _, piece := range r.pieces {
-			outcome := piece.y+1 == r.height
-			// fmt.Printf("bottom(%v,%v) on rock height %v, result=%v\n", piece.x, piece.y, r.height, outcome)
-			if outcome {
-				result = append(result, piece)
-			}
-		}
+		panic("no bottom rock piece")
 	}
 	return result
 }
