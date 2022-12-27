@@ -39,3 +39,12 @@ P2 - cycle detection I think. My approach is:
 I think the "find a pattern" happens *after* some preamble of rows.  Additionally, a single repeating row won't be 
 enough - I'll need a few, or quite a few (I don't know).  So it needs to be something I can vary.   This part I think
 will be a bit of stdout etc; semi-automated via tests etc.
+
+Tuesday 27th 0800
+
+Am thinking: a dequeue or buffer with a moving head and tail; 
+    1. commence the buffer after some period of time (or from row 0 and let it just fill up a bit but I thinka preamble isnecessary)
+    2. fill the buffer
+    3. assume it is ain a cycle; detect by taking FINAL N rows as a key and walking FORWARD to find the key.
+    4. vary the key size until we see what we see
+

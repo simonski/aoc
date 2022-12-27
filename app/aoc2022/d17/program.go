@@ -65,17 +65,33 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
-	if os.Args[5] == "test" {
-		c := NewChamber(TEST_DATA, 0)
-		fmt.Println(c.Debug())
-		c.RunPart2(1000000000000, true, FLOOR_SIZE)
-		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
-	} else if os.Args[5] == "real" {
-		c := NewChamber(REAL_DATA, 0)
-		fmt.Println(c.Debug())
-		c.RunPart2(1000000000000, true, FLOOR_SIZE)
-		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+
+	cl := cli.New(os.Args)
+	rocks := cl.GetIntOrDefault("-rocks", 1000)
+	max_key_size := cl.GetIntOrDefault("-max_key_size", 100)
+	min_key_size := cl.GetIntOrDefault("-min_key_size", 20)
+	fmt.Printf("rocks=%v, max_key_size=%v, min_key_size=%v\n", rocks, max_key_size, min_key_size)
+	c2 := NewChamber(REAL_DATA, 0)
+	if cl.Contains("-v") {
+		c2.LOG_LEVEL = 1
+	} else if cl.Contains("-vv") {
+		c2.LOG_LEVEL = 2
 	}
+	c2.AddRocks(rocks)
+	fmt.Println(c2.Debug())
+	c2.Part2_FindSequences(rocks, max_key_size, min_key_size)
+
+	// if os.Args[5] == "test" {
+	// 	c := NewChamber(TEST_DATA, 0)
+	// 	fmt.Println(c.Debug())
+	// 	// c.RunPart2(1000000000000, true, FLOOR_SIZE)
+	// 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+	// } else if os.Args[5] == "real" {
+	// 	c := NewChamber(REAL_DATA, 0)
+	// 	fmt.Println(c.Debug())
+	// 	// c.RunPart2(1000000000000, true, FLOOR_SIZE)
+	// 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+	// }
 }
 
 func (puzzle *Puzzle) Run() {
