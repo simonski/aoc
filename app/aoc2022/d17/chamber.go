@@ -22,9 +22,11 @@ type Chamber struct {
 	PieceCache      map[string]*Piece
 	Floor           int
 	RockCount       int
+
+	LOG_LEVEL int
 }
 
-func NewChamber(input string) *Chamber {
+func NewChamber(input string, log_level int) *Chamber {
 	c := Chamber{Input: input}
 	c.ROCK_HORIZONTAL = NewRock("H", "####")
 	c.ROCK_PLUS = NewRock("P", ".#.,###,.#.")
@@ -35,6 +37,7 @@ func NewChamber(input string) *Chamber {
 	c.PieceCache = make(map[string]*Piece)
 	c.Floor = 0
 	c.Rocks = make(map[int]*Rock)
+	c.LOG_LEVEL = log_level
 	return &c
 }
 
@@ -302,4 +305,77 @@ func (c *Chamber) GetRock(x int, y int) *Rock {
 	} else {
 		return nil
 	}
+}
+
+func (c *Chamber) ResetFloor() {
+
+	// go from the "first" rock and work out when we get to a seal
+	// a seal is 1 or 2 adjacent rows that occupy all columns
+	col1 := false
+	col2 := false
+	col3 := false
+	col4 := false
+	col5 := false
+	col6 := false
+	col7 := false
+
+	closingLine := -1
+
+	// walk up from the bottom finding the first row that "closes" horizontally.
+
+	// see if we can find a line that means we can drop the number of rocks and pieces we have
+
+	for row := c.Height - 1; row > c.Floor; row-- {
+		col1 = c.IsOccupied(0, row) || c.IsOccupied(0, row-1)
+		col2 = c.IsOccupied(1, row) || c.IsOccupied(1, row-1)
+		col3 = c.IsOccupied(2, row) || c.IsOccupied(2, row-1)
+		col4 = c.IsOccupied(3, row) || c.IsOccupied(3, row-1)
+		col5 = c.IsOccupied(4, row) || c.IsOccupied(4, row-1)
+		col6 = c.IsOccupied(5, row) || c.IsOccupied(5, row-1)
+		col7 = c.IsOccupied(6, row) || c.IsOccupied(6, row-1)
+
+		if col1 && col2 && col3 && col4 && col5 && col6 && col7 {
+			closingLine = row - 1
+			break
+		}
+	}
+
+	if closingLine > -1 {
+
+		// if c.RockCount >= 9000 {
+		// 	VERBOSE = true
+		// 	// VERY_VERBOSE = true
+		// }
+
+		oldFloor := c.Floor
+		if c.LOG_LEVEL == 1 {
+			fmt.Printf("Terminating line is %v, old floor was %v, setting new floor to be %v\n", closingLine, oldFloor, closingLine-1)
+			fmt.Printf("Remove all pieces and rocks from the floor to just under this new floor")
+		}
+		c.Floor = closingLine - 1
+		// get rid of anything "lower" than closingLine-1
+
+		for index := oldFloor; index < closingLine; index++ {
+			for col := 0; col < 7; col++ {
+				key := fmt.Sprintf("%v_%v", col, index)
+				// fmt.Printf("Removing piece %v\n", key)
+				delete(c.PieceCache, key)
+			}
+		}
+
+		remove_rock := make([]int, 0)
+		for rock_key, rock := range c.Rocks {
+			if rock.y < closingLine {
+				remove_rock = append(remove_rock, rock_key)
+			}
+		}
+		for _, key := range remove_rock {
+			delete(c.Rocks, key)
+		}
+
+		if c.LOG_LEVEL == 1 {
+			fmt.Printf("After cleaning, graph is\n\n%v\n", c.Debug())
+		}
+	}
+
 }

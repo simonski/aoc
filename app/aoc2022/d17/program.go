@@ -37,38 +37,43 @@ func (puzzle *Puzzle) Load(input string) {
 	puzzle.lines = lines
 }
 
+var FLOOR_SIZE = 1000
+
 func (puzzle *Puzzle) Part1() {
 	cli := cli.New(os.Args)
-	verbose := cli.Contains("-v")
-	very_verbose := cli.Contains("-vv")
-	if very_verbose {
-		verbose = true
+	log_level := 0
+	if cli.Contains("-v") {
+		log_level = 1
+	} else if cli.Contains("-vv") {
+		log_level = 2
 	}
+	resetFloor := cli.Contains("-floor")
 	if os.Args[5] == "test" {
-		c := NewChamber(TEST_DATA)
+		c := NewChamber(TEST_DATA, log_level)
 		// fmt.Println(c.Debug())
-		c.RunPart1(verbose, very_verbose, 2022, false)
+		c.RunPart1(2022, resetFloor, FLOOR_SIZE)
 		fmt.Println(c.Debug())
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+
 	} else if os.Args[5] == "real" {
-		c := NewChamber(REAL_DATA)
-		// fmt.Println(c.Debug())
-		c.RunPart1(verbose, very_verbose, 2022, true)
+		c := NewChamber(REAL_DATA, log_level)
+		c.RunPart1(2022, resetFloor, FLOOR_SIZE)
 		fmt.Println(c.Debug())
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+
 	}
 }
 
 func (puzzle *Puzzle) Part2() {
 	if os.Args[5] == "test" {
-		c := NewChamber(TEST_DATA)
+		c := NewChamber(TEST_DATA, 0)
 		fmt.Println(c.Debug())
-		c.RunPart2(false, false, 1000000000000)
+		c.RunPart2(1000000000000, true, FLOOR_SIZE)
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 	} else if os.Args[5] == "real" {
-		c := NewChamber(REAL_DATA)
+		c := NewChamber(REAL_DATA, 0)
 		fmt.Println(c.Debug())
-		c.RunPart2(false, false, 1000000000000)
+		c.RunPart2(1000000000000, true, FLOOR_SIZE)
 		fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 	}
 }

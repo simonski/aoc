@@ -6,7 +6,7 @@ import (
 )
 
 func Test_RockP(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 
 	plus := c.ROCK_PLUS
 	if plus.height != 3 {
@@ -31,7 +31,7 @@ func Test_RockP(t *testing.T) {
 }
 
 func Test_RockH(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 
 	rock := c.ROCK_HORIZONTAL
 	if rock.height != 1 {
@@ -64,7 +64,7 @@ func Test_RockH(t *testing.T) {
 }
 
 func Test_NewRock(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 	r1 := c.NewRock()
 	if !r1.Equals(c.ROCK_HORIZONTAL) {
 		fmt.Println(r1.Debug())
@@ -115,7 +115,7 @@ func verifyPieceAt(c *Chamber, x int, y int, expect string, t *testing.T) {
 }
 
 func Test_Debug(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 	r1 := c.NewRock()
 	c.AddRock(r1)
 	fmt.Println(c.Debug())
@@ -124,8 +124,8 @@ func Test_Debug(t *testing.T) {
 }
 
 func Test_DebugTicks(t *testing.T) {
-	c := NewChamber(TEST_DATA)
-	c.RunPart1(true, false, -1, false)
+	c := NewChamber(TEST_DATA, 0)
+	c.RunPart1(-1, false, FLOOR_SIZE)
 	if true {
 		fmt.Println("")
 		fmt.Println(c.Debug())
@@ -138,7 +138,7 @@ func requireRock(rock1 *Rock, rock2 *Rock, t *testing.T) {
 	}
 }
 func Test_DebugRocks(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 	requireRock(c.NewRock(), c.ROCK_HORIZONTAL, t)
 	requireRock(c.NewRock(), c.ROCK_PLUS, t)
 	requireRock(c.NewRock(), c.ROCK_L, t)
@@ -247,7 +247,7 @@ func Test_DebugRocks(t *testing.T) {
 }
 
 func Test_Rock_equals(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	horiz := c.ROCK_HORIZONTAL.Clone()
 	vert := c.ROCK_VERTICAL.Clone()
 	l := c.ROCK_L.Clone()
@@ -306,7 +306,7 @@ func requireNilPieceXY(rock *Rock, x int, y int, t *testing.T) {
 }
 
 func Test_Piece_Horizontal(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	h := c.ROCK_HORIZONTAL.Clone()
 	requirePieceXY(h, 0, 0, true, t)
 	requirePieceXY(h, 1, 0, true, t)
@@ -316,7 +316,7 @@ func Test_Piece_Horizontal(t *testing.T) {
 }
 
 func Test_Piece_Vertical(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	h := c.ROCK_VERTICAL.Clone()
 	requirePieceXY(h, 0, 0, true, t)
 	requirePieceXY(h, 0, 1, true, t)
@@ -326,7 +326,7 @@ func Test_Piece_Vertical(t *testing.T) {
 }
 
 func Test_Piece_Square(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	h := c.ROCK_SQUARE.Clone()
 	requirePieceXY(h, 0, 0, true, t)
 	requirePieceXY(h, 1, 0, true, t)
@@ -336,7 +336,7 @@ func Test_Piece_Square(t *testing.T) {
 }
 
 func Test_Piece_L(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	h := c.ROCK_L.Clone()
 	requirePieceXY(h, 2, 0, true, t)
 	requirePieceXY(h, 2, 1, true, t)
@@ -351,7 +351,7 @@ func Test_Piece_L(t *testing.T) {
 }
 
 func Test_Piece_Plus(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	h := c.ROCK_PLUS.Clone()
 	requireNilPieceXY(h, 0, 0, t)
 	requirePieceXY(h, 1, 0, true, t)
@@ -448,66 +448,68 @@ func Test_Piece_Plus(t *testing.T) {
 // }
 
 func Test_Part1_Test(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 	fmt.Println(c.Debug())
-	c.RunPart1(false, false, 2022, false)
+	c.RunPart1(2022, false, FLOOR_SIZE)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func Test_Part1_Test_FindFloor(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 	fmt.Println(c.Debug())
 	// c.Run(true, true, 41)
-	c.RunPart1(false, false, 2022, true)
+	c.RunPart1(2022, true, FLOOR_SIZE)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func Test_Part1_Real(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	fmt.Println(c.Debug())
-
-	// 3111 too low
-	// 3162 too high
-	// 3133? no, 5m wait (4th attempt)
-	// 3140? no, another 5m wait.
-	// 3159 no, 5m wait
-
-	c.RunPart1(false, false, 2022, false)
+	floorSize := 4000
+	c.RunPart1(2022, false, floorSize)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
-
 }
 
 func Test_Part1_Real_FindFloor(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	fmt.Println(c.Debug())
-
-	// 3111 too low
-	// 3162 too high
-	// 3133? no, 5m wait (4th attempt)
-	// 3140? no, another 5m wait.
-	// 3159 no, 5m wait
-
-	c.RunPart1(false, false, 2022, true)
+	c.RunPart1(2022, true, FLOOR_SIZE)
 	fmt.Println(c.Debug())
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 
 }
 
-// check the abolute positioning
-
 func Test_Part2_Test(t *testing.T) {
-	c := NewChamber(TEST_DATA)
+	c := NewChamber(TEST_DATA, 0)
 	fmt.Println(c.Debug())
-	c.RunPart2(false, false, 1000000000000)
+	c.RunPart2(1000000000000, true, FLOOR_SIZE)
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }
 
 func Test_Part2_Real(t *testing.T) {
-	c := NewChamber(REAL_DATA)
+	c := NewChamber(REAL_DATA, 0)
 	fmt.Println(c.Debug())
-	c.RunPart2(false, false, 1000000000000)
+	c.RunPart2(1000000000000, true, FLOOR_SIZE)
 	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+}
+
+func Test_Part1(t *testing.T) {
+	// this test is so I can verify as I work on part2 I haven't broken anything
+	c := NewChamber(TEST_DATA, 0)
+	c.RunPart1(2022, false, FLOOR_SIZE)
+	if c.Height != 3068 {
+		fmt.Println(c.Debug())
+		t.Fatalf("Part1 TEST_DATA should be 3068, was %v\n", c.Height)
+	}
+
+	c2 := NewChamber(REAL_DATA, 0)
+	c2.RunPart1(2022, false, FLOOR_SIZE)
+	if c.Height != 3119 {
+		fmt.Println(c2.Debug())
+		t.Fatalf("Part1 REAL_DATA should be 3119, was %v\n", c2.Height)
+	}
+
 }
