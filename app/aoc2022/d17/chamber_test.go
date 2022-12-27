@@ -493,7 +493,7 @@ func Test_Part1(t *testing.T) {
 
 	c2 := NewChamber(REAL_DATA, 0)
 	c2.RunPart1(2022, false, FLOOR_SIZE)
-	if c.Height != 3119 {
+	if c2.Height != 3119 {
 		fmt.Println(c2.Debug())
 		t.Fatalf("Part1 REAL_DATA should be 3119, was %v\n", c2.Height)
 	}
@@ -536,4 +536,35 @@ func Test_Part2_Real(t *testing.T) {
 	// c2.Part2_VerifySequences(1000, first_index, key_size)
 
 	// fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+}
+
+func Test_Part2_Test2(t *testing.T) {
+	c := NewChamber(TEST_DATA, 0)
+	first_index, key_size := c.Part2_FindFirstKey(1000, 53)
+	if first_index > -1 {
+		fmt.Printf("First index of key size %v is %v\n", key_size, first_index)
+	}
+
+	fmt.Println("")
+
+	c2 := NewChamber(TEST_DATA, 0)
+	c2.Part2_VerifySequences(1000, first_index, key_size)
+
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+}
+
+func Test_Part2_Test3(t *testing.T) {
+	c := NewChamber(REAL_DATA, 0)
+	// c.AddRocks(5000)
+	first_index, key_size := c.Part2_FindFirstKey(5000, 1615)
+	if first_index > -1 {
+		fmt.Printf("First index of key size %v is %v\n", key_size, first_index)
+	}
+
+	fmt.Println("")
+
+	c2 := NewChamber(REAL_DATA, 0)
+	c2.Part2_VerifySequences(5000, first_index, key_size)
+
+	fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
 }

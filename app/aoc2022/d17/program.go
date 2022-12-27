@@ -64,13 +64,37 @@ func (puzzle *Puzzle) Part1() {
 	}
 }
 
+func (puzzle *Puzzle) Part2_a() {
+	cl := cli.New(os.Args)
+	c := NewChamber(REAL_DATA, 0)
+	if cl.Contains("-v") {
+		c.LOG_LEVEL = 1
+	} else if cl.Contains("-vv") {
+		c.LOG_LEVEL = 2
+	}
+	// c.AddRocks(5000)
+	rocks := cl.GetIntOrDefault("-rocks", 5000)
+	key_size := cl.GetIntOrDefault("-key_size", 1615)
+	first_index, key_size := c.Part2_FindFirstKey(rocks, key_size)
+	if first_index > -1 {
+		fmt.Printf("First index of key size %v is %v\n", key_size, first_index)
+	}
+
+	fmt.Println("")
+
+	// c2 := NewChamber(REAL_DATA, 0)
+	// c2.Part2_VerifySequences(5000, first_index, key_size)
+
+	// fmt.Printf("Rock Count %v, Height is %v\n", len(c.Rocks), c.Height)
+}
+
 func (puzzle *Puzzle) Part2() {
 
 	cl := cli.New(os.Args)
 	rocks := cl.GetIntOrDefault("-rocks", 1000)
 	max_key_size := cl.GetIntOrDefault("-max_key_size", 100)
 	min_key_size := cl.GetIntOrDefault("-min_key_size", 20)
-	fmt.Printf("rocks=%v, max_key_size=%v, min_key_size=%v\n", rocks, max_key_size, min_key_size)
+	fmt.Printf("-rocks=%v, -max_key_size=%v, -min_key_size=%v\n", rocks, max_key_size, min_key_size)
 	c2 := NewChamber(REAL_DATA, 0)
 	if cl.Contains("-v") {
 		c2.LOG_LEVEL = 1

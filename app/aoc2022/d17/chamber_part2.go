@@ -8,6 +8,7 @@ import (
 
 func (c *Chamber) AddRocks(maxRocks int) []int {
 	VERBOSE := c.LOG_LEVEL == 1
+	VERY_VERBOSE := c.LOG_LEVEL == 2
 	rock := c.NewRock()
 	c.AddRock(rock)
 	if c.LOG_LEVEL == 1 {
@@ -35,8 +36,10 @@ func (c *Chamber) AddRocks(maxRocks int) []int {
 			}
 			rock := c.NewRock()
 			c.AddRock(rock)
-			if VERBOSE {
+			if VERY_VERBOSE {
 				fmt.Printf("A new rock begins falling\n%v\n", c.Debug())
+			} else if VERBOSE {
+				fmt.Printf("%v/%v\n", c.RockCount, maxRocks)
 			}
 			c.RockCount++
 		}
@@ -48,25 +51,47 @@ func (c *Chamber) Part2_FindFirstKey(rockCount int, keySize int) (int, int) {
 	c.AddRocks(rockCount)
 
 	// we want to let it assemble R rocks to H height and then look for repeating patterns.
+	fmt.Println("1")
 	cycle := NewCycledetector()
 
+	fmt.Println("2")
 	// now we have N rocks, we can build a buffer and see what we can see
 	for row := 0; row < c.Height; row++ {
 		line := c.DebugRow(row)
 		cycle.Add(line, row, 0)
 	}
+	fmt.Printf("3 - cycle size is %v\n", cycle.data.Size())
 
 	// now we have a populated set of data we can perform some querying on.
 	// we can detect a cycle by taking N rows from the END then walking forwad looking for repeating cycles
 	first_index := -1
-	for index := 0; index < cycle.data.Size(); index++ {
-		key1 := cycle.Buildkey(index, keySize)
-		key2 := cycle.Buildkey(index+keySize, keySize)
-		if key1 == key2 {
+
+	for index := 0; index < cycle.data.Size()-keySize; index++ {
+		matches := true
+		for i := 0; i < keySize; i++ {
+			index1 := index + i
+			index2 := index1 + keySize
+			key1line := cycle.data.data[index1]
+			key2line := cycle.data.data[index2]
+			fmt.Printf("[%v %v] line1=%v, line2=%v, matches=%v\n", index1, index2, key1line, key2line, key1line == key2line)
+			if key1line != key2line {
+				matches = false
+				break
+			}
+		}
+		if matches {
 			first_index = index
 			break
+			// key1 := cycle.Buildkey(index, keySize)
+			// key2 := cycle.Buildkey(index+keySize, keySize)
+			// if key1 == key2 {
+			// 	first_index = index
+			// 	break
+			// }
 		}
+
 	}
+	fmt.Printf("First_index=%v, kysize=%v\n", first_index, keySize)
 
 	return first_index, keySize
 
@@ -136,14 +161,14 @@ func (c *Chamber) Part2_FindSequences(breakAfterRock int, maxKeySize int, minKey
 
 	// found_sequence := false
 	// now we have a populated set of data we can perform some querying on.
-	// we can detect a cycle by taking N rows from the END then walking forwad looking for repeating cycles
+	// we can detect a cycle by taking N rows from the END then walking forward looking for repeating cycles
 	for key_size := maxKeySize; key_size >= minKeySize; key_size-- {
 
 		key_good := false
 
 		// build final key
 		length := cycle.data.Size()
-		key := cycle.Buildkey(length-key_size, key_size)
+		key := cycle.Buildkey(length-key_size-500, key_size)
 		// fmt.Printf("Key size %v is \n\n%v\n\n", key_size, key)
 		results := cycle.FindRepeatingKeys(key, key_size)
 		// if len(results) > 0 {

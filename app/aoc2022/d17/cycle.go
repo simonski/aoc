@@ -18,7 +18,7 @@ func (cd *Cycledetector) Add(line string, line_number int, rocks int) {
 
 func (cd *Cycledetector) Buildkey(position int, size int) string {
 	k := ""
-	for index := position; index < position+size; index++ {
+	for index := position; index < position+size && index < len(cd.data.data); index++ {
 		line := cd.data.data[index].Line
 		k += line
 		if index > 0 {
