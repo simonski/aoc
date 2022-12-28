@@ -115,7 +115,20 @@ func Test_LoadBluePrint2(t *testing.T) {
 
 }
 
+func Test_LoadBluePrints(t *testing.T) {
+	bps := LoadBlueprints(TEST_DATA)
+	if len(bps) != 2 {
+		t.Fatalf("There shoudl be test 2 blueprints, there were %v\n", len(bps))
+	}
+
+	bps_real := LoadBlueprints(REAL_DATA)
+	if len(bps_real) != 30 {
+		t.Fatalf("There shoudl be test 30 blueprints, there were %v\n", len(bps_real))
+	}
+}
+
 func Test_All(t *testing.T) {
 	Test_LoadBluePrint1(t)
 	Test_LoadBluePrint2(t)
+	Test_LoadBluePrints(t)
 }

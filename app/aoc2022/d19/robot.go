@@ -22,6 +22,16 @@ type Blueprint struct {
 	robots []*Robot
 }
 
+func LoadBlueprints(input string) []*Blueprint {
+	results := make([]*Blueprint, 0)
+	lines := strings.Split(input, "\n")
+	for _, line := range lines {
+		bp := NewBlueprint(line)
+		results = append(results, bp)
+	}
+	return results
+}
+
 func NewBlueprint(input string) *Blueprint {
 	// Blueprint 1: Each ore robot costs 4 ore. Each clay robot costs 4 ore. Each obsidian robot costs 4 ore and 17 clay. Each geode robot costs 4 ore and 16 obsidian.
 	input = strings.ReplaceAll(input, "Blueprint ", "")
