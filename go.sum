@@ -11,6 +11,8 @@ github.com/g3n/demos/hellog3n v0.0.0-20220618220802-541b62abcc93 h1:BMFSV5qutU3X
 github.com/g3n/demos/hellog3n v0.0.0-20220618220802-541b62abcc93/go.mod h1:8aPQRd9Q5Zx94KWgCCgDQ0Dwq6q9hJmMtXR9qBc1q8k=
 github.com/g3n/engine v0.2.0 h1:7dmj4c+3xHcBnYrVmRuVf/oZ2JycxJU9Y+2FQj1Af2Y=
 github.com/g3n/engine v0.2.0/go.mod h1:rnj8jiLdKEDI8VbveKhmdL4rovjjy+uxNP5YROg2x8g=
+github.com/gammazero/deque v0.2.1 h1:qSdsbG6pgp6nL7A0+K/B7s12mcCY/5l5SIUpMOl+dC0=
+github.com/gammazero/deque v0.2.1/go.mod h1:LFroj8x4cMYCukHJDbxFCkT+r9AndaJnFMuZDV34tuU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20210410170116-ea3d685f79fb/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20221017161538-93cebf72946b h1:GgabKamyOYguHqHjSkDACcgoPIz3w0Dis/zJ1wyHHHU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20221017161538-93cebf72946b/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=

@@ -32,8 +32,8 @@ The implementation of the BFS is standard, and we’ve covered this before. The 
 
 func Test_ExteriorSurface_Test(t *testing.T) {
 	g := NewGrid(TEST_DATA)
-	external, _ := g.get_external_surface_area()
 	_, not_connected := g.CountSides()
+	external, _ := g.get_external_surface_area()
 	fmt.Println("TEST")
 	fmt.Printf("total_surface_area : %v\nget_external_size  : %v\n", not_connected, external)
 

@@ -7,11 +7,11 @@ func Test_Deque(t *testing.T) {
 	if q.Size() != 0 {
 		t.Fatalf("Q shoudl be 0")
 	}
-	q.Pushleft(NewCube("1,1,1"))
+	q.Pushleft(NewCube("1,1,1", false))
 	if q.Size() != 1 {
 		t.Fatalf("Q shoudl be 1")
 	}
-	q.Pushleft(NewCube("1,1,1"))
+	q.Pushleft(NewCube("1,1,1", false))
 	if q.Size() != 2 {
 		t.Fatalf("Q shoudl be 2")
 	}

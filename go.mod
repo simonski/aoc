@@ -14,6 +14,7 @@ require (
 require (
 	github.com/g3n/demos/hellog3n v0.0.0-20220618220802-541b62abcc93 // indirect
 	github.com/g3n/engine v0.2.0 // indirect
+	github.com/gammazero/deque v0.2.1 // indirect
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20221017161538-93cebf72946b // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect

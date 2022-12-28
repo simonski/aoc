@@ -1,8 +1,10 @@
 package d18
 
 import (
+	"fmt"
 	"strings"
 
+	"github.com/gammazero/deque"
 	"github.com/simonski/goutils"
 )
 
@@ -40,7 +42,7 @@ func NewGrid(input string) *Grid {
 	g := Grid{data: make(map[string]*Cube)}
 	lines := strings.Split(input, "\n")
 	for _, line := range lines {
-		c := NewCube(line)
+		c := NewCube(line, true)
 		g.Add(c)
 	}
 	return &g
@@ -55,14 +57,16 @@ func (g *Grid) GetOrEmpty(x int, y int, z int) *Cube {
 	key := Key(x, y, z)
 	result := g.data[key]
 	if result == nil {
-		return &Cube{x: x, y: y, z: z}
+		c := &Cube{x: x, y: y, z: z, solid: false}
+		g.data[key] = c
+		return c
 	}
 	return result
 }
 
-func (g *Grid) Contains(x int, y int, z int) bool {
-	return g.Get(x, y, z) != nil
-}
+// func (g *Grid) Contains(x int, y int, z int) bool {
+// 	return g.Get(x, y, z) != nil
+// }
 
 // returns all neighbouring coordinates that can be directly connected
 func (g *Grid) NeighboursConnectable(x int, y int, z int) []*Point3D {
@@ -79,8 +83,8 @@ func (g *Grid) NeighboursConnectable(x int, y int, z int) []*Point3D {
 func (g *Grid) CubesConnected(x int, y int, z int) []*Cube {
 	results := make([]*Cube, 0)
 	for _, p := range g.NeighboursConnectable(x, y, z) {
-		c := g.Get(p.x, p.y, p.z)
-		if c != nil {
+		c := g.GetOrEmpty(p.x, p.y, p.z)
+		if c.solid {
 			results = append(results, c)
 		}
 	}
@@ -126,20 +130,23 @@ func (g *Grid) _has_path_to_outside(cube *Cube, cubes_to_outside map[*Cube]bool,
 		Param cubes_to_outside is to cache cubes we've seen before, that we know have a path.
 		Param internal_cubues is to cache cubes we've seen before, that are internal. """
 	*/
-	frontier := NewQ()
-	frontier.Pushleft(cube)
+	frontier := deque.New[*Cube]()
+	frontier.PushFront(cube)
 	explored := make(map[*Cube]bool)
 	explored[cube] = true
 
 	max_x, max_y, max_z, min_x, min_y, min_z := g.Bounds()
 
 	for {
-		if frontier.Size() == 0 {
+		if frontier.Len() == 0 {
 			break
 		}
-		// fmt.Printf("Q size is %v\n", frontier.Size())
 
-		current_cube := frontier.Popleft() // # FIFO for BFS
+		if frontier.Len()%50000 == 0 {
+			fmt.Printf("Q size is %v\n", frontier.Len())
+		}
+
+		current_cube := frontier.PopFront() // # FIFO for BFS
 
 		// # Check caches
 		if cubes_to_outside[current_cube] {
@@ -150,7 +157,7 @@ func (g *Grid) _has_path_to_outside(cube *Cube, cubes_to_outside map[*Cube]bool,
 			continue // # This cube doesn't have a path, so no point checking its neighbours
 		}
 
-		if g.Contains(current_cube.x, current_cube.y, current_cube.z) { // } in self.filled_cubes:
+		if g.Get(current_cube.x, current_cube.y, current_cube.z).solid { // } in self.filled_cubes:
 			// if filled_cubes[current_cube] { // } in self.filled_cubes:
 			continue // # This path is blocked
 		}
@@ -168,14 +175,11 @@ func (g *Grid) _has_path_to_outside(cube *Cube, cubes_to_outside map[*Cube]bool,
 		for _, p := range g.NeighboursConnectable(current_cube.x, current_cube.y, current_cube.z) {
 			neighbour := g.GetOrEmpty(p.x, p.y, p.z)
 			if !explored[neighbour] {
-				frontier.Pushright(neighbour)
+				frontier.PushBack(neighbour)
 				explored[neighbour] = true
 			}
 		}
 
-		if frontier.Size() == 0 {
-			break
-		}
 	}
 
 	return false
