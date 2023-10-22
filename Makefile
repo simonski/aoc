@@ -34,15 +34,16 @@ clean:
 	rm -rf dist
 	
 build:
+	mkdir -p bin
 	bn revision
 	go fmt ./...
-	go build
+	go build -o bin/aoc
 
 server: build
-	./aoc server
+	./bin/aoc server
 
 devserver: build
-	./aoc server -fs ./api
+	./bin/aoc server -fs ./api
 
 test:
 	# go test ./app/aoc2020 -timeout 10s
@@ -55,7 +56,7 @@ release:
 	goreleaser --snapshot --skip-publish --rm-dist
 
 docker: build
-	GOOS=linux GOARCH=amd64 go build -o aoc_linux
+	GOOS=linux GOARCH=amd64 go build -o bin/aoc_linux
 	docker build -t aoc .
 
 publish: 
