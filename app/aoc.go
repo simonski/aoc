@@ -25,6 +25,8 @@ import (
 	aoc2022d16 "github.com/simonski/aoc/app/aoc2022/d16"
 	aoc2022d17 "github.com/simonski/aoc/app/aoc2022/d17"
 	aoc2022d18 "github.com/simonski/aoc/app/aoc2022/d18"
+	"github.com/simonski/aoc/app/aoc2023"
+	aoc2023d01 "github.com/simonski/aoc/app/aoc2023/d01"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
@@ -226,7 +228,13 @@ func (a *AOC) List() string {
 }
 
 func (a *AOC) GetPuzzle(year string, day string) utils.Puzzle {
-	if year == "2022" {
+	if year == "2023" {
+		if day == "01" {
+			return aoc2023d01.NewPuzzle()
+		} else {
+			return nil
+		}
+	} else if year == "2022" {
 		if day == "06" {
 			return aoc2022d06.NewPuzzle()
 		} else if day == "11" {
@@ -284,6 +292,8 @@ func (a *AOC) GetAppLogic(year int) utils.AppLogic {
 		return aoc2021.NewApplication(a.CLI)
 	} else if year == 2022 {
 		return aoc2022.NewApplication(a.CLI)
+	} else if year == 2023 {
+		return aoc2023.NewApplication(a.CLI)
 	} else {
 		return nil
 	}

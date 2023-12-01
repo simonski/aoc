@@ -1,5 +1,10 @@
 # AOC TODO
 
+### 2023 -01
+
+Fix the entrypoint and testing so I can run and test single days easily.
+
+
 ## To Learn ()
 TODO
 
