@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"os"
+	"reflect"
 	"runtime/debug"
 	"strings"
 
@@ -49,6 +50,31 @@ func main() {
 		fmt.Printf("I don't know how to '%v'.\n", command)
 		os.Exit(1)
 	}
+}
+
+type IPuzzle interface {
+	Debug() string
+}
+
+func GetPuzzle(year string, day string) *IPuzzle {
+	typeName := fmt.Sprintf("app.aoc%v.d%v.Puzzle", year, day)
+	fmt.Printf("typeName=%v\n", typeName)
+	typeByName := reflect.TypeOf(typeName)
+	if typeByName.Kind() == reflect.Struct {
+		instance := reflect.New(typeByName).Elem()
+		instanceInterface := instance.Interface()
+		created, ok := instanceInterface.(IPuzzle)
+		if ok {
+			fmt.Println("ok")
+			return &created
+		}
+		fmt.Println("not")
+
+		return nil
+
+	}
+	fmt.Printf("not-x: %v\n", typeByName)
+	return nil
 }
 
 func Info(cli *cli.CLI) {

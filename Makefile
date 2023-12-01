@@ -1,4 +1,4 @@
-default_target: build
+default_target: help
 .PHONY : default_target upload
 
 help:
@@ -9,7 +9,8 @@ help:
 	@echo "commands"
 	@echo ""
 	@echo "  clean                 - cleans temp files"
-	@echo "  test                  - builds and runs tests"
+	@echo "  test-all              - builds and runs tests"
+	@echo "  test <year> <day>     - builds and runs tests"
 	@echo "  build                 - creates binary"
 
 	@echo "  install               - builds and installs"
@@ -44,9 +45,12 @@ server: build
 devserver: build
 	./aoc server -fs ./api
 
-test:
+test-all:
 	# go test ./app/aoc2020 -timeout 10s
 	go test ./... -timeout 10s
+
+test:
+	@echo go test ./app/aoc2023/d01/... -v
 
 install:
 	go install

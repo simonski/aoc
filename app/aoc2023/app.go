@@ -24,6 +24,9 @@ func NewApplication(cli *cli.CLI) Application {
 }
 
 func (app Application) Summary(year int, day int) *utils.Summary {
+	// TODO
+	// todo create an instance of a struct by name e.g. fi I know it is a.b.c.Foo
+	// then func("a.b.c.Foo") should instantiate it and refer to it as a .Puzzle?
 	methodName := fmt.Sprintf("Y%vD%02d_Summary", year, day)
 	_, rvar, exists := app.GetMethod(methodName)
 	if exists {

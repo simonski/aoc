@@ -1,9 +1,15 @@
 package TOKEN_PACKAGE
 
-import "strings"
+import (
+	"os"
+	"strconv"
+	"strings"
+
+	"github.com/simonski/aoc/utils"
+)
 
 /*
---- Day 05:  ---
+--- Day TOKEN_DAY: TOEKN_TITLE ---
 
 */
 
@@ -13,6 +19,13 @@ type Puzzle struct {
 	day   string
 	input string
 	lines []string
+}
+
+func (p *Puzzle) Summary() *utils.Summary {
+	year, _ := strconv.Atoi("TOKEN_YEAR")
+	day, _ := strconv.Atoi("TOKEN_DAY")
+	s := utils.NewSummary(year, day)
+	return s
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
@@ -40,6 +53,12 @@ func (puzzle *Puzzle) Part2() {
 }
 
 func (puzzle *Puzzle) Run() {
-	puzzle.Part1()
-	puzzle.Part2()
+	c := utils.NewCLI(os.Args)
+	if c.Contains("P1") {
+		// puzzle.Part1()
+	} else if c.Contains("P2") {
+		// puzzle.Part2()
+	} else {
+		// puzzle.Part2()
+	}
 }

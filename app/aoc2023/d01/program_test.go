@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/simonski/aoc/utils"
 )
 
 func Test_1(t *testing.T) {
@@ -16,7 +18,7 @@ func Test_1(t *testing.T) {
 		rvar := -1
 		for index := 0; index < len(line)-1; index++ {
 			candidate := line[index : index+1]
-			i, isInt := IsInt(candidate)
+			i, isInt := utils.IsInt(candidate)
 			if isInt {
 				lvar = i
 				break
@@ -25,7 +27,7 @@ func Test_1(t *testing.T) {
 
 		for index := len(line) - 1; index >= 0; index-- {
 			candidate := line[index : index+1]
-			i, isInt := IsInt(candidate)
+			i, isInt := utils.IsInt(candidate)
 			if isInt {
 				rvar = i
 				break

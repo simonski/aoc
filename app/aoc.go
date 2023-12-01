@@ -227,54 +227,6 @@ func (a *AOC) List() string {
 
 }
 
-func (a *AOC) GetPuzzle(year string, day string) utils.Puzzle {
-	if year == "2023" {
-		if day == "01" {
-			return aoc2023d01.NewPuzzle()
-		} else {
-			return nil
-		}
-	} else if year == "2022" {
-		if day == "06" {
-			return aoc2022d06.NewPuzzle()
-		} else if day == "11" {
-			return aoc2022d11.NewPuzzle()
-		} else if day == "12" {
-			return aoc2022d12.NewPuzzle()
-		} else if day == "13" {
-			return aoc2022d13.NewPuzzle()
-		} else if day == "14" {
-			return aoc2022d14.NewPuzzle()
-		} else if day == "15" {
-			return aoc2022d15.NewPuzzle()
-		} else if day == "16" {
-			return aoc2022d16.NewPuzzle()
-		} else if day == "17" {
-			return aoc2022d17.NewPuzzle()
-		} else if day == "18" {
-			return aoc2022d18.NewPuzzle()
-			// } else if day == "05" {
-			// 	return aoc2022d05.NewPuzzle()
-			// } else if day == "04" {
-			// 	return aoc2022d04.NewPuzzle()
-			// } else if day == "03" {
-			// 	return aoc2022d03.NewPuzzle()
-			// } else if day == "02" {
-			// 	return aoc2022d02.NewPuzzle()
-			// } else if day == "01" {
-			// 	return aoc2022d01.NewPuzzle()
-		} else {
-			return nil
-		}
-
-	} else {
-		return nil
-	}
-	// concreteTypeName := fmt.Sprintf("app.aoc%v.d%v.Puzzle", year, day)
-	// puzzle := reflect.TypeOf(concreteTypeName)
-	// return &puzzle
-}
-
 func (a *AOC) GetAppLogic(year int) utils.AppLogic {
 	if year == 2015 {
 		return aoc2015.NewApplication(a.CLI)
@@ -317,4 +269,43 @@ func (a *AOC) GetSummaries() []*utils.Summary {
 		}
 	}
 	return results
+}
+
+func (a *AOC) GetPuzzle(year string, day string) utils.Puzzle {
+	if year == "2023" {
+		if day == "01" {
+			return aoc2023d01.New()
+		}
+	} else if year == "2022" {
+		if day == "06" {
+			return aoc2022d06.NewPuzzle()
+		} else if day == "11" {
+			return aoc2022d11.NewPuzzle()
+		} else if day == "12" {
+			return aoc2022d12.NewPuzzle()
+		} else if day == "13" {
+			return aoc2022d13.NewPuzzle()
+		} else if day == "14" {
+			return aoc2022d14.NewPuzzle()
+		} else if day == "15" {
+			return aoc2022d15.NewPuzzle()
+		} else if day == "16" {
+			return aoc2022d16.NewPuzzle()
+		} else if day == "17" {
+			return aoc2022d17.NewPuzzle()
+		} else if day == "18" {
+			return aoc2022d18.NewPuzzle()
+			// } else if day == "05" {
+			// 	return aoc2022d05.NewPuzzle()
+			// } else if day == "04" {
+			// 	return aoc2022d04.NewPuzzle()
+			// } else if day == "03" {
+			// 	return aoc2022d03.NewPuzzle()
+			// } else if day == "02" {
+			// 	return aoc2022d02.NewPuzzle()
+			// } else if day == "01" {
+			// 	return aoc2022d01.NewPuzzle()
+		}
+	}
+	return nil
 }

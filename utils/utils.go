@@ -210,3 +210,8 @@ func Compute_lcm(x uint, y uint) uint {
 	}
 	return lcm
 }
+
+func IsInt(candidate string) (int, bool) {
+	i, err := strconv.Atoi(candidate)
+	return i, err == nil
+}

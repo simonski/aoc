@@ -21,35 +21,42 @@ type Puzzle struct {
 	lines []string
 }
 
+func New() *Puzzle {
+	p := Puzzle{year: "2023", day: "01", title: "Trebuchet?!"}
+	p.Load(REAL_DATA)
+	return &p
+}
+
 func NewPuzzleWithData(input string) *Puzzle {
 	p := Puzzle{year: "2023", day: "01", title: "Trebuchet?!"}
 	p.Load(input)
 	return &p
 }
 
-func NewPuzzle() *Puzzle {
-	return NewPuzzleWithData(REAL_DATA)
-}
-
-func (puzzle *Puzzle) Load(input string) {
+func (p *Puzzle) Load(input string) {
 	lines := strings.Split(input, "\n")
-	puzzle.input = input
-	puzzle.lines = lines
+	p.input = input
+	p.lines = lines
 }
 
-func (puzzle *Puzzle) Part1(data string) {
-	puzzle.Load(data)
-	p := NewPuzzleWithData(data)
+func (p *Puzzle) Part1() {
+	p.Part1Logic(p.input)
+}
 
-	fmt.Printf("There are %v lines.\n", len(p.lines))
+func (p *Puzzle) Part1Logic(data string) {
+	// puzzle.Load(data)
+	// p := NewPuzzleWithData(data)
+
+	lines := strings.Split(data, "\n")
+	fmt.Printf("There are %v lines.\n", len(lines))
 
 	grandTotal := 0
-	for _, line := range p.lines {
+	for _, line := range lines {
 		lvar := -1
 		rvar := -1
 		for index := 0; index < len(line)-1; index++ {
 			candidate := line[index : index+1]
-			i, isInt := IsInt(candidate)
+			i, isInt := utils.IsInt(candidate)
 			if isInt {
 				lvar = i
 				break
@@ -58,7 +65,7 @@ func (puzzle *Puzzle) Part1(data string) {
 
 		for index := len(line) - 1; index >= 0; index-- {
 			candidate := line[index : index+1]
-			i, isInt := IsInt(candidate)
+			i, isInt := utils.IsInt(candidate)
 			if isInt {
 				rvar = i
 				break
@@ -78,20 +85,14 @@ func (puzzle *Puzzle) Part1(data string) {
 		fmt.Printf("Line: %v, lvar: %v, rvar: %v, sum: %v\n", line, lvar, rvar, sum)
 	}
 	fmt.Printf("GrantTotal: %v\n", grandTotal)
-
 }
 
-type NumberThing struct {
-	Value  string
-	Number int
-}
+func (p *Puzzle) Part2() {
 
-func (puzzle *Puzzle) Part2(data string) {
-	puzzle.Load(data)
-	p := NewPuzzleWithData(data)
+	lines := strings.Split(p.input, "\n")
 
 	output := make([]string, 0)
-	for _, original := range p.lines {
+	for _, original := range lines {
 		line := EdgeCases(original)
 		line = strings.ReplaceAll(line, "zero", "0")
 		line = strings.ReplaceAll(line, "one", "1")
@@ -109,27 +110,25 @@ func (puzzle *Puzzle) Part2(data string) {
 	}
 	new_data := strings.Join(output, "\n")
 
-	puzzle.Part1(new_data)
+	p.Part1Logic(new_data)
+}
 
+func (p *Puzzle) Summary() *utils.Summary {
+	s := utils.NewSummary(2023, 01)
+	return s
 }
 
 func (puzzle *Puzzle) Run() {
-	// USAGE := "Usage: aoc run 2023 01 (P1|P2)"
 	c := utils.NewCLI(os.Args)
 	if c.Contains("P1") {
-		puzzle.Part1(REAL_DATA)
+		puzzle.Part1()
 	} else if c.Contains("P2") {
-		puzzle.Part2(REAL_DATA)
+		puzzle.Part2()
 	} else {
-		puzzle.Part2(REAL_DATA)
-		puzzle.Part2(TEST_DATA_2)
+		puzzle.Part1()
+		puzzle.Part2()
+		// puzzle.Part2(TEST_DATA_2)
 	}
-
-}
-
-func IsInt(candidate string) (int, bool) {
-	i, err := strconv.Atoi(candidate)
-	return i, err == nil
 }
 
 func EdgeCases(line string) string {
@@ -163,7 +162,6 @@ func FirstWord(line string) (string, int) {
 		}
 	}
 	return minWord, minWordIndex
-
 }
 
 func IsMin(candidate int, values ...int) bool {
