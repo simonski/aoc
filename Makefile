@@ -44,10 +44,13 @@ server: build
 devserver: build
 	./aoc server -fs ./api
 
-test:
+test-all:
 	# go test ./app/aoc2020 -timeout 10s
 	go test ./... -timeout 10s
 
+test:
+	@echo go test ./app/aoc2023/d02/... -v
+	
 install:
 	go install
 

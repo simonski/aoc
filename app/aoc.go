@@ -16,15 +16,8 @@ import (
 	"github.com/simonski/aoc/app/aoc2020"
 	"github.com/simonski/aoc/app/aoc2021"
 	"github.com/simonski/aoc/app/aoc2022"
-	aoc2022d06 "github.com/simonski/aoc/app/aoc2022/d06"
-	aoc2022d11 "github.com/simonski/aoc/app/aoc2022/d11"
-	aoc2022d12 "github.com/simonski/aoc/app/aoc2022/d12"
-	aoc2022d13 "github.com/simonski/aoc/app/aoc2022/d13"
-	aoc2022d14 "github.com/simonski/aoc/app/aoc2022/d14"
-	aoc2022d15 "github.com/simonski/aoc/app/aoc2022/d15"
-	aoc2022d16 "github.com/simonski/aoc/app/aoc2022/d16"
-	aoc2022d17 "github.com/simonski/aoc/app/aoc2022/d17"
-	aoc2022d18 "github.com/simonski/aoc/app/aoc2022/d18"
+	aoc2023d01 "github.com/simonski/aoc/app/aoc2023/d01"
+	aoc2023d02 "github.com/simonski/aoc/app/aoc2023/d02"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
@@ -96,7 +89,6 @@ func (app *AOC) Summary(cli *cli.CLI) {
 	} else {
 		fmt.Println("No summary.")
 	}
-
 }
 
 func (app *AOC) Render(cli *cli.CLI) {
@@ -226,42 +218,494 @@ func (a *AOC) List() string {
 }
 
 func (a *AOC) GetPuzzle(year string, day string) utils.Puzzle {
-	if year == "2022" {
-		if day == "06" {
-			return aoc2022d06.NewPuzzle()
-		} else if day == "11" {
-			return aoc2022d11.NewPuzzle()
-		} else if day == "12" {
-			return aoc2022d12.NewPuzzle()
-		} else if day == "13" {
-			return aoc2022d13.NewPuzzle()
-		} else if day == "14" {
-			return aoc2022d14.NewPuzzle()
-		} else if day == "15" {
-			return aoc2022d15.NewPuzzle()
-		} else if day == "16" {
-			return aoc2022d16.NewPuzzle()
-		} else if day == "17" {
-			return aoc2022d17.NewPuzzle()
-		} else if day == "18" {
-			return aoc2022d18.NewPuzzle()
-			// } else if day == "05" {
-			// 	return aoc2022d05.NewPuzzle()
-			// } else if day == "04" {
-			// 	return aoc2022d04.NewPuzzle()
-			// } else if day == "03" {
-			// 	return aoc2022d03.NewPuzzle()
-			// } else if day == "02" {
-			// 	return aoc2022d02.NewPuzzle()
-			// } else if day == "01" {
-			// 	return aoc2022d01.NewPuzzle()
-		} else {
-			return nil
-		}
 
-	} else {
-		return nil
+	// if year == "2015" {
+	// 	if day == "01" {
+	// 		return aoc2015d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2015d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2015d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2015d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2015d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2015d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2015d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2015d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2015d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2015d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2015d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2015d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2015d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2015d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2015d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2015d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2015d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2015d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2015d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2015d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2015d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2015d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2015d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2015d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2015d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2016" {
+	// 	if day == "01" {
+	// 		return aoc2016d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2016d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2016d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2016d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2016d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2016d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2016d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2016d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2016d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2016d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2016d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2016d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2016d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2016d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2016d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2016d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2016d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2016d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2016d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2016d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2016d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2016d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2016d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2016d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2016d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2017" {
+	// 	if day == "01" {
+	// 		return aoc2017d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2017d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2017d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2017d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2017d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2017d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2017d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2017d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2017d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2017d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2017d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2017d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2017d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2017d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2017d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2017d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2017d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2017d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2017d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2017d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2017d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2017d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2017d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2017d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2017d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2018" {
+	// 	if day == "01" {
+	// 		return aoc2018d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2018d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2018d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2018d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2018d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2018d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2018d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2018d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2018d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2018d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2018d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2018d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2018d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2018d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2018d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2018d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2018d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2018d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2018d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2018d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2018d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2018d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2018d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2018d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2018d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2019" {
+	// 	if day == "01" {
+	// 		return aoc2019d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2019d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2019d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2019d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2019d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2019d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2019d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2019d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2019d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2019d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2019d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2019d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2019d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2019d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2019d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2019d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2019d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2019d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2019d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2019d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2019d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2019d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2019d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2019d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2019d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2020" {
+	// 	if day == "01" {
+	// 		return aoc2020d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2020d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2020d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2020d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2020d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2020d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2020d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2020d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2020d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2020d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2020d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2020d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2020d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2020d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2020d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2020d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2020d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2020d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2020d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2020d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2020d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2020d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2020d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2020d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2020d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2021" {
+	// 	if day == "01" {
+	// 		return aoc2021d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2021d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2021d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2021d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2021d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2021d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2021d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2021d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2021d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2021d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2021d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2021d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2021d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2021d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2021d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2021d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2021d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2021d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2021d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2021d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2021d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2021d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2021d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2021d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2021d25.NewPuzzle()
+	// 	}
+	// }
+
+	// if year == "2022" {
+	// 	if day == "01" {
+	// 		return aoc2022d01.NewPuzzle()
+	// 	} else if day == "02" {
+	// 		return aoc2022d02.NewPuzzle()
+	// 	} else if day == "03" {
+	// 		return aoc2022d03.NewPuzzle()
+	// 	} else if day == "04" {
+	// 		return aoc2022d04.NewPuzzle()
+	// 	} else if day == "05" {
+	// 		return aoc2022d05.NewPuzzle()
+	// 	} else if day == "06" {
+	// 		return aoc2022d06.NewPuzzle()
+	// 	} else if day == "07" {
+	// 		return aoc2022d07.NewPuzzle()
+	// 	} else if day == "08" {
+	// 		return aoc2022d08.NewPuzzle()
+	// 	} else if day == "09" {
+	// 		return aoc2022d09.NewPuzzle()
+	// 	} else if day == "10" {
+	// 		return aoc2022d10.NewPuzzle()
+	// 	} else if day == "11" {
+	// 		return aoc2022d11.NewPuzzle()
+	// 	} else if day == "12" {
+	// 		return aoc2022d12.NewPuzzle()
+	// 	} else if day == "13" {
+	// 		return aoc2022d13.NewPuzzle()
+	// 	} else if day == "14" {
+	// 		return aoc2022d14.NewPuzzle()
+	// 	} else if day == "15" {
+	// 		return aoc2022d15.NewPuzzle()
+	// 	} else if day == "16" {
+	// 		return aoc2022d16.NewPuzzle()
+	// 	} else if day == "17" {
+	// 		return aoc2022d17.NewPuzzle()
+	// 	} else if day == "18" {
+	// 		return aoc2022d18.NewPuzzle()
+	// 	} else if day == "19" {
+	// 		return aoc2022d19.NewPuzzle()
+	// 	} else if day == "20" {
+	// 		return aoc2022d20.NewPuzzle()
+	// 	} else if day == "21" {
+	// 		return aoc2022d21.NewPuzzle()
+	// 	} else if day == "22" {
+	// 		return aoc2022d22.NewPuzzle()
+	// 	} else if day == "23" {
+	// 		return aoc2022d23.NewPuzzle()
+	// 	} else if day == "24" {
+	// 		return aoc2022d24.NewPuzzle()
+	// 	} else if day == "25" {
+	// 		return aoc2022d25.NewPuzzle()
+	// 	}
+	// }
+
+	if year == "2023" {
+		if day == "01" {
+			return aoc2023d01.NewPuzzle()
+		} else if day == "02" {
+			return aoc2023d02.NewPuzzle()
+			// } else if day == "03" {
+			// 	return aoc2023d03.NewPuzzle()
+			// } else if day == "04" {
+			// 	return aoc2023d04.NewPuzzle()
+			// } else if day == "05" {
+			// 	return aoc2023d05.NewPuzzle()
+			// } else if day == "06" {
+			// 	return aoc2023d06.NewPuzzle()
+			// } else if day == "07" {
+			// 	return aoc2023d07.NewPuzzle()
+			// } else if day == "08" {
+			// 	return aoc2023d08.NewPuzzle()
+			// } else if day == "09" {
+			// 	return aoc2023d09.NewPuzzle()
+			// } else if day == "10" {
+			// 	return aoc2023d10.NewPuzzle()
+			// } else if day == "11" {
+			// 	return aoc2023d11.NewPuzzle()
+			// } else if day == "12" {
+			// 	return aoc2023d12.NewPuzzle()
+			// } else if day == "13" {
+			// 	return aoc2023d13.NewPuzzle()
+			// } else if day == "14" {
+			// 	return aoc2023d14.NewPuzzle()
+			// } else if day == "15" {
+			// 	return aoc2023d15.NewPuzzle()
+			// } else if day == "16" {
+			// 	return aoc2023d16.NewPuzzle()
+			// } else if day == "17" {
+			// 	return aoc2023d17.NewPuzzle()
+			// } else if day == "18" {
+			// 	return aoc2023d18.NewPuzzle()
+			// } else if day == "19" {
+			// 	return aoc2023d19.NewPuzzle()
+			// } else if day == "20" {
+			// 	return aoc2023d20.NewPuzzle()
+			// } else if day == "21" {
+			// 	return aoc2023d21.NewPuzzle()
+			// } else if day == "22" {
+			// 	return aoc2023d22.NewPuzzle()
+			// } else if day == "23" {
+			// 	return aoc2023d23.NewPuzzle()
+			// } else if day == "24" {
+			// 	return aoc2023d24.NewPuzzle()
+			// } else if day == "25" {
+			// 	return aoc2023d25.NewPuzzle()
+		}
 	}
+
+	return nil
 	// concreteTypeName := fmt.Sprintf("app.aoc%v.d%v.Puzzle", year, day)
 	// puzzle := reflect.TypeOf(concreteTypeName)
 	// return &puzzle

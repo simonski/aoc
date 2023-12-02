@@ -35,8 +35,6 @@ sed -e "s/TOKEN_PACKAGE/d${DAY}/g" -e "s/TOKEN_TITLE/${TITLE}/g" -e "s/TOKEN_YEA
 
 touch app/aoc${YEAR}/d${DAY}/blog.md
 touch app/aoc${YEAR}/d${DAY}/problem.md
-touch app/aoc${YEAR}/d${DAY}/input.txt
-
 
 # git checkout main
 # git pull origin main

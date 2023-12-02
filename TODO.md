@@ -1,5 +1,15 @@
 # AOC TODO
 
+### 2023-01-02
+
+Fix the getSummary etc. to return pre-2022 and post-2022 via different methods.  Iterate over time to
+each y2023/d01/ style.  Learn how (or not) to reflect instances.
+
+### 2023 -01
+
+Fix the entrypoint and testing so I can run and test single days easily.
+
+
 ## To Learn ()
 TODO
 
