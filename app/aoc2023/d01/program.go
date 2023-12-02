@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
 )
 
@@ -15,14 +16,21 @@ import (
 
 type Puzzle struct {
 	title string
-	year  string
-	day   string
+	year  int
+	day   int
 	input string
 	lines []string
 }
 
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
+}
+
 func NewPuzzleWithData(input string) *Puzzle {
-	p := Puzzle{year: "2023", day: "01", title: "Trebuchet?!"}
+	p := Puzzle{year: 2023, day: 1, title: "Trebuchet?!"}
 	p.Load(input)
 	return &p
 }

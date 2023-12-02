@@ -3,6 +3,8 @@ package d02
 import (
 	"fmt"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 /*
@@ -12,21 +14,28 @@ import (
 
 type Puzzle struct {
 	title string
-	year  string
-	day   string
+	year  int
+	day   int
 	input string
 	lines []string
 	games []*Game
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
-	p := Puzzle{year: "2023", day: "02", title: "--- Day 2: Cube Conundrum ---"}
+	p := Puzzle{year: 2023, day: 2, title: "--- Day 2: Cube Conundrum ---"}
 	p.Load(input)
 	return &p
 }
 
 func NewPuzzle() *Puzzle {
 	return NewPuzzleWithData(REAL_DATA)
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	return s
 }
 
 func (puzzle *Puzzle) Load(input string) {

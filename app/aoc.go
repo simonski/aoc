@@ -163,6 +163,7 @@ func (a *AOC) List() string {
 		stars := 0
 		totalAvailableStars += 25
 		for day := 1; day <= 25; day++ {
+
 			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
 			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
 			methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
@@ -172,6 +173,12 @@ func (a *AOC) List() string {
 			_, _, m2exists := app.GetMethod(methodNamePart2)
 			_, _, m1existsRender := app.GetMethod(methodNamePart1Render)
 			_, _, m2existsRender := app.GetMethod(methodNamePart2Render)
+
+			summary := a.GetSummary(year, day)
+			if summary != nil {
+				m1exists = summary.ProgressP1 == utils.Completed
+				m2exists = summary.ProgressP2 == utils.Completed
+			}
 
 			part1 := cross
 			part2 := cross
@@ -213,7 +220,6 @@ func (a *AOC) List() string {
 	output += fmt.Sprintf("(Total Stars %v/%v)\n", totalStars, totalAvailableStars)
 
 	return output
-
 }
 
 func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
