@@ -17,6 +17,7 @@ type AppLogic interface {
 	GetName() string
 	Api(day int) string
 	Summary(year int, day int) *Summary
+	GetPuzzle(year int, day int) Puzzle
 }
 
 /*
