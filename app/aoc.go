@@ -42,7 +42,7 @@ func (app *AOC) Run(cli *cli.CLI) {
 		os.Exit(1)
 	}
 	iyear, _ := strconv.Atoi(year)
-	if iyear < 2022 {
+	if iyear <= 2022 {
 		al := app.GetAppLogic(iyear)
 		if al == nil {
 			fmt.Printf("Sorry, we don't have year %v\n", year)
@@ -78,7 +78,7 @@ func (app *AOC) Summary(cli *cli.CLI) {
 
 	al := app.GetAppLogic(iyear)
 	if al == nil {
-		fmt.Printf("Sorry, we don't have year %v\n", year)
+		fmt.Printf("Sorry, we don't have year %v\n", iyear)
 		return
 	}
 	summary := al.Summary(iyear, iday)
