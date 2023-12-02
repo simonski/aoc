@@ -154,31 +154,31 @@ func (a *AOC) List() string {
 	totalStars := 0
 	totalAvailableStars := 0
 	for year := max_year; year >= min_year; year-- {
-		app := a.GetAppLogic(year)
-		if app == nil {
-			fmt.Printf("AppLogic for year %v does not exist.\n", year)
-			continue
-		}
+		// app := a.GetAppLogic(year)
+		// if app == nil {
+		// 	fmt.Printf("AppLogic for year %v does not exist.\n", year)
+		// 	continue
+		// }
 		line := ""
 		stars := 0
 		totalAvailableStars += 25
 		for day := 1; day <= 25; day++ {
 
-			methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
-			methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
-			methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
-			methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
+			// methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
+			// methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
+			// methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
+			// methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
 
-			_, _, m1exists := app.GetMethod(methodNamePart1)
-			_, _, m2exists := app.GetMethod(methodNamePart2)
-			_, _, m1existsRender := app.GetMethod(methodNamePart1Render)
-			_, _, m2existsRender := app.GetMethod(methodNamePart2Render)
+			// _, _, m1exists := app.GetMethod(methodNamePart1)
+			// _, _, m2exists := app.GetMethod(methodNamePart2)
+			// _, _, m1existsRender := app.GetMethod(methodNamePart1Render)
+			// _, _, m2existsRender := app.GetMethod(methodNamePart2Render)
 
 			summary := a.GetSummary(year, day)
-			if summary != nil {
-				m1exists = summary.ProgressP1 == utils.Completed
-				m2exists = summary.ProgressP2 == utils.Completed
-			}
+			// if summary != nil {
+			m1exists := summary.ProgressP1 == utils.Completed
+			m2exists := summary.ProgressP2 == utils.Completed
+			// }
 
 			part1 := cross
 			part2 := cross
@@ -199,10 +199,10 @@ func (a *AOC) List() string {
 				part2 = cross
 			}
 
-			if m1existsRender {
+			if summary.VisualisationP1 {
 				part1 = gold(part1)
 			}
-			if m2existsRender {
+			if summary.VisualisationP1 {
 				part2 = gold(part2)
 			}
 
@@ -223,8 +223,14 @@ func (a *AOC) List() string {
 }
 
 func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
-	al := a.GetAppLogic(year)
-	return al.GetPuzzle(year, day)
+	if year < 2023 {
+		al := a.GetAppLogic(year)
+		return al.GetPuzzle(year, day)
+	} else {
+		al := aoc2023.NewApplication(a.CLI)
+		return al.GetPuzzle(year, day)
+
+	}
 }
 
 func (a *AOC) GetAppLogic(year int) utils.AppLogic {
@@ -244,19 +250,26 @@ func (a *AOC) GetAppLogic(year int) utils.AppLogic {
 		return aoc2021.NewApplication(a.CLI)
 	} else if year == 2022 {
 		return aoc2022.NewApplication(a.CLI)
-	} else if year == 2023 {
-		return aoc2023.NewApplication(a.CLI)
 	} else {
 		return nil
 	}
 }
 
 func (a *AOC) GetSummary(year int, day int) *utils.Summary {
-	appLogic := a.GetAppLogic(year)
-	if appLogic != nil {
-		return appLogic.Summary(year, day)
+	if year < 2023 {
+		appLogic := a.GetAppLogic(year)
+		if appLogic != nil {
+			return appLogic.Summary(year, day)
+		} else {
+			return utils.NewSummary(year, day)
+		}
 	} else {
-		return nil
+		p := a.GetPuzzle(year, day)
+		if p == nil {
+			return utils.NewSummary(year, day)
+		}
+		s := p.GetSummary()
+		return &s
 	}
 }
 
