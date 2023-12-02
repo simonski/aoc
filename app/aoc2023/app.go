@@ -18,16 +18,6 @@ func NewApplication(cli *cli.CLI) Application {
 	return app
 }
 
-// func (app Application) Run(cli *cli.CLI) {
-// }
-
-// func (app Application) Render(cli *cli.CLI) {
-// }
-
-// func (app Application) Api(day int) string {
-// 	return ""
-// }
-
 func (app Application) Summary(year int, day int) *utils.Summary {
 	p := app.GetPuzzle(year, day)
 	if p == nil {
@@ -36,10 +26,6 @@ func (app Application) Summary(year int, day int) *utils.Summary {
 	s := p.GetSummary()
 	return &s
 }
-
-// func (app Application) GetMethod(methodName string) (reflect.Value, reflect.Value, bool) {
-// 	return reflect.ValueOf(""), reflect.ValueOf(""), false
-// }
 
 func (app Application) GetPuzzle(year int, day int) utils.Puzzle {
 

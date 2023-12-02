@@ -1,6 +1,9 @@
 package TOKEN_PACKAGE
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
 /*
 --- Day 05:  ---
@@ -9,14 +12,16 @@ import "strings"
 
 type Puzzle struct {
 	title string
-	year  string
-	day   string
+	year  int
+	day   int
 	input string
 	lines []string
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
-	p := Puzzle{year: "TOKEN_YEAR", day: "TOKEN_DAY", title: "TOKEN_TITLE"}
+	iyear, _ := strconv.Atoi("TOKEN_YEAR")
+	iday, _ := strconv.Atoi("TOKEN_DAY")
+	p := Puzzle{year: iyear, day: iday, title: "TOKEN_TITLE"}
 	p.Load(input)
 	return &p
 }
