@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/gookit/color"
-	aoc2015 "github.com/simonski/aoc/app/aoc2015"
+	"github.com/simonski/aoc/app/aoc2015"
 	"github.com/simonski/aoc/app/aoc2016"
 	"github.com/simonski/aoc/app/aoc2017"
 	"github.com/simonski/aoc/app/aoc2018"
@@ -19,8 +19,8 @@ import (
 	"github.com/simonski/aoc/app/aoc2023"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
-	cli "github.com/simonski/cli"
-	goutils "github.com/simonski/goutils"
+	"github.com/simonski/cli"
+	"github.com/simonski/goutils"
 )
 
 type AOC struct {

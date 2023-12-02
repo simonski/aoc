@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -115,7 +115,7 @@ func (puzzle *Puzzle) Part2(data string) {
 
 func (puzzle *Puzzle) Run() {
 	// USAGE := "Usage: aoc run 2023 01 (P1|P2)"
-	c := utils.NewCLI(os.Args)
+	c := cli.New(os.Args)
 	if c.Contains("P1") {
 		puzzle.Part1(REAL_DATA)
 	} else if c.Contains("P2") {
