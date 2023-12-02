@@ -8,6 +8,7 @@ curl https://adventofcode.com/$YEAR/day/$DAY > info.txt
 TITLE=`cat info.txt | grep "Day ${DAY}:" | sed -e "s/.*--- Day/Day/g" | sed -e "s/\ ---.*//g"`
 
 # read -p "Title : " TITLE
+START=`date +'%Y-%m-%d %H:%M:%S'`
 
 if [ "$YEAR" == "" ]
 then
@@ -35,7 +36,7 @@ sed -e "s/TOKEN_PACKAGE/d${DAY}/g" -e "s/TOKEN_TITLE/${TITLE}/g" -e "s/TOKEN_YEA
 
 sed -e "s/TOKEN_PACKAGE/d${DAY}/g" -e "s/TOKEN_TITLE/${TITLE}/g" -e "s/TOKEN_YEAR/${YEAR}/g" -e "s/TOKEN_DAY/${DAY}/g" app/template/template_program_test.go > app/aoc${YEAR}/d${DAY}/program_test.go
 
-sed -e "s/TOKEN_PACKAGE/d${DAY}/g" -e "s/TOKEN_TITLE/${TITLE}/g" -e "s/TOKEN_YEAR/${YEAR}/g" -e "s/TOKEN_DAY/${DAY}/g" app/template/template_program.go > app/aoc${YEAR}/d${DAY}/program.go
+sed -e "s/TOKEN_START/${START}/g" -e "s/TOKEN_PACKAGE/d${DAY}/g" -e "s/TOKEN_TITLE/${TITLE}/g" -e "s/TOKEN_YEAR/${YEAR}/g" -e "s/TOKEN_DAY/${DAY}/g" app/template/template_program.go > app/aoc${YEAR}/d${DAY}/program.go
 
 touch app/aoc${YEAR}/d${DAY}/blog.md
 touch app/aoc${YEAR}/d${DAY}/problem.md

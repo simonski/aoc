@@ -3,11 +3,12 @@ package TOKEN_PACKAGE
 import (
 	"strconv"
 	"strings"
+
+	"github.com/simonski/aoc/utils"
 )
 
 /*
---- Day 05:  ---
-
+TOKEN_TITLE
 */
 
 type Puzzle struct {
@@ -16,6 +17,14 @@ type Puzzle struct {
 	day   int
 	input string
 	lines []string
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.NotStarted
+	s.ProgressP2 = utils.NotStarted
+	s.DateStarted = "TOKEN_START"
+	return s
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
