@@ -3,7 +3,11 @@ DAY=$2
 
 read -p "Year: " YEAR
 read -p "Day : " DAY
-read -p "Title : " TITLE
+
+curl https://adventofcode.com/$YEAR/day/$DAY > info.txt
+TITLE=`cat info.txt | grep "Day ${DAY}:" | sed -e "s/.*--- Day/Day/g" | sed -e "s/\ ---.*//g"`
+
+# read -p "Title : " TITLE
 
 if [ "$YEAR" == "" ]
 then
@@ -40,3 +44,5 @@ touch app/aoc${YEAR}/d${DAY}/problem.md
 # git pull origin main
 # git checkout -b feature/${YEAR}_${DAY}
 # echo "ok!"
+
+echo "Ok, created ${YEAR}/${DAY}/${TITLE}"

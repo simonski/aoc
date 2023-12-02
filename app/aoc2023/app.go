@@ -1,8 +1,8 @@
 package aoc2023
 
 import (
-	"github.com/simonski/aoc/app/aoc2023/d01"
-	"github.com/simonski/aoc/app/aoc2023/d02"
+	"github.com/simonski/aoc/app/aoc2023/d1"
+	"github.com/simonski/aoc/app/aoc2023/d2"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 )
@@ -31,23 +31,23 @@ func (app Application) GetPuzzle(year int, day int) utils.Puzzle {
 
 	if year == 2023 {
 		if day == 1 {
-			return d01.NewPuzzle()
+			return d1.NewPuzzle()
 		} else if day == 2 {
-			return d02.NewPuzzle()
+			return d2.NewPuzzle()
 			// } else if day == 3 {
-			// 	return d03.NewPuzzle()
+			// 	return d3.NewPuzzle()
 			// } else if day == 4 {
-			// 	return d04.NewPuzzle()
+			// 	return d4.NewPuzzle()
 			// } else if day == 5 {
-			// 	return d05.NewPuzzle()
+			// 	return d5.NewPuzzle()
 			// } else if day == 6 {
-			// 	return d06.NewPuzzle()
+			// 	return d6.NewPuzzle()
 			// } else if day == 7 {
-			// 	return d07.NewPuzzle()
+			// 	return d7.NewPuzzle()
 			// } else if day == 8 {
-			// 	return d08.NewPuzzle()
+			// 	return d8.NewPuzzle()
 			// } else if day == 9 {
-			// 	return d09.NewPuzzle()
+			// 	return d9.NewPuzzle()
 			// } else if day == 10 {
 			// 	return d10.NewPuzzle()
 			// } else if day == 11 {

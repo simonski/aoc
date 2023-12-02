@@ -626,7 +626,7 @@ hgt:178cm
 hcl:z
 byr:2024 hgt:179cm
 iyr:2017
-eyr:1998 ecl:#d087a7
+eyr:1998 ecl:#d87a7
 
 pid:673581655 eyr:2023
 byr:1924 hcl:#18171d ecl:blu hgt:187cm iyr:2015

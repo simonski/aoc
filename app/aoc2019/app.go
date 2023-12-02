@@ -219,11 +219,11 @@ func (app Application) GetPuzzle(year int, day int) utils.Puzzle {
 		// } else if day == 6 {
 		// 	return d06.NewPuzzle()
 		// } else if day == 7 {
-		// 	return d07.NewPuzzle()
+		// 	return d7.NewPuzzle()
 		// } else if day == 8 {
-		// 	return d08.NewPuzzle()
+		// 	return d8.NewPuzzle()
 		// } else if day == 9 {
-		// 	return d09.NewPuzzle()
+		// 	return d9.NewPuzzle()
 		// } else if day == 10 {
 		// 	return d10.NewPuzzle()
 		// } else if day == 11 {
