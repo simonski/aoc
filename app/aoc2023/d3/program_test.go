@@ -46,3 +46,11 @@ func Test_FindNumbersAdjacent_Part1(t *testing.T) {
 	}
 	fmt.Printf("Test total is %v\n", total)
 }
+
+func Test_FindGearNumbers_Part2(t *testing.T) {
+	grid := NewGrid(TEST_DATA)
+	numbers := grid.FindGearNumbers()
+	if len(numbers) != 2 {
+		t.Fatalf("Expected 2 gearnumbers, got %v\n", len(numbers))
+	}
+}

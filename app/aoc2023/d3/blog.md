@@ -2,6 +2,9 @@ Puzzle: Day 3: Gear Ratios
 Year: 2023
 Day: 3
 
+I "saw" this one, so the solution was fixed from the start.  In this case I believe the experience of "keep that for later" that Eric has so kindly taught me over the years helped me out.  I thought the symbol locations would be useful.
+
+
 Part1:
 
 1. detect a number

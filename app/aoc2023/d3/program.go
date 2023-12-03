@@ -22,9 +22,10 @@ type Puzzle struct {
 
 func (puzzle *Puzzle) GetSummary() utils.Summary {
 	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
 	s.DateStarted = "2023-12-03 07:30:19"
+	s.DateCompleted = "2023-12-03 08:51:00"
 	return s
 }
 
@@ -55,12 +56,29 @@ func (puzzle *Puzzle) Part1() {
 	for _, n := range numbers {
 		total += n.Value
 	}
-	fmt.Printf("Test total is %v\n", total)
+	fmt.Printf("Part 1 : %v\n", total)
 
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	grid := NewGrid(TEST_DATA)
+	numbers := grid.FindGearNumbers()
+	total := 0
+	for _, n := range numbers {
+		value := n.Number1.Value * n.Number2.Value
+		total += value
+	}
+	fmt.Printf("Part 2 (test) : %v\n", total)
+
+	grid = NewGrid(REAL_DATA)
+	numbers = grid.FindGearNumbers()
+	total = 0
+	for _, n := range numbers {
+		value := n.Number1.Value * n.Number2.Value
+		total += value
+	}
+	fmt.Printf("Part 2 (real) : %v\n", total)
+
 }
 
 func (puzzle *Puzzle) Run() {
