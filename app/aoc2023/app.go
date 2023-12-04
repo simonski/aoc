@@ -4,6 +4,7 @@ import (
 	"github.com/simonski/aoc/app/aoc2023/d1"
 	"github.com/simonski/aoc/app/aoc2023/d2"
 	"github.com/simonski/aoc/app/aoc2023/d3"
+	"github.com/simonski/aoc/app/aoc2023/d4"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 )
@@ -37,8 +38,8 @@ func (app Application) GetPuzzle(year int, day int) utils.Puzzle {
 			return d2.NewPuzzle()
 		} else if day == 3 {
 			return d3.NewPuzzle()
-			// } else if day == 4 {
-			// 	return d4.NewPuzzle()
+		} else if day == 4 {
+			return d4.NewPuzzle()
 			// } else if day == 5 {
 			// 	return d5.NewPuzzle()
 			// } else if day == 6 {
