@@ -204,3 +204,99 @@ func MaxInt(a int, b int) int {
 	}
 	return b
 }
+
+// a semi-functional collapsing function which finds overlaps and merges indexes
+func CollapseRanges(ranges [][]int) [][]int {
+
+	inside := func(r1 []int, r2 []int) bool {
+		if r1[0] > r2[0] && r1[1] < r2[0] {
+			return true
+		}
+		return false
+	}
+
+	extends_left := func(r1 []int, r2 []int) bool {
+		if r1[0] < r2[0] && r1[1] > r2[0] && r1[1] < r2[1] {
+			return true
+		}
+		return false
+	}
+
+	extends_right := func(r1 []int, r2 []int) bool {
+		if r1[1] > r2[1] && r1[0] > r2[0] && r1[0] < r2[1] {
+			return true
+		}
+		return false
+	}
+
+	filter := func(r1 []int, r2 []int) (bool, []int) {
+		if inside(r1, r2) {
+			// r1 is inside r2
+			// drop r1
+			return true, r2
+		} else if extends_left(r1, r2) {
+			// r1 extends r2 left
+			result := []int{r1[0], r2[1]}
+			return true, result
+
+		} else if extends_right(r1, r2) {
+			// r1 extends r2 right
+			result := []int{r2[0], r1[1]}
+			return true, result
+
+		} else {
+			return false, nil
+		}
+	}
+
+	filter_down := func(ranges [][]int) (bool, [][]int) {
+
+		for index := 0; index < len(ranges); index++ {
+			r1 := ranges[index]
+			for index2 := index + 1; index2 < len(ranges); index2++ {
+				if index == index2 {
+					// dont compare thyself
+					continue
+				}
+				r2 := ranges[index2]
+
+				fmt.Printf("checking (%v) (%v)\n", r1, r2)
+
+				modified, r3 := filter(r1, r2)
+				if modified {
+					fmt.Printf("modified (%v) (%v)\n", r1, r2)
+					// remove r1 and r2, replace with r3
+					new_ranges := make([][]int, 0)
+					new_ranges = append(new_ranges, r3)
+					for i := 0; i < len(ranges); i++ {
+						if i != index && i != index2 {
+							new_ranges = append(new_ranges, ranges[i])
+						}
+					}
+					return true, new_ranges
+				} else {
+					fmt.Printf("not modified (%v) (%v)\n", r1, r2)
+
+				}
+
+			}
+		}
+		return false, ranges
+
+	}
+
+	filter_all := func(ranges [][]int) [][]int {
+		results := ranges
+		modified := true
+		for {
+			modified, results = filter_down(results)
+			if !modified {
+				break
+			}
+		}
+		return results
+	}
+
+	merged := filter_all(ranges)
+	return merged
+}

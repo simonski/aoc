@@ -49,7 +49,7 @@ test-all:
 	go test ./... -timeout 10s
 
 test:
-	@echo go test ./app/aoc2023/d02/... -v
+	@echo go test ./app/aoc2023/d5/... -v
 	
 install:
 	go install
