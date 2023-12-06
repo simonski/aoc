@@ -50,16 +50,12 @@ func (puzzle *Puzzle) Load(input string) {
 func (puzzle *Puzzle) Part1() {
 	puzzle.Load(REAL_DATA)
 
-	const REAL_DATA = `Time:        35     69     68     87
-						Distance:   213   1168   1086   1248`
-
 	times1 := get_best_times(35, 213)
 	times2 := get_best_times(69, 1168)
 	times3 := get_best_times(68, 1086)
 	times4 := get_best_times(87, 1248)
 
 	result := len(times1) * len(times2) * len(times3) * len(times4)
-	// 14079000 too high (had nubmers wrong in icalls to get_best times)
 	fmt.Printf("Part1: %v\n", result)
 
 }
@@ -91,6 +87,3 @@ func get_best_times(racetime int, max_distance int) []int {
 	}
 	return results
 }
-
-// const REAL_DATA = `Time:        35     69     68     87
-// Distance:   213   1168   1086   1248`

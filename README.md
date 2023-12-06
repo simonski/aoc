@@ -7,41 +7,38 @@ This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.c
 ```bash
 git clone github.com/simonski/aoc.git
 cd aoc
+make setup
 make
 ```
 
-This will build `$GOBIN/aoc` which you can then type `aoc` on and play with.
+
+This will build `aoc` which you can then type `./aoc` on and play with.
+
+## Run
+
+Type `./aoc`
+
+A calendar will be printed with the stars. Each day can be run using `aoc run <year> <day>`.   Every year I break this, so for 2023 I think I will refactor the lot to the `Puzzle` interface I dreamed up.
 
 ### Webserver time
 
-The whole thing is wrapped as a toy server.  Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls.
+The whole thing is wrapped as a Rube Goldberg toy webserver with webassembly and what-not. Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls. 
 
 I use a complicated arrangement of javascript talking back to the server for a `d3.js` visualisation. Good luck with that part next year :).  There's a bunch of dead and unused code in there that I'll tidy up.
 
 ```bash
 cd $CODE/aoc
-caddy start
-make
 ./aoc server
 ```
 
-
-
-## Run
-
-Type `aoc`
-
-A calendar will be printed with the completion stars. Each day can be run using `aoc run <year> <day>`
-
 ## Extend
 
-Let's say you work on a new day, for example 1st December 2022.  Each day should go in its own `feature/YYYY_DD` branch taken from `main`.  I use the script `start.sh` which token-switches some template code:
+Let's say you work on a new day, for example 1st December 2023.  I use the script `start.sh` which token-switches some template code:
 
 ```bash
 ./start.sh
 YEAR: 2022
-DAY: 01
-TITLE: "Whatever Eric calls today"
+DAY: 1
 ```
 
 You can then run it as an application (<b>edit</b> not true: run via tests until I integrate.)

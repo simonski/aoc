@@ -8,7 +8,7 @@ require (
 	github.com/gammazero/deque v0.2.1
 	github.com/gookit/color v1.3.6
 	github.com/simonski/cli v0.0.0-20220919133012-ba6c528d0d37
-	github.com/simonski/goutils v0.0.0-20221013050613-ad1da6fd9c4b
+	github.com/simonski/goutils v0.0.0-20230903103029-7a7712f9a9d2
 )
 
 require (
