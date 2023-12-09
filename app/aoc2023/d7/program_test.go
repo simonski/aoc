@@ -130,6 +130,7 @@ func Test_P2_GameReal(t *testing.T) {
 	total := 0
 	// 248784657 too high
 	// 248540703 // no
+	// 248747492
 	// 248454024 too low
 	for _, h := range g.Hands {
 		// fmt.Printf("%v %v\n", h.Rank, h.Debug())

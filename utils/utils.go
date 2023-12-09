@@ -69,8 +69,8 @@ func BinaryStringToUInt64(v string) uint64 {
 func SplitDataToListOfInts(data string, delim string) []int {
 	results := make([]int, 0)
 	splits := strings.Split(data, delim)
-	for _, line := range splits {
-		iline, _ := strconv.Atoi(line)
+	for i := range splits {
+		iline, _ := strconv.Atoi(splits[i])
 		results = append(results, iline)
 	}
 	return results
@@ -169,34 +169,34 @@ func Lcm_x(data []uint) uint {
 	return result
 }
 
-func Compute_lcms(data []uint) uint {
-	lcm := Compute_lcm(data[0], data[1])
-	for index := 1; index < len(data); index++ {
-		lcm = Compute_lcm(lcm, data[index])
-	}
-	return lcm
-}
+// func Compute_lcms(data []uint) uint {
+// 	lcm := Compute_lcm(data[0], data[1])
+// 	for index := 1; index < len(data); index++ {
+// 		lcm = Compute_lcm(lcm, data[index])
+// 	}
+// 	return lcm
+// }
 
-func Compute_lcm(x uint, y uint) uint {
+// func Compute_lcm(x uint, y uint) uint {
 
-	//    # choose the greater number
-	var greater uint
-	if x > y {
-		greater = x
-	} else {
-		greater = y
-	}
+// 	//    # choose the greater number
+// 	var greater uint
+// 	if x > y {
+// 		greater = x
+// 	} else {
+// 		greater = y
+// 	}
 
-	var lcm uint
-	for {
-		if (greater%x == 0) && (greater%y == 0) {
-			lcm = greater
-			break
-		}
-		greater += 1
-	}
-	return lcm
-}
+// 	var lcm uint
+// 	for {
+// 		if (greater%x == 0) && (greater%y == 0) {
+// 			lcm = greater
+// 			break
+// 		}
+// 		greater += 1
+// 	}
+// 	return lcm
+// }
 
 func MaxInt(a int, b int) int {
 	if a > b {
@@ -299,4 +299,9 @@ func CollapseRanges(ranges [][]int) [][]int {
 
 	merged := filter_all(ranges)
 	return merged
+}
+
+func ToInt(s string) int {
+	i, _ := strconv.Atoi(s)
+	return i
 }
