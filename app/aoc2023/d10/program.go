@@ -95,11 +95,21 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
+	fmt.Println("PART2")
 	g := NewGrid(REAL_DATA)
-	fmt.Println(g.Debug())
+	fmt.Println("PART2")
+	g.Walk(g.start_s_pos)
+	fmt.Println("PART2")
+	fmt.Println(g.DebugPathOnly())
+	fmt.Println("/PART2")
+
+	// 	take a corner, anything that is connected to the corner and NOT a visited tile is outside
+	// subtract all the path entries
+	// == inside/enclosed
+
 }
 
 func (puzzle *Puzzle) Run() {
 	puzzle.Part1()
-	puzzle.Part2()
+	// puzzle.Part2()
 }

@@ -31,8 +31,11 @@ func (pt *PointType) Render() string {
 	} else if pt.South && pt.East {
 		return "╭"
 	} else {
-		return "."
+		return pt.letter
 	}
+	// } else {
+	// return "."
+	// }
 }
 
 func NewPointType(letter string) *PointType {
@@ -82,6 +85,7 @@ func NewPoint(x int, y int, pt *PointType) *Point {
 }
 
 type Grid struct {
+	GOLD bool
 	data [][]*Point
 	// current_s_pos *Point
 	start_s_pos *Point
@@ -162,9 +166,33 @@ func (g *Grid) Debug() string {
 	for rowNum, row := range g.data {
 		for colNum, col := range row {
 			if showS && g.s_x == colNum && g.s_y == rowNum {
-				result = fmt.Sprintf("%v%v", result, TERMINAL_GOLD("S"))
+				if g.GOLD {
+					result = fmt.Sprintf("%v%v", result, TERMINAL_GOLD("S"))
+				} else {
+					result = fmt.Sprintf("%v%v", result, "S")
+				}
 			} else {
 				result = fmt.Sprintf("%v%v", result, col.pt.Render())
+			}
+		}
+		result = fmt.Sprintf("%v\n", result)
+	}
+	return result
+}
+
+func (g *Grid) DebugPathOnly() string {
+	showS := true
+	result := ""
+	for rowNum, row := range g.data {
+		for colNum, col := range row {
+			if showS && g.s_x == colNum && g.s_y == rowNum {
+				result = fmt.Sprintf("%v%v", result, TERMINAL_GOLD("S"))
+			} else {
+				if col.visited {
+					result = fmt.Sprintf("%v%v", result, col.pt.Render())
+				} else {
+					result = fmt.Sprintf("%v ", result)
+				}
 			}
 		}
 		result = fmt.Sprintf("%v\n", result)
