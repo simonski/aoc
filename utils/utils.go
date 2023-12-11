@@ -198,13 +198,6 @@ func Lcm_x(data []uint) uint {
 // 	return lcm
 // }
 
-func MaxInt(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 // a semi-functional collapsing function which finds overlaps and merges indexes
 func CollapseRanges(ranges [][]int) [][]int {
 
@@ -304,4 +297,18 @@ func CollapseRanges(ranges [][]int) [][]int {
 func ToInt(s string) int {
 	i, _ := strconv.Atoi(s)
 	return i
+}
+
+func MinInt(a int, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func MaxInt(a int, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
