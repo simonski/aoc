@@ -1,5 +1,20 @@
 # AOC TODO
 
+### 2023-12-11
+- refactor blog to date entries?
+    date.md
+
+### Reading list 
+
+https://en.wikipedia.org/wiki/Shoelace_formula
+https://en.wikipedia.org/wiki/Pick%27s_theorem
+https://en.wikipedia.org/wiki/Chinese_remainder_theorem    
+https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+https://en.wikipedia.org/wiki/Flood_fill
+https://en.wikipedia.org/wiki/Recursion
+https://en.wikipedia.org/wiki/Breadth-first_search
+https://en.wikipedia.org/wiki/Depth-first_search
+
 ### 2023-01-02
 
 Fix the `./start.sh` 

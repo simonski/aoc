@@ -312,3 +312,7 @@ func MaxInt(a int, b int) int {
 	}
 	return b
 }
+
+func ContainsString(search string, data string) bool {
+	return strings.Index(data, search) > -1
+}
