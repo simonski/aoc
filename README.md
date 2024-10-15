@@ -2,6 +2,21 @@
 
 This houses my Advent of Code [https://adventofcode.com/](https://adventofcode.com/) attempts, in go.
 
+## Prepare
+
+Every year I forget to remember and prepare.   This year will be no different, however if you want to go fast, read slow:
+
+- https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+- https://en.wikipedia.org/wiki/Memoization
+- https://en.wikipedia.org/wiki/Recursion
+- https://en.wikipedia.org/wiki/Recursion
+- https://en.wikipedia.org/wiki/Shoelace_formula
+- https://en.wikipedia.org/wiki/Pick%27s_theorem
+- https://en.wikipedia.org/wiki/Chinese_remainder_theorem    
+- https://en.wikipedia.org/wiki/Flood_fill
+- https://en.wikipedia.org/wiki/Breadth-first_search
+- https://en.wikipedia.org/wiki/Depth-first_search
+
 ## Install
 
 ```bash
@@ -10,7 +25,6 @@ cd aoc
 make setup
 make
 ```
-
 
 This will build `aoc` which you can then type `./aoc` on and play with.
 
