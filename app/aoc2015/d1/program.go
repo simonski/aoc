@@ -23,8 +23,8 @@ type Puzzle struct {
 
 func (puzzle *Puzzle) GetSummary() utils.Summary {
 	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
 	s.DateStarted = "2023-12-02 07:41:42"
 	return s
 }

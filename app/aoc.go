@@ -17,6 +17,7 @@ import (
 	"github.com/simonski/aoc/app/aoc2021"
 	"github.com/simonski/aoc/app/aoc2022"
 	"github.com/simonski/aoc/app/aoc2023"
+	"github.com/simonski/aoc/app/aoc2024"
 	"github.com/simonski/aoc/app/constants"
 	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
@@ -226,10 +227,14 @@ func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
 	if year < 2023 {
 		al := a.GetAppLogic(year)
 		return al.GetPuzzle(year, day)
-	} else {
+	} else if year == 2023 {
 		al := aoc2023.NewApplication(a.CLI)
 		return al.GetPuzzle(year, day)
-
+	} else if year == 2024 {
+		al := aoc2024.NewApplication(a.CLI)
+		return al.GetPuzzle(year, day)
+	} else {
+		return nil
 	}
 }
 

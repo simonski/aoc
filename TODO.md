@@ -1,5 +1,9 @@
 # AOC TODO
 
+### 2024-10-15
+    Refactor all probkems to the new Puzzle class so that that stars etc work.
+    
+
 ### 2023-12-11
 - refactor blog to date entries?
     date.md
