@@ -78,20 +78,19 @@ func (puzzle *Puzzle) Part1() {
 		for row_index := 0; row_index < rows; row_index++ {
 			cell := puzzle.lines[row_index][col_index : col_index+1]
 			// fmt.Printf("(%v, %v)=%v]\n", col_index, row_index, cell)
-			if cell != "X" {
-				continue
-			}
-			// is x
-			// search up
+			if cell == "X" {
+				// is x
+				// search up
 
-			// count += puzzle.searchUp(row_index, col_index)
-			// count += puzzle.searchDown(row_index, col_index)
-			// count += puzzle.searchLeft(row_index, col_index)
-			count += puzzle.searchRight(col_index, row_index)
-			// count += puzzle.searchUpLeft(row_index, col_index)
-			// count += puzzle.searchUpRight(row_index, col_index)
-			// count += puzzle.searchDownLeft(row_index, col_index)
-			// count += puzzle.searchDownRight(row_index, col_index)
+				count += puzzle.searchUp(col_index, row_index)
+				count += puzzle.searchDown(col_index, row_index)
+				count += puzzle.searchLeft(col_index, row_index)
+				count += puzzle.searchRight(col_index, row_index)
+				count += puzzle.searchUpLeft(col_index, row_index)
+				count += puzzle.searchUpRight(col_index, row_index)
+				count += puzzle.searchDownLeft(col_index, row_index)
+				count += puzzle.searchDownRight(col_index, row_index)
+			}
 		}
 	}
 
@@ -126,49 +125,58 @@ func (puzzle *Puzzle) searchRight(col_index int, row_index int) int {
 	word := "X"
 	need_word := "XMAS"
 	need := "M"
-	cache := puzzle.cache
 	location := make([]string, 0)
 	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
 
-	for col_index2 := col_index; col_index2 < len(puzzle.lines[0]); col_index2++ {
-		cell := puzzle.lines[row_index][col_index2 : col_index2+1]
+	row := puzzle.lines[row_index]
+
+	for col_index2 := col_index + 1; col_index2 < len(puzzle.lines[0]); col_index2++ {
+		cell := row[col_index2 : col_index2+1]
+		pos := fmt.Sprintf("%v,%v", col_index2, row_index)
 		if cell == need {
-			pos := fmt.Sprintf("%v,%v", col_index2, row_index)
 			location = append(location, pos)
 			word += cell
 			if word == need_word {
 				// now check - do we already have this?
 				sort.Strings(location)
 				key := fmt.Sprintf("%v", location)
-				_, exists := cache[key]
+				_, exists := puzzle.cache[key]
 				if !exists {
 					for _, k := range location {
+						fmt.Printf("cache2 (%v)\n", k)
 						puzzle.cache2[k] = true
 					}
-					cache[key] = true
+					puzzle.cache[key] = true
 					return 1
 				} else {
 					return 0
 				}
 			}
 			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
 		}
 	}
 	return 0
 }
 
-func (puzzle *Puzzle) searchUp(row_index int, col_index int) int {
+func (puzzle *Puzzle) searchLeft(col_index int, row_index int) int {
 	word := "X"
 	need_word := "XMAS"
 	need := "M"
-	cache := puzzle.cache
 	location := make([]string, 0)
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
-	for row_index2 := row_index - 1; row_index2 >= 0; row_index2-- {
-		cell := puzzle.lines[row_index2][col_index : col_index+1]
-		pos := fmt.Sprintf("%v,%v", row_index2, col_index)
+
+	row := puzzle.lines[row_index]
+	// cell := row[col_index : col_index+1]
+	// fmt.Printf("start %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
+
+	for col_index2 := col_index - 1; col_index2 >= 0; col_index2-- {
+		cell := row[col_index2 : col_index2+1]
+		pos := fmt.Sprintf("%v,%v", col_index2, row_index)
+		// fmt.Printf("    %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
 		if cell == need {
 			location = append(location, pos)
 			word += cell
@@ -176,24 +184,150 @@ func (puzzle *Puzzle) searchUp(row_index int, col_index int) int {
 				// now check - do we already have this?
 				sort.Strings(location)
 				key := fmt.Sprintf("%v", location)
-				_, exists := cache[key]
+				_, exists := puzzle.cache[key]
 				if !exists {
 					for _, k := range location {
+						fmt.Printf("cache2 (%v)\n", k)
 						puzzle.cache2[k] = true
 					}
-					cache[key] = true
+					puzzle.cache[key] = true
 					return 1
 				} else {
 					return 0
 				}
 			}
 			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
 		}
 	}
 	return 0
 }
 
-func (puzzle *Puzzle) searchUpLeft(row_index int, col_index int) int {
+func (puzzle *Puzzle) searchUp(col_index int, row_index int) int {
+	word := "X"
+	need_word := "XMAS"
+	need := "M"
+	location := make([]string, 0)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
+	location = append(location, pos)
+
+	row := puzzle.lines[row_index]
+	cell := row[col_index : col_index+1]
+	fmt.Printf("start %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
+
+	for row_index2 := row_index - 1; row_index2 >= 0; row_index2-- {
+		row := puzzle.lines[row_index2]
+		cell := row[col_index : col_index+1]
+		pos := fmt.Sprintf("%v,%v", col_index, row_index2)
+		fmt.Printf("    %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
+		if cell == need {
+			location = append(location, pos)
+			word += cell
+			if word == need_word {
+				// now check - do we already have this?
+				sort.Strings(location)
+				key := fmt.Sprintf("%v", location)
+				_, exists := puzzle.cache[key]
+				if !exists {
+					for _, k := range location {
+						fmt.Printf("cache2 (%v)\n", k)
+						puzzle.cache2[k] = true
+					}
+					puzzle.cache[key] = true
+					return 1
+				} else {
+					return 0
+				}
+			}
+			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
+		}
+	}
+	return 0
+}
+
+func (puzzle *Puzzle) searchDown(col_index int, row_index int) int {
+	word := "X"
+	need_word := "XMAS"
+	need := "M"
+	location := make([]string, 0)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
+	location = append(location, pos)
+
+	row := puzzle.lines[row_index]
+	cell := row[col_index : col_index+1]
+	fmt.Printf("start %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
+
+	for row_index2 := row_index + 1; row_index2 < len(puzzle.lines); row_index2++ {
+		row := puzzle.lines[row_index2]
+		cell := row[col_index : col_index+1]
+		pos := fmt.Sprintf("%v,%v", col_index, row_index2)
+		fmt.Printf("    %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
+		if cell == need {
+			location = append(location, pos)
+			word += cell
+			if word == need_word {
+				// now check - do we already have this?
+				sort.Strings(location)
+				key := fmt.Sprintf("%v", location)
+				_, exists := puzzle.cache[key]
+				if !exists {
+					for _, k := range location {
+						fmt.Printf("cache2 (%v)\n", k)
+						puzzle.cache2[k] = true
+					}
+					puzzle.cache[key] = true
+					return 1
+				} else {
+					return 0
+				}
+			}
+			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
+		}
+	}
+	return 0
+}
+
+// func (puzzle *Puzzle) searchUp(row_index int, col_index int) int {
+// 	word := "X"
+// 	need_word := "XMAS"
+// 	need := "M"
+// 	cache := puzzle.cache
+// 	location := make([]string, 0)
+// 	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+// 	location = append(location, pos)
+// 	for row_index2 := row_index - 1; row_index2 >= 0; row_index2-- {
+// 		cell := puzzle.lines[row_index2][col_index : col_index+1]
+// 		pos := fmt.Sprintf("%v,%v", row_index2, col_index)
+// 		if cell == need {
+// 			location = append(location, pos)
+// 			word += cell
+// 			if word == need_word {
+// 				// now check - do we already have this?
+// 				sort.Strings(location)
+// 				key := fmt.Sprintf("%v", location)
+// 				_, exists := cache[key]
+// 				if !exists {
+// 					for _, k := range location {
+// 						puzzle.cache2[k] = true
+// 					}
+// 					cache[key] = true
+// 					return 1
+// 				} else {
+// 					return 0
+// 				}
+// 			}
+// 			need = need_word[len(word) : len(word)+1]
+// 		}
+// 	}
+// 	return 0
+// }
+
+func (puzzle *Puzzle) searchUpLeft(col_index int, row_index int) int {
 	word := "X"
 	need_word := "XMAS"
 	need := "M"
@@ -201,7 +335,7 @@ func (puzzle *Puzzle) searchUpLeft(row_index int, col_index int) int {
 	location := make([]string, 0)
 	row_index2 := row_index
 	col_index2 := col_index
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
 	for offset := 1; offset < 100; offset++ {
 		row_index2 = row_index - offset
@@ -211,7 +345,7 @@ func (puzzle *Puzzle) searchUpLeft(row_index int, col_index int) int {
 		}
 		cell := puzzle.lines[row_index2][col_index2 : col_index2+1]
 		if cell == need {
-			pos := fmt.Sprintf("%v,%v", row_index2, col_index2)
+			pos := fmt.Sprintf("%v,%v", col_index2, row_index2)
 			location = append(location, pos)
 			word += cell
 			if word == need_word {
@@ -230,12 +364,14 @@ func (puzzle *Puzzle) searchUpLeft(row_index int, col_index int) int {
 				}
 			}
 			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
 		}
 	}
 	return 0
 }
 
-func (puzzle *Puzzle) searchUpRight(row_index int, col_index int) int {
+func (puzzle *Puzzle) searchUpRight(col_index int, row_index int) int {
 	word := "X"
 	need_word := "XMAS"
 	need := "M"
@@ -244,8 +380,10 @@ func (puzzle *Puzzle) searchUpRight(row_index int, col_index int) int {
 	row_index2 := row_index
 	col_index2 := col_index
 	max_cols := len(puzzle.lines[0]) - 1
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
+	cell := puzzle.lines[row_index][col_index : col_index+1]
+	fmt.Printf("start %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
 
 	for offset := 1; offset < 100; offset++ {
 		row_index2 = row_index - offset
@@ -254,8 +392,9 @@ func (puzzle *Puzzle) searchUpRight(row_index int, col_index int) int {
 			return 0
 		}
 		cell := puzzle.lines[row_index2][col_index2 : col_index2+1]
+		fmt.Printf("    %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
 		if cell == need {
-			pos := fmt.Sprintf("%v,%v", row_index2, col_index2)
+			pos := fmt.Sprintf("%v,%v", col_index2, row_index2)
 			location = append(location, pos)
 			word += cell
 			if word == need_word {
@@ -274,12 +413,14 @@ func (puzzle *Puzzle) searchUpRight(row_index int, col_index int) int {
 				}
 			}
 			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
 		}
 	}
 	return 0
 }
 
-func (puzzle *Puzzle) searchDownLeft(row_index int, col_index int) int {
+func (puzzle *Puzzle) searchDownLeft(col_index int, row_index int) int {
 	word := "X"
 	need_word := "XMAS"
 	need := "M"
@@ -288,7 +429,7 @@ func (puzzle *Puzzle) searchDownLeft(row_index int, col_index int) int {
 	max_rows := len(puzzle.lines) - 1
 	cache := puzzle.cache
 	location := make([]string, 0)
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
 
 	for offset := 1; offset < 100; offset++ {
@@ -299,7 +440,7 @@ func (puzzle *Puzzle) searchDownLeft(row_index int, col_index int) int {
 		}
 		cell := puzzle.lines[row_index2][col_index2 : col_index2+1]
 		if cell == need {
-			pos := fmt.Sprintf("%v,%v", row_index2, col_index2)
+			pos := fmt.Sprintf("%v,%v", col_index2, row_index2)
 			location = append(location, pos)
 			word += cell
 			if word == need_word {
@@ -318,12 +459,14 @@ func (puzzle *Puzzle) searchDownLeft(row_index int, col_index int) int {
 				}
 			}
 			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
 		}
 	}
 	return 0
 }
 
-func (puzzle *Puzzle) searchDownRight(row_index int, col_index int) int {
+func (puzzle *Puzzle) searchDownRight(col_index int, row_index int) int {
 	word := "X"
 	need_word := "XMAS"
 	need := "M"
@@ -333,7 +476,7 @@ func (puzzle *Puzzle) searchDownRight(row_index int, col_index int) int {
 	max_cols := len(puzzle.lines[0]) - 1
 	cache := puzzle.cache
 	location := make([]string, 0)
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
 
 	for offset := 1; offset < 100; offset++ {
@@ -344,7 +487,7 @@ func (puzzle *Puzzle) searchDownRight(row_index int, col_index int) int {
 		}
 		cell := puzzle.lines[row_index2][col_index2 : col_index2+1]
 		if cell == need {
-			pos := fmt.Sprintf("%v,%v", row_index2, col_index2)
+			pos := fmt.Sprintf("%v,%v", col_index2, row_index2)
 			location = append(location, pos)
 			word += cell
 			if word == need_word {
@@ -363,84 +506,86 @@ func (puzzle *Puzzle) searchDownRight(row_index int, col_index int) int {
 				}
 			}
 			need = need_word[len(word) : len(word)+1]
+		} else {
+			break
 		}
 	}
 	return 0
 }
 
-func (puzzle *Puzzle) searchDown(row_index int, col_index int) int {
-	// cell := puzzle.lines[row_index][col_index:1]
-	word := "X"
-	need_word := "XMAS"
-	need := "M"
-	cache := puzzle.cache
-	location := make([]string, 0)
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
-	location = append(location, pos)
+// func (puzzle *Puzzle) searchDown(row_index int, col_index int) int {
+// 	// cell := puzzle.lines[row_index][col_index:1]
+// 	word := "X"
+// 	need_word := "XMAS"
+// 	need := "M"
+// 	cache := puzzle.cache
+// 	location := make([]string, 0)
+// 	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+// 	location = append(location, pos)
 
-	for row_index2 := row_index + 1; row_index2 < len(puzzle.lines); row_index2++ {
-		cell := puzzle.lines[row_index2][col_index : col_index+1]
-		if cell == need {
-			pos := fmt.Sprintf("%v,%v", row_index2, col_index)
-			location = append(location, pos)
-			word += cell
-			if word == need_word {
-				// now check - do we already have this?
-				sort.Strings(location)
-				key := fmt.Sprintf("%v", location)
-				_, exists := cache[key]
-				if !exists {
-					for _, k := range location {
-						puzzle.cache2[k] = true
-					}
-					cache[key] = true
-					return 1
-				} else {
-					return 0
-				}
-			}
-			need = need_word[len(word) : len(word)+1]
-		}
-	}
-	return 0
-}
+// 	for row_index2 := row_index + 1; row_index2 < len(puzzle.lines); row_index2++ {
+// 		cell := puzzle.lines[row_index2][col_index : col_index+1]
+// 		if cell == need {
+// 			pos := fmt.Sprintf("%v,%v", row_index2, col_index)
+// 			location = append(location, pos)
+// 			word += cell
+// 			if word == need_word {
+// 				// now check - do we already have this?
+// 				sort.Strings(location)
+// 				key := fmt.Sprintf("%v", location)
+// 				_, exists := cache[key]
+// 				if !exists {
+// 					for _, k := range location {
+// 						puzzle.cache2[k] = true
+// 					}
+// 					cache[key] = true
+// 					return 1
+// 				} else {
+// 					return 0
+// 				}
+// 			}
+// 			need = need_word[len(word) : len(word)+1]
+// 		}
+// 	}
+// 	return 0
+// }
 
-func (puzzle *Puzzle) searchLeft(row_index int, col_index int) int {
-	// cell := puzzle.lines[row_index][col_index:1]
-	word := "X"
-	need_word := "XMAS"
-	need := "M"
-	cache := puzzle.cache
-	location := make([]string, 0)
-	pos := fmt.Sprintf("%v,%v", row_index, col_index)
-	location = append(location, pos)
+// func (puzzle *Puzzle) searchLeft(row_index int, col_index int) int {
+// 	// cell := puzzle.lines[row_index][col_index:1]
+// 	word := "X"
+// 	need_word := "XMAS"
+// 	need := "M"
+// 	cache := puzzle.cache
+// 	location := make([]string, 0)
+// 	pos := fmt.Sprintf("%v,%v", row_index, col_index)
+// 	location = append(location, pos)
 
-	for col_index2 := col_index - 1; col_index2 >= 0; col_index2-- {
-		cell := puzzle.lines[row_index][col_index2 : col_index2+1]
-		if cell == need {
-			pos := fmt.Sprintf("%v,%v", row_index, col_index2)
-			location = append(location, pos)
-			word += cell
-			if word == need_word {
-				// now check - do we already have this?
-				sort.Strings(location)
-				key := fmt.Sprintf("%v", location)
-				_, exists := cache[key]
-				if !exists {
-					for _, k := range location {
-						puzzle.cache2[k] = true
-					}
-					cache[key] = true
-					return 1
-				} else {
-					return 0
-				}
-			}
-			need = need_word[len(word) : len(word)+1]
-		}
-	}
-	return 0
-}
+// 	for col_index2 := col_index - 1; col_index2 >= 0; col_index2-- {
+// 		cell := puzzle.lines[row_index][col_index2 : col_index2+1]
+// 		if cell == need {
+// 			pos := fmt.Sprintf("%v,%v", row_index, col_index2)
+// 			location = append(location, pos)
+// 			word += cell
+// 			if word == need_word {
+// 				// now check - do we already have this?
+// 				sort.Strings(location)
+// 				key := fmt.Sprintf("%v", location)
+// 				_, exists := cache[key]
+// 				if !exists {
+// 					for _, k := range location {
+// 						puzzle.cache2[k] = true
+// 					}
+// 					cache[key] = true
+// 					return 1
+// 				} else {
+// 					return 0
+// 				}
+// 			}
+// 			need = need_word[len(word) : len(word)+1]
+// 		}
+// 	}
+// 	return 0
+// }
 
 func (puzzle *Puzzle) Part2() {
 	puzzle.Load(REAL_DATA)

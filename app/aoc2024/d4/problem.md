@@ -25,15 +25,16 @@ MAMMMXMMMM
 MXMXAXMASX
 In this word search, XMAS occurs a total of 18 times; here's the same word search again, but where letters not involved in any XMAS have been replaced with .:
 
-....XXMAS.
-.SAMXMS...
-...S..A...
-..A.A.MS.X
-XMASAMX.MM
-X.....XA.A
-S.S.S.S.SS
-.A.A.A.A.A
-..M.M.M.MM
-.X.X.XMASX
+  0123456789
+1 ....XXMAS.
+2 .SAMXMS...
+3 ...S..A...
+4 ..A.A.MS.X
+5 XMASAMX.MM
+6 X.....XA.A
+7 S.S.S.S.SS
+8 .A.A.A.A.A
+9 ..M.M.M.MM
+0 .X.X.XMASX
 
 Take a look at the little Elf's word search. How many times does XMAS appear?
