@@ -52,7 +52,7 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(TEST_DATA)
+	puzzle.Load(REAL_DATA)
 
 	/*
 		for col in cols
@@ -94,8 +94,6 @@ func (puzzle *Puzzle) Part1() {
 		}
 	}
 
-	fmt.Println(count)
-	fmt.Printf("cache size %v\n", len(puzzle.cache))
 	keys := make([]string, 0)
 	for k := range puzzle.cache {
 		// 	fmt.Printf("%v: %v\n", k, v)
@@ -118,6 +116,10 @@ func (puzzle *Puzzle) Part1() {
 		}
 		fmt.Print("\n")
 	}
+
+	fmt.Println("")
+	fmt.Println(count)
+	// fmt.Printf("cache size %v\n", len(puzzle.cache))
 
 }
 
@@ -337,7 +339,12 @@ func (puzzle *Puzzle) searchUpLeft(col_index int, row_index int) int {
 	col_index2 := col_index
 	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
-	for offset := 1; offset < 100; offset++ {
+	max_offset := len(puzzle.lines)
+	if len(puzzle.lines[0]) > max_offset {
+		max_offset = len(puzzle.lines[0])
+	}
+
+	for offset := 1; offset < max_offset; offset++ {
 		row_index2 = row_index - offset
 		col_index2 = col_index - offset
 		if row_index2 < 0 || col_index2 < 0 {
@@ -385,7 +392,12 @@ func (puzzle *Puzzle) searchUpRight(col_index int, row_index int) int {
 	cell := puzzle.lines[row_index][col_index : col_index+1]
 	fmt.Printf("start %v, value=%v, need=%v, word=%v\n", pos, cell, need, word)
 
-	for offset := 1; offset < 100; offset++ {
+	max_offset := len(puzzle.lines)
+	if len(puzzle.lines[0]) > max_offset {
+		max_offset = len(puzzle.lines[0])
+	}
+
+	for offset := 1; offset < max_offset; offset++ {
 		row_index2 = row_index - offset
 		col_index2 = col_index + offset
 		if row_index2 < 0 || col_index2 > max_cols {
@@ -432,7 +444,12 @@ func (puzzle *Puzzle) searchDownLeft(col_index int, row_index int) int {
 	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
 
-	for offset := 1; offset < 100; offset++ {
+	max_offset := len(puzzle.lines)
+	if len(puzzle.lines[0]) > max_offset {
+		max_offset = len(puzzle.lines[0])
+	}
+
+	for offset := 1; offset < max_offset; offset++ {
 		row_index2 = row_index + offset
 		col_index2 = col_index - offset
 		if row_index2 > max_rows || col_index2 < 0 {
@@ -479,7 +496,12 @@ func (puzzle *Puzzle) searchDownRight(col_index int, row_index int) int {
 	pos := fmt.Sprintf("%v,%v", col_index, row_index)
 	location = append(location, pos)
 
-	for offset := 1; offset < 100; offset++ {
+	max_offset := len(puzzle.lines)
+	if len(puzzle.lines[0]) > max_offset {
+		max_offset = len(puzzle.lines[0])
+	}
+
+	for offset := 1; offset < max_offset; offset++ {
 		row_index2 = row_index + offset
 		col_index2 = col_index + offset
 		if row_index2 > max_rows || col_index2 > max_cols {
