@@ -2,6 +2,7 @@ package d5
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -168,6 +169,19 @@ func (rs *RuleStore) isValid(updates []int) bool {
 	return rs.isValid(next_updates)
 }
 
+func (rs *RuleStore) reorder(updates []int) []int {
+	// update is currently in the wrong order
+	sort.Slice(updates, func(i int, j int) bool {
+		r1 := rs.GetRule(updates[i])
+		r2 := rs.GetRule(updates[j])
+		if r1.Contains(r2.rule_id) {
+			return true
+		}
+		return false
+	})
+	return updates
+}
+
 func (puzzle *Puzzle) Part1() {
 	puzzle.Load(REAL_DATA)
 	rs := puzzle.rulestore
@@ -188,7 +202,24 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
-	// puzzle.Load(REAL_DATA)
+	puzzle.Load(REAL_DATA)
+	rs := puzzle.rulestore
+	fails := make([][]int, 0)
+
+	for _, upd := range rs.updates {
+		if !rs.isValid(upd.values) {
+			result := rs.reorder(upd.values)
+			fails = append(fails, result)
+		}
+	}
+
+	total := 0
+	for _, result := range fails {
+		fmt.Println(result)
+		value := result[len(result)/2]
+		total += value
+	}
+	fmt.Println(total)
 }
 
 func (puzzle *Puzzle) Run() {
