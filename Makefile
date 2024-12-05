@@ -34,7 +34,6 @@ clean:
 	rm -rf dist
 	
 build:
-	bn revision
 	go fmt ./...
 	go build
 
