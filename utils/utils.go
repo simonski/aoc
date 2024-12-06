@@ -169,34 +169,34 @@ func Lcm_x(data []uint) uint {
 	return result
 }
 
-// func Compute_lcms(data []uint) uint {
-// 	lcm := Compute_lcm(data[0], data[1])
-// 	for index := 1; index < len(data); index++ {
-// 		lcm = Compute_lcm(lcm, data[index])
-// 	}
-// 	return lcm
-// }
+func Compute_lcms(data []uint) uint {
+	lcm := Compute_lcm(data[0], data[1])
+	for index := 1; index < len(data); index++ {
+		lcm = Compute_lcm(lcm, data[index])
+	}
+	return lcm
+}
 
-// func Compute_lcm(x uint, y uint) uint {
+func Compute_lcm(x uint, y uint) uint {
 
-// 	//    # choose the greater number
-// 	var greater uint
-// 	if x > y {
-// 		greater = x
-// 	} else {
-// 		greater = y
-// 	}
+	//    # choose the greater number
+	var greater uint
+	if x > y {
+		greater = x
+	} else {
+		greater = y
+	}
 
-// 	var lcm uint
-// 	for {
-// 		if (greater%x == 0) && (greater%y == 0) {
-// 			lcm = greater
-// 			break
-// 		}
-// 		greater += 1
-// 	}
-// 	return lcm
-// }
+	var lcm uint
+	for {
+		if (greater%x == 0) && (greater%y == 0) {
+			lcm = greater
+			break
+		}
+		greater += 1
+	}
+	return lcm
+}
 
 // a semi-functional collapsing function which finds overlaps and merges indexes
 func CollapseRanges(ranges [][]int) [][]int {
