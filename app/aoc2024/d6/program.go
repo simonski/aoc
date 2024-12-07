@@ -26,6 +26,8 @@ type Grid struct {
 	height           int
 	guardX           int
 	guardY           int
+	guardXOriginal   int
+	guardYOriginal   int
 	guardOrientation string
 }
 
@@ -35,6 +37,12 @@ type Cell struct {
 	cellType   string
 	visitCount int
 	visited    bool
+
+	// used to work out where the direction was (to find the loop)
+	movedNorth bool
+	movedSouth bool
+	movedEast  bool
+	movedWest  bool
 }
 
 const NORTH string = "^"
@@ -43,6 +51,10 @@ const EAST string = ">"
 const WEST string = "<"
 const FURNIURE string = "#"
 const OTHER string = "."
+const DIRECTION_UP_DOWN string = "|"
+const DIRECTION_EAST_WEST string = "-"
+const OBSTRUCTION string = "O"
+const DIRECTION_ALL string = "+"
 
 func NewGrid(lines []string) *Grid {
 	grid := Grid{}
@@ -58,6 +70,8 @@ func NewGrid(lines []string) *Grid {
 			if isGuard(cellType) {
 				grid.guardX = x
 				grid.guardY = y
+				grid.guardXOriginal = x
+				grid.guardYOriginal = y
 				grid.guardOrientation = cellType
 				cell.cellType = OTHER
 			}
@@ -136,6 +150,21 @@ func (grid *Grid) Tick() bool {
 	return true
 }
 
+func (grid *Grid) walk() []string {
+	path := make([]string, 0)
+	for {
+		// fmt.Println(grid.Debug())
+		// fmt.Println("")
+		key := fmt.Sprintf("%v.%v", grid.guardX, grid.guardY)
+		if !grid.Tick() {
+			break
+		}
+		path = append(path, key)
+
+	}
+	return path
+}
+
 func isGuard(s string) bool {
 	return isNorth(s) || isSouth(s) || isEast(s) || isWest(s)
 }
@@ -198,20 +227,13 @@ func (puzzle *Puzzle) Part1() {
 	// puzzle.Load(TEST_DATA_1)
 	puzzle.Load(REAL_DATA)
 	grid := NewGrid(puzzle.lines)
-
 	key := fmt.Sprintf("%v.%v", grid.guardX, grid.guardY)
 	startCell := grid.cells[key]
 	startCell.visited = true
 	startCell.visitCount = 1
 
-	for {
-		// fmt.Println(grid.Debug())
-		// fmt.Println("")
+	grid.walk()
 
-		if !grid.Tick() {
-			break
-		}
-	}
 	total := 0
 	distinct := 0
 	for _, cell := range grid.cells {
@@ -225,7 +247,73 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
+
+	// in this case we can let it run once, then mark all the spaces that
+	// - are adjacent to a route
+	// - not an obstruction
+
+	// then for each of these we can
+
+	// 1042 too low
 	puzzle.Load(REAL_DATA)
+	grid := NewGrid(puzzle.lines)
+	fmt.Println("Prewalk")
+	fmt.Println(grid.Debug(false))
+	path := grid.walk()
+	fmt.Println("postwalk")
+	fmt.Println(grid.Debug(false))
+	loops := grid.countLoops(path)
+	fmt.Printf("There are %v loops\n", loops)
+
+}
+
+func (grid *Grid) countLoops(path []string) int {
+	count := 0
+	// guardKey := fmt.Sprintf("%v.%v", grid.guardXOriginal, grid.guardYOriginal)
+	grid.reset()
+	fmt.Print(grid.Debug(false))
+	// fmt.Printf("guard %v\n", guardKey)
+	fmt.Println(path)
+	for _, key := range path {
+		fmt.Println(key)
+		grid.reset()
+		cell := grid.cells[key]
+		if !isGuard(cell.cellType) {
+			cell.cellType = OBSTRUCTION
+			if isLoop(grid, key) {
+				count++
+			}
+		}
+		cell.cellType = OTHER
+
+	}
+	return count
+}
+
+func (grid *Grid) reset() {
+	for key := range grid.cells {
+		cell := grid.cells[key]
+		cell.visitCount = 0
+		cell.visited = false
+		if isGuard(cell.cellType) {
+			cell.cellType = OTHER
+		}
+	}
+	grid.guardX = grid.guardXOriginal
+	grid.guardY = grid.guardYOriginal
+	grid.guardOrientation = NORTH
+}
+
+func isLoop(grid *Grid, key string) bool {
+	for {
+		if !grid.Tick() {
+			return false
+		}
+		cell := grid.cells[key]
+		if cell.visitCount > 1 {
+			return true
+		}
+	}
 }
 
 func (puzzle *Puzzle) Run() {
