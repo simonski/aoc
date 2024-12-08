@@ -99,6 +99,7 @@ Predict the path of the guard. How many distinct positions will the guard visit 
 
 
 --- Part Two ---
+
 While The Historians begin working around the guard's patrol route, you borrow their fancy device and step outside the lab. From the safety of a supply closet, you time travel through the last few months and record the nightly status of the lab's guard post on the walls of the closet.
 
 Returning after what seems like only a few seconds to The Historians, they explain that the guard's patrol area is simply too large for them to safely search the lab without getting caught.
