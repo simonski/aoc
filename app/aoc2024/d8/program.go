@@ -21,10 +21,11 @@ type Puzzle struct {
 }
 
 type Grid struct {
-	cells    map[string]*Cell
-	antennas map[string][]*Cell
-	width    int
-	height   int
+	cells        map[string]*Cell
+	antennas     map[string][]*Cell
+	width        int
+	height       int
+	antennaCount int
 }
 
 func (grid *Grid) isCellInGrid(cell *Cell) bool {
@@ -60,6 +61,7 @@ func NewGrid(data []string) *Grid {
 				}
 				antennas = append(antennas, cell)
 				g.antennas[cell.cellType] = antennas
+				g.antennaCount += 1
 			}
 		}
 	}
@@ -67,11 +69,10 @@ func NewGrid(data []string) *Grid {
 }
 
 type Cell struct {
-	x            int
-	y            int
-	key          string
-	cellType     string
-	antinodeCell *Cell
+	x        int
+	y        int
+	key      string
+	cellType string
 }
 
 func NewCell(x int, y int, cellType string) *Cell {
@@ -113,11 +114,6 @@ func (puzzle *Puzzle) Load(input string) {
 	puzzle.lines = lines
 }
 
-func (puzzle *Puzzle) Part1() {
-	// puzzle.p1(TEST_DATA)
-	puzzle.p1(REAL_DATA)
-}
-
 func (puzzle *Puzzle) p1(data string) {
 	puzzle.Load(data)
 	count := 0
@@ -151,13 +147,57 @@ func (puzzle *Puzzle) p1(data string) {
 	fmt.Printf("\nThere are %v antinodes in the grid, %v total keys.\n", count, len(keys))
 }
 
-func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
-}
+func (puzzle *Puzzle) p2(data string) {
+	puzzle.Load(data)
+	count := 0
+	grid := NewGrid(puzzle.lines)
 
-func (puzzle *Puzzle) Run() {
-	puzzle.Part1()
-	puzzle.Part2()
+	// keys := make(map[string]bool)
+
+	antinodes := make(map[string]*Cell)
+	for _, antennas := range grid.antennas {
+		cellPairs := pairs(antennas)
+		// fmt.Printf("\nFor antenna type '%v', there are %v antennas, as %v pairs\n", cellType, len(antennas), len(cellPairs))
+		// for _, cp := range cellPairs {
+		// 	fmt.Printf("%v\n", cp.string())
+		// }
+
+		for _, pair := range cellPairs {
+			results := calculate_antinodes2(grid.width, grid.height, pair)
+			// fmt.Printf("  pair %v has %v antinodes.\n", pair.string(), len(results))
+			count += len(results)
+			antinodes[pair.c1.key] = pair.c1
+			antinodes[pair.c2.key] = pair.c2
+			for _, antinode := range results {
+				antinodes[antinode.key] = antinode
+			}
+		}
+
+	}
+
+	for row := 0; row < grid.height; row++ {
+		for col := 0; col < grid.width; col++ {
+			key := fmt.Sprintf("%v.%v", col, row)
+			cell, exists := antinodes[key]
+			if exists {
+				cell_antenna, antenna_exists := grid.cells[key]
+				if antenna_exists && cell_antenna.isAntenna() {
+					fmt.Print(cell_antenna.cellType)
+				} else {
+					fmt.Print(cell.cellType)
+				}
+			} else {
+				fmt.Print(".")
+			}
+		}
+		fmt.Println()
+	}
+
+	// for key, v := range antinodes {
+	// 	fmt.Printf("%v, %v\n", key, v)
+	// }
+	fmt.Printf("There are %v antinodes in the grid, %v total antinodes, %v count.\n", len(antinodes), len(antinodes)+len(grid.antennas), count)
+	// fmt.Printf("Count=%v, antennas=%v\n", count, grid.antennaCount)
 }
 
 type CellPair struct {
@@ -217,4 +257,69 @@ func calculate_antinodes(pair *CellPair) (*Cell, *Cell) {
 
 	return a1, a2
 
+}
+
+func calculate_antinodes2(width int, height int, pair *CellPair) []*Cell {
+
+	c1 := pair.c1
+	c2 := pair.c2
+	x_offset := c1.x - c2.x
+	y_offset := c1.y - c2.y
+
+	results := make([]*Cell, 0)
+
+	c1x := c1.x
+	c1y := c1.y
+	c2x := c2.x
+	c2y := c2.y
+	for {
+
+		c1x = c1x + x_offset
+		c1y = c1y + y_offset
+		c2x = c2x - x_offset
+		c2y = c2y - y_offset
+
+		a1 := NewCell(c1x, c1y, "#")
+		a2 := NewCell(c2x, c2y, "#")
+
+		if a1.x < 0 || a1.x >= width || a1.y < 0 || a1.y >= height {
+			a1 = nil
+		} else {
+			results = append(results, a1)
+		}
+
+		if a2.x < 0 || a2.x >= width || a2.y < 0 || a2.y >= height {
+			a2 = nil
+		} else {
+			results = append(results, a2)
+		}
+
+		if a1 == nil && a2 == nil {
+			break
+		}
+	}
+
+	return results
+
+}
+
+func (puzzle *Puzzle) Part1() {
+	puzzle.p1(REAL_DATA)
+}
+
+func (puzzle *Puzzle) Part2() {
+	fmt.Println("TEST_DATA: ")
+	puzzle.p2(TEST_DATA)
+
+	fmt.Println("TEST_DATA_P2_0: ")
+	puzzle.p2(TEST_DATA_P2_O)
+
+	fmt.Println("REAL_DATA: ")
+	puzzle.p2(REAL_DATA)
+
+}
+
+func (puzzle *Puzzle) Run() {
+	puzzle.Part1()
+	puzzle.Part2()
 }
