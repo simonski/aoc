@@ -62,6 +62,7 @@ The first example from above now proceeds differently:
 0099.1117772...333.44.5555.6666.....8888..
 0099.111777244.333....5555.6666.....8888..
 00992111777.44.333....5555.6666.....8888..
+
 The process of updating the filesystem checksum is the same; now, this example's checksum would be 2858.
 
 Start over, now compacting the amphipod's hard drive using this new method instead. What is the resulting filesystem checksum?
