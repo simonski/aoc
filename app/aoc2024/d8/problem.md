@@ -111,3 +111,4 @@ The original example now has 34 antinodes, including the antinodes that appear o
 ...#......##
 
 Calculate the impact of the signal using this updated model. How many unique locations within the bounds of the map contain an antinode?
+
