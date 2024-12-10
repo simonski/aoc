@@ -1,6 +1,7 @@
 package d10
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -47,6 +48,30 @@ func (puzzle *Puzzle) Load(input string) {
 
 func (puzzle *Puzzle) Part1() {
 	puzzle.Load(REAL_DATA)
+	puzzle.p1(TEST_DATA)
+	puzzle.p1(TEST_DATA_2)
+	puzzle.p1(REAL_DATA)
+}
+
+func (puzzle *Puzzle) p1(data string) {
+	tm := NewTrailMap(data)
+	for _, start := range tm.starts {
+		path := make([]*Cell, 0)
+		tm.walk(start, path)
+	}
+	paths := tm.paths
+	fmt.Printf("There are %v starts, %v ends and %v ways of getting to the end trails.\n", len(tm.starts), len(tm.ends), len(paths))
+
+	// a complete trail is the start cell and end cell as a key
+	complete_trails := make(map[string]bool)
+	for _, p := range paths {
+		pathKey := p[0].key + "," + p[9].key
+		complete_trails[pathKey] = true
+	}
+	// for k := range complete_trails {
+	// 	fmt.Println(k)
+	// }
+	fmt.Printf("Count of unique start/ends is %v\n\n", len(complete_trails))
 }
 
 func (puzzle *Puzzle) Part2() {
