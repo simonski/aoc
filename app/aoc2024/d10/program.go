@@ -68,10 +68,25 @@ func (puzzle *Puzzle) p1(data string) {
 		pathKey := p[0].key + "," + p[9].key
 		complete_trails[pathKey] = true
 	}
+
+	values := make(map[string]int)
+	for _, p := range paths {
+		pathKey := p[0].key
+		value := values[pathKey]
+		value++
+		values[pathKey] = value
+	}
+
+	total := 0
+	for _, v := range values {
+		total += v
+	}
+
 	// for k := range complete_trails {
 	// 	fmt.Println(k)
 	// }
 	fmt.Printf("Count of unique start/ends is %v\n\n", len(complete_trails))
+	fmt.Printf("total=%v\n", total)
 }
 
 func (puzzle *Puzzle) Part2() {
