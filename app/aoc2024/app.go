@@ -1,8 +1,8 @@
 package aoc2024
 
 import (
-	"github.com/simonski/aoc/app/aoc2022/d10"
 	"github.com/simonski/aoc/app/aoc2024/d1"
+	"github.com/simonski/aoc/app/aoc2024/d10"
 	"github.com/simonski/aoc/app/aoc2024/d2"
 	"github.com/simonski/aoc/app/aoc2024/d3"
 	"github.com/simonski/aoc/app/aoc2024/d4"
