@@ -3,6 +3,7 @@ package aoc2024
 import (
 	"github.com/simonski/aoc/app/aoc2024/d1"
 	"github.com/simonski/aoc/app/aoc2024/d10"
+	"github.com/simonski/aoc/app/aoc2024/d11"
 	"github.com/simonski/aoc/app/aoc2024/d2"
 	"github.com/simonski/aoc/app/aoc2024/d3"
 	"github.com/simonski/aoc/app/aoc2024/d4"
@@ -58,8 +59,8 @@ func (app Application) GetPuzzle(year int, day int) utils.Puzzle {
 			return d9.NewPuzzle()
 		} else if day == 10 {
 			return d10.NewPuzzle()
-			// } else if day == 11 {
-			// 	return d11.NewPuzzle()
+		} else if day == 11 {
+			return d11.NewPuzzle()
 			// } else if day == 12 {
 			// 	return d12.NewPuzzle()
 			// } else if day == 13 {
