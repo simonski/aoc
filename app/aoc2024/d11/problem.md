@@ -10,9 +10,12 @@ Sometimes, the number engraved on a stone changes. Other times, a stone might sp
 
 As you observe them for a while, you find that the stones have a consistent behavior. Every time you blink, the stones each simultaneously change according to the first applicable rule in this list:
 
-If the stone is engraved with the number 0, it is replaced by a stone engraved with the number 1.
-If the stone is engraved with a number that has an even number of digits, it is replaced by two stones. The left half of the digits are engraved on the new left stone, and the right half of the digits are engraved on the new right stone. (The new numbers don't keep extra leading zeroes: 1000 would become stones 10 and 0.)
-If none of the other rules apply, the stone is replaced by a new stone; the old stone's number multiplied by 2024 is engraved on the new stone.
+1. If the stone is engraved with the number 0, it is replaced by a stone engraved with the number 1.
+
+2. If the stone is engraved with a number that has an even number of digits, it is replaced by two stones. The left half of the digits are engraved on the new left stone, and the right half of the digits are engraved on the new right stone. (The new numbers don't keep extra leading zeroes: 1000 would become stones 10 and 0.)
+
+3. If none of the other rules apply, the stone is replaced by a new stone; the old stone's number multiplied by 2024 is engraved on the new stone.
+
 No matter how the stones change, their order is preserved, and they stay on their perfectly straight line.
 
 How will the stones evolve if you keep blinking at them? You take a note of the number engraved on each stone in the line (your puzzle input).
