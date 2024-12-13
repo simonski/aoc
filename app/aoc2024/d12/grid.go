@@ -135,6 +135,53 @@ func NewRegion(id int) *Region {
 	return &r
 }
 
+func (r *Region) sides(grid *Grid) int {
+	// for each cell, the !neighbour is a side
+
+	y_edges := make(map[int]bool)
+	x_edges := make(map[int]bool)
+
+	for _, cell := range r.cells {
+		up := grid.get(cell.x, cell.y-1)
+		down := grid.get(cell.x, cell.y+1)
+		left := grid.get(cell.x-1, cell.y)
+		right := grid.get(cell.x+1, cell.y)
+
+		if up == nil {
+			y_edges[cell.y] = true
+
+		} else if up.region != cell.region {
+			y_edges[cell.y] = true
+		}
+
+		if down == nil {
+			y_edges[cell.y] = true
+
+		} else if down.region != cell.region {
+			y_edges[cell.y] = true
+		}
+
+		if left == nil {
+			x_edges[cell.x] = true
+
+		} else if left.region != cell.region {
+			x_edges[cell.x] = true
+		}
+
+		if right == nil {
+			x_edges[cell.x] = true
+
+		} else if right.region != cell.region {
+			x_edges[cell.x] = true
+
+		}
+
+	}
+
+	return len(x_edges) + len(y_edges)
+
+}
+
 func (r *Region) add(cell *Cell) {
 	r.cells = append(r.cells, cell)
 }
@@ -153,4 +200,8 @@ func (r *Region) perimeter(grid *Grid) int {
 
 func (r *Region) price(grid *Grid) int {
 	return r.area() * r.perimeter(grid)
+}
+
+func (r *Region) new_price(grid *Grid) int {
+	return r.area() * r.sides(grid)
 }
