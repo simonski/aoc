@@ -111,6 +111,116 @@ func (grid *Grid) floodFindRegions(region *Region, cell *Cell) {
 	}
 }
 
+func (grid *Grid) countCorners(cell *Cell) int {
+
+	//  00000XXX000000
+	//  00XXXXXXXXX000
+	//  0XXXXXXXXXXXX0
+	//  00000X00XXXXXX
+
+	// a corner cell tells me the edge
+	isNotNeighbour := func(candidate *Cell, cell *Cell) bool {
+		if candidate == nil {
+			return true
+		}
+		return candidate.region != cell.region
+	}
+
+	isNeighbour := func(candidate *Cell, cell *Cell) bool {
+		return candidate != nil && candidate.region == cell.region
+	}
+
+	left := grid.left(cell)
+	up := grid.up(cell)
+	right := grid.right(cell)
+	down := grid.down(cell)
+
+	upRight := grid.upRight(cell)
+	downLeft := grid.downLeft(cell)
+	upLeft := grid.upLeft(cell)
+
+	count := 0
+	// _. outside top left   (bottom-right is origin)
+	// .X
+	if isNotNeighbour(up, cell) && isNotNeighbour(left, cell) {
+		count++
+	}
+
+	// _. outside top right   (bottom-right is origin)
+	// X.
+	if isNotNeighbour(up, cell) && isNotNeighbour(right, cell) {
+		count++
+	}
+
+	// .X bottom left
+	// _.
+	if isNotNeighbour(left, cell) && isNotNeighbour(down, cell) {
+		count++
+	}
+
+	// X. bottom right
+	// ._
+	if isNotNeighbour(right, cell) && isNotNeighbour(down, cell) {
+		count++
+	}
+
+	// interior
+
+	// XX top left   (origin is bottom left)
+	// X.
+	if isNeighbour(up, cell) && isNeighbour(upRight, cell) && isNotNeighbour(right, cell) {
+		count++
+	}
+
+	// XX top right
+	// .X
+	if isNeighbour(left, cell) && isNeighbour(down, cell) && isNotNeighbour(downLeft, cell) {
+		count++
+	}
+
+	// X. bottom left (origin is bottom left)
+	// XX
+	if isNeighbour(up, cell) && isNeighbour(right, cell) && isNotNeighbour(upRight, cell) {
+		count++
+	}
+
+	// .X bottom right  origin is bottom right
+	// XX
+	if isNeighbour(left, cell) && isNeighbour(up, cell) && isNotNeighbour(upLeft, cell) {
+		count++
+	}
+
+	return count
+}
+
+func (g *Grid) left(cell *Cell) *Cell {
+	return g.get(cell.x-1, cell.y)
+}
+
+func (g *Grid) right(cell *Cell) *Cell {
+	return g.get(cell.x+1, cell.y)
+}
+
+func (g *Grid) up(cell *Cell) *Cell {
+	return g.get(cell.x, cell.y-1)
+}
+
+func (g *Grid) down(cell *Cell) *Cell {
+	return g.get(cell.x, cell.y+1)
+}
+
+func (g *Grid) downLeft(cell *Cell) *Cell {
+	return g.get(cell.x-1, cell.y+1)
+}
+
+func (g *Grid) upLeft(cell *Cell) *Cell {
+	return g.get(cell.x-1, cell.y-1)
+}
+
+func (g *Grid) upRight(cell *Cell) *Cell {
+	return g.get(cell.x+1, cell.y-1)
+}
+
 type Cell struct {
 	x      int
 	y      int
@@ -136,50 +246,12 @@ func NewRegion(id int) *Region {
 }
 
 func (r *Region) sides(grid *Grid) int {
-	// for each cell, the !neighbour is a side
-
-	y_edges := make(map[int]bool)
-	x_edges := make(map[int]bool)
-
-	for _, cell := range r.cells {
-		up := grid.get(cell.x, cell.y-1)
-		down := grid.get(cell.x, cell.y+1)
-		left := grid.get(cell.x-1, cell.y)
-		right := grid.get(cell.x+1, cell.y)
-
-		if up == nil {
-			y_edges[cell.y] = true
-
-		} else if up.region != cell.region {
-			y_edges[cell.y] = true
-		}
-
-		if down == nil {
-			y_edges[cell.y] = true
-
-		} else if down.region != cell.region {
-			y_edges[cell.y] = true
-		}
-
-		if left == nil {
-			x_edges[cell.x] = true
-
-		} else if left.region != cell.region {
-			x_edges[cell.x] = true
-		}
-
-		if right == nil {
-			x_edges[cell.x] = true
-
-		} else if right.region != cell.region {
-			x_edges[cell.x] = true
-
-		}
-
+	// the number of sides == the number of corners
+	count := 0
+	for _, c := range r.cells {
+		count += grid.countCorners(c)
 	}
-
-	return len(x_edges) + len(y_edges)
-
+	return count
 }
 
 func (r *Region) add(cell *Cell) {

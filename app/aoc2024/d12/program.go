@@ -97,16 +97,17 @@ func (puzzle *Puzzle) Part1() {
 	fmt.Printf("grid value is %v, new_value=%v\n", value, new_value)
 	fmt.Println()
 
-	// g = NewGrid(REAL_DATA)
-	// g.findRegions()
-	// value = 0
-	// fmt.Printf("There are %v region for REAL_DATA\n", g.region)
-	// for _, r := range g.regions {
-	// 	fmt.Printf("region %v has area %v perimeter %v = %v, size=%v\n", r.id, r.area(), r.perimeter(g), r.price(g), r.size(g))
-	// 	value += r.price(g)
-	// }
-	// fmt.Printf("grid value is %v\n", value)
-	// fmt.Println()
+	g = NewGrid(REAL_DATA)
+	g.findRegions()
+	value = 0
+	new_value = 0
+	for _, r := range g.regions {
+		fmt.Printf("region %v has area %v perimeter %v = %v, sides=%v, new_price=%v\n", r.id, r.area(), r.perimeter(g), r.price(g), r.sides(g), r.new_price(g))
+		value += r.price(g)
+		new_value += r.new_price(g)
+	}
+	fmt.Printf("PT 2 grid value is %v, new_value=%v\n", value, new_value)
+	fmt.Println()
 }
 
 func (puzzle *Puzzle) Part2() {
