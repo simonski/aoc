@@ -45,6 +45,7 @@ func (g *Game) debug() string {
 	return l
 }
 
+// 38839
 func (g *Game) Play() *GameAttempt {
 
 	// the remainder to be filled by buttonB
@@ -172,6 +173,13 @@ func NewPuzzle() *Puzzle {
 	return NewPuzzleWithData(REAL_DATA)
 }
 
+func (puzzle *Puzzle) Add(value int) {
+	for _, g := range puzzle.games {
+		g.prize.x += value
+		g.prize.y += value
+	}
+}
+
 func (puzzle *Puzzle) Load(input string) {
 	lines := strings.Split(input, "\n")
 	puzzle.input = input
@@ -191,7 +199,7 @@ func (puzzle *Puzzle) Load(input string) {
 }
 
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	puzzle.Load(TEST_DATA)
 	total := 0
 	for _, game := range puzzle.games {
 		ga := game.Play()
@@ -209,7 +217,23 @@ func (puzzle *Puzzle) Part1() {
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	puzzle.Load(TEST_DATA)
+	puzzle.Add(10000000000000)
+	total := 0
+	for _, game := range puzzle.games {
+		ga := game.Play()
+		if ga != nil {
+			fmt.Println(ga.debug())
+			fmt.Println("Resolved.\n")
+			total += ga.totalCost()
+
+		} else {
+			fmt.Println(game.debug())
+			fmt.Println("Cannot resolve.\n")
+		}
+	}
+	fmt.Printf("P2 total cost is %v\n", total)
+
 }
 
 func (puzzle *Puzzle) Run() {
