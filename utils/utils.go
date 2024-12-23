@@ -222,6 +222,10 @@ func CollapseRanges(ranges [][]int) [][]int {
 	return merged
 }
 
+func ToFloat64(s int) float64 {
+	return float64(s)
+}
+
 func ToInt(s string) int {
 	i, _ := strconv.Atoi(s)
 	return i
