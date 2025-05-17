@@ -1,6 +1,8 @@
 module github.com/simonski/aoc
 
-go 1.19
+go 1.22
+
+toolchain go1.22.4
 
 require (
 	github.com/andybons/gogif v0.0.0-20140526152223-16d573594812
@@ -35,9 +37,10 @@ require (
 	github.com/xanzy/ssh-agent v0.3.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	golang.org/x/crypto v0.0.0-20220507011949-2cf3adece122 // indirect
-	golang.org/x/image v0.2.0 // indirect
+	golang.org/x/image v0.14.0 // indirect
 	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
 	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	golang.org/x/term v0.0.0-20220411215600-e5f449aeb171 // indirect
+	gonum.org/v1/gonum v0.15.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )

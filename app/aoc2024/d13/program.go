@@ -11,7 +11,6 @@ import (
 /*
 Day 13: Claw Contraption
 */
-
 type Puzzle struct {
 	title string
 	year  int
@@ -46,7 +45,7 @@ func (g *Game) debug() string {
 }
 
 // 38839
-func (g *Game) Play() *GameAttempt {
+func (g *Game) Play1() *GameAttempt {
 
 	// the remainder to be filled by buttonB
 	remainderX := g.prize.x % g.buttonA.x
@@ -74,6 +73,61 @@ func (g *Game) Play() *GameAttempt {
 		}
 	}
 	return attempt
+
+}
+
+func (g *Game) Play2() *GameAttempt {
+
+	// Button A: X+26, Y+66
+	// Button B: X+67, Y+21
+	// Prize: X=10000000012748, Y=10000000012176
+
+	// lcm = x1*x2
+	// aX = lcm/a.x
+
+	// the remainder to be filled by buttonB
+
+	// lcm := g.buttonA.x * g.buttonB.x // 1742
+	// remainder := g.prize.x % lcm     // 1578
+
+	// // then I want to find an lcm which is a button x and the remainder
+	// lcm2 := remainder * g.buttonA.x
+
+	// lcm2 := remainder * lcm
+	// remainder2 = g.prize.x % lcm2
+
+	// // if I keep adding the lcm to the remainder until I get a value
+	// // that yields mod 0 on either buttonA or buttonB
+
+	// // aPresses is the minimum number of presses before we can flip to B presses
+	// // so we can say the answer is
+	// // (totalX - aPresses) / bSize = bPresses
+
+	// // remainderX := g.prize.x % g.buttonA.x
+	// // totalX := g.prize.x - remainderX
+	// // maxPressesA := totalX / g.buttonA.x
+
+	// // // the remainder to be filled by buttonB
+	// // remainderX2 := g.prize.x % g.buttonB.x
+	// // totalX2 := g.prize.x - remainderX2
+	// // maxPressesB := totalX2 / g.buttonB.x
+
+	// var attempt *GameAttempt
+	// for aPresses := aX; aPresses < maxPresses; aPresses += aX {
+	// 	for bPresses := maxPressesB; bPresses > 0; bPresses-- {
+	// 		ga := NewGameAttempt(g, aPresses, bPresses)
+	// 		if ga.isValid() {
+	// 			if attempt == nil {
+	// 				attempt = ga
+	// 			} else {
+	// 				if attempt.totalCost() > ga.totalCost() {
+	// 					attempt = ga
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+	return nil
 
 }
 
@@ -202,7 +256,7 @@ func (puzzle *Puzzle) Part1() {
 	puzzle.Load(TEST_DATA)
 	total := 0
 	for _, game := range puzzle.games {
-		ga := game.Play()
+		ga := game.Play1()
 		if ga != nil {
 			fmt.Println(ga.debug())
 			fmt.Println("Resolved.\n")
@@ -221,7 +275,7 @@ func (puzzle *Puzzle) Part2() {
 	puzzle.Add(10000000000000)
 	total := 0
 	for _, game := range puzzle.games {
-		ga := game.Play()
+		ga := game.Play2()
 		if ga != nil {
 			fmt.Println(ga.debug())
 			fmt.Println("Resolved.\n")
