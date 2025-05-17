@@ -61,5 +61,5 @@ docker: build
 	docker build -t aoc .
 
 publish: 
-	docker tag aoc simongauld/aoc:latest
-	docker push simongauld/aoc:latest
+	docker tag aoc ghcr.io/simonski/aoc:latest
+	docker push ghcr.io/simonski/aoc:latest
