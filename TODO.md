@@ -1,5 +1,10 @@
 # AOC TODO
 
+### 2025-05-29
+    
+I got ChatGPT to scrape (sustainably!) all problems so I can offline solve them on 
+some long-haul plane rides I have coming up.
+
 ### 2024-10-15
     Refactor all probkems to the new Puzzle class so that that stars etc work.
     
