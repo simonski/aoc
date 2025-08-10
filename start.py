@@ -73,10 +73,6 @@ def run_day(year:str, day:str)->bool:
     package_dir = f"{root_dir}/y{year}"
     token_switch("app/template/template_app.go.template", f"{package_dir}/app.go", f"y{year}", year, day, title)
 
-    print(f"year={year}")
-    print(f"day={day}")
-    print(f"target_dir={target_dir}")
-
     return True
 
 def main():
