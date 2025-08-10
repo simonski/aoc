@@ -398,8 +398,9 @@ func indexFunc(w http.ResponseWriter, r *http.Request) {
 
 func api202105(w http.ResponseWriter, r *http.Request) {
 	a := SERVER.application
-	appLogic := a.GetAppLogic(2021)
-	response := appLogic.Api(5)
+	// appLogic := a.GetAppLogic(2021)
+	p := a.GetPuzzle(2021, 5)
+	response := p.RunWWW()
 	// msgb, _ := json.Marshal(response)
 	// msg := string(msgb)
 	length_str := fmt.Sprintf("%v", len(response))
@@ -410,8 +411,8 @@ func api202105(w http.ResponseWriter, r *http.Request) {
 
 func api202109(w http.ResponseWriter, r *http.Request) {
 	a := SERVER.application
-	appLogic := a.GetAppLogic(2021)
-	response := appLogic.Api(9)
+	p := a.GetPuzzle(2021, 9)
+	response := p.RunWWW()
 	// msgb, _ := json.Marshal(response)
 	// msg := string(msgb)
 	length_str := fmt.Sprintf("%v", len(response))
@@ -422,8 +423,8 @@ func api202109(w http.ResponseWriter, r *http.Request) {
 
 func api202111(w http.ResponseWriter, r *http.Request) {
 	a := SERVER.application
-	appLogic := a.GetAppLogic(2021)
-	response := appLogic.Api(11)
+	p := a.GetPuzzle(2021, 11)
+	response := p.RunWWW()
 	// msgb, _ := json.Marshal(response)
 	// msg := string(msgb)
 	length_str := fmt.Sprintf("%v", len(response))

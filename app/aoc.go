@@ -8,17 +8,17 @@ import (
 	"strings"
 
 	"github.com/gookit/color"
-	"github.com/simonski/aoc/app/aoc2016"
-	"github.com/simonski/aoc/app/aoc2017"
-	"github.com/simonski/aoc/app/aoc2018"
-	"github.com/simonski/aoc/app/aoc2019"
-	"github.com/simonski/aoc/app/aoc2020"
-	"github.com/simonski/aoc/app/aoc2021"
-	"github.com/simonski/aoc/app/aoc2022"
-	"github.com/simonski/aoc/app/aoc2023"
-	"github.com/simonski/aoc/app/aoc2024"
 	"github.com/simonski/aoc/app/constants"
-	aoc2015 "github.com/simonski/aoc/app/y2015"
+	"github.com/simonski/aoc/app/y2015"
+	"github.com/simonski/aoc/app/y2016"
+	"github.com/simonski/aoc/app/y2017"
+	"github.com/simonski/aoc/app/y2018"
+	"github.com/simonski/aoc/app/y2019"
+	"github.com/simonski/aoc/app/y2020"
+	"github.com/simonski/aoc/app/y2021"
+	"github.com/simonski/aoc/app/y2022"
+	"github.com/simonski/aoc/app/y2023"
+	"github.com/simonski/aoc/app/y2024"
 	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
 	"github.com/simonski/goutils"
@@ -195,34 +195,34 @@ func (a *AOC) GetPuzzleOrDie(year int, day int) utils.Puzzle {
 
 func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
 	if year == 2015 {
-		a := aoc2015.NewApplication(a.CLI)
+		a := y2015.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2016 {
-		a := aoc2016.NewApplication(a.CLI)
+		a := y2016.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2017 {
-		a := aoc2017.NewApplication(a.CLI)
+		a := y2017.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2018 {
-		a := aoc2018.NewApplication(a.CLI)
+		a := y2018.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2019 {
-		a := aoc2019.NewApplication(a.CLI)
+		a := y2019.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2020 {
-		a := aoc2020.NewApplication(a.CLI)
+		a := y2020.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2021 {
-		a := aoc2021.NewApplication(a.CLI)
+		a := y2021.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2022 {
-		a := aoc2022.NewApplication(a.CLI)
+		a := y2022.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2023 {
-		a := aoc2023.NewApplication(a.CLI)
+		a := y2023.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2024 {
-		a := aoc2024.NewApplication(a.CLI)
+		a := y2024.NewApplication(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else {
 		return nil

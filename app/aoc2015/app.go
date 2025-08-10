@@ -1,31 +1,14 @@
 package aoc2015
 
 import (
-	"github.com/simonski/aoc/app/y2015/d1"
-	"github.com/simonski/aoc/app/y2015/d10"
-	"github.com/simonski/aoc/app/y2015/d11"
-	"github.com/simonski/aoc/app/y2015/d12"
-	"github.com/simonski/aoc/app/y2015/d13"
-	"github.com/simonski/aoc/app/y2015/d14"
-	"github.com/simonski/aoc/app/y2015/d15"
-	"github.com/simonski/aoc/app/y2015/d16"
-	"github.com/simonski/aoc/app/y2015/d17"
-	"github.com/simonski/aoc/app/y2015/d18"
-	"github.com/simonski/aoc/app/y2015/d19"
-	"github.com/simonski/aoc/app/y2015/d2"
-	"github.com/simonski/aoc/app/y2015/d20"
-	"github.com/simonski/aoc/app/y2015/d21"
-	"github.com/simonski/aoc/app/y2015/d22"
-	"github.com/simonski/aoc/app/y2015/d23"
-	"github.com/simonski/aoc/app/y2015/d24"
-	"github.com/simonski/aoc/app/y2015/d25"
-	"github.com/simonski/aoc/app/y2015/d3"
-	"github.com/simonski/aoc/app/y2015/d4"
-	"github.com/simonski/aoc/app/y2015/d5"
-	"github.com/simonski/aoc/app/y2015/d6"
-	"github.com/simonski/aoc/app/y2015/d7"
-	"github.com/simonski/aoc/app/y2015/d8"
-	"github.com/simonski/aoc/app/y2015/d9"
+	"github.com/simonski/aoc/app/aoc2015/d1"
+	"github.com/simonski/aoc/app/aoc2015/d2"
+	"github.com/simonski/aoc/app/aoc2015/d3"
+	"github.com/simonski/aoc/app/aoc2015/d4"
+	"github.com/simonski/aoc/app/aoc2015/d5"
+	"github.com/simonski/aoc/app/aoc2015/d6"
+	"github.com/simonski/aoc/app/aoc2015/d7"
+	"github.com/simonski/aoc/app/aoc2015/d8"
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
 )
@@ -59,40 +42,6 @@ func (app Application) GetPuzzle(year int, day int) utils.Puzzle {
 		return d7.NewPuzzle()
 	} else if day == 8 {
 		return d8.NewPuzzle()
-	} else if day == 9 {
-		return d9.NewPuzzle()
-	} else if day == 10 {
-		return d10.NewPuzzle()
-	} else if day == 11 {
-		return d11.NewPuzzle()
-	} else if day == 12 {
-		return d12.NewPuzzle()
-	} else if day == 13 {
-		return d13.NewPuzzle()
-	} else if day == 14 {
-		return d14.NewPuzzle()
-	} else if day == 15 {
-		return d15.NewPuzzle()
-	} else if day == 16 {
-		return d16.NewPuzzle()
-	} else if day == 17 {
-		return d17.NewPuzzle()
-	} else if day == 18 {
-		return d18.NewPuzzle()
-	} else if day == 19 {
-		return d19.NewPuzzle()
-	} else if day == 20 {
-		return d20.NewPuzzle()
-	} else if day == 21 {
-		return d21.NewPuzzle()
-	} else if day == 22 {
-		return d22.NewPuzzle()
-	} else if day == 23 {
-		return d23.NewPuzzle()
-	} else if day == 24 {
-		return d24.NewPuzzle()
-	} else if day == 25 {
-		return d25.NewPuzzle()
 	}
 
 	return nil
