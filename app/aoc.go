@@ -35,7 +35,7 @@ func NewAOC(cli *cli.CLI) AOC {
 	return app
 }
 
-func (app *AOC) Run(cli *cli.CLI) {
+func (aoc *AOC) Run(cli *cli.CLI) {
 	USAGE := "Usage: aoc run (year) (day)"
 	year := cli.GetStringOrDefault("run", "")
 	if year == "" {
@@ -43,29 +43,13 @@ func (app *AOC) Run(cli *cli.CLI) {
 		os.Exit(1)
 	}
 	iyear, _ := strconv.Atoi(year)
-	if iyear <= 2022 {
-		al := app.GetAppLogic(iyear)
-		if al == nil {
-			fmt.Printf("Sorry, we don't have year %v\n", year)
-			return
-		}
-		al.Run(cli)
-	} else {
-		// iyear, _ := strconv.Atoi(year)
-		day := cli.GetStringOrDie(year)
-		iday, _ := strconv.Atoi(day)
-		puzzle := app.GetPuzzle(iyear, iday)
-		if puzzle == nil {
-			fmt.Printf("Sorry, we don't have year %v\n", year)
-			return
-		} else {
-			puzzle.Run()
-		}
-
-	}
+	day := cli.GetStringOrDie(year)
+	iday, _ := strconv.Atoi(day)
+	puzzle := aoc.GetPuzzleOrDie(iyear, iday)
+	puzzle.Run()
 }
 
-func (app *AOC) Summary(cli *cli.CLI) {
+func (aoc *AOC) Summary(cli *cli.CLI) {
 	USAGE := "Usage: aoc summary (year) (day)"
 	year := cli.GetStringOrDefault("summary", "")
 	if year == "" {
@@ -73,25 +57,16 @@ func (app *AOC) Summary(cli *cli.CLI) {
 		os.Exit(1)
 	}
 	iyear, _ := strconv.Atoi(year)
-
 	day := cli.GetStringOrDefault(year, "")
 	iday, _ := strconv.Atoi(day)
 
-	al := app.GetAppLogic(iyear)
-	if al == nil {
-		fmt.Printf("Sorry, we don't have year %v\n", iyear)
-		return
-	}
-	summary := al.Summary(iyear, iday)
-	if summary != nil {
-		j, _ := json.MarshalIndent(summary, "", "  ")
-		fmt.Printf("%v\n", string(j))
-	} else {
-		fmt.Println("No summary.")
-	}
+	puzzle := aoc.GetPuzzleOrDie(iyear, iday)
+	summary := puzzle.GetSummary()
+	j, _ := json.MarshalIndent(summary, "", "  ")
+	fmt.Printf("%v\n", string(j))
 }
 
-func (app *AOC) Render(cli *cli.CLI) {
+func (aoc *AOC) Render(cli *cli.CLI) {
 	USAGE := "Usage: aoc render (year) (day)"
 	year := cli.GetStringOrDefault("render", "")
 	if year == "" {
@@ -99,12 +74,14 @@ func (app *AOC) Render(cli *cli.CLI) {
 		os.Exit(1)
 	}
 	iyear, _ := strconv.Atoi(year)
-	al := app.GetAppLogic(iyear)
-	al.Render(cli)
+	day := cli.GetStringOrDefault(year, "")
+	iday, _ := strconv.Atoi(day)
+	puzzle := aoc.GetPuzzleOrDie(iyear, iday)
+	puzzle.Render(cli)
 }
 
-func (app *AOC) Help(cli *cli.CLI) {
-	output := strings.ReplaceAll(constants.USAGE_OVERALL, "LIST", app.List())
+func (aoc *AOC) Help(cli *cli.CLI) {
+	output := strings.ReplaceAll(constants.USAGE_OVERALL, "LIST", aoc.List())
 	fmt.Println(output)
 	command := cli.GetStringOrDefault("help", "")
 	if command != "" {
@@ -114,7 +91,7 @@ func (app *AOC) Help(cli *cli.CLI) {
 }
 
 // builds a table of progress for all problems for the terminal
-func (a *AOC) List() string {
+func (aoc *AOC) List() string {
 
 	output := ""
 
@@ -155,31 +132,14 @@ func (a *AOC) List() string {
 	totalStars := 0
 	totalAvailableStars := 0
 	for year := max_year; year >= min_year; year-- {
-		// app := a.GetAppLogic(year)
-		// if app == nil {
-		// 	fmt.Printf("AppLogic for year %v does not exist.\n", year)
-		// 	continue
-		// }
 		line := ""
 		stars := 0
 		totalAvailableStars += 25
 		for day := 1; day <= 25; day++ {
 
-			// methodNamePart1 := fmt.Sprintf("Y%vD%02dP1", year, day)
-			// methodNamePart2 := fmt.Sprintf("Y%vD%02dP2", year, day)
-			// methodNamePart1Render := fmt.Sprintf("Y%vD%02dP1Render", year, day)
-			// methodNamePart2Render := fmt.Sprintf("Y%vD%02dP2Render", year, day)
-
-			// _, _, m1exists := app.GetMethod(methodNamePart1)
-			// _, _, m2exists := app.GetMethod(methodNamePart2)
-			// _, _, m1existsRender := app.GetMethod(methodNamePart1Render)
-			// _, _, m2existsRender := app.GetMethod(methodNamePart2Render)
-
-			summary := a.GetSummary(year, day)
-			// if summary != nil {
+			summary := aoc.GetSummary(year, day)
 			m1exists := summary.ProgressP1 == utils.Completed
 			m2exists := summary.ProgressP2 == utils.Completed
-			// }
 
 			part1 := cross
 			part2 := cross
@@ -223,59 +183,56 @@ func (a *AOC) List() string {
 	return output
 }
 
-func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
-	if year < 2023 {
-		al := a.GetAppLogic(year)
-		return al.GetPuzzle(year, day)
-	} else if year == 2023 {
-		al := aoc2023.NewApplication(a.CLI)
-		return al.GetPuzzle(year, day)
-	} else if year == 2024 {
-		al := aoc2024.NewApplication(a.CLI)
-		return al.GetPuzzle(year, day)
-	} else {
+func (a *AOC) GetPuzzleOrDie(year int, day int) utils.Puzzle {
+	p := a.GetPuzzle(year, day)
+	if p == nil {
+		fmt.Printf("Sorry, we don't have year-day %v-%v\n", year, day)
+		os.Exit(1)
 		return nil
 	}
+	return p
 }
 
-func (a *AOC) GetAppLogic(year int) utils.AppLogic {
+func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
 	if year == 2015 {
-		return aoc2015.NewApplication(a.CLI)
+		a := aoc2015.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2016 {
-		return aoc2016.NewApplication(a.CLI)
+		a := aoc2016.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2017 {
-		return aoc2017.NewApplication(a.CLI)
+		a := aoc2017.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2018 {
-		return aoc2018.NewApplication(a.CLI)
+		a := aoc2018.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2019 {
-		return aoc2019.NewApplication(a.CLI)
+		a := aoc2019.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2020 {
-		return aoc2020.NewApplication(a.CLI)
+		a := aoc2020.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2021 {
-		return aoc2021.NewApplication(a.CLI)
+		a := aoc2021.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else if year == 2022 {
-		return aoc2022.NewApplication(a.CLI)
+		a := aoc2022.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
+	} else if year == 2023 {
+		a := aoc2023.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
+	} else if year == 2024 {
+		a := aoc2024.NewApplication(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else {
 		return nil
 	}
 }
 
 func (a *AOC) GetSummary(year int, day int) *utils.Summary {
-	if year < 2023 {
-		appLogic := a.GetAppLogic(year)
-		if appLogic != nil {
-			return appLogic.Summary(year, day)
-		} else {
-			return utils.NewSummary(year, day)
-		}
-	} else {
-		p := a.GetPuzzle(year, day)
-		if p == nil {
-			return utils.NewSummary(year, day)
-		}
-		s := p.GetSummary()
-		return &s
-	}
+	puzzle := a.GetPuzzleOrDie(year, day)
+	s := puzzle.GetSummary()
+	return &s
 }
 
 func (a *AOC) GetSummaries() []*utils.Summary {

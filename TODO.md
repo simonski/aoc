@@ -1,5 +1,19 @@
 # AOC TODO
 
+### 2025-08-10
+
+- move 100% to Puzzle
+- move all puzzles to their own package e.g. y2025 d15
+    getPuzzle() 
+        if year == 2025
+            if day = 1
+                return y2025d01.New(cli)
+            else:
+                return nil 
+    
+
+
+
 ### 2025-05-29
     
 I got ChatGPT to scrape (sustainably!) all problems so I can offline solve them on 

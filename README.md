@@ -32,17 +32,28 @@ This will build `aoc` which you can then type `./aoc` on and play with.
 
 Type `./aoc`
 
-A calendar will be printed with the stars. Each day can be run using `aoc run <year> <day>`.   Every year I break this, so for 2023 I think I will refactor the lot to the `Puzzle` interface I dreamed up.
+A calendar will be printed with the stars. Each day can be run using `aoc run <year> <day>`.   Every year I break this, so for next year I think I will refactor the lot to the `Puzzle` interface I dreamed up.  Or something else.
 
 ### Webserver time
 
-The whole thing is wrapped as a Rube Goldberg toy webserver with webassembly and what-not. Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls. 
+The whole thing is wrapped as a Rube Goldberg toy webserver with webassembly and what-not for the occasional visualisation. Run the server and see some visualisations for the problems I liked.  Note that I use `Caddy` for the tls. 
 
 I use a complicated arrangement of javascript talking back to the server for a `d3.js` visualisation. Good luck with that part next year :).  There's a bunch of dead and unused code in there that I'll tidy up.
 
 ```bash
 cd $CODE/aoc
 ./aoc server
+```
+
+## A new day
+
+To fetch the latest day (or just to sync it all), do the following:
+
+In Chrome: Application → Cookies → https://adventofcode.com
+
+```bash
+export AOC_SESSION="xx"
+./aoc_scraper.py
 ```
 
 ## Extend
