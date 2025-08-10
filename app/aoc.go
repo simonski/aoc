@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/gookit/color"
-	"github.com/simonski/aoc/app/aoc2015"
 	"github.com/simonski/aoc/app/aoc2016"
 	"github.com/simonski/aoc/app/aoc2017"
 	"github.com/simonski/aoc/app/aoc2018"
@@ -19,6 +18,7 @@ import (
 	"github.com/simonski/aoc/app/aoc2023"
 	"github.com/simonski/aoc/app/aoc2024"
 	"github.com/simonski/aoc/app/constants"
+	aoc2015 "github.com/simonski/aoc/app/y2015"
 	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
 	"github.com/simonski/goutils"

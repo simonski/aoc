@@ -58,12 +58,8 @@ export AOC_SESSION="xx"
 
 ## Extend
 
-Let's say you work on a new day, for example 1st December 2023.  I use the script `start.sh` which token-switches some template code:
-
 ```bash
-./start.sh
-YEAR: 2022
-DAY: 1
+./start.py init 
 ```
 
 You can then run it as an application (<b>edit</b> not true: run via tests until I integrate.)

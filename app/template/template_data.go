@@ -1,5 +1,5 @@
 package TOKEN_PACKAGE
 
-const TEST_DATA = `TOKEN_DATA`
+const TEST_DATA = ``
 
-const REAL_DATA = ``
+const REAL_DATA = `TOKEN_DATA`

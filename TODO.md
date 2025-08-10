@@ -2,6 +2,7 @@
 
 ### 2025-08-10
 
+- USING start.py
 - move 100% to Puzzle
 - move all puzzles to their own package e.g. y2025 d15
     getPuzzle() 
@@ -10,7 +11,7 @@
                 return y2025d01.New(cli)
             else:
                 return nil 
-    
+- then migrate 
 
 
 
