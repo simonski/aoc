@@ -1,4 +1,4 @@
-package aoc2020
+package d24
 
 /*
 --- Day 24: Lobby Layout ---

@@ -1,4 +1,4 @@
-package aoc2021
+package d08
 
 const DATA = `eb cbgfae cabdf fedab efb adgcef cbgaefd egdb dbgefa eafgd | dfbae be gdafe gcefab
 bfcae acegfd dbfac daf bgfdc dfgaceb gfebdc da dbag cdgbaf | bgfdc dfcba bdegfc efadcg

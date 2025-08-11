@@ -1,4 +1,4 @@
-package d4
+package d04
 
 const TEST_DATAx = `MSAMXMSMSA
 AMXSXMAAMM

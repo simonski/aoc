@@ -1,4 +1,4 @@
-package aoc2020
+package d21
 
 const DAY_21_TEST_DATA = `mxmxvkd kfcds sqjhc nhms (contains dairy, fish)
 trh fvjkl sbzzf mxmxvkd (contains dairy)

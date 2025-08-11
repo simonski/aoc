@@ -1,4 +1,4 @@
-package aoc2020
+package d25
 
 import (
 	"fmt"

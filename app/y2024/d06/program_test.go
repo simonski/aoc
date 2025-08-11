@@ -1,4 +1,4 @@
-package d6
+package d06
 
 import (
 	"fmt"
@@ -6,6 +6,6 @@ import (
 )
 
 func Test_1(t *testing.T) {
-	p := NewPuzzleWithData(TEST_DATA)
+	p := NewPuzzleWithData(TEST_DATA_1)
 	fmt.Printf("There are %v lines.\n", len(p.lines))
 }

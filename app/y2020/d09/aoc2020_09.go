@@ -1,4 +1,4 @@
-package aoc2020
+package d09
 
 /*
 Day 09 - Encoding Error

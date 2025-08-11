@@ -1,4 +1,4 @@
-package aoc2020
+package d21
 
 /*
 --- Day 21: Allergen Assessment ---

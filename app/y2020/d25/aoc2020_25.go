@@ -1,4 +1,4 @@
-package aoc2020
+package d25
 
 /*
 --- Day 25: Combo Breaker ---

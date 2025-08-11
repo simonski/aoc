@@ -1,4 +1,4 @@
-package d5
+package d05
 
 const TEST_DATA = `47|53
 97|13

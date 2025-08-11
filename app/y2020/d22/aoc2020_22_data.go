@@ -1,4 +1,4 @@
-package aoc2020
+package d22
 
 const DAY_22_TEST_DATA = `Player 1:
 9

@@ -1,4 +1,4 @@
-package aoc2020
+package d24
 
 const DAY_24_INPUT = `seseseseseswsesesenwseseseswenweeese
 nwneneseswneneweeneneeeeneeneene

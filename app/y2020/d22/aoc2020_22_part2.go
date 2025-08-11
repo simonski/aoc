@@ -1,4 +1,4 @@
-package aoc2020
+package d22
 
 /*
 --- Day 22: Crab Combat PART 2---

@@ -1,4 +1,4 @@
-package aoc2022
+package d02
 
 const DAY_2022_02_TEST_DATA = `A Y
 B X

@@ -1,4 +1,4 @@
-package aoc2021
+package d14
 
 func Pairs(value string) []string {
 	pairs := make([]string, 0)

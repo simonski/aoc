@@ -1,4 +1,4 @@
-package aoc2020
+package d19
 
 const DAY_19_INPUT_PART_1 = `3: 7 45 | 10 39
 120: 109 45 | 16 39

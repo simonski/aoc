@@ -1,4 +1,4 @@
-package aoc2020
+package d04
 
 import (
 	"strings"

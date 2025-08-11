@@ -1,4 +1,4 @@
-package aoc2020
+package d20
 
 /*
 -- Day 20: Jurassic Jigsaw ---

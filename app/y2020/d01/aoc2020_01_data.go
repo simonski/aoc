@@ -1,4 +1,4 @@
-package aoc2020
+package d01
 
 const DAY_1_DATA = `1749
 1897

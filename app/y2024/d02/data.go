@@ -1,4 +1,4 @@
-package d2
+package d02
 
 const TEST_DATA = `7 6 4 2 1
 1 2 7 8 9

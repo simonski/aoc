@@ -1,4 +1,4 @@
-package aoc2021
+package d08
 
 /*
   0:      1:      2:      3:      4:

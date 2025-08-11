@@ -1,4 +1,4 @@
-package d7
+package d07
 
 const TEST_DATA = `190: 10 19
 3267: 81 40 27

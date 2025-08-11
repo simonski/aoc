@@ -1,4 +1,4 @@
-package aoc2021
+package d05
 
 /*
 Describe the problem
