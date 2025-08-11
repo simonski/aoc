@@ -1,4 +1,4 @@
-package aoc2018
+package d09
 
 import (
 	"fmt"
