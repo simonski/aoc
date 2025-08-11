@@ -2,9 +2,10 @@
 
 ### 2025-08-10
 
-- USING start.py
-- move 100% to Puzzle
 - move all puzzles to their own package e.g. y2025 d15
+DONE - USING start.py
+DONE - move 100% to Puzzle
+
     getPuzzle() 
         if year == 2025
             if day = 1

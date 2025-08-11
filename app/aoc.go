@@ -102,7 +102,8 @@ func (aoc *AOC) List() string {
 	star := "\u2606"
 
 	tick = star
-	cross := " " // \u2717"
+	// cross := " " // \u2717"
+	cross := "\u2717"
 
 	dash := "\u2501"
 
@@ -138,33 +139,50 @@ func (aoc *AOC) List() string {
 		for day := 1; day <= 25; day++ {
 
 			summary := aoc.GetSummary(year, day)
-			m1exists := summary.ProgressP1 == utils.Completed
-			m2exists := summary.ProgressP2 == utils.Completed
+			// m1exists := summary.ProgressP1 == utils.Completed
+			// m2exists := summary.ProgressP2 == utils.Completed
 
 			part1 := cross
 			part2 := cross
 
 			gold := color.FgYellow.Render
+			green := color.FgGreen.Render
+			// blue := color.FgBlue.Render
+			red := color.FgRed.Render
+			cyan := color.FgCyan.Render
 
-			if m1exists {
-				part1 = tick
+			if summary.ProgressP1 == utils.Completed {
 				stars++
+				part1 = tick
 			} else {
 				part1 = cross
 			}
 
-			if m2exists {
-				part2 = tick
+			if summary.ProgressP2 == utils.Completed {
 				stars++
+				part1 = tick
 			} else {
 				part2 = cross
 			}
 
 			if summary.VisualisationP1 {
 				part1 = gold(part1)
+			} else if summary.ProgressP1 == utils.Completed {
+				part1 = green(tick)
+			} else if summary.ProgressP1 == utils.Started {
+				part1 = cyan("~")
+			} else if summary.ProgressP1 == utils.Paused {
+				part1 = red(cross)
 			}
-			if summary.VisualisationP1 {
+
+			if summary.VisualisationP2 {
 				part2 = gold(part2)
+			} else if summary.ProgressP2 == utils.Completed {
+				part2 = green(tick)
+			} else if summary.ProgressP2 == utils.Started {
+				part2 = cyan("~")
+			} else if summary.ProgressP2 == utils.Paused {
+				part2 = red(cross)
 			}
 
 			line = fmt.Sprintf("%v%v%v\u2503", line, part1, part2)

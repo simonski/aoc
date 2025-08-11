@@ -1,8 +1,10 @@
 package d01
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
@@ -42,18 +44,10 @@ func (puzzle *Puzzle) Load(input string) {
 
 func (puzzle *Puzzle) GetSummary() utils.Summary {
 	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
+	s.ProgressP1 = utils.Started
+	s.ProgressP2 = utils.Started
 	s.DateStarted = "d01"
 	return s
-}
-
-func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
-}
-
-func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Run() {
@@ -66,4 +60,53 @@ func (puzzle *Puzzle) RunWWW() string {
 }
 
 func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+
+func (puzzle *Puzzle) Part1() {
+	puzzle.Load(REAL_DATA)
+
+	//	func AOC_2015_01_part1_attempt1(cli *goutils.CLI) {
+
+	// total_length := len(DAY_2015_01_DATA)
+	only_down := len(strings.ReplaceAll(REAL_DATA, "(", ""))
+	only_up := len(strings.ReplaceAll(REAL_DATA, ")", ""))
+
+	floor := 0
+	floor += only_up
+	floor -= only_down
+
+	fmt.Printf("From 0 go up %v and down %v ending up on %v\n", only_up, only_down, floor)
+
+}
+
+func (puzzle *Puzzle) Part2() {
+	puzzle.Load(REAL_DATA)
+
+	/*
+	   --- Part Two ---
+	   Now, given the same instructions, find the position of the first character that causes him to enter the basement (floor -1). The first character in the instructions has position 1, the second character has position 2, and so on.
+
+	   For example:
+
+	   ) causes him to enter the basement at character position 1.
+	   ()()) causes him to enter the basement at character position 5.
+	   What is the position of the character that causes Santa to first enter the basement?
+	*/
+
+	start := time.Now()
+	end := time.Now()
+	floor := 0
+	for index := 0; index < len(REAL_DATA); index++ {
+		c := REAL_DATA[index : index+1]
+		if c == "(" {
+			floor++
+		} else if c == ")" {
+			floor--
+		}
+		fmt.Printf("Char[%v] %v, Floor %v\n", index, c, floor)
+		if floor == -1 {
+			break
+		}
+	}
+	fmt.Printf("%v\n", end.Sub(start))
 }
