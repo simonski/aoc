@@ -3,7 +3,7 @@ package constants
 const VERSION = "0.0.1"
 
 const MIN_YEAR = 2015
-const MAX_YEAR = 2023
+const MAX_YEAR = 2024
 
 const USAGE_OVERALL = `aoc is my Advent Of Code set of attempts.
 
