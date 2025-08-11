@@ -1,31 +1,25 @@
-package d06
+package d6
 
 import (
-	"strconv"
+	"fmt"
 	"strings"
-
-	"github.com/simonski/aoc/utils"
-	"github.com/simonski/cli"
 )
 
 /*
-Tuning Trouble
+--- Day 05:  ---
+
 */
 
 type Puzzle struct {
-	title     string
-	year      int
-	day       int
-	input     string
-	lines     []string
-	HasRender bool
-	HasWWW    bool
+	title string
+	year  string
+	day   string
+	input string
+	lines []string
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
-	iyear, _ := strconv.Atoi("2022")
-	iday, _ := strconv.Atoi("06")
-	p := Puzzle{year: iyear, day: iday, title: "Tuning Trouble"}
+	p := Puzzle{year: "2022", day: "06", title: "Tuning Trouble"}
 	p.Load(input)
 	return &p
 }
@@ -34,36 +28,55 @@ func NewPuzzle() *Puzzle {
 	return NewPuzzleWithData(REAL_DATA)
 }
 
+func (p *Puzzle) NextPacketMarker(buffer_size int) int {
+	length := len(p.input)
+	for index := 0; index < length; index++ {
+		if index+buffer_size > length {
+			break
+		}
+		counts := make(map[string]int)
+		slice := p.input[index : index+buffer_size]
+		fmt.Printf("slice[%v:%v] = %v\n", index, index+buffer_size, slice)
+
+		for i := 0; i < len(slice); i++ {
+			c := slice[i : i+1]
+			fmt.Printf("%v[%v] = %v\n", slice, i, c)
+			v := counts[c]
+			v += 1
+			counts[c] = v
+		}
+		success := true
+		for _, v := range counts {
+			if v != 1 {
+				success = false
+				break
+			}
+		}
+		if success {
+			return index + buffer_size
+		}
+
+	}
+	return -1
+}
+
 func (puzzle *Puzzle) Load(input string) {
 	lines := strings.Split(input, "\n")
 	puzzle.input = input
 	puzzle.lines = lines
 }
 
-func (puzzle *Puzzle) GetSummary() utils.Summary {
-	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
-	s.DateStarted = "d06"
-	return s
-}
-
 func (puzzle *Puzzle) Part1() {
 	puzzle.Load(REAL_DATA)
+	fmt.Printf("202206P1: %v\n", puzzle.NextPacketMarker(4))
 }
 
 func (puzzle *Puzzle) Part2() {
 	puzzle.Load(REAL_DATA)
+	fmt.Printf("202206P2: %v\n", puzzle.NextPacketMarker(14))
 }
 
 func (puzzle *Puzzle) Run() {
 	puzzle.Part1()
 	puzzle.Part2()
-}
-
-func (puzzle *Puzzle) RunWWW() string {
-	return ""
-}
-
-func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }

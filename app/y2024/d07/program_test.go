@@ -1,4 +1,4 @@
-package d07
+package d7
 
 import (
 	"fmt"

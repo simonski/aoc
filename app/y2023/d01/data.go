@@ -1,6 +1,17 @@
-package d01
+package d1
 
-const TEST_DATA = ``
+const TEST_DATA_1 = `1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet`
+
+const TEST_DATA_2 = `two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen`
 
 const REAL_DATA = `7jlncfksix7rjgrpglmn9
 vcgkgxninerqjltdbhqzzpd4nine23

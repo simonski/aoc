@@ -1,4 +1,4 @@
-package d06
+package d6
 
 import (
 	"fmt"

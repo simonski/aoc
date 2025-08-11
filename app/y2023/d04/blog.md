@@ -1,4 +1,4 @@
-Puzzle: Scratchcards
+Puzzle: Day 4: Scratchcards
 Year: 2023
-Day: 04
+Day: 4
 

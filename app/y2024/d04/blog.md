@@ -1,4 +1,4 @@
-Puzzle: Ceres Search
+Puzzle: Day 4: Ceres Search
 Year: 2024
-Day: 04
+Day: 4
 

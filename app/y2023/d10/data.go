@@ -1,6 +1,58 @@
 package d10
 
-const TEST_DATA = ``
+const TEST_DATA_1 = `.....
+.F-7.
+.|.|.
+.L-J.
+.....`
+
+const TEST_DATA_2 = `.....
+.S-7.
+.|.|.
+.L-J.
+.....`
+
+const TEST_DATA_3 = `-L|F7
+7S-7|
+L|7||
+-L-J|
+L|-JF`
+
+const TEST_DATA_4 = `..F7.
+.FJ|.
+SJ.L7
+|F--J
+LJ...`
+
+const TEST_DATA_5 = `7-F7-
+.FJ|7
+SJLL7
+|F--J
+LJ.LJ`
+
+const TEST_DATA_6 = `.....
+.S-7.
+.|.|.
+.L-J.
+.....`
+
+const TEST_DATA_7 = `.....
+.012.nex
+.1.3.
+.234.
+.....`
+
+const TEST_DATA_8 = `..F7.
+.FJ|.
+SJ.L7
+|F--J
+LJ...`
+
+const TEST_DATA_9 = `..45.
+.236.
+01.78
+14567
+23...`
 
 const REAL_DATA = `---7|.|-7F7.-FF-77FF7J-L-77.JF-.FLJ-7.F77F7-J-L7LF7J.L7.-L-.F7-7F7-|-F---..FFF7-L|.|..-.|J.F-77--77|--J.LFLF7F-|7-|.LFF-FJ7FL--7F-FJ-J-L.FFJ
 L7--F.F-F7-7J..|L---JL.J7.777LLF|L|FJ-LJ-JLFJ|FL-|.L7|F-JFJFJ||-L7||-F7J|FJLJ||-7|FFL7..|.--|L-J|L-JJJJFLL7L7--JJ7LF.7J-J---LJ7F|JLL.|7|7F|7
@@ -142,3 +194,77 @@ L.LJ-F|-LFJ-J7|.|F|JLJLFL.F.|LLJL7.LJF---J-F.F--L-J.F||LJ7F-.F7JLJF|L-FJ|-L-FJ.|
 -JJ-L7J77FL-JJ.|7JLF7-7.|.L--|.|-LF|-7L7-|J7.L-7|.L-FLF-J.|J-F-J.L----JJJ.---77|-7..L-L|F|F---|JFLLJF-JFJ|F7FJLL-J-|||.L--7JFF.-7|.F|L--|L7J
 |L.|F|7LFFJ77.FLJ7.7JL77-7.LLL7-JJLL-|-JLJ.L.7.F---J|-||7-|LF-77FJFJ-FJ7.|F|JL7JF|-FL7-|-|7|L-JJFJ..L7FJL|||L--7-|-LF777L7F7F7FL.FF7-F77-J||
 7-7--.FL|JJF---J----JJJLJ|J-J-LJ7-.LJJ.L---L--J..LL77-|-L.-F7-L7-L7J-LJL-L-JF---FJ--.--.LF---JL-----LLJLLLJL---JLL.LJ--JLJL7JJ|-FJLJJLLJLLLJ`
+
+const TEST_DATA_P2_1 = `...........
+.S-------7.
+.|F-----7|.
+.||.....||.
+.||.....||.
+.|L-7.F-J|.
+.|..|.|..|.
+.L--J.L--J.
+...........`
+
+const TEST_DATA_P2_2 = `...........
+.S-------7.
+.|F-----7|.
+.||OOOOO||.
+.||OOOOO||.
+.|L-7OF-J|.
+.|II|O|II|.
+.L--JOL--J.
+.....O.....`
+
+const TEST_DATA_P2_3 = `..........
+.S------7.
+.|F----7|.
+.||OOOO||.
+.||OOOO||.
+.|L-7F-J|.
+.|II||II|.
+.L--JL--J.
+..........`
+
+const TEST_DATA_P2_4 = `.F----7F7F7F7F-7....
+.|F--7||||||||FJ....
+.||.FJ||||||||L7....
+FJL7L7LJLJ||LJ.L-7..
+L--J.L7...LJS7F-7L7.
+....F-J..F7FJ|L7L7L7
+....L7.F7||L7|.L7L7|
+.....|FJLJ|FJ|F7|.LJ
+....FJL-7.||.||||...
+....L---J.LJ.LJLJ...`
+
+const TEST_DATA_P2_5 = `OF----7F7F7F7F-7OOOO
+O|F--7||||||||FJOOOO
+O||OFJ||||||||L7OOOO
+FJL7L7LJLJ||LJIL-7OO
+L--JOL7IIILJS7F-7L7O
+OOOOF-JIIF7FJ|L7L7L7
+OOOOL7IF7||L7|IL7L7|
+OOOOO|FJLJ|FJ|F7|OLJ
+OOOOFJL-7O||O||||OOO
+OOOOL---JOLJOLJLJOOO`
+
+const TEST_DATA_P2_6 = `FF7FSF7F7F7F7F7F---7
+L|LJ||||||||||||F--J
+FL-7LJLJ||||||LJL-77
+F--JF--7||LJLJ7F7FJ-
+L---JF-JLJ.||-FJLJJ7
+|F|F-JF---7F7-L7L|7|
+|FFJF7L7F-JF7|JL---7
+7-L-JL7||F7|L7F-7F7|
+L.L7LFJ|||||FJL7||LJ
+L7JLJL-JLJLJL--JLJ.L`
+
+const TEST_DATA_P2_7 = `FF7FSF7F7F7F7F7F---7
+L|LJ||||||||||||F--J
+FL-7LJLJ||||||LJL-77
+F--JF--7||LJLJIF7FJ-
+L---JF-JLJIIIIFJLJJ7
+|F|F-JF---7IIIL7L|7|
+|FFJF7L7F-JF7IIL---7
+7-L-JL7||F7|L7F-7F7|
+L.L7LFJ|||||FJL7||LJ
+L7JLJL-JLJLJL--JLJ.L`

@@ -1,4 +1,4 @@
-Puzzle: Bridge Repair
+Puzzle: Day 7: Bridge Repair
 Year: 2024
-Day: 07
+Day: 7
 

@@ -1,31 +1,38 @@
 package d11
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/simonski/aoc/utils"
-	"github.com/simonski/cli"
 )
 
 /*
-Cosmic Expansion
+Day 11: Cosmic Expansion
 */
 
 type Puzzle struct {
-	title     string
-	year      int
-	day       int
-	input     string
-	lines     []string
-	HasRender bool
-	HasWWW    bool
+	title string
+	year  int
+	day   int
+	input string
+	lines []string
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	s.DateStarted = "2023-12-11 11:00:52"
+	s.DateCompleted = "2023-12-11 11:50:52"
+	return s
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
 	iyear, _ := strconv.Atoi("2023")
 	iday, _ := strconv.Atoi("11")
-	p := Puzzle{year: iyear, day: iday, title: "Cosmic Expansion"}
+	p := Puzzle{year: iyear, day: iday, title: "Day 11: Cosmic Expansion"}
 	p.Load(input)
 	return &p
 }
@@ -40,30 +47,35 @@ func (puzzle *Puzzle) Load(input string) {
 	puzzle.lines = lines
 }
 
-func (puzzle *Puzzle) GetSummary() utils.Summary {
-	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
-	s.DateStarted = "d11"
-	return s
-}
-
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	u := NewUniverse(REAL_DATA)
+	u.Expand()
+	pairs := u.Pairs()
+	total := 0
+	for _, p := range pairs {
+		cell1 := p[0]
+		cell2 := p[1]
+		distance := cell1.Distance(cell2)
+		total += distance
+	}
+	fmt.Printf("D11P1: %v\n", total)
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	u := NewUniverse(REAL_DATA)
+	// u.Expand()
+	pairs := u.Pairs()
+	total := 0
+	for _, p := range pairs {
+		cell1 := p[0]
+		cell2 := p[1]
+		distance := cell1.DistanceP2(u, cell2, 1000000)
+		total += distance
+	}
+	fmt.Printf("D11P2: %v\n", total)
 }
 
 func (puzzle *Puzzle) Run() {
 	puzzle.Part1()
 	puzzle.Part2()
-}
-
-func (puzzle *Puzzle) RunWWW() string {
-	return ""
-}
-
-func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }

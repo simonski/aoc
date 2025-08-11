@@ -1,4 +1,4 @@
-package d08
+package d8
 
 import (
 	"fmt"

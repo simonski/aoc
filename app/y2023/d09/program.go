@@ -1,31 +1,38 @@
-package d09
+package d9
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/simonski/aoc/utils"
-	"github.com/simonski/cli"
 )
 
 /*
-Mirage Maintenance
+Day 9: Mirage Maintenance
 */
 
 type Puzzle struct {
-	title     string
-	year      int
-	day       int
-	input     string
-	lines     []string
-	HasRender bool
-	HasWWW    bool
+	title string
+	year  int
+	day   int
+	input string
+	lines []string
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Completed
+	s.ProgressP2 = utils.Completed
+	s.DateStarted = "2023-12-09 07:45:16"
+	s.DateStarted = "2023-12-09 17:45:16"
+	return s
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
 	iyear, _ := strconv.Atoi("2023")
-	iday, _ := strconv.Atoi("09")
-	p := Puzzle{year: iyear, day: iday, title: "Mirage Maintenance"}
+	iday, _ := strconv.Atoi("9")
+	p := Puzzle{year: iyear, day: iday, title: "Day 9: Mirage Maintenance"}
 	p.Load(input)
 	return &p
 }
@@ -40,30 +47,15 @@ func (puzzle *Puzzle) Load(input string) {
 	puzzle.lines = lines
 }
 
-func (puzzle *Puzzle) GetSummary() utils.Summary {
-	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
-	s.DateStarted = "d09"
-	return s
-}
-
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	fmt.Printf("D9P1: %v\n", part1(strings.Split(REAL_DATA, "\n")))
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	fmt.Printf("D9P2: %v\n", part2(strings.Split(REAL_DATA, "\n")))
 }
 
 func (puzzle *Puzzle) Run() {
 	puzzle.Part1()
 	puzzle.Part2()
-}
-
-func (puzzle *Puzzle) RunWWW() string {
-	return ""
-}
-
-func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }

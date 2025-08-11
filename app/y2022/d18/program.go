@@ -1,31 +1,25 @@
 package d18
 
 import (
-	"strconv"
+	"fmt"
 	"strings"
-
-	"github.com/simonski/aoc/utils"
-	"github.com/simonski/cli"
 )
 
 /*
-Boiling Boulders
+--- Day 05:  ---
+
 */
 
 type Puzzle struct {
-	title     string
-	year      int
-	day       int
-	input     string
-	lines     []string
-	HasRender bool
-	HasWWW    bool
+	title string
+	year  string
+	day   string
+	input string
+	lines []string
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
-	iyear, _ := strconv.Atoi("2022")
-	iday, _ := strconv.Atoi("18")
-	p := Puzzle{year: iyear, day: iday, title: "Boiling Boulders"}
+	p := Puzzle{year: "2022", day: "18", title: "Boiling Boulders"}
 	p.Load(input)
 	return &p
 }
@@ -40,30 +34,25 @@ func (puzzle *Puzzle) Load(input string) {
 	puzzle.lines = lines
 }
 
-func (puzzle *Puzzle) GetSummary() utils.Summary {
-	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
-	s.ProgressP1 = utils.NotStarted
-	s.ProgressP2 = utils.NotStarted
-	s.DateStarted = "d18"
-	return s
-}
-
 func (puzzle *Puzzle) Part1() {
-	puzzle.Load(REAL_DATA)
+	g := NewGrid(TEST_DATA)
+	external, _ := g.get_external_surface_area()
+	_, not_connected := g.CountSides()
+	fmt.Println("TEST")
+	fmt.Printf("total_surface_area : %v\nget_external_size  : %v\n", not_connected, external)
+
 }
 
 func (puzzle *Puzzle) Part2() {
-	puzzle.Load(REAL_DATA)
+	fmt.Println()
+	fmt.Println("REAL")
+	g2 := NewGrid(REAL_DATA)
+	external2, _ := g2.get_external_surface_area()
+	_, not_connected2 := g2.CountSides()
+	fmt.Printf("total_surface_area : %v\nget_external_size  : %v\n", not_connected2, external2)
 }
 
 func (puzzle *Puzzle) Run() {
 	puzzle.Part1()
 	puzzle.Part2()
-}
-
-func (puzzle *Puzzle) RunWWW() string {
-	return ""
-}
-
-func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }

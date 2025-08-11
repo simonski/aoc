@@ -1,6 +1,11 @@
-package d02
+package d2
 
-const TEST_DATA = ``
+const TEST_DATA = `7 6 4 2 1
+1 2 7 8 9
+9 7 6 2 1
+1 3 2 4 5
+8 6 4 4 1
+1 3 6 7 9`
 
 const REAL_DATA = `51 52 55 58 60 61 62 61
 64 65 67 70 72 74 77 77

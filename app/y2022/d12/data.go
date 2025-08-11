@@ -1,6 +1,10 @@
 package d12
 
-const TEST_DATA = ``
+const TEST_DATA = `Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi`
 
 const REAL_DATA = `abcccccccccccccccccaaaaaaaaccccccacccaaccccccccccccccccccaaaaaaaaaacccccccccccccccccccccccccccccccaaaaaaccccccccccccccccccccccccccccccccccaaaaa
 abccccccccccccccccccaaaaacccccccaaaaaaacccccccccccaaccaaaaaaaaaaaaaccccccccccccccccccccccccccccccccaaaaacccccccccccccccccccccccccccccccccaaaaaa

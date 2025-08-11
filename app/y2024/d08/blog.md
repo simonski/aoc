@@ -1,4 +1,4 @@
-Puzzle: Resonant Collinearity
+Puzzle: Day 8: Resonant Collinearity
 Year: 2024
-Day: 08
+Day: 8
 

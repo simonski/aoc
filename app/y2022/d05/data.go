@@ -1,8 +1,19 @@
-package d05
+package d5
 
-const TEST_DATA = ``
+const TEST_STACKS = `
+    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+`
 
-const REAL_DATA = `[P]     [C]         [M]            
+const TEST_INSTRUCTIONS = `move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2`
+
+const REAL_STACKS = `
+[P]     [C]         [M]            
 [D]     [P] [B]     [V] [S]        
 [Q] [V] [R] [V]     [G] [B]        
 [R] [W] [G] [J]     [T] [M]     [V]
@@ -11,8 +22,9 @@ const REAL_DATA = `[P]     [C]         [M]
 [H] [D] [L] [D] [W] [R] [R] [P] [C]
 [F] [L] [H] [R] [Z] [J] [J] [D] [D]
  1   2   3   4   5   6   7   8   9 
+`
 
-move 4 from 9 to 1
+const REAL_INSTRUCTIONS = `move 4 from 9 to 1
 move 6 from 3 to 1
 move 7 from 4 to 1
 move 2 from 8 to 5

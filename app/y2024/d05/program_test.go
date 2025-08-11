@@ -1,4 +1,4 @@
-package d05
+package d5
 
 import (
 	"fmt"

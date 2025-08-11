@@ -1,4 +1,4 @@
-Puzzle: Haunted Wasteland
+Puzzle: Day 8: Haunted Wasteland
 Year: 2023
-Day: 08
+Day: 8
 

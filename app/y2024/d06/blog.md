@@ -1,4 +1,4 @@
-Puzzle: Guard Gallivant
+Puzzle: Day 6: Guard Gallivant
 Year: 2024
-Day: 06
+Day: 6
 

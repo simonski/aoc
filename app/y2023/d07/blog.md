@@ -1,4 +1,4 @@
-Puzzle: Camel Cards
+Puzzle: Day 7: Camel Cards
 Year: 2023
-Day: 07
+Day: 7
 
