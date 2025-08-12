@@ -1,10 +1,11 @@
-package d2
+package d02
 
 import (
 	"fmt"
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -82,4 +83,10 @@ func (puzzle *Puzzle) FindGames(red int, green int, blue int) []*Game {
 		}
 	}
 	return retain
+}
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

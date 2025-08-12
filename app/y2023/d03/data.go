@@ -1,4 +1,4 @@
-package d3
+package d03
 
 const TEST_DATA = `467..114..
 ...*......

@@ -1,4 +1,4 @@
-package d7
+package d07
 
 const TEST_DATA = `32T3K 765
 T55J5 684

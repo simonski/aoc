@@ -1,4 +1,4 @@
-package d6
+package d06
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -86,4 +87,9 @@ func get_best_times(racetime int, max_distance int) []int {
 		}
 	}
 	return results
+}
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

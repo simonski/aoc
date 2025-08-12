@@ -1,4 +1,4 @@
-package d8
+package d08
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -162,4 +163,10 @@ func P2X_X() {
 	// fmt.Printf("LCM(%v,%v)=%v\n", s1, s2, utils.Lcm(s1, s2))
 	// t.Fatalf("x")
 
+}
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -130,4 +131,9 @@ func (c *Cache) walk(value int, blinks int) int {
 		return c.count(value*2024, blinks-1)
 	}
 
+}
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

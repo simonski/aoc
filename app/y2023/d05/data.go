@@ -1,4 +1,4 @@
-package d5
+package d05
 
 const TEST_DATA = `seeds: 79 14 55 13
 

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -147,4 +148,9 @@ func (puzzle *Puzzle) Run() {
 	// puzzle.Part1()
 	// fmt.Println()
 	puzzle.Part2()
+}
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

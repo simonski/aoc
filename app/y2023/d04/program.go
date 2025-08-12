@@ -1,4 +1,4 @@
-package d4
+package d04
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -120,4 +121,10 @@ func descend(card *Card, cards map[int]*Card, results []*Card) []*Card {
 		results = descend(winningCard, cards, results)
 	}
 	return results
+}
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

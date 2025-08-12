@@ -1,4 +1,4 @@
-package d1
+package d01
 
 import (
 	"fmt"
@@ -45,7 +45,7 @@ func (puzzle *Puzzle) Load(input string) {
 	puzzle.lines = lines
 }
 
-func (puzzle *Puzzle) Part1(data string) {
+func (puzzle *Puzzle) Execute(data string) {
 	puzzle.Load(data)
 	p := NewPuzzleWithData(data)
 
@@ -94,7 +94,15 @@ type NumberThing struct {
 	Number int
 }
 
-func (puzzle *Puzzle) Part2(data string) {
+func (puzzle *Puzzle) Part1() {
+	puzzle.Execute(REAL_DATA)
+}
+
+func (puzzle *Puzzle) Part2() {
+	puzzle.Part2Execute(REAL_DATA)
+}
+
+func (puzzle *Puzzle) Part2Execute(data string) {
 	puzzle.Load(data)
 	p := NewPuzzleWithData(data)
 
@@ -117,7 +125,7 @@ func (puzzle *Puzzle) Part2(data string) {
 	}
 	new_data := strings.Join(output, "\n")
 
-	puzzle.Part1(new_data)
+	puzzle.Execute(new_data)
 
 }
 
@@ -125,12 +133,12 @@ func (puzzle *Puzzle) Run() {
 	// USAGE := "Usage: aoc run 2023 01 (P1|P2)"
 	c := cli.New(os.Args)
 	if c.Contains("P1") {
-		puzzle.Part1(REAL_DATA)
+		puzzle.Part1()
 	} else if c.Contains("P2") {
-		puzzle.Part2(REAL_DATA)
+		puzzle.Part2()
 	} else {
-		puzzle.Part2(REAL_DATA)
-		puzzle.Part2(TEST_DATA_2)
+		puzzle.Part2Execute(REAL_DATA)
+		puzzle.Part2Execute(TEST_DATA_2)
 	}
 
 }
@@ -181,4 +189,9 @@ func IsMin(candidate int, values ...int) bool {
 		}
 	}
 	return true
+}
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

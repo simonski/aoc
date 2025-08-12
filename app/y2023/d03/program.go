@@ -1,4 +1,4 @@
-package d3
+package d03
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 )
 
 /*
@@ -84,4 +85,9 @@ func (puzzle *Puzzle) Part2() {
 func (puzzle *Puzzle) Run() {
 	puzzle.Part1()
 	puzzle.Part2()
+}
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
 }

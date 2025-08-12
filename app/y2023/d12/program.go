@@ -151,3 +151,9 @@ func (puzzle *Puzzle) Run() {
 	puzzle.Part2X()
 
 }
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
+}
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
+}

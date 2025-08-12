@@ -1,4 +1,4 @@
-package d6
+package d06
 
 const TEST_DATA = `Time:      7  15   30
 Distance:  9  40  200
