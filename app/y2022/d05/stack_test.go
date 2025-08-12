@@ -1,4 +1,4 @@
-package d5
+package d05
 
 import (
 	"testing"

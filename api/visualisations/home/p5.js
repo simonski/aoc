@@ -36183,7 +36183,7 @@
                             switch (buf[p++]) {
                                 case 0x21: // Graphics Control Extension Block
                                     switch (buf[p++]) {
-                                        case 0xff: // Application specific block
+                                        case 0xff: // Puzzle specific block
                                             // Try if it's a Netscape block (with animation loop counter).
                                             if (
                                                 buf[p] !== 0x0b || // 21 FF already read, check block size.

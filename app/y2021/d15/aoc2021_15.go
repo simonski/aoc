@@ -48,7 +48,7 @@ What is the lowest total risk of any path from the top left to the bottom right?
 
 */
 
-func (app *Application) Y2021D15_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D15_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 15)
 	s.Name = "Chiton"
 	s.ProgressP1 = utils.Completed
@@ -361,12 +361,12 @@ func debug(graph *PointGraph, visited map[*XPoint]bool, current *XPoint) string 
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D15P1() {
+func (app *Puzzle) Y2021D15P1() {
 	// graph := NewPointGraph(DAY_2021_15_DATA)
 	// dijkstra("D15Part1", graph)
 }
 
-func (app *Application) Y2021D15P2() {
+func (app *Puzzle) Y2021D15P2() {
 	graph := NewPointGraph(DAY_2021_15_DATA)
 	bigGraph := growBy(graph, 5)
 	fmt.Printf("%v, %v, %v points.\n", bigGraph.Width, bigGraph.Height, len(bigGraph.Points))
@@ -374,7 +374,7 @@ func (app *Application) Y2021D15P2() {
 	dijkstra("D15Part2", bigGraph)
 }
 
-// func (app *Application) Y2021D15P1() {
+// func (app *Puzzle) Y2021D15P1() {
 // 	growBy5(DAY_2021_15_DATA)
 // 	dijkstra(DAY_2021_15_DATA)
 // }

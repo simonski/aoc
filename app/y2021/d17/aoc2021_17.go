@@ -112,7 +112,7 @@ In the above example, using an initial velocity of 6,9 is the best you can do, c
 Find the initial velocity that causes the probe to reach the highest y position and still eventually be within the target area after any step. What is the highest y position it reaches on this trajectory?
 */
 
-func (app *Application) Y2021D17_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D17_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 17)
 	s.Name = "Trick Shot"
 	s.ProgressP1 = utils.Completed
@@ -289,6 +289,11 @@ func create_velo_map(min int, max int, drag int, initial int, clamp_to_zero bool
 // x = >= 29 && <= 73
 
 // x + (n*x_diff) >= 29 && <= 73
+
+type Point struct {
+	X int
+	Y int
+}
 
 func (p *Point) Copy() *Point {
 	p2 := &Point{}
@@ -553,7 +558,7 @@ func demoD17_real() *HDB {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D17P1() {
+func (app *Puzzle) Y2021D17P1() {
 
 	// db := demoD17_test()
 	db := demoD17_real()
@@ -680,7 +685,7 @@ func (app *Application) Y2021D17P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D17P2() {
+func (app *Puzzle) Y2021D17P2() {
 
 	min_x := 29
 	max_x := 79

@@ -10,18 +10,18 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D01_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D01_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 1)
 	s.Name = "Report Repair"
 	s.ProgressP1 = utils.Completed
 	s.ProgressP2 = utils.Completed
 	return s
 }
-func (app *Application) Y2020D01P1() {
+func (app *Puzzle) Y2020D01P1() {
 	AOC_2020_01(app.CLI)
 }
 
-func (app *Application) Y2020D01P2() {
+func (app *Puzzle) Y2020D01P2() {
 	AOC_2020_02(app.CLI)
 }
 

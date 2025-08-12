@@ -12,7 +12,7 @@ import (
 
 */
 
-func (app *Application) Y2022D03_Summary() *utils.Summary {
+func (puzzle *Puzzle) Y2022D03_Summary() *utils.Summary {
 	s := utils.Summary{}
 	s.Name = "Rucksack Reorganization"
 	s.Year = 2022
@@ -156,15 +156,15 @@ func (logic Y2022D3) Load(data string) {
 	logic.Rucksacks = rucksacks
 }
 
-func (app *Application) Y2022D03P1() {
+func (puzzle *Puzzle) Y2022D03P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2022D03P2() {
+func (puzzle *Puzzle) Y2022D03P2() {
 }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
-func (app *Application) Y2022D03() {
-	app.Y2022D03P1()
-	app.Y2022D03P2()
+func (puzzle *Puzzle) Y2022D03() {
+	puzzle.Y2022D03P1()
+	puzzle.Y2022D03P2()
 }

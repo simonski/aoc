@@ -213,34 +213,34 @@ func (a *AOC) GetPuzzleOrDie(year int, day int) utils.Puzzle {
 
 func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
 	if year == 2015 {
-		a := y2015.NewApplication(a.CLI)
+		a := y2015.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2016 {
-		a := y2016.NewApplication(a.CLI)
+		a := y2016.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2017 {
-		a := y2017.NewApplication(a.CLI)
+		a := y2017.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2018 {
-		a := y2018.NewApplication(a.CLI)
+		a := y2018.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2019 {
-		a := y2019.NewApplication(a.CLI)
+		a := y2019.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2020 {
-		a := y2020.NewApplication(a.CLI)
+		a := y2020.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2021 {
-		a := y2021.NewApplication(a.CLI)
+		a := y2021.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2022 {
-		a := y2022.NewApplication(a.CLI)
+		a := y2022.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2023 {
-		a := y2023.NewApplication(a.CLI)
+		a := y2023.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else if year == 2024 {
-		a := y2024.NewApplication(a.CLI)
+		a := y2024.NewPuzzle(a.CLI)
 		return a.GetPuzzle(year, day)
 	} else {
 		return nil

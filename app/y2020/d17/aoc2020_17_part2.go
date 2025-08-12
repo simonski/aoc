@@ -26,7 +26,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D17P2() {
+func (app *Puzzle) Y2020D17P2() {
 
 	g := NewGrid4D(DAY_17_INPUT)
 	g.Cycle()

@@ -44,7 +44,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D18_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D18_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 18)
 	s.Name = "Operation Order"
 	s.ProgressP1 = utils.Completed
@@ -52,7 +52,7 @@ func (app *Application) Y2020D18_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D18() {
+func (app *Puzzle) Y2020D18() {
 	app.Y2020D18P1()
 	app.Y2020D18P2()
 }
@@ -433,7 +433,7 @@ const DAY_18_INPUT = `5 + 9 + 3 + ((2 + 8 + 2) + 8 + 9 * (4 * 2 * 5) + 6) * 4
 7 + (7 * 9 * 7 + (8 * 4 + 7 + 7 + 2) * (4 + 5 + 7 + 6 + 6) + 9) * 5 + 5 + 2 + 3
 ((6 + 7 + 8 + 6 + 7) + 8 * 4 + 8 + 8) * (4 * 6) + 7 * 6`
 
-func (app *Application) Y2020D18P1() {
+func (app *Puzzle) Y2020D18P1() {
 
 	wc := NewWeirdCalculator()
 	wc.Debug("1 + 2 * 3 + 4 * 5", 65)
@@ -453,7 +453,7 @@ func (app *Application) Y2020D18P1() {
 
 }
 
-func (app *Application) Y2020D18P2() {
+func (app *Puzzle) Y2020D18P2() {
 
 	wc := NewWeirdCalculator()
 	wc.DebugV2("1 + 2 * 3 + 4 * 5", 105)

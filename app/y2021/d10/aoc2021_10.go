@@ -340,25 +340,25 @@ func isCorrupt(line string) (bool, string, int) {
 }
 
 // // rename this to the year and day in question
-// func (app *Application) Y2021D10P2() {
+// func (app *Puzzle) Y2021D10P2() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y2021D10() {
+// func (app *Puzzle) Y2021D10() {
 // 	app.Y2021D10P1()
 // 	app.Y2021D10P2()
 // }
 
-func (app *Application) Y2021D10_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D10_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 10)
 	s.Name = "Syntax Scoring"
 	s.ProgressP1 = utils.Completed
@@ -367,12 +367,12 @@ func (app *Application) Y2021D10_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D10P1() {
+func (app *Puzzle) Y2021D10P1() {
 	day10TestPart1(DAY_2021_10_TEST_DATA)
 	day10TestPart1(DAY_2021_10_DATA)
 }
 
-func (app *Application) Y2021D10P2() {
+func (app *Puzzle) Y2021D10P2() {
 	day10TestPart2(DAY_2021_10_TEST_DATA)
 	day10TestPart2(DAY_2021_10_DATA)
 }

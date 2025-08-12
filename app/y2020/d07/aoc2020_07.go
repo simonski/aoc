@@ -49,7 +49,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D07_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D07_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 7)
 	s.Name = "Handy Haversacks"
 	s.ProgressP1 = utils.Completed
@@ -58,15 +58,15 @@ func (app *Application) Y2020D07_Summary() *utils.Summary {
 }
 
 // AOC_2020_07 is the entrypoint
-func (app *Application) Y2020D07P1() {
+func (app *Puzzle) Y2020D07P1() {
 	AOC_2020_07_part1_attempt1(app)
 }
 
-func (app *Application) Y2020D07P2() {
+func (app *Puzzle) Y2020D07P2() {
 	AOC_2020_07_part2_attempt1(app)
 }
 
-func AOC_2020_07_part1_attempt1(app *Application) {
+func AOC_2020_07_part1_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	g := NewBagGraphFromFilename(filename)
@@ -74,7 +74,7 @@ func AOC_2020_07_part1_attempt1(app *Application) {
 	fmt.Printf("There are %v possible combinations.\n", len(g.GetBagsThatCanContain("shiny gold")))
 }
 
-func AOC_2020_07_part2_attempt1(app *Application) {
+func AOC_2020_07_part2_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	g := NewBagGraphFromFilename(filename)

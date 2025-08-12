@@ -23,7 +23,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D06_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D06_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 6)
 	s.Name = "Custom Customs"
 	s.ProgressP1 = utils.Completed
@@ -32,22 +32,22 @@ func (app *Application) Y2020D06_Summary() *utils.Summary {
 }
 
 // AOC_2020_06 is the entrypoint
-func (app *Application) Y2020D06P1() {
+func (app *Puzzle) Y2020D06P1() {
 	AOC_2020_06_part1_attempt1(app)
 }
 
-func (app *Application) Y2020D06P2() {
+func (app *Puzzle) Y2020D06P2() {
 	AOC_2020_06_part2_attempt1(app)
 }
 
-func AOC_2020_06_part1_attempt1(app *Application) {
+func AOC_2020_06_part1_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	q := NewQandAFromFile(filename)
 	fmt.Printf("There are %v total answers.\n", q.TotalForAllGroups())
 }
 
-func AOC_2020_06_part2_attempt1(app *Application) {
+func AOC_2020_06_part2_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	q := NewQandAFromFile(filename)

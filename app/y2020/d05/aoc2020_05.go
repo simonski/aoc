@@ -9,7 +9,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D05_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D05_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 5)
 	s.Name = "Binary Boarding"
 	s.ProgressP1 = utils.Completed
@@ -17,20 +17,20 @@ func (app *Application) Y2020D05_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D05() {
+func (app *Puzzle) Y2020D05() {
 	app.Y2020D05P1()
 	app.Y2020D05P2()
 }
 
-func (app *Application) Y2020D05P1() {
+func (app *Puzzle) Y2020D05P1() {
 	app.AOC_2020_05_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D05P2() {
+func (app *Puzzle) Y2020D05P2() {
 	app.AOC_2020_05_part2_attempt1(app.CLI)
 }
 
-func (app *Application) AOC_2020_05_part1_attempt1(cli *cli.CLI) {
+func (app *Puzzle) AOC_2020_05_part1_attempt1(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	passes := LoadBoardingPassesFromFile(filename)
 	maxPass := passes[0]
@@ -46,7 +46,7 @@ func (app *Application) AOC_2020_05_part1_attempt1(cli *cli.CLI) {
 	fmt.Printf("Highest seatId is %v, pass is %v", maxSeatId, maxPass.line)
 }
 
-func (app *Application) AOC_2020_05_part2_attempt1(cli *cli.CLI) {
+func (app *Puzzle) AOC_2020_05_part2_attempt1(cli *cli.CLI) {
 	// so the seat ids with -1 and +1 will be present
 	// only one will be missing
 	// two ways of checking

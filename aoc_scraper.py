@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 # thank sam altman's baby for this script 
 # pip install requests beautifulsoup4
-# In Chrome: Application → Cookies → https://adventofcode.com
+# In Chrome: Puzzle → Cookies → https://adventofcode.com
 # export AOC_SESSION="xx"
 # ./aoc_scraper.py
 

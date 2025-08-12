@@ -172,7 +172,7 @@ The magnitude of this final sum is 4140.
 Add up all of the snailfish numbers from the homework assignment in the order they appear. What is the magnitude of the final sum?
 */
 
-func (app *Application) Y2021D18_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D18_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 18)
 	s.Name = "Snailfish"
 	s.ProgressP1 = utils.Completed
@@ -180,7 +180,7 @@ func (app *Application) Y2021D18_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2021D18P1() {
+func (app *Puzzle) Y2021D18P1() {
 	splits := strings.Split(DAY_2021_18_DATA, "\n")
 	p := NewPair(splits[0])
 	for index := 1; index < len(splits); index++ {
@@ -192,7 +192,7 @@ func (app *Application) Y2021D18P1() {
 
 }
 
-func (app *Application) Y2021D18P2() {
+func (app *Puzzle) Y2021D18P2() {
 	splits := strings.Split(DAY_2021_18_DATA, "\n")
 	max := 0
 	for index := 0; index < len(splits); index++ {
@@ -224,5 +224,5 @@ func (app *Application) Y2021D18P2() {
 
 }
 
-// func (app *Application) Y2021D18P2() {
+// func (app *Puzzle) Y2021D18P2() {
 // }

@@ -170,7 +170,7 @@ const DAY_17_TEST_INPUT = `.#.
 const ACTIVE = "#"
 const INACTIVE = "."
 
-func (app *Application) Y2020D17_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D17_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 17)
 	s.Name = "Conway Cubes"
 	s.ProgressP1 = utils.Completed
@@ -178,12 +178,12 @@ func (app *Application) Y2020D17_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D17() {
+func (app *Puzzle) Y2020D17() {
 	app.Y2020D17P1()
 	app.Y2020D17P2()
 }
 
-func (app *Application) Y2020D17P1() {
+func (app *Puzzle) Y2020D17P1() {
 
 	g := NewGrid3D(DAY_17_INPUT)
 	g.Cycle()

@@ -108,7 +108,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D11_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D11_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 11)
 	s.Name = "Seating System"
 	s.ProgressP1 = utils.Completed
@@ -116,12 +116,12 @@ func (app *Application) Y2020D11_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D11() {
+func (app *Puzzle) Y2020D11() {
 	app.Y2020D11P1()
 	app.Y2020D11P2()
 }
 
-func (app *Application) Y2020D11P1() {
+func (app *Puzzle) Y2020D11P1() {
 	filename := app.CLI.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
@@ -134,7 +134,7 @@ func (app *Application) Y2020D11P1() {
 	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
 }
 
-func (app *Application) Y2020D11P2() {
+func (app *Puzzle) Y2020D11P2() {
 }
 
 // Tick performs one round of the seating change logic, returning the

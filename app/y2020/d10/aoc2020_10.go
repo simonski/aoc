@@ -94,7 +94,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D10_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D10_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 10)
 	s.Name = "Adapter Array"
 	s.ProgressP1 = utils.Completed
@@ -103,16 +103,16 @@ func (app *Application) Y2020D10_Summary() *utils.Summary {
 }
 
 // AOC_2020_10 is the entrypoint
-func (app *Application) Y2020D10P1() {
+func (app *Puzzle) Y2020D10P1() {
 	// AOC_2020_10_part1_attempt1_from_cli(cli)
 	// AOC_2020_10_part2_attempt1(cli)
 }
 
-func (app *Application) Y2020D10P2() {
+func (app *Puzzle) Y2020D10P2() {
 	AOC_2020_10_part2_attempt2(app)
 }
 
-func AOC_2020_10_part1_attempt1_from_cli(app *Application) {
+func AOC_2020_10_part1_attempt1_from_cli(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	ints := goutils.Load_file_to_ints(filename)
@@ -187,7 +187,7 @@ func AOC_2020_10_part1_attempt1(ints []int) map[int]int {
 // 	fmt.Printf("%v\n", data)
 // }
 
-func AOC_2020_10_part2_attempt2(app *Application) {
+func AOC_2020_10_part2_attempt2(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	data := goutils.Load_file_to_ints(filename)

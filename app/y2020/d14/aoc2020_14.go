@@ -52,7 +52,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D14_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D14_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 14)
 	s.Name = "Docking Data"
 	s.ProgressP1 = utils.Completed
@@ -60,12 +60,12 @@ func (app *Application) Y2020D14_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D14() {
+func (app *Puzzle) Y2020D14() {
 	app.Y2020D14P1()
 	app.Y2020D14P2()
 }
 
-func (app *Application) Y2020D14P1() {
+func (app *Puzzle) Y2020D14P1() {
 	filename := app.CLI.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV1()

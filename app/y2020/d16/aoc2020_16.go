@@ -354,7 +354,7 @@ nearby tickets:
 772,188,73,486,129,78,897,595,426,486,481,772,652,266,548,187,892,692,534,256
 `
 
-func (app *Application) Y2020D16_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D16_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 16)
 	s.Name = "Ticket Translation"
 	s.ProgressP1 = utils.Completed
@@ -362,18 +362,18 @@ func (app *Application) Y2020D16_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D16() {
+func (app *Puzzle) Y2020D16() {
 	app.Y2020D16P1()
 	app.Y2020D16P2()
 }
 
-func (app *Application) Y2020D16P1() {
+func (app *Puzzle) Y2020D16P1() {
 	d := NewDay16(DAY_16_INPUT_1)
 	errorRate := d.ErrorRate()
 	fmt.Printf("Error Rate is %v\n", errorRate)
 }
 
-func (app *Application) Y2020D16P2() {
+func (app *Puzzle) Y2020D16P2() {
 	// d := NewDay16(DAY_16_INPUT_2_TEST_DATA)
 	d := NewDay16(DAY_16_INPUT_1)
 	d.DiscardInvalidTickets()

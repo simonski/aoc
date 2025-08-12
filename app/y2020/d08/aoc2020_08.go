@@ -57,7 +57,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D08_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D08_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 8)
 	s.Name = "Handheld Halting"
 	s.ProgressP1 = utils.Completed
@@ -66,14 +66,14 @@ func (app *Application) Y2020D08_Summary() *utils.Summary {
 }
 
 // AOC_2020_08 is the entrypoint
-func (app *Application) Y2020D08P1() {
+func (app *Puzzle) Y2020D08P1() {
 	AOC_2020_08_part1_attempt1(app)
 }
-func (app *Application) Y2020D08P2() {
+func (app *Puzzle) Y2020D08P2() {
 	AOC_2020_08_part2_attempt1(app)
 }
 
-func AOC_2020_08_part1_attempt1(app *Application) {
+func AOC_2020_08_part1_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewProgramFromFilename(filename)
@@ -92,7 +92,7 @@ func AOC_2020_08_part1_attempt1(app *Application) {
 
 }
 
-func AOC_2020_08_part2_attempt1(app *Application) {
+func AOC_2020_08_part2_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewProgramFromFilename(filename)

@@ -1,4 +1,4 @@
-package d6
+package d06
 
 const TEST_DATA = `mjqjpqmgbljsphdztnvjfqwrcgsmlb`
 

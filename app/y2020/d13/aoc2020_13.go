@@ -62,7 +62,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D13_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D13_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 13)
 	s.Name = "Shuttle Search"
 	s.ProgressP1 = utils.Completed
@@ -71,16 +71,16 @@ func (app *Application) Y2020D13_Summary() *utils.Summary {
 }
 
 // AOC_2020_13 is the entrypoint
-func (app *Application) Y2020D13() {
+func (app *Puzzle) Y2020D13() {
 	app.Y2020D13P1()
 	app.Y2020D13P2()
 }
 
-func (app *Application) Y2020D13P1() {
+func (app *Puzzle) Y2020D13P1() {
 	AOC_2020_13_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D13P2() {
+func (app *Puzzle) Y2020D13P2() {
 	AOC_2020_13_part2_attempt1(app.CLI)
 }
 

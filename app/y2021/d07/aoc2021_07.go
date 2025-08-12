@@ -42,7 +42,7 @@ This costs a total of 37 fuel. This is the cheapest possible outcome; more expen
 Determine the horizontal position that the crabs can align to using the least fuel possible. How much fuel must they spend to align to that position?
 */
 
-func (app *Application) Y2021D07_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D07_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 7)
 	s.Name = "The Treachery Of Whales"
 	s.ProgressP1 = utils.Completed
@@ -131,7 +131,7 @@ func NewOceanOfCrabs(data string) *OceanOfCrabs {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D07P1() {
+func (app *Puzzle) Y2021D07P1() {
 	ocean := NewOceanOfCrabs(DAY_2021_07_TEST_DATA)
 	fmt.Println(ocean.Debug())
 	median := ocean.Median
@@ -179,7 +179,7 @@ func Cost(distance int) int {
 	return total
 }
 
-func (app *Application) Y2021D07P2() {
+func (app *Puzzle) Y2021D07P2() {
 	ocean := NewOceanOfCrabs(DAY_2021_07_DATA)
 	fmt.Println(ocean.Debug())
 	median := ocean.Median
@@ -221,16 +221,16 @@ func (app *Application) Y2021D07P2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y2021D07() {
+// func (app *Puzzle) Y2021D07() {
 // 	app.Y2021D07P1()
 // 	app.Y2021D07P2()
 // }

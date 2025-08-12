@@ -49,7 +49,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D12_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D12_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 12)
 	s.Name = "Rain Risk"
 	s.ProgressP1 = utils.Completed
@@ -57,12 +57,12 @@ func (app *Application) Y2020D12_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D12() {
+func (app *Puzzle) Y2020D12() {
 	app.Y2020D12P1()
 	app.Y2020D12P2()
 }
 
-func (app *Application) Y2020D12P1() {
+func (app *Puzzle) Y2020D12P1() {
 	filename := app.CLI.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
@@ -75,7 +75,7 @@ func (app *Application) Y2020D12P1() {
 	fmt.Printf("Occupied Count is : %v\n", sp.GetOccupiedCount())
 }
 
-func (app *Application) Y2020D12P1_x(cli *cli.CLI) {
+func (app *Puzzle) Y2020D12P1_x(cli *cli.CLI) {
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	// p.Debug()
@@ -87,7 +87,7 @@ func (app *Application) Y2020D12P1_x(cli *cli.CLI) {
 	}
 }
 
-func (app *Application) Y2020D12P2() {
+func (app *Puzzle) Y2020D12P2() {
 	filename := app.CLI.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	s := NewShip2(10, 1)

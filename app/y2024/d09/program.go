@@ -367,8 +367,3 @@ func (puzzle *Puzzle) Render(cli *cli.CLI) {
 func (puzzle *Puzzle) RunWWW() string {
 	return ""
 }
-func (puzzle *Puzzle) Render(cli *cli.CLI) {
-}
-func (puzzle *Puzzle) RunWWW() string {
-	return ""
-}

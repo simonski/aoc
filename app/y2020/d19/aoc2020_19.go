@@ -66,7 +66,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D19_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D19_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 19)
 	s.Name = "Monster Mesages"
 	s.ProgressP1 = utils.Completed
@@ -74,12 +74,12 @@ func (app *Application) Y2020D19_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D19() {
+func (app *Puzzle) Y2020D19() {
 	app.Y2020D19P1()
 	app.Y2020D19P2()
 }
 
-func (app *Application) Y2020D19P1() {
+func (app *Puzzle) Y2020D19P1() {
 
 	/*
 		OK I’m guessing loop detection; a cheap way of doing that would be.. find what gives a loop then exclude any that include that in their rule to begin with
@@ -102,7 +102,7 @@ func (app *Application) Y2020D19P1() {
 	rre.Debug()
 }
 
-func (app *Application) Y2020D19P2() {
+func (app *Puzzle) Y2020D19P2() {
 
 	/*
 		I think that this

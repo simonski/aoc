@@ -61,7 +61,7 @@ Find a way to simulate lanternfish. How many lanternfish would there be after 80
 
 */
 
-func (app *Application) Y2021D06_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D06_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 6)
 	s.Name = "Lanternfish"
 	s.ProgressP1 = utils.Completed
@@ -70,7 +70,7 @@ func (app *Application) Y2021D06_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D06P1() {
+func (app *Puzzle) Y2021D06P1() {
 	bruteForceAttempt(80, DAY_2021_06_TEST_DATA)
 	// algoAttempt(80, DAY_2021_06_TEST_DATA)
 	// attempt1(256, DAY_2021_06_TEST_DATA)
@@ -149,7 +149,7 @@ func count_children(cache map[int]int, depth int, days int) int {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D06P2() {
+func (app *Puzzle) Y2021D06P2() {
 	s := strings.ReplaceAll(DAY_2021_06_DATA, " ", "")
 	data := utils.SplitDataToListOfInts(s, ",")
 	algo(256, data)
@@ -157,16 +157,16 @@ func (app *Application) Y2021D06P2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2021D06() {
+func (app *Puzzle) Y2021D06() {
 	app.Y2021D06P1()
 	app.Y2021D06P2()
 }

@@ -58,7 +58,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D09_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D09_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 9)
 	s.Name = "Encoding Error"
 	s.ProgressP1 = utils.Completed
@@ -67,14 +67,14 @@ func (app *Application) Y2020D09_Summary() *utils.Summary {
 }
 
 // AOC_2020_09 is the entrypoint
-func (app *Application) Y2020D09P1() {
+func (app *Puzzle) Y2020D09P1() {
 	AOC_2020_09_part1_attempt1(app)
 }
-func (app *Application) Y2020D09P2() {
+func (app *Puzzle) Y2020D09P2() {
 	AOC_2020_09_part2_attempt1(app)
 }
 
-func AOC_2020_09_part2_attempt1(app *Application) {
+func AOC_2020_09_part2_attempt1(app *Puzzle) {
 	cli := app.CLI
 	searchFor := 373803594
 	// find the first contiguous block of numbers that sums to our number
@@ -111,7 +111,7 @@ func AOC_2020_09_part2_attempt1(app *Application) {
 
 }
 
-func AOC_2020_09_part1_attempt1(app *Application) {
+func AOC_2020_09_part1_attempt1(app *Puzzle) {
 	cli := app.CLI
 	filename := cli.GetFileExistsOrDie("-input")
 

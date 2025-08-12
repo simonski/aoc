@@ -62,7 +62,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D24_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D24_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 24)
 	s.Name = "Lobby Layout"
 	s.ProgressP1 = utils.Completed
@@ -70,21 +70,21 @@ func (app *Application) Y2020D24_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D24() {
+func (app *Puzzle) Y2020D24() {
 	app.Y2020D24P1()
 	app.Y2020D24P2()
 }
 
-func (app *Application) Y2020D24P1() {
+func (app *Puzzle) Y2020D24P1() {
 	AOC_2020_24_part1_attempt1(app.CLI)
 }
 
-func (app *Application) Y2020D24P2() {
+func (app *Puzzle) Y2020D24P2() {
 	AOC_2020_24_part2_attempt1(app.CLI)
 	app.Y2020D24P2Render()
 }
 
-func (app *Application) Y2020D24P2Render() {
+func (app *Puzzle) Y2020D24P2Render() {
 	grid := NewHexGrid()
 	grid.RenderAnimation(DAY_24_INPUT, "animation.gif", 100, 1)
 }

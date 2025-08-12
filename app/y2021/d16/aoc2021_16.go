@@ -123,7 +123,7 @@ A0016C880162017C3686B18A3D4780 is an operator packet that contains an operator p
 Decode the structure of your hexadecimal-encoded BITS transmission; what do you get if you add up the version numbers in all packets?
 */
 
-func (app *Application) Y2021D16_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D16_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 16)
 	s.Name = "Packet Decoder"
 	s.ProgressP1 = utils.Completed
@@ -132,7 +132,7 @@ func (app *Application) Y2021D16_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D16P1() {
+func (app *Puzzle) Y2021D16P1() {
 
 	DEBUG := false
 
@@ -299,7 +299,7 @@ func (app *Application) Y2021D16P1() {
 }
 
 // // rename this to the year and day in question
-func (app *Application) Y2021D16P2() {
+func (app *Puzzle) Y2021D16P2() {
 
 	if true {
 		c := NewContextD16()
@@ -373,16 +373,16 @@ func (app *Application) Y2021D16P2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star}
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y2021D16() {
+// func (app *Puzzle) Y2021D16() {
 // 	app.Y2021D16P1()
 // 	app.Y2021D16P2()
 // }

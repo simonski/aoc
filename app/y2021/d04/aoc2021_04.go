@@ -67,7 +67,7 @@ To guarantee victory against the giant squid, figure out which board will win fi
 
 */
 
-func (app *Application) Y2021D04_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D04_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 4)
 	s.Name = "Giant Squid"
 	s.ProgressP1 = utils.Completed
@@ -76,7 +76,7 @@ func (app *Application) Y2021D04_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D04P1() {
+func (app *Puzzle) Y2021D04P1() {
 	playGameD1(DAY_2021_04_TEST_DATA)
 	playGameD1(DAY_2021_04_DATA)
 }
@@ -249,22 +249,22 @@ func playGameD2(data string) {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D04P2() {
+func (app *Puzzle) Y2021D04P2() {
 	playGameD2(DAY_2021_04_TEST_DATA)
 	playGameD2(DAY_2021_04_DATA)
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2021D04() {
+func (app *Puzzle) Y2021D04() {
 	app.Y2021D04P1()
 	app.Y2021D04P2()
 }

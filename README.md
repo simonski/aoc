@@ -49,7 +49,7 @@ cd $CODE/aoc
 
 To fetch the latest day (or just to sync it all), do the following:
 
-In Chrome: Application → Cookies → https://adventofcode.com
+In Chrome: Puzzle → Cookies → https://adventofcode.com
 
 ```bash
 export AOC_SESSION="xx"

@@ -10,7 +10,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D02_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D02_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 2)
 	s.Name = "Password Philosophy"
 	s.ProgressP1 = utils.Completed
@@ -18,12 +18,12 @@ func (app *Application) Y2020D02_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D02P1() {
+func (app *Puzzle) Y2020D02P1() {
 	verbose := app.CLI.IndexOf("-v") > -1
 	AOC_2020_02_part1_attempt1(app.CLI, verbose)
 }
 
-func (app *Application) Y2020D02P2() {
+func (app *Puzzle) Y2020D02P2() {
 	verbose := app.CLI.IndexOf("-v") > -1
 	AOC_2020_02_part2_attempt1(app.CLI, verbose)
 }

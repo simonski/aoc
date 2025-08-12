@@ -53,7 +53,7 @@ import (
 	"github.com/simonski/aoc/utils"
 )
 
-func (app *Application) Y2020D15_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D15_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 15)
 	s.Name = "Rambunctious Recitation"
 	s.ProgressP1 = utils.Completed
@@ -61,12 +61,12 @@ func (app *Application) Y2020D15_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D15() {
+func (app *Puzzle) Y2020D15() {
 	app.Y2020D15P1()
 	app.Y2020D15P2()
 }
 
-func (app *Application) Y2020D15P1() {
+func (app *Puzzle) Y2020D15P1() {
 	sequence := "1,12,0,20,8,16"
 	result := NextInDay15Part1Sequence(sequence, 2020)
 	fmt.Printf("2020th in sequence %v is %v\n", sequence, result)
@@ -75,7 +75,7 @@ func (app *Application) Y2020D15P1() {
 	fmt.Printf("30000000th in sequence %v is %v\n", sequence, result2)
 }
 
-func (app *Application) Y2020D15P2() {
+func (app *Puzzle) Y2020D15P2() {
 	fmt.Println("cannot find.")
 }
 

@@ -46,7 +46,7 @@ Use the binary numbers in your diagnostic report to calculate the gamma rate and
 
 */
 
-func (app *Application) Y2021D03_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D03_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 3)
 	s.Name = "Binary Diagnostic"
 	s.ProgressP1 = utils.Completed
@@ -55,7 +55,7 @@ func (app *Application) Y2021D03_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D03P1() {
+func (app *Puzzle) Y2021D03P1() {
 	RunD1With(DAY_2021_03_TEST_DATA)
 	fmt.Println()
 	RunD1With(DAY_2021_03_DATA)
@@ -143,7 +143,7 @@ Use the binary numbers in your diagnostic report to calculate the oxygen generat
 */
 
 // rename this to the year and day in question
-func (app *Application) Y2021D03P2() {
+func (app *Puzzle) Y2021D03P2() {
 	RunD2With(DAY_2021_03_TEST_DATA)
 	fmt.Println()
 	RunD2With(DAY_2021_03_DATA)
@@ -244,16 +244,16 @@ func retainLeastFunc(data []string, index int) []string {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2021D03() {
+func (app *Puzzle) Y2021D03() {
 	app.Y2021D03P1()
 	app.Y2021D03P2()
 }

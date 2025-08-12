@@ -42,7 +42,7 @@ Calculate the horizontal position and depth you would have after following the p
 
 */
 
-func (app *Application) Y2021D02_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D02_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 2)
 	s.Name = "Dive!"
 	s.ProgressP1 = utils.Completed
@@ -51,7 +51,7 @@ func (app *Application) Y2021D02_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D02P1() {
+func (app *Puzzle) Y2021D02P1() {
 	x := 0
 	y := 0
 	for _, line := range strings.Split(DAY_2021_02_TEST_DATA, "\n") {
@@ -111,7 +111,7 @@ After following these new instructions, you would have a horizontal position of 
 
 Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 */
-func (app *Application) Y2021D02P2() {
+func (app *Puzzle) Y2021D02P2() {
 	x := 0
 	y := 0
 	aim := 0
@@ -151,16 +151,16 @@ func (app *Application) Y2021D02P2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2021D02() {
+func (app *Puzzle) Y2021D02() {
 	app.Y2021D02P1()
 	app.Y2021D02P2()
 }

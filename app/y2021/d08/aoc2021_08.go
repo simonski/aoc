@@ -21,7 +21,7 @@ bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbg
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`
 
-func (app *Application) Y2021D08_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D08_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 8)
 	s.Name = "Seven Segment Search"
 	s.ProgressP1 = utils.Completed
@@ -29,12 +29,12 @@ func (app *Application) Y2021D08_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2021D08P1() {
+func (app *Puzzle) Y2021D08P1() {
 	runPart1(BIG)
 	runPart1(DATA)
 }
 
-func (app *Application) Y2021D08P2() {
+func (app *Puzzle) Y2021D08P2() {
 	// runPart2(SMALL)
 	// runPart2(BIG)
 	runPart2(DATA)

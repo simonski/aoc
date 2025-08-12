@@ -1,4 +1,4 @@
-package d6
+package d06
 
 import (
 	"testing"

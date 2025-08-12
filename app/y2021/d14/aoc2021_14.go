@@ -61,7 +61,7 @@ Apply 10 steps of pair insertion to the polymer template and find the most and l
 
 */
 
-func (app *Application) Y2021D14_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D14_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 14)
 	s.Name = "Extended Polymerization"
 	s.ProgressP1 = utils.Completed
@@ -136,12 +136,12 @@ func NewPolymer(data string) *Polymer {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D14P1() {
+func (app *Puzzle) Y2021D14P1() {
 	// d14P1(DAY_2021_14_TEST_DATA, 10)
 	// d14P1(DAY_2021_14_DATA, 10)
 }
 
-func (app *Application) Y2021D14P2() {
+func (app *Puzzle) Y2021D14P2() {
 	// go_on_then_1_working(DAY_2021_14_TEST_DATA, 10)
 	// go_on_then_2(DAY_2021_14_TEST_DATA, 40)
 	go_on_then_2(DAY_2021_14_DATA, 40)

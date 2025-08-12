@@ -368,7 +368,7 @@ In total, there are 79 beacons.
 Assemble the full map of beacons. How many beacons are there?
 */
 
-func (app *Application) Y2021D19_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D19_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 19)
 	s.Name = "Beacon Scanner"
 	s.ProgressP1 = utils.Started
@@ -391,7 +391,7 @@ func (app *Application) Y2021D19_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2021D19P1() {
+func (app *Puzzle) Y2021D19P1() {
 
 	b := &Beacon{X: 1, Y: 2, Z: 3}
 	p := b.Permutations()

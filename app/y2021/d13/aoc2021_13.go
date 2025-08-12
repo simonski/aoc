@@ -114,7 +114,7 @@ The transparent paper is pretty big, so for now, focus on just completing the fi
 How many dots are visible after completing just the first fold instruction on your transparent paper?
 */
 
-func (app *Application) Y2021D13_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D13_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 13)
 	s.Name = "Transparent Origami"
 	s.ProgressP1 = utils.Completed
@@ -244,7 +244,7 @@ func NewDay13Grid(data string) *Day13Grid {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D13P1() {
+func (app *Puzzle) Y2021D13P1() {
 	g := NewDay13Grid(DAY_2021_13_TEST_DATA)
 	fmt.Println(g.Debug())
 	for _, fold := range g.Folds {
@@ -279,20 +279,20 @@ func (app *Application) Y2021D13P1() {
 }
 
 // // rename this to the year and day in question
-// func (app *Application) Y2021D13P2() {
+// func (app *Puzzle) Y2021D13P2() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y2021D13() {
+// func (app *Puzzle) Y2021D13() {
 // 	app.Y2021D13P1()
 // 	app.Y2021D13P2()
 // }

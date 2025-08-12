@@ -83,7 +83,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D23_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D23_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 23)
 	s.Name = "Crab Cups"
 	s.ProgressP1 = utils.Completed
@@ -91,14 +91,14 @@ func (app *Application) Y2020D23_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D23() {
+func (app *Puzzle) Y2020D23() {
 	app.Y2020D23P1()
 	app.Y2020D23P2()
 }
 
-func (app *Application) Y2020D23P1() {
+func (app *Puzzle) Y2020D23P1() {
 }
-func (app *Application) Y2020D23P2() {
+func (app *Puzzle) Y2020D23P2() {
 
 	start := time.Now()
 	input := "198753462"

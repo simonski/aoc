@@ -14,7 +14,7 @@ import (
 
 */
 
-func (app *Application) Y2022D01_Summary() *utils.Summary {
+func (puzzle *Puzzle) Y2022D01_Summary() *utils.Summary {
 	s := utils.NewSummary(2022, 1)
 	s.Name = "Calorie Counting"
 
@@ -31,7 +31,7 @@ func (app *Application) Y2022D01_Summary() *utils.Summary {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2022D01P1() {
+func (puzzle *Puzzle) Y2022D01P1() {
 	splits := strings.Split(DAY_2022_01_TEST_DATA, "\n")
 	total := 0
 	max := 0
@@ -58,7 +58,7 @@ func (app *Application) Y2022D01P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2022D01P2() {
+func (puzzle *Puzzle) Y2022D01P2() {
 	splits := strings.Split(DAY_2022_01_TEST_DATA, "\n")
 
 	totals := make([]int, 0)
@@ -87,16 +87,16 @@ func (app *Application) Y2022D01P2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-func (app *Application) Y20XXDXXP1Render() {
+func (puzzle *Puzzle) Y20XXDXXP1Render() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-func (app *Application) Y20XXDXXP2Render() {
+func (puzzle *Puzzle) Y20XXDXXP2Render() {
 }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2022D01() {
-	app.Y2022D01P1()
-	app.Y2022D01P2()
+func (puzzle *Puzzle) Y2022D01() {
+	puzzle.Y2022D01P1()
+	puzzle.Y2022D01P2()
 }

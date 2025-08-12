@@ -105,7 +105,7 @@ How many paths through this cave system are there that visit small caves at most
 
 */
 
-func (app *Application) Y2021D12_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D12_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 12)
 	s.Name = "Passage Pathing"
 	s.ProgressP1 = utils.Completed
@@ -325,14 +325,14 @@ func NewCaveSystem(data string) *CaveSystem {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D12P1() {
+func (app *Puzzle) Y2021D12P1() {
 	day12Part1("test1", 1, DAY_2021_12_TEST_DATA_7)
 	day12Part1("test2", 1, DAY_2021_12_TEST_DATA_19)
 	day12Part1("testX", 1, DAY_2021_12_TEST_DATA_X)
 	day12Part1("real", 1, DAY_2021_12_DATA)
 }
 
-func (app *Application) Y2021D12P2() {
+func (app *Puzzle) Y2021D12P2() {
 	day12Part1("test1", 2, DAY_2021_12_TEST_DATA_7)
 	day12Part1("test2", 2, DAY_2021_12_TEST_DATA_19)
 	day12Part1("testX", 2, DAY_2021_12_TEST_DATA_X)
@@ -357,20 +357,20 @@ func day12Part1(title string, maxVisits int, data string) {
 }
 
 // // rename this to the year and day in question
-// func (app *Application) Y2021D12P2() {
+// func (app *Puzzle) Y2021D12P2() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y2021D12() {
+// func (app *Puzzle) Y2021D12() {
 // 	app.Y2021D12P1()
 // 	app.Y2021D12P2()
 // }

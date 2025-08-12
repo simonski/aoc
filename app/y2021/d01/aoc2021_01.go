@@ -51,7 +51,7 @@ In this example, there are 7 measurements that are larger than the previous meas
 How many measurements are larger than the previous measurement?
 */
 
-func (app *Application) Y2021D01_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D01_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 1)
 	s.Name = "Sonar Sweep"
 	s.ProgressP1 = utils.Completed
@@ -59,7 +59,7 @@ func (app *Application) Y2021D01_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2021D01P1() {
+func (app *Puzzle) Y2021D01P1() {
 	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA, "\n")
 	last_value := 0
 	increase := 0
@@ -89,7 +89,7 @@ func (app *Application) Y2021D01P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D01P2() {
+func (app *Puzzle) Y2021D01P2() {
 	ints := utils.SplitDataToListOfInts(DAY_2021_01_TEST_DATA, "\n")
 	last_value := 0
 	increase := 0
@@ -127,16 +127,16 @@ func (app *Application) Y2021D01P2() {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y202021D01P1Render() {
+// func (app *Puzzle) Y202021D01P1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y202021D01P2Render() {
+// func (app *Puzzle) Y202021D01P2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y202021D01() {
+// func (app *Puzzle) Y202021D01() {
 // 	app.Y2021D01P1()
 // 	app.Y2021D01P2()
 // }

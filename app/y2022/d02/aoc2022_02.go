@@ -12,7 +12,7 @@ import (
 
 */
 
-func (app *Application) Y2022D02_Summary() *utils.Summary {
+func (puzzle *Puzzle) Y2022D02_Summary() *utils.Summary {
 	s := utils.NewSummary(2022, 2)
 	s.Name = "Rock Paper Scissors"
 
@@ -157,7 +157,7 @@ func (g *D2Game) PlayRound2(round string) int {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2022D02P1() {
+func (puzzle *Puzzle) Y2022D02P1() {
 	game := D2Game{}
 
 	score1 := game.PlayGame1(DAY_2022_02_TEST_DATA)
@@ -168,7 +168,7 @@ func (app *Application) Y2022D02P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2022D02P2() {
+func (puzzle *Puzzle) Y2022D02P2() {
 	game := D2Game{}
 
 	score1 := game.PlayGame2(DAY_2022_02_TEST_DATA)
@@ -180,7 +180,7 @@ func (app *Application) Y2022D02P2() {
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2022D02() {
-	app.Y2022D02P1()
-	app.Y2022D02P2()
+func (puzzle *Puzzle) Y2022D02() {
+	puzzle.Y2022D02P1()
+	puzzle.Y2022D02P2()
 }

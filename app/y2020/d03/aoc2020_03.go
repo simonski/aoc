@@ -8,7 +8,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D03_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D03_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 3)
 	s.Name = "Toboggan Trajectory"
 	s.ProgressP1 = utils.Completed
@@ -17,14 +17,14 @@ func (app *Application) Y2020D03_Summary() *utils.Summary {
 }
 
 // AOC_2020_03 is the entrypoint
-func (app *Application) Y2020D03P1() {
+func (app *Puzzle) Y2020D03P1() {
 	cli := app.CLI
 	verbose := cli.IndexOf("-v") > -1
 	AOC_2020_03_part1_attempt1(cli, verbose)
 	AOC_2020_03_part1_attempt2(cli, verbose)
 }
 
-func (app *Application) Y2020D03P2() {
+func (app *Puzzle) Y2020D03P2() {
 }
 
 // AOC_2020_01_part3_attempt1 this is part 1 of day 3, attempt 1

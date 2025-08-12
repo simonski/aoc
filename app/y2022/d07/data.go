@@ -1,4 +1,4 @@
-package d7
+package d07
 
 const TEST_DATA = `$ cd /
 $ ls

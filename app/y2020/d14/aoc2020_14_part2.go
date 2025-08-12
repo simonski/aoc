@@ -56,7 +56,7 @@ Execute the initialization program using an emulator for a version 2 decoder chi
 
 */
 
-func (app *Application) Y2020D14P2() {
+func (app *Puzzle) Y2020D14P2() {
 	filename := app.CLI.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV2()

@@ -30,7 +30,7 @@ import (
 	"github.com/simonski/aoc/utils"
 )
 
-func (app *Application) Y2020D21_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D21_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 21)
 	s.Name = "Allergen Assessment"
 	s.ProgressP1 = utils.Completed
@@ -38,14 +38,14 @@ func (app *Application) Y2020D21_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D21() {
+func (app *Puzzle) Y2020D21() {
 	app.Y2020D21P1()
 	app.Y2020D21P2()
 }
 
-func (app *Application) Y2020D21P1() {
+func (app *Puzzle) Y2020D21P1() {
 }
-func (app *Application) Y2020D21P2() {
+func (app *Puzzle) Y2020D21P2() {
 }
 
 func NewFoodDB(data string) *FoodDB {

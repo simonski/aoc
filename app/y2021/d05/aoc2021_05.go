@@ -51,7 +51,7 @@ Consider only horizontal and vertical lines. At how many points do at least two 
 
 */
 
-func (app *Application) Y2021D05_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D05_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 5)
 	s.Name = "Hydrothermal Venture"
 	s.ProgressP1 = utils.Completed
@@ -298,7 +298,7 @@ func Part2D5(data string) {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D05P1() {
+func (app *Puzzle) Y2021D05P1() {
 	Part1D5(DAY_2021_05_TEST_DATA)
 	// Part1D5(DAY_2021_05_DATA)
 }
@@ -327,22 +327,22 @@ You still need to determine the number of points where at least two lines overla
 
 Consider all of the lines. At how many points do at least two lines overlap?
 */
-func (app *Application) Y2021D05P2() {
+func (app *Puzzle) Y2021D05P2() {
 	Part2D5(DAY_2021_05_TEST_DATA)
 	Part2D5(DAY_2021_05_DATA)
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-func (app *Application) Y2021D05() {
+func (app *Puzzle) Y2021D05() {
 	app.Y2021D05P1()
 	app.Y2021D05P2()
 }

@@ -33,7 +33,7 @@ The risk level of a low point is 1 plus its height. In the above example, the ri
 Find all of the low points on your heightmap. What is the sum of the risk levels of all low points on your heightmap?
 */
 
-func (app *Application) Y2021D09_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D09_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 9)
 	s.Name = "Smoke Basin"
 	s.ProgressP1 = utils.Completed
@@ -276,7 +276,7 @@ func (b *Basin) fillUp(grid *Day9Grid, point *Point) {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D09P1() {
+func (app *Puzzle) Y2021D09P1() {
 	g := NewDay9Grid(DAY_2021_09_TEST_DATA)
 	fmt.Printf("%v\n", g.Debug())
 	fmt.Println()
@@ -296,7 +296,7 @@ func (app *Application) Y2021D09P1() {
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D09P2() {
+func (app *Puzzle) Y2021D09P2() {
 	g := NewDay9Grid(DAY_2021_09_DATA)
 	fmt.Printf("loaded grid, width=%v, height=%v\n", g.Width, g.Height)
 	g.LoadBasins()

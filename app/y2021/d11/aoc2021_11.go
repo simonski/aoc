@@ -304,7 +304,7 @@ After 100 steps, there have been a total of 1656 flashes.
 Given the starting energy levels of the dumbo octopuses in your cavern, simulate 100 steps. How many total flashes are there after 100 steps?
 */
 
-func (app *Application) Y2021D11_Summary() *utils.Summary {
+func (app *Puzzle) Y2021D11_Summary() *utils.Summary {
 	s := utils.NewSummary(2021, 11)
 	s.Name = "Dumbo Octopus"
 	s.ProgressP1 = utils.Completed
@@ -511,7 +511,7 @@ func (g *Day11Grid) FlashWalk(step int, depth int, p *Day11Point, originPoint *D
 }
 
 // rename this to the year and day in question
-func (app *Application) Y2021D11P1() {
+func (app *Puzzle) Y2021D11P1() {
 	DEBUG := true
 	data := DAY_2021_11_TEST_DATA_1
 	grid := NewDay11Grid(data)
@@ -548,7 +548,7 @@ It seems like the individual flashes aren't bright enough to navigate. However, 
 
 In the example above, the first time all octopuses flash simultaneously is step 195:
 */
-func (app *Application) Y2021D11P2() {
+func (app *Puzzle) Y2021D11P2() {
 
 	data1 := DAY_2021_11_TEST_DATA
 	grid1 := NewDay11Grid(data1)
@@ -577,7 +577,7 @@ type Day11Response struct {
 	Index int
 }
 
-func (app *Application) Y2021D11P2Api() *Day11Response {
+func (app *Puzzle) Y2021D11P2Api() *Day11Response {
 
 	data2 := DAY_2021_11_DATA
 	grid2 := NewDay11Grid(data2)
@@ -602,16 +602,16 @@ func (app *Application) Y2021D11P2Api() *Day11Response {
 }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP1Render() {
+// func (app *Puzzle) Y20XXDXXP1Render() {
 // }
 
 // rename and uncomment this to the year and day in question once complete for a gold star!
-// func (app *Application) Y20XXDXXP2Render() {
+// func (app *Puzzle) Y20XXDXXP2Render() {
 // }
 
 // this is what we will reflect and call - so both parts with run. It's up to you to make it print nicely etc.
 // The app reference has a CLI for logging.
-// func (app *Application) Y2021D11() {
+// func (app *Puzzle) Y2021D11() {
 // 	app.Y2021D11P1()
 // 	app.Y2021D11P2()
 // }

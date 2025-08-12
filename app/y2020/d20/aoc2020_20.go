@@ -174,7 +174,7 @@ import (
 	goutils "github.com/simonski/goutils"
 )
 
-func (app *Application) Y2020D20_Summary() *utils.Summary {
+func (app *Puzzle) Y2020D20_Summary() *utils.Summary {
 	s := utils.NewSummary(2020, 20)
 	s.Name = "Jurassic Jigsaw"
 	s.ProgressP1 = utils.Completed
@@ -182,12 +182,12 @@ func (app *Application) Y2020D20_Summary() *utils.Summary {
 	return s
 }
 
-func (app *Application) Y2020D20() {
+func (app *Puzzle) Y2020D20() {
 	app.Y2020D20P1()
 	app.Y2020D20P2()
 }
 
-func (app *Application) Y2020D20P1() {
+func (app *Puzzle) Y2020D20P1() {
 	image := NewImageFromString(DAY_20_DATA)
 	fmt.Printf("FindCorners\n")
 	data := image.Arrange(false)
@@ -205,7 +205,7 @@ func (app *Application) Y2020D20P1() {
 	fmt.Printf("Day 20.1: Corners are %v * %v * %v * %v = ?\n", corner1.TileId, corner2.TileId, corner3.TileId, corner4.TileId)
 }
 
-func (app *Application) Y2020D20P2() {
+func (app *Puzzle) Y2020D20P2() {
 	image := NewImageFromString(DAY_20_DATA)
 	image.Arrange(false)
 	hideEdges := false
