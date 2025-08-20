@@ -52,9 +52,11 @@ The first step of attacking the weakness in the XMAS data is to find the first n
 */
 import (
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -75,7 +77,7 @@ func (app *Puzzle) Y2020D09P2() {
 }
 
 func AOC_2020_09_part2_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	searchFor := 373803594
 	// find the first contiguous block of numbers that sums to our number
 	filename := cli.GetFileExistsOrDie("-input")
@@ -112,7 +114,7 @@ func AOC_2020_09_part2_attempt1(app *Puzzle) {
 }
 
 func AOC_2020_09_part1_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 
 	ints := goutils.Load_file_to_ints(filename)

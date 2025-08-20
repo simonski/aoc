@@ -22,16 +22,16 @@ type Puzzle struct {
 	HasWWW    bool
 }
 
+func NewPuzzle() *Puzzle {
+	return NewPuzzleWithData(REAL_DATA)
+}
+
 func NewPuzzleWithData(input string) *Puzzle {
 	iyear, _ := strconv.Atoi("2022")
 	iday, _ := strconv.Atoi("02")
 	p := Puzzle{year: iyear, day: iday, title: "Rock Paper Scissors"}
 	p.Load(input)
 	return &p
-}
-
-func NewPuzzle() *Puzzle {
-	return NewPuzzleWithData(REAL_DATA)
 }
 
 func (puzzle *Puzzle) Load(input string) {

@@ -42,10 +42,12 @@ So, in this example, the number of bag colors that can eventually contain at lea
 */
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -67,7 +69,7 @@ func (app *Puzzle) Y2020D07P2() {
 }
 
 func AOC_2020_07_part1_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	g := NewBagGraphFromFilename(filename)
 	g.Debug()
@@ -75,7 +77,7 @@ func AOC_2020_07_part1_attempt1(app *Puzzle) {
 }
 
 func AOC_2020_07_part2_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	g := NewBagGraphFromFilename(filename)
 	fmt.Printf("There are %v bags inside the gold.\n", g.GetTotalBagsContainedBy("shiny gold"))

@@ -76,11 +76,13 @@ func (app *Puzzle) Y2020D24() {
 }
 
 func (app *Puzzle) Y2020D24P1() {
-	AOC_2020_24_part1_attempt1(app.CLI)
+	cli := cli.New(os.Args)
+	AOC_2020_24_part1_attempt1(cli)
 }
 
 func (app *Puzzle) Y2020D24P2() {
-	AOC_2020_24_part2_attempt1(app.CLI)
+	cli := cli.New(os.Args)
+	AOC_2020_24_part2_attempt1(cli)
 	app.Y2020D24P2Render()
 }
 

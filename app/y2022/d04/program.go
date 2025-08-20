@@ -24,14 +24,14 @@ type Puzzle struct {
 	Pairs []*Pair
 }
 
-func NewPuzzle() Puzzle {
+func NewPuzzle() *Puzzle {
 	return NewPuzzleWithData(REAL_DATA)
 }
 
-func NewPuzzleWithData(input string) Puzzle {
+func NewPuzzleWithData(input string) *Puzzle {
 	p := Puzzle{year: 2022, day: 04, title: "Camp Cleanup"}
 	p.Load(input)
-	return p
+	return &p
 }
 
 func (puzzle *Puzzle) Load(input string) {

@@ -2,6 +2,7 @@ package d01
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -18,14 +19,18 @@ func (app *Puzzle) Y2020D01_Summary() *utils.Summary {
 	return s
 }
 func (app *Puzzle) Y2020D01P1() {
-	AOC_2020_01(app.CLI)
+	cli := cli.New(os.Args)
+	AOC_2020_01(cli)
 }
 
 func (app *Puzzle) Y2020D01P2() {
-	AOC_2020_02(app.CLI)
+	AOC_2020_02(cli.New(os.Args))
 }
 
 // AOC_2020_01 is the entrypoint to the various attempts for day one
+func AOC_2020_02(cli *cli.CLI) {
+}
+
 func AOC_2020_01(cli *cli.CLI) {
 
 	logger := goutils.NewLogger("Day 01-1")

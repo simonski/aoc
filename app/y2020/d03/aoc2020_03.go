@@ -2,6 +2,7 @@ package d03
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/simonski/aoc/utils"
 	cli "github.com/simonski/cli"
@@ -18,7 +19,7 @@ func (app *Puzzle) Y2020D03_Summary() *utils.Summary {
 
 // AOC_2020_03 is the entrypoint
 func (app *Puzzle) Y2020D03P1() {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	verbose := cli.IndexOf("-v") > -1
 	AOC_2020_03_part1_attempt1(cli, verbose)
 	AOC_2020_03_part1_attempt2(cli, verbose)

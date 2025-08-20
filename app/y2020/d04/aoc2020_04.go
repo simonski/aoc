@@ -2,11 +2,13 @@ package d04
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -27,7 +29,7 @@ func (app *Puzzle) Y2020D04P2() {
 }
 
 func AOC_2020_04_part1_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetStringOrDie("-input")
 	pc := NewPassportControlFromFile(filename)
 	validCount := 0
@@ -44,7 +46,7 @@ func AOC_2020_04_part1_attempt1(app *Puzzle) {
 }
 
 func AOC_2020_04_part2_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetStringOrDie("-input")
 	pc := NewPassportControlFromFile(filename)
 	validCount := 0

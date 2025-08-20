@@ -2,6 +2,7 @@ package d05
 
 import (
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/simonski/aoc/utils"
@@ -23,11 +24,13 @@ func (app *Puzzle) Y2020D05() {
 }
 
 func (app *Puzzle) Y2020D05P1() {
-	app.AOC_2020_05_part1_attempt1(app.CLI)
+	cli := cli.New(os.Args)
+	app.AOC_2020_05_part1_attempt1(cli)
 }
 
 func (app *Puzzle) Y2020D05P2() {
-	app.AOC_2020_05_part2_attempt1(app.CLI)
+	cli := cli.New(os.Args)
+	app.AOC_2020_05_part2_attempt1(cli)
 }
 
 func (app *Puzzle) AOC_2020_05_part1_attempt1(cli *cli.CLI) {

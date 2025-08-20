@@ -54,6 +54,7 @@ import (
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -74,7 +75,7 @@ func (app *Puzzle) Y2020D08P2() {
 }
 
 func AOC_2020_08_part1_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewProgramFromFilename(filename)
 	p.Debug()
@@ -93,7 +94,7 @@ func AOC_2020_08_part1_attempt1(app *Puzzle) {
 }
 
 func AOC_2020_08_part2_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	p := NewProgramFromFilename(filename)
 

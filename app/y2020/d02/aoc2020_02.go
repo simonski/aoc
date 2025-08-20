@@ -2,6 +2,7 @@ package d02
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -19,13 +20,15 @@ func (app *Puzzle) Y2020D02_Summary() *utils.Summary {
 }
 
 func (app *Puzzle) Y2020D02P1() {
-	verbose := app.CLI.IndexOf("-v") > -1
-	AOC_2020_02_part1_attempt1(app.CLI, verbose)
+	cli := cli.New(os.Args)
+	verbose := cli.IndexOf("-v") > -1
+	AOC_2020_02_part1_attempt1(cli, verbose)
 }
 
 func (app *Puzzle) Y2020D02P2() {
-	verbose := app.CLI.IndexOf("-v") > -1
-	AOC_2020_02_part2_attempt1(app.CLI, verbose)
+	cli := cli.New(os.Args)
+	verbose := cli.IndexOf("-v") > -1
+	AOC_2020_02_part2_attempt1(cli, verbose)
 }
 
 // AOC_2020_02 is the entrypoint to the various attempts for day two

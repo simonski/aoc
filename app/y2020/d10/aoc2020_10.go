@@ -88,9 +88,11 @@ Find a chain that uses all of your adapters to connect the charging outlet to yo
 */
 import (
 	"fmt"
+	"os"
 	"sort"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -113,7 +115,7 @@ func (app *Puzzle) Y2020D10P2() {
 }
 
 func AOC_2020_10_part1_attempt1_from_cli(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	ints := goutils.Load_file_to_ints(filename)
 	results := AOC_2020_10_part1_attempt1(ints)
@@ -188,7 +190,7 @@ func AOC_2020_10_part1_attempt1(ints []int) map[int]int {
 // }
 
 func AOC_2020_10_part2_attempt2(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	data := goutils.Load_file_to_ints(filename)
 	fmt.Printf("data is   %v\n", data)

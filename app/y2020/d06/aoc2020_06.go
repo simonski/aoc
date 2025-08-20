@@ -16,10 +16,12 @@ As it is, I Went the other way this time and whilst it works, I require a rewrit
 */
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -41,14 +43,14 @@ func (app *Puzzle) Y2020D06P2() {
 }
 
 func AOC_2020_06_part1_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	q := NewQandAFromFile(filename)
 	fmt.Printf("There are %v total answers.\n", q.TotalForAllGroups())
 }
 
 func AOC_2020_06_part2_attempt1(app *Puzzle) {
-	cli := app.CLI
+	cli := cli.New(os.Args)
 	filename := cli.GetFileExistsOrDie("-input")
 	q := NewQandAFromFile(filename)
 	fmt.Printf("There are %v total answers in the second round.\n", q.SecondTotalForAllGroups())

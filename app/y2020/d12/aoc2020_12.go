@@ -42,6 +42,7 @@ Figure out where the navigation instructions lead. What is the Manhattan distanc
 */
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/simonski/aoc/utils"
@@ -63,7 +64,8 @@ func (app *Puzzle) Y2020D12() {
 }
 
 func (app *Puzzle) Y2020D12P1() {
-	filename := app.CLI.GetFileExistsOrDie("-input")
+	cli := cli.New(os.Args)
+	filename := cli.GetFileExistsOrDie("-input")
 	tolerance := 4
 	sp := NewSeatingPlanFromFile(filename, tolerance, false)
 	for {
@@ -88,7 +90,8 @@ func (app *Puzzle) Y2020D12P1_x(cli *cli.CLI) {
 }
 
 func (app *Puzzle) Y2020D12P2() {
-	filename := app.CLI.GetFileExistsOrDie("-input")
+	cli := cli.New(os.Args)
+	filename := cli.GetFileExistsOrDie("-input")
 	p := NewPathFromFile(filename)
 	s := NewShip2(10, 1)
 	fmt.Printf("START\n  Ship2(%v,%v %v) WP (%v,%v)\n", s.X, s.Y, s.Angle, s.Waypoint.X, s.Waypoint.Y)

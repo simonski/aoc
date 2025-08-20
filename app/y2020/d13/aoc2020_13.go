@@ -53,6 +53,7 @@ What is the ID of the earliest bus you can take to the airport multiplied by the
 */
 import (
 	"fmt"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -77,11 +78,13 @@ func (app *Puzzle) Y2020D13() {
 }
 
 func (app *Puzzle) Y2020D13P1() {
-	AOC_2020_13_part1_attempt1(app.CLI)
+	cli := cli.New(os.Args)
+	AOC_2020_13_part1_attempt1(cli)
 }
 
 func (app *Puzzle) Y2020D13P2() {
-	AOC_2020_13_part2_attempt1(app.CLI)
+	cli := cli.New(os.Args)
+	AOC_2020_13_part2_attempt1(cli)
 }
 
 /*

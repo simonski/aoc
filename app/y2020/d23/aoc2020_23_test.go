@@ -195,3 +195,13 @@ func Test_AOC2020_23_Ring_Test_Mega(t *testing.T) {
 	// fmt.Printf("CrabCups(100) REAL gives %v\n", result100Real)
 
 }
+
+func split_undecorated_string_to_ints(sequence string) []int {
+	results := make([]int, len(sequence))
+	for index := 0; index < len(sequence); index++ {
+		svalue := sequence[index : index+1]
+		ivalue, _ := strconv.Atoi(svalue)
+		results[index] = ivalue
+	}
+	return results
+}

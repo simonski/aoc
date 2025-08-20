@@ -45,10 +45,12 @@ Execute the initialization program. What is the sum of all values left in memory
 */
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"strconv"
 
 	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -66,7 +68,8 @@ func (app *Puzzle) Y2020D14() {
 }
 
 func (app *Puzzle) Y2020D14P1() {
-	filename := app.CLI.GetFileExistsOrDie("-input")
+	cli := cli.New(os.Args)
+	filename := cli.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV1()
 	p.Debug()

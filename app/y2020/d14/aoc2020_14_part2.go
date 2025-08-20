@@ -2,8 +2,10 @@ package d14
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
+	"github.com/simonski/cli"
 	goutils "github.com/simonski/goutils"
 )
 
@@ -57,7 +59,8 @@ Execute the initialization program using an emulator for a version 2 decoder chi
 */
 
 func (app *Puzzle) Y2020D14P2() {
-	filename := app.CLI.GetFileExistsOrDie("-input")
+	cli := cli.New(os.Args)
+	filename := cli.GetFileExistsOrDie("-input")
 	p := NewDay14ProgramFromFilename(filename)
 	p.RunV2()
 	p.Debug()
