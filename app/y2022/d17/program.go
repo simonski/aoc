@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
 )
 
@@ -15,14 +16,14 @@ import (
 
 type Puzzle struct {
 	title string
-	year  string
-	day   string
+	year  int
+	day   int
 	input string
 	lines []string
 }
 
 func NewPuzzleWithData(input string) *Puzzle {
-	p := Puzzle{year: "2022", day: "17", title: "Pyroclastic Flow"}
+	p := Puzzle{year: 2022, day: 17, title: "Pyroclastic Flow"}
 	p.Load(input)
 	return &p
 }
@@ -131,4 +132,19 @@ func (puzzle *Puzzle) Run() {
 		fmt.Println(USAGE)
 		os.Exit(1)
 	}
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Started
+	s.ProgressP2 = utils.Started
+	s.DateStarted = "d01"
+	return s
+}
+
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
+}
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }

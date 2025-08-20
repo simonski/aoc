@@ -77,7 +77,7 @@ func Test_AOC2022_04_Part1_ShouldIntersect_5(t *testing.T) {
 
 func Test_AOC2022_04_Part1_Verify(t *testing.T) {
 	input := TEST_DATA
-	day4 := NewPuzzle(input)
+	day4 := NewPuzzleWithData(input)
 	overlaps := 0
 	for _, pair := range day4.Pairs {
 		if pair.Overlap() {
@@ -91,7 +91,7 @@ func Test_AOC2022_04_Part1_Verify(t *testing.T) {
 
 func Test_AOC2022_04_Part2_Verify(t *testing.T) {
 	input := TEST_DATA
-	day4 := NewPuzzle(input)
+	day4 := NewPuzzleWithData(input)
 	intersections := 0
 	for _, pair := range day4.Pairs {
 		if pair.Intersect() {
@@ -105,7 +105,7 @@ func Test_AOC2022_04_Part2_Verify(t *testing.T) {
 
 func Test_AOC2022_04_Part1(t *testing.T) {
 	input := REAL_DATA
-	day4 := NewPuzzle(input)
+	day4 := NewPuzzleWithData(input)
 	overlaps := 0
 	for _, pair := range day4.Pairs {
 		if pair.Overlap() {
@@ -117,7 +117,7 @@ func Test_AOC2022_04_Part1(t *testing.T) {
 
 func Test_AOC2022_04_Part2(t *testing.T) {
 	input := REAL_DATA
-	day4 := NewPuzzle(input)
+	day4 := NewPuzzleWithData(input)
 	overlaps := 0
 	for _, pair := range day4.Pairs {
 		if pair.Intersect() {

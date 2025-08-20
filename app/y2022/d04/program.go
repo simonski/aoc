@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	"github.com/simonski/goutils"
 )
 
@@ -15,15 +17,19 @@ import (
 
 type Puzzle struct {
 	title string
-	year  string
-	day   string
+	year  int
+	day   int
 	input string
 	lines []string
 	Pairs []*Pair
 }
 
-func NewPuzzle(input string) Puzzle {
-	p := Puzzle{year: "2022", day: "04", title: "Camp Cleanup"}
+func NewPuzzle() Puzzle {
+	return NewPuzzleWithData(REAL_DATA)
+}
+
+func NewPuzzleWithData(input string) Puzzle {
+	p := Puzzle{year: 2022, day: 04, title: "Camp Cleanup"}
 	p.Load(input)
 	return p
 }
@@ -142,4 +148,19 @@ func NewPair(input string) *Pair {
 	t2 := NewTask(splits[1])
 	p := Pair{input: input, task1: t1, task2: t2}
 	return &p
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Started
+	s.ProgressP2 = utils.Started
+	s.DateStarted = "d04"
+	return s
+}
+
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
+}
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }

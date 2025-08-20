@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/simonski/aoc/utils"
+	"github.com/simonski/cli"
 	"github.com/simonski/goutils"
 )
 
@@ -38,8 +40,8 @@ func NewBlock(x int, y int, blockType BlockType) *Block {
 
 type Puzzle struct {
 	title    string
-	year     string
-	day      string
+	year     int
+	day      int
 	input    string
 	Lines    []string
 	Rows     int
@@ -51,7 +53,7 @@ type Puzzle struct {
 }
 
 func NewPuzzleWithData(VERBOSE bool, input string) *Puzzle {
-	p := Puzzle{year: "2022", day: "14", title: "Regolith Reservoir", Cols: 0, Rows: 0, Grid: make(map[string]*Block)}
+	p := Puzzle{year: 2022, day: 14, title: "Regolith Reservoir", Cols: 0, Rows: 0, Grid: make(map[string]*Block)}
 	p.Load(VERBOSE, input)
 	p.Origin = p.Put(500, 0, ORIGIN)
 	return &p
@@ -314,4 +316,19 @@ func (puzzle *Puzzle) AddSand(max_y int) (bool, *Block, int) {
 
 	// if we cannot, move down and left
 	// if we cannot, move down and right
+}
+
+func (puzzle *Puzzle) GetSummary() utils.Summary {
+	s := utils.Summary{Day: puzzle.day, Year: puzzle.year, Name: puzzle.title}
+	s.ProgressP1 = utils.Started
+	s.ProgressP2 = utils.Started
+	s.DateStarted = "d01"
+	return s
+}
+
+func (puzzle *Puzzle) RunWWW() string {
+	return ""
+}
+
+func (puzzle *Puzzle) Render(cli *cli.CLI) {
 }
