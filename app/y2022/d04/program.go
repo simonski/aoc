@@ -25,7 +25,7 @@ type Puzzle struct {
 }
 
 func NewPuzzle() *Puzzle {
-	return NewPuzzleWithData(REAL_DATA)
+	return NewPuzzleWithData(DAY_2022_04_DATA)
 }
 
 func NewPuzzleWithData(input string) *Puzzle {

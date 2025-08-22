@@ -30,18 +30,18 @@ import (
 	cli "github.com/simonski/cli"
 )
 
-type Puzzle struct {
+type App struct {
 	CLI     *cli.CLI
 	Verbose bool
 }
 
-func NewPuzzle(cli *cli.CLI) Puzzle {
-	app := Puzzle{CLI: cli}
+func NewApp(cli *cli.CLI) App {
+	app := App{CLI: cli}
 	app.Verbose = cli.IndexOf("-v") > -1
 	return app
 }
 
-func (app Puzzle) Summary(year int, day int) *utils.Summary {
+func (app App) Summary(year int, day int) *utils.Summary {
 	p := app.GetPuzzle(year, day)
 	if p == nil {
 		return utils.NewSummary(year, day)
@@ -50,7 +50,7 @@ func (app Puzzle) Summary(year int, day int) *utils.Summary {
 	return &s
 }
 
-func (app Puzzle) GetPuzzle(year int, day int) utils.Puzzle {
+func (app App) GetPuzzle(year int, day int) utils.Puzzle {
 
 	if day == 1 {
 		return d01.NewPuzzle()

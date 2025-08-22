@@ -153,7 +153,7 @@ func (puzzle *Puzzle) Load(input string) {
 	rs := NewRuleStore()
 	rs.Load(lines)
 	puzzle.rulestore = rs
-	rs.Debug()
+	// rs.Debug()
 }
 
 func (rs *RuleStore) isValid(updates []int) bool {

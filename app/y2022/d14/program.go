@@ -50,6 +50,7 @@ type Puzzle struct {
 	Origin   *Block
 	HasFloor bool
 	Floor    int
+	IS_DEBUG bool
 }
 
 func NewPuzzleWithData(VERBOSE bool, input string) *Puzzle {
@@ -72,7 +73,9 @@ func (p *Puzzle) Put(x int, y int, value BlockType) *Block {
 	b := NewBlock(x, y, value)
 	key := fmt.Sprintf("%v_%v", x, y)
 	p.Grid[key] = b
-	fmt.Printf("PUT (%v,%v)\n", x, y)
+	if p.IS_DEBUG {
+		fmt.Printf("PUT (%v,%v)\n", x, y)
+	}
 	return b
 }
 

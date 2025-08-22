@@ -32,7 +32,9 @@ func main() {
 	if command == "" {
 		app.Help(c)
 		os.Exit(1)
-	} else if command == "run" {
+	}
+
+	if command == "run" {
 		app.Run(c)
 	} else if command == "render" {
 		app.Render(c)

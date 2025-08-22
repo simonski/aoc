@@ -142,15 +142,19 @@ func (p *Packet) Add(child *Packet) {
 
 // [[[1,[1,6,0,10,10],[],5,[]],[3,[5,8],2,[3,6,5,7],8],4,[0,[10]],8],[7,7],[[3,[9,5,10],[3],8,10],2,3,9],[[8,[3,1,4,9,5]]],[[[],0],10,10,3]]
 
-func nextEntry(data string) (string, string) {
+func nextEntry(data string, VERBOSE bool) (string, string) {
 	if data == "" {
 		return "", ""
 	}
 	entry := data[0:1]
-	fmt.Printf("first character is '%v'\n", entry)
+	if VERBOSE {
+		fmt.Printf("first character is '%v'\n", entry)
+	}
 	if entry == "[" || entry == "]" || entry == "," {
 		remainder := data[1:]
-		fmt.Printf("returning characeter '%v', remainder '%v'\n", entry, remainder)
+		if VERBOSE {
+			fmt.Printf("returning characeter '%v', remainder '%v'\n", entry, remainder)
+		}
 		return entry, remainder
 	} else {
 		lastgood := ""
@@ -159,10 +163,14 @@ func nextEntry(data string) (string, string) {
 			_, err := strconv.Atoi(attempt)
 			if err == nil {
 				lastgood = attempt
-				fmt.Printf("lastgood is %v\n", attempt)
+				if VERBOSE {
+					fmt.Printf("lastgood is %v\n", attempt)
+				}
 			} else {
 				remainder := data[len(lastgood):]
-				fmt.Printf("failed at '%v', lastgood is '%v', remainder='%v'\n", attempt, lastgood, remainder)
+				if VERBOSE {
+					fmt.Printf("failed at '%v', lastgood is '%v', remainder='%v'\n", attempt, lastgood, remainder)
+				}
 				return lastgood, remainder
 			}
 		}
@@ -188,7 +196,7 @@ func BuildPacket(VERBOSE bool, data string) *Packet {
 	iteration := 0
 	for {
 		iteration++
-		entry, data = nextEntry(data)
+		entry, data = nextEntry(data, VERBOSE)
 		if entry == "[" {
 			if VERBOSE {
 				fmt.Printf("[%v] entry starts a packet", iteration)
@@ -220,7 +228,9 @@ func BuildPacket(VERBOSE bool, data string) *Packet {
 			}
 			value := NewPacketValue(entry)
 			current.Add(value)
-			fmt.Printf("current contains %v, root contains %v\n", current.Size(), root.Size())
+			if VERBOSE {
+				fmt.Printf("current contains %v, root contains %v\n", current.Size(), root.Size())
+			}
 		}
 
 	}
