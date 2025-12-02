@@ -19,6 +19,7 @@ import (
 	"github.com/simonski/aoc/app/y2022"
 	"github.com/simonski/aoc/app/y2023"
 	"github.com/simonski/aoc/app/y2024"
+	"github.com/simonski/aoc/app/y2025"
 	"github.com/simonski/aoc/utils"
 	"github.com/simonski/cli"
 	"github.com/simonski/goutils"
@@ -139,6 +140,10 @@ func (aoc *AOC) List() string {
 		for day := 1; day <= 25; day++ {
 
 			summary := aoc.GetSummary(year, day)
+			if summary == nil {
+				line = fmt.Sprintf("%v  \u2503", line)
+				continue
+			}
 			// m1exists := summary.ProgressP1 == utils.Completed
 			// m2exists := summary.ProgressP2 == utils.Completed
 
@@ -242,15 +247,22 @@ func (a *AOC) GetPuzzle(year int, day int) utils.Puzzle {
 	} else if year == 2024 {
 		a := y2024.NewApp(a.CLI)
 		return a.GetPuzzle(year, day)
+	} else if year == 2025 {
+		a := y2025.NewApp(a.CLI)
+		return a.GetPuzzle(year, day)
 	} else {
 		return nil
 	}
 }
 
 func (a *AOC) GetSummary(year int, day int) *utils.Summary {
-	puzzle := a.GetPuzzleOrDie(year, day)
-	s := puzzle.GetSummary()
-	return &s
+	puzzle := a.GetPuzzle(year, day)
+	if puzzle != nil {
+		s := puzzle.GetSummary()
+		return &s
+	} else {
+		return nil
+	}
 }
 
 func (a *AOC) GetSummaries() []*utils.Summary {
